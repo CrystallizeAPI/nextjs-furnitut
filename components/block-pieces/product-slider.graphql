@@ -2,17 +2,17 @@
 #import "./../block-fragments/layout.graphql"
 
 fragment productSlider on ProductSliderPiece {
-  title
-  description
-  products {
-    variants {
-      sku
+    title
+    description
+    products {
+        variants {
+            sku
+        }
+        items {
+            itemId
+        }
     }
-    items {
-      itemId
+    layout {
+        ...layout
     }
-  }
-  layout {
-    ...layout
-  }
 }

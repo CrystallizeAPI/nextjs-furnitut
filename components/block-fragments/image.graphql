@@ -1,10 +1,10 @@
 fragment image on Image {
-  url
-  altText
-  focalPoint
-  variants {
     url
-    width
-    height
-  }
+    altText
+    focalPoint
+    variants {
+        url
+        width
+        height
+    }
 }

@@ -2,39 +2,39 @@
 #import "./../block-fragments/layout.graphql"
 
 fragment storySlider on StorySliderPiece {
-  title
-  description
-  stories {
-    items {
-      ... on story {
-        path
-        title
-        intro
-        media {
-          image {
-            ...image
-          }
-          shoppableImage {
-            ...image
-          }
-          video {
-            thumbnails {
-              url
-              altText
-              variants {
-                width
-                height
-                url
-              }
+    title
+    description
+    stories {
+        items {
+            ... on story {
+                path
+                title
+                intro
+                media {
+                    image {
+                        ...image
+                    }
+                    shoppableImage {
+                        ...image
+                    }
+                    video {
+                        thumbnails {
+                            url
+                            altText
+                            variants {
+                                width
+                                height
+                                url
+                            }
+                        }
+                        title
+                        playlists
+                    }
+                }
             }
-            title
-            playlists
-          }
         }
-      }
     }
-  }
-  layout {
-    ...layout
-  }
+    layout {
+        ...layout
+    }
 }

@@ -1,58 +1,58 @@
 #import "./../../../components/category-blocks.graphql"
 
 query FetchCategory($path: String!) {
-  browse {
-    category(path: $path) {
-      hits {
-        name
-        breadcrumbs {
-          name
-          path
-          id
-        }
-        blocks {
-          ...blocks
-        }
-        children {
-          hits {
-            __typename
-            ... on product {
-              name
-              path
-              description(format: json)
-              defaultVariant {
-                sku
-                defaultPrice
-                firstImage {
-                  url
-                  altText
-                  focalPoint
-                  variants(maxWidth: 500, types: ["avif"]) {
-                    url
-                    width
-                    height
-                  }
-                }
-              }
-              variants {
-                sku
-                isDefault
+    browse {
+        category(path: $path) {
+            hits {
                 name
-                firstImage {
-                  url
-                  altText
-                  focalPoint
-                  variants(maxWidth: 100, types: ["avif"]) {
-                    url
-                    width
-                    height
-                  }
+                breadcrumbs {
+                    name
+                    path
+                    id
                 }
-              }
+                blocks {
+                    ...blocks
+                }
+                children {
+                    hits {
+                        __typename
+                        ... on product {
+                            name
+                            path
+                            description(format: json)
+                            defaultVariant {
+                                sku
+                                defaultPrice
+                                firstImage {
+                                    url
+                                    altText
+                                    focalPoint
+                                    variants(maxWidth: 500, types: ["avif"]) {
+                                        url
+                                        width
+                                        height
+                                    }
+                                }
+                            }
+                            variants {
+                                sku
+                                isDefault
+                                name
+                                firstImage {
+                                    url
+                                    altText
+                                    focalPoint
+                                    variants(maxWidth: 100, types: ["avif"]) {
+                                        url
+                                        width
+                                        height
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     }
-  }
 }

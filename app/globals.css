@@ -3,190 +3,181 @@
 @tailwind utilities;
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 
-  .aspect-portrait {
-    aspect-ratio: 3 / 4;
-  }
+    .aspect-portrait {
+        aspect-ratio: 3 / 4;
+    }
 
-  .crystallize-image {
-    @apply h-full w-full relative;
-  }
-  .crystallize-image figure {
-    @apply w-full h-full flex;
-  }
+    .crystallize-image {
+        @apply h-full w-full relative;
+    }
+    .crystallize-image figure {
+        @apply w-full h-full flex;
+    }
 
-  .crystallize-image picture {
-    container-type: size;
+    .crystallize-image picture {
+        container-type: size;
 
-    @apply w-full h-full;
-  }
-  .crystallize-image {
-    --crop-focus-x: var(--focus-x, 0.5);
-    --crop-focus-y: var(--focus-y, 0.5);
-  }
-  .crystallize-image img {
-    --container-width: 100cqw;
-    --container-height: 100cqh;
-    --image-width: calc(var(--container-width) - 100%);
-    --image-height: calc(var(--container-height) - 100%);
-    width: var(--container-width);
-    height: var(--container-height);
-    object-position: clamp(
-        100%,
-        0.5 * var(--container-width) - var(--crop-focus-x) * var(--image-width),
-        0%
-      )
-      clamp(
-        100%,
-        0.5 * var(--container-height) - var(--crop-focus-y) *
-          var(--image-height),
-        0%
-      );
-    object-fit: cover;
-  }
+        @apply w-full h-full;
+    }
+    .crystallize-image {
+        --crop-focus-x: var(--focus-x, 0.5);
+        --crop-focus-y: var(--focus-y, 0.5);
+    }
+    .crystallize-image img {
+        --container-width: 100cqw;
+        --container-height: 100cqh;
+        --image-width: calc(var(--container-width) - 100%);
+        --image-height: calc(var(--container-height) - 100%);
+        width: var(--container-width);
+        height: var(--container-height);
+        object-position: clamp(100%, 0.5 * var(--container-width) - var(--crop-focus-x) * var(--image-width), 0%)
+            clamp(100%, 0.5 * var(--container-height) - var(--crop-focus-y) * var(--image-height), 0%);
+        object-fit: cover;
+    }
 
-  .page {
-    @apply max-w-screen-2xl mx-auto px-12 pt-32;
-  }
+    .page {
+        @apply max-w-screen-2xl mx-auto px-12 pt-32;
+    }
 
-  details.accordination {
-    @apply relative border-t border-muted;
-  }
-  details.accordination > summary {
-    list-style-type: none;
-    @apply cursor-pointer;
-  }
-  /* details.accordination > summary .accordination-arrow {
+    details.accordination {
+        @apply relative border-t border-muted;
+    }
+    details.accordination > summary {
+        list-style-type: none;
+        @apply cursor-pointer;
+    }
+    /* details.accordination > summary .accordination-arrow {
     @apply rotate-180;
   } */
-  details.accordination > summary .accordination-arrow {
-    @apply -rotate-180;
-  }
-  details[open].accordination > summary .accordination-arrow {
-    @apply rotate-0;
-  }
+    details.accordination > summary .accordination-arrow {
+        @apply -rotate-180;
+    }
+    details[open].accordination > summary .accordination-arrow {
+        @apply rotate-0;
+    }
 
-  details[open] > summary {
-    margin-bottom: 0.5rem;
-  }
+    details[open] > summary {
+        margin-bottom: 0.5rem;
+    }
 
-  .btn {
-    @apply inline-block px-6 py-3 text-light bg-dark rounded-lg font-medium hover:bg-opacity-90;
-  }
-  .btn.small {
-    @apply px-4 py-1.5;
-  }
-  .btn.large {
-    @apply px-8 py-4;
-  }
+    .btn {
+        @apply inline-block px-6 py-3 text-light bg-dark rounded-lg font-medium hover:bg-opacity-90;
+    }
+    .btn.small {
+        @apply px-4 py-1.5;
+    }
+    .btn.large {
+        @apply px-8 py-4;
+    }
 
-  .theme-muted {
-    @apply bg-muted;
-  }
-  .theme-muted .block-title {
-    @apply text-dark;
-  }
-  .theme-muted .block-description p {
-    @apply text-dark;
-  }
+    .theme-muted {
+        @apply bg-muted;
+    }
+    .theme-muted .block-title {
+        @apply text-dark;
+    }
+    .theme-muted .block-description p {
+        @apply text-dark;
+    }
 
-  .theme-pastel {
-    @apply bg-accent;
-  }
-  .theme-pastel .block-title {
-    @apply text-light;
-  }
-  .theme-pastel .block-description p {
-    @apply text-light;
-  }
+    .theme-pastel {
+        @apply bg-accent;
+    }
+    .theme-pastel .block-title {
+        @apply text-light;
+    }
+    .theme-pastel .block-description p {
+        @apply text-light;
+    }
 
-  .theme-light {
-    @apply bg-soft;
-  }
-  .theme-light .block-title {
-    @apply text-dark;
-  }
+    .theme-light {
+        @apply bg-soft;
+    }
+    .theme-light .block-title {
+        @apply text-dark;
+    }
 
-  .theme-dark {
-    @apply bg-dark;
-  }
-  .theme-dark .block-title {
-    @apply text-light;
-  }
-  .theme-dark .block-description p {
-    @apply text-light;
-  }
-  .theme-dark .block-btn {
-    @apply bg-light text-dark;
-  }
-  .embla {
-    max-width: 100rem;
-    margin: auto;
-    --slide-height: 19rem;
-    --slide-spacing: 1rem;
-    --slide-size: 50%;
-  }
-  .embla__viewport {
-    overflow: hidden;
-  }
-  .embla__container {
-    display: flex;
-    touch-action: pan-y pinch-zoom;
-    margin-left: calc(var(--slide-spacing) * -1);
-  }
-  .embla__slide {
-    transform: translate3d(0, 0, 0);
-    flex: 0 0 var(--slide-size);
-    min-width: 0;
-    padding-left: var(--slide-spacing);
-  }
+    .theme-dark {
+        @apply bg-dark;
+    }
+    .theme-dark .block-title {
+        @apply text-light;
+    }
+    .theme-dark .block-description p {
+        @apply text-light;
+    }
+    .theme-dark .block-btn {
+        @apply bg-light text-dark;
+    }
+    .embla {
+        max-width: 100rem;
+        margin: auto;
+        --slide-height: 19rem;
+        --slide-spacing: 1rem;
+        --slide-size: 50%;
+    }
+    .embla__viewport {
+        overflow: hidden;
+    }
+    .embla__container {
+        display: flex;
+        touch-action: pan-y pinch-zoom;
+        margin-left: calc(var(--slide-spacing) * -1);
+    }
+    .embla__slide {
+        transform: translate3d(0, 0, 0);
+        flex: 0 0 var(--slide-size);
+        min-width: 0;
+        padding-left: var(--slide-spacing);
+    }
 
-  .embla__button:disabled {
-    color: var(--detail-high-contrast);
-  }
-  .embla__button__svg {
-    width: 35%;
-    height: 35%;
-  }
-  .embla__dots {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-items: center;
-    margin-right: calc((2.6rem - 1.4rem) / 2 * -1);
-  }
-  .embla__dot {
-    -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: transparent;
-    touch-action: manipulation;
-    display: inline-flex;
-    text-decoration: none;
-    cursor: pointer;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    width: 2.6rem;
-    height: 2.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-  }
-  .embla__dot:after {
-    box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
-    width: 1.4rem;
-    height: 1.4rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    content: "";
-  }
-  .embla__dot--selected:after {
-    box-shadow: inset 0 0 0 0.2rem var(--text-body);
-  }
+    .embla__button:disabled {
+        color: var(--detail-high-contrast);
+    }
+    .embla__button__svg {
+        width: 35%;
+        height: 35%;
+    }
+    .embla__dots {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        align-items: center;
+        margin-right: calc((2.6rem - 1.4rem) / 2 * -1);
+    }
+    .embla__dot {
+        -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: transparent;
+        touch-action: manipulation;
+        display: inline-flex;
+        text-decoration: none;
+        cursor: pointer;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        width: 2.6rem;
+        height: 2.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+    .embla__dot:after {
+        box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
+        width: 1.4rem;
+        height: 1.4rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        content: '';
+    }
+    .embla__dot--selected:after {
+        box-shadow: inset 0 0 0 0.2rem var(--text-body);
+    }
 }

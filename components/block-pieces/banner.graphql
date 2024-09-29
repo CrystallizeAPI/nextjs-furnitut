@@ -2,18 +2,18 @@
 #import "./../block-fragments/layout.graphql"
 
 fragment banner on BannerPiece {
-  title
-  description
-  layout {
-    ...layout
-  }
-  banner {
-    ...image
-  }
-  callToAction {
-    action {
-      label
-      url
+    title
+    description
+    layout {
+        ...layout
     }
-  }
+    banner {
+        ...image
+    }
+    callToAction {
+        action {
+            label
+            url
+        }
+    }
 }

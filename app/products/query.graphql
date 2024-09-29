@@ -1,31 +1,31 @@
 #import "./../../components/category-blocks.graphql"
 
 query FetchAllCategories {
-  browse {
-    category(path: "/products") {
-      hits {
-        id
-        name
-        breadcrumbs {
-          id
-          name
-          path
-        }
-        blocks {
-          ...blocks
-        }
-        children {
-          hits {
-            id
-            name
-            ... on category {
-              id
-              name
-              path
+    browse {
+        category(path: "/products") {
+            hits {
+                id
+                name
+                breadcrumbs {
+                    id
+                    name
+                    path
+                }
+                blocks {
+                    ...blocks
+                }
+                children {
+                    hits {
+                        id
+                        name
+                        ... on category {
+                            id
+                            name
+                            path
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     }
-  }
 }

@@ -1,84 +1,84 @@
 query FetchProduct($path: String!) {
-  browse {
-    product(path: $path) {
-      hits {
-        name
-        path
-        description(format: json)
-        breadcrumbs(withShortcuts: false) {
-          name
-          path
-        }
-        story {
-          title
-          body(format: json)
-          images {
-            key
-            url
-            variants {
-              url
-              width
-              height
-            }
-          }
-        }
-        relatedProducts {
-          items {
-            ... on product {
-              path
-              name
-              variants {
-                firstImage {
-                  url
-                  variants(types: ["avif"], maxWidth: 100) {
-                    url
-                    width
-                    height
-                  }
+    browse {
+        product(path: $path) {
+            hits {
+                name
+                path
+                description(format: json)
+                breadcrumbs(withShortcuts: false) {
+                    name
+                    path
                 }
-              }
-              defaultVariant {
-                defaultPrice
-                firstImage {
-                  url
-                  variants(types: ["avif"], maxWidth: 500) {
-                    url
-                    width
-                    height
-                  }
+                story {
+                    title
+                    body(format: json)
+                    images {
+                        key
+                        url
+                        variants {
+                            url
+                            width
+                            height
+                        }
+                    }
                 }
-              }
-            }
-          }
-        }
+                relatedProducts {
+                    items {
+                        ... on product {
+                            path
+                            name
+                            variants {
+                                firstImage {
+                                    url
+                                    variants(types: ["avif"], maxWidth: 100) {
+                                        url
+                                        width
+                                        height
+                                    }
+                                }
+                            }
+                            defaultVariant {
+                                defaultPrice
+                                firstImage {
+                                    url
+                                    variants(types: ["avif"], maxWidth: 500) {
+                                        url
+                                        width
+                                        height
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
-        variants {
-          name
-          sku
-          priceVariants
-          defaultPrice
-          attributes
-          dimensions {
-            depth
-            depthUnit
-            height
-            heightUnit
-            width
-            widthUnit
-            weight
-            weightUnit
-          }
-          images {
-            url
-            variants(maxWidth: 800, types: ["avif"]) {
-              url
-              key
-              width
-              height
+                variants {
+                    name
+                    sku
+                    priceVariants
+                    defaultPrice
+                    attributes
+                    dimensions {
+                        depth
+                        depthUnit
+                        height
+                        heightUnit
+                        width
+                        widthUnit
+                        weight
+                        weightUnit
+                    }
+                    images {
+                        url
+                        variants(maxWidth: 800, types: ["avif"]) {
+                            url
+                            key
+                            width
+                            height
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     }
-  }
 }

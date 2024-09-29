@@ -2,14 +2,14 @@
 #import "./../block-fragments/layout.graphql"
 
 fragment featureHighlights on FeatureHighlightsPiece {
-  layout {
-    ...layout
-  }
-  usp {
-    headline
-    description
-    icon {
-      ...image
+    layout {
+        ...layout
     }
-  }
+    usp {
+        headline
+        description
+        icon {
+            ...image
+        }
+    }
 }

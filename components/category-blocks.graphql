@@ -5,19 +5,19 @@
 #import "./block-pieces/feature-highlight.graphql"
 
 fragment blocks on ComponentChoiceComponentForCategoryBlocks {
-  storySlider {
-    ...storySlider
-  }
-  banner {
-    ...banner
-  }
-  featureHighlights {
-    ...featureHighlights
-  }
-  productSlider {
-    ...productSlider
-  }
-  pictureGrid {
-    ...pictureGrid
-  }
+    storySlider {
+        ...storySlider
+    }
+    banner {
+        ...banner
+    }
+    featureHighlights {
+        ...featureHighlights
+    }
+    productSlider {
+        ...productSlider
+    }
+    pictureGrid {
+        ...pictureGrid
+    }
 }

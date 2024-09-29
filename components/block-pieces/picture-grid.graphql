@@ -2,12 +2,12 @@
 #import "./../block-fragments/layout.graphql"
 
 fragment pictureGrid on PictureGridPiece {
-  title
-  description
-  images {
-    ...image
-  }
-  layout {
-    ...layout
-  }
+    title
+    description
+    images {
+        ...image
+    }
+    layout {
+        ...layout
+    }
 }

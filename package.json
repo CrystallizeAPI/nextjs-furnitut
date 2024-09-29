@@ -1,34 +1,47 @@
 {
-  "name": "nextjs-furnitut",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "codegen": "graphql-codegen --config codegen.ts"
-  },
-  "dependencies": {
-    "@crystallize/reactjs-components": "^2.1.0",
-    "@graphql-codegen/client-preset": "^4.3.3",
-    "@graphql-typed-document-node/core": "^3.2.0",
-    "classnames": "^2.5.1",
-    "embla-carousel-react": "^8.3.0",
-    "graphql": "^16.9.0",
-    "next": "14.2.7",
-    "react": "^18",
-    "react-dom": "^18"
-  },
-  "devDependencies": {
-    "@graphql-codegen/cli": "^5.0.2",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.7",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.6.2"
-  }
+    "name": "nextjs-furnitut",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "codegen": "graphql-codegen --config codegen.ts",
+        "prettier": "prettier --write ."
+    },
+    "dependencies": {
+        "@adyen/adyen-web": "^5.69.1",
+        "@crystallize/js-api-client": "^3.2.0",
+        "@crystallize/node-service-api-request-handlers": "^4.2.0",
+        "@crystallize/reactjs-components": "^2.1.0",
+        "@dintero/checkout-web-sdk": "^0.8.12",
+        "@graphql-codegen/client-preset": "^4.3.3",
+        "@graphql-typed-document-node/core": "^3.2.0",
+        "@react-email/components": "^0.0.25",
+        "@react-email/render": "^1.0.1",
+        "@sendgrid/mail": "^8.1.3",
+        "@stripe/react-stripe-js": "^2.8.0",
+        "@stripe/stripe-js": "^4.5.0",
+        "classnames": "^2.5.1",
+        "embla-carousel-react": "^8.3.0",
+        "graphql": "^16.9.0",
+        "next": "^14.2.11",
+        "nodemailer": "^6.9.15",
+        "razorpay": "^2.9.4",
+        "react": "^18",
+        "react-dom": "^18"
+    },
+    "devDependencies": {
+        "@graphql-codegen/cli": "^5.0.2",
+        "@types/node": "^20",
+        "@types/nodemailer": "^6.4.16",
+        "@types/react": "^18.3.10",
+        "@types/react-dom": "^18",
+        "eslint": "^8",
+        "eslint-config-next": "14.2.7",
+        "postcss": "^8",
+        "tailwindcss": "^3.4.1",
+        "typescript": "^5.6.2"
+    }
 }

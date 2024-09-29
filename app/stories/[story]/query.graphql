@@ -1,86 +1,86 @@
 query FetchStory($path: String!) {
-  browse {
-    story(path: $path) {
-      hits {
-        ...storyContent
-        breadcrumbs {
-          path
-          name
-          id
-        }
-        featured {
-          variants {
-            sku
-          }
-          items {
-            path
-            ... on product {
-              name
-              description
-              defaultVariant {
-                firstImage {
-                  url
-                  variants {
-                    url
-                    width
-                    height
-                  }
+    browse {
+        story(path: $path) {
+            hits {
+                ...storyContent
+                breadcrumbs {
+                    path
+                    name
+                    id
                 }
-              }
+                featured {
+                    variants {
+                        sku
+                    }
+                    items {
+                        path
+                        ... on product {
+                            name
+                            description
+                            defaultVariant {
+                                firstImage {
+                                    url
+                                    variants {
+                                        url
+                                        width
+                                        height
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                upNext {
+                    items {
+                        path
+                        ...storyContent
+                    }
+                }
+                story {
+                    title
+                    body
+                    images {
+                        url
+                        key
+                        altText
+                        caption
+                        focalPoint
+                    }
+                }
             }
-          }
         }
-        upNext {
-          items {
-            path
-            ...storyContent
-          }
-        }
-        story {
-          title
-          body
-          images {
-            url
-            key
-            altText
-            caption
-            focalPoint
-          }
-        }
-      }
     }
-  }
 }
 
 fragment storyContent on story {
-  title
-  media {
-    image {
-      url
-      variants {
-        url
-        width
-        height
-      }
+    title
+    media {
+        image {
+            url
+            variants {
+                url
+                width
+                height
+            }
+        }
+        shoppableImage {
+            url
+            variants {
+                url
+                width
+                height
+            }
+        }
+        video {
+            playlists
+            title
+            thumbnails {
+                url
+                key
+                altText
+                caption
+                focalPoint
+            }
+        }
     }
-    shoppableImage {
-      url
-      variants {
-        url
-        width
-        height
-      }
-    }
-    video {
-      playlists
-      title
-      thumbnails {
-        url
-        key
-        altText
-        caption
-        focalPoint
-      }
-    }
-  }
 }

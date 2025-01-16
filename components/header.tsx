@@ -5,7 +5,11 @@ import { useCart } from '@/context/cart-context';
 import { usePathname } from 'next/navigation';
 import { Image } from '@/components/image';
 
-export const Header = ({ navigation }: { navigation: any }) => {
+type HeaderProps = {
+    navigation?: { href: string; name: string }[];
+};
+
+export const Header = ({ navigation }: HeaderProps) => {
     const { setIsCartOpen, cart, isCartOpen } = useCart();
     const currentPath = usePathname();
 
@@ -53,15 +57,11 @@ export const Header = ({ navigation }: { navigation: any }) => {
                         </div>
                     </Link>
                     <div className="flex gap-6 min-h-full text-base self-stretch items-stretch font-medium pl-8">
-                        {navigation?.map((nav: any) => {
-                            if (nav.link?.url === undefined) return null;
-                            const link = nav.link.url || nav.link.item.items?.[0].path;
-                            return (
-                                <Link href={link} className="h-full flex items-center " key={nav.name}>
-                                    {nav.name}
-                                </Link>
-                            );
-                        })}
+                        {navigation?.map(({ href, name }) => (
+                            <Link href={href} className="h-full flex items-center" key={name}>
+                                {name}
+                            </Link>
+                        ))}
                     </div>
                 </div>
 

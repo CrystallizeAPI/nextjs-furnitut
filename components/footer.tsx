@@ -1,6 +1,12 @@
 import Link from 'next/link';
-export const Footer = ({ navigation }) => {
+
+type FooterProps = {
+    navigation?: { href: string; name: string }[];
+};
+
+export const Footer = ({ navigation }: FooterProps) => {
     const year = new Date().getFullYear();
+
     return (
         <footer className="mt-24 border-t border-muted px-12">
             <div className="px-12  max-w-screen-2xl mx-auto pt-24 pb-12">
@@ -23,19 +29,15 @@ export const Footer = ({ navigation }) => {
                             </div>
                         </Link>
 
-                        <p className="text-sm mt-8 ">Organisation No. 9999999</p>
+                        <p className="text-sm mt-8 ">Organization No. 9999999</p>
                         <p className="text-sm mt-1">© {year} Crystallize AS</p>
                     </div>
                     <div className="flex flex-col gap-4 min-h-full text-base self-stretch items-stretch font-medium pl-8 mt-12">
-                        {navigation?.map((nav: any) => {
-                            if (nav.link?.url === undefined) return null;
-                            const link = nav.link.url || nav.link.item.items?.[0].path;
-                            return (
-                                <Link href={link} className="h-full flex items-center " key={nav.name}>
-                                    {nav.name}
-                                </Link>
-                            );
-                        })}
+                        {navigation?.map(({ href, name }) => (
+                            <Link href={href} className="h-full flex items-center" key={name}>
+                                {name}
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </div>

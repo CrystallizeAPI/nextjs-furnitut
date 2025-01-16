@@ -4,19 +4,23 @@ query FetchLayout {
             hits {
                 children {
                     hits {
-                        name
-                        ... on menuItem {
-                            label
-                            link {
-                                url
-                                item {
-                                    items {
-                                        path
-                                    }
-                                }
-                            }
-                        }
+                        ...menuItem
                     }
+                }
+            }
+        }
+    }
+}
+
+fragment menuItem on Document {
+    name
+    ... on menuItem {
+        label
+        link {
+            url
+            item {
+                items {
+                    path
                 }
             }
         }

@@ -1,5 +1,7 @@
-import React, { ComponentPropsWithRef, useCallback, useEffect, useState } from 'react';
-import { EmblaCarouselType } from 'embla-carousel';
+import { ComponentPropsWithRef, useCallback, useEffect, useState } from 'react';
+import type useEmblaCarousel from 'embla-carousel-react';
+
+type EmblaApi = ReturnType<typeof useEmblaCarousel>[1];
 
 type UsePrevNextButtonsType = {
     prevBtnDisabled: boolean;
@@ -8,7 +10,7 @@ type UsePrevNextButtonsType = {
     onNextButtonClick: () => void;
 };
 
-export const usePrevNextButtons = (emblaApi: EmblaCarouselType | undefined): UsePrevNextButtonsType => {
+export const usePrevNextButtons = (emblaApi: EmblaApi): UsePrevNextButtonsType => {
     const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
     const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
 
@@ -22,9 +24,9 @@ export const usePrevNextButtons = (emblaApi: EmblaCarouselType | undefined): Use
         emblaApi.scrollNext();
     }, [emblaApi]);
 
-    const onSelect = useCallback((emblaApi: EmblaCarouselType) => {
-        setPrevBtnDisabled(!emblaApi.canScrollPrev());
-        setNextBtnDisabled(!emblaApi.canScrollNext());
+    const onSelect = useCallback((emblaApi: EmblaApi) => {
+        setPrevBtnDisabled(!emblaApi?.canScrollPrev());
+        setNextBtnDisabled(!emblaApi?.canScrollNext());
     }, []);
 
     useEffect(() => {
@@ -42,11 +44,9 @@ export const usePrevNextButtons = (emblaApi: EmblaCarouselType | undefined): Use
     };
 };
 
-type PropType = ComponentPropsWithRef<'button'>;
+type PropType = ComponentPropsWithRef<'button'> & { children?: React.ReactNode };
 
-export const PrevButton: React.FC<PropType> = (props) => {
-    const { children, ...restProps } = props;
-
+export const PrevButton = ({ children, ...restProps }: PropType) => {
     return (
         <button
             className="absolute left-0 w-14 h-14 rounded-full bg-light border-muted border flex items-center justify-center top-1/2 -translate-x-1/2 -translate-y-1/2 "
@@ -64,9 +64,7 @@ export const PrevButton: React.FC<PropType> = (props) => {
     );
 };
 
-export const NextButton: React.FC<PropType> = (props) => {
-    const { children, ...restProps } = props;
-
+export const NextButton = ({ children, ...restProps }: PropType) => {
     return (
         <button
             className="absolute right-0 w-14 h-14 rounded-full bg-light border-muted border flex items-center justify-center top-1/2 translate-x-1/2 -translate-y-1/2"

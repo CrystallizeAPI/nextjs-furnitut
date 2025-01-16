@@ -1,23 +1,22 @@
 'use client';
-import React, { useCallback, useEffect, useState } from 'react';
-import { EmblaOptionsType } from 'embla-carousel';
 
 import useEmblaCarousel from 'embla-carousel-react';
 import { PrevButton, NextButton, usePrevNextButtons } from './arrow-buttons';
 
-export const Slider = ({
-    options,
-    type = 'product',
-    children,
-}: {
+type SliderProps = {
     type?: 'story' | 'product';
-    options: EmblaOptionsType;
+    options: Parameters<typeof useEmblaCarousel>[0];
     children?: React.ReactNode[] | React.ReactNode;
-}) => {
+};
+
+export const Slider = ({ options, type = 'product', children }: SliderProps) => {
     const [emblaRef, emblaApi] = useEmblaCarousel(options);
     const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
 
-    if (children === undefined) return null;
+    if (children === undefined) {
+        return null;
+    }
+
     const style = {
         '--slide-size': type === 'story' ? '50%' : '25%',
     } as React.CSSProperties;

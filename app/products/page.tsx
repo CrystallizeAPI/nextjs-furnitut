@@ -1,43 +1,39 @@
-import { Breadcrumb } from '@/components/breadcrumb';
-import { FetchAllCategoriesQuery } from '@/generated/graphql';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 import { FetchAllCategoriesDocument } from '@/generated/graphql';
 import { apiRequest } from '@/utils/api-request';
-import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import Link from 'next/link';
 import { Blocks } from '@/components/blocks';
 
-const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Variables>) => {
-    const response = (await apiRequest(query)) as {
-        data: FetchAllCategoriesQuery;
-    };
+const fetchData = async () => {
+    const response = await apiRequest(FetchAllCategoriesDocument);
+    const { blocks, breadcrumbs, name, children } = response.data.browse?.category?.hits?.[0] ?? {};
 
-    return response.data.browse?.category?.hits?.[0];
+    return { name, blocks, breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item), children: children?.hits };
 };
 
-export const revalidate = 4;
-
 export default async function Products() {
-    const mainCategory = await fetchData(FetchAllCategoriesDocument);
-    const breadcrumbs = mainCategory?.breadcrumbs?.[0];
-    const { blocks } = mainCategory || {};
+    const { name, children, breadcrumbs, blocks } = await fetchData();
+
     return (
         <main>
             <div className="page  pb-6">
-                {breadcrumbs && <Breadcrumb breadcrumbs={breadcrumbs} />}
-                <h1 className="text-4xl font-bold py-4">{mainCategory?.name}</h1>
+                <Breadcrumbs breadcrumbs={breadcrumbs} />
+                <h1 className="text-4xl font-bold py-4">{name}</h1>
                 <div className="gap-4 flex">
-                    {mainCategory?.children?.hits?.map((child) => (
-                        <Link href={child?.path} key={child?.id} className="bg-dark text-light rounded-full px-4 py-2">
-                            {child?.name}
-                        </Link>
-                    ))}
+                    {children?.map((child) => {
+                        const href = !!child && 'path' in child ? child?.path : undefined;
+
+                        return !!href ? (
+                            <Link href={href} key={child?.id} className="bg-dark text-light rounded-full px-4 py-2">
+                                {child?.name}
+                            </Link>
+                        ) : null;
+                    })}
                 </div>
             </div>
-            {blocks && (
-                <div className="min-h-screen pt-12">
-                    <Blocks blocks={mainCategory?.blocks || []} />
-                </div>
-            )}
+            <div className="min-h-screen pt-12">
+                <Blocks blocks={blocks} />
+            </div>
         </main>
     );
 }

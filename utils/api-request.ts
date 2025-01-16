@@ -1,19 +1,12 @@
-import { TypedDocumentNode } from '@graphql-typed-document-node/core';
-import { GraphQLError, print } from 'graphql';
+import { print } from 'graphql';
 
-type GraphQLResponse<GraphQLData> =
-    | {
-          data: GraphQLData;
-      }
-    | {
-          errors: GraphQLError[];
-      };
+import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 
 const apiEndpoint = `https://api.crystallize.com/${process.env.CRYSTALLIZE_TENANT_IDENTIFIER}/discovery`;
 
-export const apiRequest = async <Result, Variables>(
-    query: TypedDocumentNode<Result, Variables>,
-    variables?: Variables,
+export const apiRequest = async <TResult, TVariables = {}>(
+    query: TypedDocumentNode<TResult, TVariables>,
+    ...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
 ) => {
     const response = await fetch(apiEndpoint, {
         method: 'POST',
@@ -22,9 +15,16 @@ export const apiRequest = async <Result, Variables>(
         },
         body: JSON.stringify({ query: print(query), variables }),
     });
-    if ('errors' in response) {
+
+    if (!response.ok) {
         throw new Error();
     }
-    const result = (await response.json()) as Promise<GraphQLResponse<Result>>;
-    return result;
+
+    const result = await response.json();
+
+    if ('errors' in result) {
+        throw new Error();
+    }
+
+    return result as { data: TResult };
 };

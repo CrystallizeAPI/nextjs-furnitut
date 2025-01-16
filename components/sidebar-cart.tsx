@@ -2,19 +2,19 @@
 
 import Link from 'next/link';
 import { useCart } from '@/context/cart-context';
-import { CartViewer } from './cart';
+import { Cart } from './cart';
 import { Price } from './price';
 import classNames from 'classnames';
+
 export const SidebarCart = () => {
     const { cart, isCartOpen, setIsCartOpen } = useCart();
 
     return (
         <div
             className={classNames(
-                'bg-light transition-all border-l-muted border-l py-8 px-10 w-[500px] h-full z-10 overflow-y-auto flex flex-col fixed top-0 right-0 ',
-                {
-                    '!-right-[505px]': !isCartOpen,
-                },
+                'bg-light transition-all border-l-muted border-l py-8 px-10 w-[500px] h-full z-10 overflow-y-auto',
+                'flex flex-col fixed top-0 right-0',
+                !isCartOpen && '!-right-[505px]',
             )}
         >
             <div className="flex justify-between items-center mb-4">
@@ -28,7 +28,7 @@ export const SidebarCart = () => {
                 </button>
             </div>
             <div className="grow h-full  overflow-y-scroll">
-                <CartViewer cart={cart} />
+                <Cart cart={cart} />
             </div>
             <div>
                 {cart && cart.items.length > 0 && (

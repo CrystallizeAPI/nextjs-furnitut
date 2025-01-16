@@ -1,14 +1,11 @@
-export const Accordination = ({
-    title,
-    children,
-    defaultOpen = false,
-    className,
-}: {
+type AccordionProps = {
     title: string;
     children: React.ReactNode;
     defaultOpen?: boolean;
     className?: string;
-}) => (
+};
+
+export const Accordion = ({ title, children, defaultOpen, className }: AccordionProps) => (
     <details open={defaultOpen} className={`accordination text-dark`}>
         <summary className={`text-2xl ${className}`}>
             <h2 className=" font-bold flex items-center justify-between">

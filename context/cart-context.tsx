@@ -5,14 +5,14 @@ import { useFormState } from 'react-dom';
 import { addToCartServerAction } from '@/app/actions/add-to-cart-action-server';
 import { Cart, CartItem } from '@/use-cases/contracts/cart';
 
-interface CartContextProps {
+type CartContextProps = {
     cart: Cart | null;
     isLoading: boolean;
     addToCartAction: (formData: FormData, type?: 'remove' | 'add' | 'reduce') => void;
     isCartOpen: boolean;
     setIsCartOpen: (value: boolean) => void;
     emptyCart: () => void;
-}
+};
 
 export const CartContext = createContext<CartContextProps | undefined>(undefined);
 

@@ -17,15 +17,7 @@ query FetchStory($path: String!) {
                             description
                             defaultVariant {
                                 sku
-                                defaultPrice: priceVariants(key: "default")
-                                firstImage {
-                                    url
-                                    variants(maxWidth: 200, types: ["avif"]) {
-                                        url
-                                        width
-                                        height
-                                    }
-                                }
+                                ...commonProductVariant
                             }
                         }
                     }
@@ -94,21 +86,25 @@ fragment storyContent on story {
     }
 }
 
+fragment commonProductVariant on ProductVariantForProduct {
+    defaultPrice: priceVariants(key: "default")
+    firstImage {
+        url
+        variants(maxWidth: 200, types: ["avif"]) {
+            width
+            url
+            height
+        }
+    }
+}
+
 fragment showcases on Showcase {
     hotspot
     items {
         name
         ... on product {
             defaultVariant {
-                defaultPrice: priceVariants(key: "default")
-                firstImage {
-                    url
-                    variants(maxWidth: 200, types: ["avif"]) {
-                        width
-                        url
-                        height
-                    }
-                }
+                ...commonProductVariant
             }
         }
     }
@@ -117,14 +113,6 @@ fragment showcases on Showcase {
         product {
             path
         }
-        defaultPrice: priceVariants(key: "default")
-        firstImage {
-            url
-            variants(maxWidth: 200, types: ["avif"]) {
-                width
-                url
-                height
-            }
-        }
+        ...commonProductVariant
     }
 }

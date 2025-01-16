@@ -7,7 +7,7 @@ export default function LoginForm({ error }: { error?: string }) {
             <div className="-translate-y-20 w-full rounded-xl max-w-96 mx-auto">
                 <div className="px-2">
                     <h1 className="text-2xl font-bold ">Login</h1>
-                    <p className="mb-4">We'll send you an email with login details.</p>
+                    <p className="mb-4">We&apos;ll send you an email with login details.</p>
                 </div>
 
                 <form

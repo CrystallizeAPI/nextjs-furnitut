@@ -1,5 +1,6 @@
 import { Image } from '@/components/image';
 import { Typography } from '../block-fragments/typography';
+
 export const Banner = ({ block }: { block: any }) => {
     if (block === null) return null;
     const { banner } = block;

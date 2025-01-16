@@ -3,26 +3,12 @@
 import Link from 'next/link';
 import { useCart } from '@/context/cart-context';
 import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
 import { Image } from '@/components/image';
-import { CartItem } from '@/use-cases/contracts/cart';
 
 export const Header = ({ navigation }: { navigation: any }) => {
     const { setIsCartOpen, cart, isCartOpen } = useCart();
     const currentPath = usePathname();
-    let lastItemAdded = cart?.lastItemAdded as CartItem[];
-    useEffect(() => {
-        if (lastItemAdded?.length < 1) {
-            return;
-        }
-        let timeout: ReturnType<typeof setTimeout>;
 
-        setTimeout(() => {
-            lastItemAdded = [];
-        }, 8000);
-
-        return () => clearTimeout(timeout);
-    }, []);
     if (currentPath === '/checkout')
         return (
             <header className=" fixed max-w-screen-2xl w-full px-10  top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-8">
@@ -138,17 +124,16 @@ export const Header = ({ navigation }: { navigation: any }) => {
                             )}
                         </span>
                     </button>
-                    {lastItemAdded?.length > 0 && (
+                    {!!cart?.lastItemAdded?.length && (
                         <div className="starting:opacity-0 starting:translate-y-10 opacity-100 transition-all absolute border translate-y-4 border-muted top-full right-0 bg-light text-dark p-2 rounded-lg shadow">
-                            {lastItemAdded?.map((item: any, index: number) => (
-                                <div className="flex gap-2 items-center pr-6" key={`last-item-addedToCart-${index}`}>
+                            {cart.lastItemAdded.map((item, index) => (
+                                <div className="flex gap-2 items-center pr-6" key={index}>
                                     <div className="w-8 h-8 relative overflow-hidden rounded border border-muted ">
                                         <Image
                                             {...item.images?.[0]}
-                                            alt={item.variant.product.name}
+                                            key="image"
                                             sizes="100px"
                                             className="relative [&_img]:object-cover"
-                                            showShowcases={false}
                                         />
                                     </div>
                                     <div className="flex gap-1">

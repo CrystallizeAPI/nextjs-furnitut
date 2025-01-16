@@ -1,20 +1,25 @@
-import { Image as CrystallizeImage } from '@crystallize/reactjs-components';
-import classNames from 'classnames';
-import { Price } from './price';
+import clsx from 'classnames';
 import Link from 'next/link';
-import { ReactElement } from 'react';
-export const Image = ({
-    className,
-    focalPoint,
-    preserveRatio = false,
-    showShowcases = false,
-    ...image
-}: {
-    className?: string;
+import { Image as CrystallizeImage } from '@crystallize/reactjs-components';
+
+import { ImageVariant, Showcase } from '@/generated/graphql';
+import { Price } from './price';
+
+type CrystallizeImageVariants = React.ComponentProps<typeof CrystallizeImage>['variants'];
+
+type ImageProps = {
     focalPoint?: any;
     preserveRatio?: boolean;
     showShowcases?: boolean;
-}) => {
+    className?: string;
+    variants?: Array<Omit<ImageVariant, 'size' | 'key'> | null> | null;
+    sizes?: string;
+    showcases?: Array<Showcase | null> | null;
+    altText?: string | null;
+    src?: string;
+};
+
+export const Image = ({ className, focalPoint, preserveRatio, showShowcases, altText, ...image }: ImageProps) => {
     const styles = {
         '--focus-x': focalPoint?.x,
         '--focus-y': focalPoint?.y,
@@ -23,23 +28,25 @@ export const Image = ({
             : 'auto',
     } as React.CSSProperties;
 
-    const orientation = image?.variants?.[0]?.width > image?.variants?.[0]?.height ? 'img-landscape' : 'img-portrait';
+    const width = image?.variants?.[0]?.width ?? 0;
+    const height = image?.variants?.[0]?.height ?? 0;
+    const orientation = width > height ? 'img-landscape' : 'img-portrait';
+
     return (
         <div
-            className={classNames(`${orientation} ${className || ''} `, {
-                'crystallize-image': !preserveRatio,
-                relative: showShowcases,
-            })}
             style={styles}
+            className={clsx(orientation, !preserveRatio && 'crystallize-image', showShowcases && 'relative', className)}
         >
             {showShowcases && (
                 <div className="absolute top-0 left-0 w-full h-full">
-                    {image?.showcases?.map((showcase, index) => (
-                        <HotSpot key={index} showcase={showcase} />
-                    ))}
+                    {image?.showcases?.map((showcase, index) => <HotSpot key={index} showcase={showcase} />)}
                 </div>
             )}
-            <CrystallizeImage {...image} alt={image?.altText} />
+            <CrystallizeImage
+                {...image}
+                variants={image.variants as CrystallizeImageVariants}
+                alt={altText ?? undefined}
+            />
         </div>
     );
 };
@@ -53,7 +60,7 @@ export const HotSpot = ({ showcase }: { showcase: any }) => {
     const price = product?.defaultPrice || product?.defaultVariant?.defaultPrice;
     const link = product?.product?.path || product?.path;
 
-    const HotspotWrapper = ({ children }: { children: ReactElement[] }) => {
+    const HotspotWrapper = ({ children }: { children: React.ReactElement[] }) => {
         const classes =
             'group absolute w-8 h-8 flex items-center justify-center rounded-full bg-dark/40 -translate-x-1/2 -translate-y-1/2';
         const styles = {
@@ -76,7 +83,7 @@ export const HotSpot = ({ showcase }: { showcase: any }) => {
         <HotspotWrapper>
             <div className="bg-light w-4 h-4 rounded-full z-10"></div>
             <div
-                className={classNames(
+                className={clsx(
                     'group-hover:w-auto group-hover:h-auto top-0 absolute w-0 h-0 overflow-hidden bg-dark rounded-lg transition-all',
                     {
                         'left-0 pl-8': x <= 50,

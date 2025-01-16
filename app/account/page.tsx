@@ -1,9 +1,10 @@
 import { getSession } from '@/core/auth.server';
 import LoginForm from '@/components/login-form';
-import { createOrderFetcher } from '@crystallize/js-api-client';
+import { createOrderFetcher, type Order } from '@crystallize/js-api-client';
 import { crystallizeClient } from '@/core/crystallize-client.server';
 import { Price } from '@/components/price';
 import { logout } from '@/core/auth.server';
+import { Image } from '@/components/image';
 
 const formatDate = (incomingDate: string) => {
     const date = new Date(incomingDate);
@@ -16,13 +17,21 @@ const formatDate = (incomingDate: string) => {
     });
 };
 
-export default async function OrdersPage({ searchParams }: { searchParams: { error?: string } }) {
+type OrdersPageProps = { searchParams: { error?: string } };
+
+export default async function OrdersPage({ searchParams }: OrdersPageProps) {
     const session = await getSession();
-    let orders;
-    let customer;
-    if (session) {
-        customer = await crystallizeClient.nextPimApi(
-            `#graphql
+
+    if (!session) {
+        return (
+            <main className="page">
+                <LoginForm error={searchParams.error} />
+            </main>
+        );
+    }
+
+    const customer = await crystallizeClient.nextPimApi(
+        `#graphql
             query GetCustomer($identifier: String!) {
                 customer(identifier: $identifier) {
                 ... on Customer {
@@ -41,114 +50,108 @@ export default async function OrdersPage({ searchParams }: { searchParams: { err
                     }
                 }
           }`,
-            {
-                identifier: session.user.email,
-            },
-        );
+        {
+            identifier: session.user.email,
+        },
+    );
 
-        orders = await createOrderFetcher(crystallizeClient).byCustomerIdentifier(
-            session.user.email,
-            {},
-            {
-                identifier: true,
-                firstName: true,
-                lastName: true,
-                addresses: {
-                    city: true,
-                    country: true,
-                    postalCode: true,
-                    state: true,
-                    street: true,
-                    type: true,
-                },
+    const orders = await createOrderFetcher(crystallizeClient).byCustomerIdentifier(
+        session.user.email,
+        {},
+        {
+            identifier: true,
+            firstName: true,
+            lastName: true,
+            addresses: {
+                city: true,
+                country: true,
+                postalCode: true,
+                state: true,
+                street: true,
+                type: true,
             },
-            {},
-            {
-                reference: true,
-            },
-        );
-    }
-    if (!session) {
-        return (
-            <main className="page">
-                <LoginForm error={searchParams.error} />
-            </main>
-        );
-    }
+        },
+        {},
+        {
+            reference: true,
+        },
+    );
+
     return (
         <main className="page min-h-screen">
             <div className="grid grid-cols-12 gap-8">
                 <div className="col-span-8">
                     <h1 className="font-medium">Orders</h1>
-                    {orders &&
-                        orders.orders.map((order: any) => {
-                            return (
-                                <details className="mt-2 bg-light rounded-2xl border border-muted hover:bg-light/70 cursor-pointer">
-                                    <summary className="px-6   flex justify-between py-4">
-                                        <span>
-                                            <h2 className="text-lg font-bold">{order?.reference}</h2>
-                                            <span className="text-dark/90 text-sm">{formatDate(order.createdAt)}</span>
-                                        </span>
-                                        <div className="flex font-bold text-sm  text-right">
-                                            <Price price={{ price: order?.total?.gross ?? 0 }} />
-                                        </div>
-                                    </summary>
-                                    <div className="border-t border-muted">
-                                        {order.cart.map((item: any, index: number) => {
-                                            return (
-                                                <div
-                                                    key={index}
-                                                    className="px-6 py-2 mb-2 gap-2 w-full flex items-center border-b border-muted"
-                                                >
-                                                    <div className="flex justify-between w-full gap-8 ">
-                                                        <div className="overflow-hidden relative rounded-md w-16 h-20 bg-soft border border-muted">
-                                                            <img
-                                                                src={item.imageUrl}
-                                                                alt={item.name}
-                                                                className="object-contain w-full h-full"
-                                                            />
-                                                        </div>
-                                                        <div className="flex flex-col w-full justify-center">
-                                                            <span className="text-base">{item.name}</span>
-                                                            <span className="text-sm italic text-dark/70">
-                                                                {item.sku}
-                                                            </span>
-                                                            <span className="text-sm">Qty: {item.quantity}</span>
-                                                        </div>
+                    {orders?.orders.map((item) => {
+                        const order = item as Order & { reference: string; createdAt: string };
+                        return (
+                            <details
+                                key={order.id}
+                                className="mt-2 bg-light rounded-2xl border border-muted hover:bg-light/70 cursor-pointer"
+                            >
+                                <summary className="px-6   flex justify-between py-4">
+                                    <span>
+                                        <h2 className="text-lg font-bold">{order?.reference}</h2>
+                                        <span className="text-dark/90 text-sm">{formatDate(order.createdAt)}</span>
+                                    </span>
+                                    <div className="flex font-bold text-sm  text-right">
+                                        <Price price={{ price: order?.total?.gross ?? 0 }} />
+                                    </div>
+                                </summary>
+                                <div className="border-t border-muted">
+                                    {order.cart.map((item: any, index: number) => {
+                                        return (
+                                            <div
+                                                key={index}
+                                                className="px-6 py-2 mb-2 gap-2 w-full flex items-center border-b border-muted"
+                                            >
+                                                <div className="flex justify-between w-full gap-8 ">
+                                                    <div className="overflow-hidden relative rounded-md w-16 h-20 bg-soft border border-muted">
+                                                        <Image
+                                                            src={item.imageUrl}
+                                                            altText={item.name}
+                                                            className="object-contain"
+                                                        />
                                                     </div>
-                                                    <div className="text-base">
-                                                        <Price price={{ price: item.price.gross }} />
+                                                    <div className="flex flex-col w-full justify-center">
+                                                        <span className="text-base">{item.name}</span>
+                                                        <span className="text-sm italic text-dark/70">{item.sku}</span>
+                                                        <span className="text-sm">Qty: {item.quantity}</span>
                                                     </div>
                                                 </div>
-                                            );
-                                        })}
-                                    </div>
+                                                <div className="text-base">
+                                                    <Price price={{ price: item.price.gross }} />
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
 
-                                    <div className="flex flex-col gap-2  py-4 items-end mt-2 px-6">
-                                        <div className="flex justify-between w-60 text-sm text-dark/70">
-                                            <p>Net</p>
-                                            <Price price={{ price: order?.total?.net ?? 0 }} />
-                                        </div>
-                                        <div className="flex justify-between w-60 text-sm text-dark/70">
-                                            <p>Tax</p>
-                                            <p>
-                                                <Price
-                                                    price={{
-                                                        price: (order?.total?.gross ?? 0) - (order?.total?.net ?? 0),
-                                                    }}
-                                                />
-                                            </p>
-                                        </div>
-                                        <div className="flex font-bold text-lgxl justify-between w-60">
-                                            <p>Paid</p>
-                                            <p>
-                                                <Price price={{ price: order?.total?.gross ?? 0 }} />
-                                            </p>
-                                        </div>
+                                <div className="flex flex-col gap-2  py-4 items-end mt-2 px-6">
+                                    <div className="flex justify-between w-60 text-sm text-dark/70">
+                                        <p>Net</p>
+                                        <Price price={{ price: order?.total?.net ?? 0 }} />
                                     </div>
-                                </details>
-                            );
-                        })}
+                                    <div className="flex justify-between w-60 text-sm text-dark/70">
+                                        <p>Tax</p>
+                                        <p>
+                                            <Price
+                                                price={{
+                                                    price: (order?.total?.gross ?? 0) - (order?.total?.net ?? 0),
+                                                }}
+                                            />
+                                        </p>
+                                    </div>
+                                    <div className="flex font-bold text-lgxl justify-between w-60">
+                                        <p>Paid</p>
+                                        <p>
+                                            <Price price={{ price: order?.total?.gross ?? 0 }} />
+                                        </p>
+                                    </div>
+                                </div>
+                            </details>
+                        );
+                    })}
                 </div>
                 <div className="col-span-4">
                     <p className="font-medium">Account</p>

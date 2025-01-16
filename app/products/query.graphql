@@ -1,5 +1,3 @@
-#import "./../../components/category-blocks.graphql"
-
 query FetchAllCategories {
     browse {
         category(path: "/products") {
@@ -12,7 +10,7 @@ query FetchAllCategories {
                     path
                 }
                 blocks {
-                    ...blocks
+                    ...categoryBlocks
                 }
                 children {
                     hits {

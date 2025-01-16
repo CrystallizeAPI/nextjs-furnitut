@@ -1,6 +1,6 @@
 import { storage } from '@/core/storage.server';
 import { crystallizeClient } from '@/core/crystallize-client.server';
-import { Cart } from './contract';
+import { Cart } from './contracts/cart';
 
 export const FETCH_CART = `#graphql
     id

@@ -2,7 +2,7 @@ import { crystallizeClient } from '@/core/crystallize-client.server';
 import { CreateOrderInputRequest, createOrderPusher, PaymentInputRequest } from '@crystallize/js-api-client';
 import { fulfillCart } from './fulfill-cart.server';
 
-export default async (
+export const pushCrystallizeOrder = async (
     orderIntent: CreateOrderInputRequest,
     payment: PaymentInputRequest,
     metadata?: Record<string, string>,

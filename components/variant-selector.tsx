@@ -2,9 +2,11 @@ import { Image } from '@/components/image';
 import Link from 'next/link';
 import classNames from 'classnames';
 import { Price } from './price';
+import { type FragmentType } from '@/generated';
+import { ProductVariantFragment, ProductVariantFragmentDoc } from '@/generated/graphql';
 
-function reduceAttributes(variants: any) {
-    return variants.reduce((acc: Record<string, any[]>, variant: any) => {
+function reduceAttributes(variants?: ProductVariantFragment[]) {
+    return variants?.reduce((acc: Record<string, any[]>, variant: any) => {
         Object.keys(variant.attributes).forEach((key) => {
             const value = variant.attributes[key];
             if (!acc[key]) {
@@ -21,16 +23,35 @@ function reduceAttributes(variants: any) {
     }, {});
 }
 
-export const findSuitableVariant = (variants: any, searchParams: any) => {
-    const paramKeys = Object.keys(searchParams);
+type GetHrefProps = { path: string; name: string; value: string; searchParams: Record<string, string> };
+
+const getHref = ({ path, name, value, searchParams }: GetHrefProps) => {
+    const params = new URLSearchParams(searchParams);
+    params.set(name, value);
+    return `${path}?${params.toString()}`;
+};
+
+type FindSuitableVariantProps = {
+    searchParams: Record<string, string>;
+    variants?: Array<FragmentType<typeof ProductVariantFragmentDoc> | null> | null;
+};
+
+export const findSuitableVariant = (props: FindSuitableVariantProps) => {
+    const variants = props.variants as ProductVariantFragment[] | null;
+    const searchParams = props.searchParams;
+    const paramKeys = Object.keys(props.searchParams);
+
     if (paramKeys.includes('sku')) {
         // If we have a sku, we don't need to check the other attributes
-        return variants.find((variant: any) => variant.sku === searchParams.sku);
-    } else {
-        //If we have attribute keys as params, we'll do our best to find the matching variant
-        return variants?.find((variant: any) => {
+        return variants?.find((variant) => variant?.sku === searchParams.sku);
+    }
+
+    //If we have attribute keys as params, we'll do our best to find the matching variant
+    return (
+        variants?.find((variant) => {
             return paramKeys.every((key) => {
                 let properKey;
+
                 if (key in variant?.attributes) {
                     properKey = key;
                 } else {
@@ -39,30 +60,36 @@ export const findSuitableVariant = (variants: any, searchParams: any) => {
                         properKey = newKey;
                     }
                 }
-                return variant?.attributes[properKey] === searchParams[key];
+
+                return !!properKey ? variant?.attributes[properKey] === searchParams[key] : false;
             });
-        });
-    }
+        }) ?? variants?.[0]
+    );
 };
 
-export const VariantSelector = ({
-    variants,
-    searchParams,
-    path,
-}: {
-    variants: any;
-    searchParams: any;
+type VariantSelectorProps = {
+    variants?: Array<FragmentType<typeof ProductVariantFragmentDoc> | null> | null;
+    searchParams: Record<string, string>;
     path: string;
-}) => {
-    const useAttributeSelector = variants.every((variant) => variant.attributes !== null);
+};
 
-    if (!useAttributeSelector) {
+export const VariantSelector = (props: VariantSelectorProps) => {
+    const { searchParams, path } = props;
+    const variants = props.variants?.reduce<ProductVariantFragment[]>((acc, item) => {
+        const variant = item as ProductVariantFragment | null;
+        !!variant && acc.push(variant);
+        return acc;
+    }, []);
+
+    const hasAttributeSelector = variants?.every((variant) => variant?.attributes !== null);
+
+    if (!hasAttributeSelector) {
         // Variants are not using attributes
         const currentSku = searchParams.sku;
         return (
             <div className="py-2 flex gap-y-1 flex-col">
                 <span className="font-bold text-base pb-2 block">Variants</span>
-                {[...variants].map((variant: any, index: number) => {
+                {variants?.map((variant, index) => {
                     return (
                         <Link
                             key={`variant-${index}`}
@@ -73,7 +100,7 @@ export const VariantSelector = ({
                             )}
                         >
                             <div className=" overflow-hidden h-16 w-16 shrink-0 rounded-md border border-muted  ">
-                                <Image {...variant.images[0]} sizes="200px" />
+                                <Image {...variant.images?.[0]} sizes="200px" />
                             </div>
                             <div className="flex py-2 w-full justify-between px-4">
                                 <span className=" flex-col flex ">
@@ -93,46 +120,35 @@ export const VariantSelector = ({
 
     const variantSelectorOptions = reduceAttributes(variants);
 
-    const createQueryString = (name: string, value: string) => {
-        const params = new URLSearchParams(searchParams);
-        params.set(name, value);
-        return params.toString();
-    };
-
-    return (
-        <>
-            {Object.keys(variantSelectorOptions).map((key, facetIndex) => {
-                const searchValue = searchParams[key];
-                return (
-                    <div className="py-2" key={`${key}-${facetIndex}-selector`}>
-                        <span className="font-bold text-base pb-2 block">{key}</span>
-                        <div className="grid grid-cols-5 gap-1">
-                            {variantSelectorOptions[key].map((value, index: number) => {
-                                return (
-                                    <Link
-                                        key={`attribute-variant-${index}`}
-                                        href={path + '?' + createQueryString(key, value.value)}
-                                        className={classNames(
-                                            'bg-light rounded-lg overflow-hidden border-muted border text-xs p-1 text-center font-bold',
-                                            {
-                                                '!border-dark':
-                                                    value.value === searchValue || (!searchValue && index === 0),
-                                            },
-                                        )}
-                                    >
-                                        {facetIndex === 0 && (
-                                            <div className="aspect-square overflow-hidden rounded-md">
-                                                <Image {...value.images[0]} sizes="200px" />
-                                            </div>
-                                        )}
-                                        <span className="py-2 block">{value.value}</span>
-                                    </Link>
-                                );
-                            })}
-                        </div>
-                    </div>
-                );
-            })}
-        </>
-    );
+    return Object.keys(variantSelectorOptions ?? {}).map((key, facetIndex) => {
+        const searchValue = searchParams[key];
+        return (
+            <div className="py-2" key={`${key}-${facetIndex}-selector`}>
+                <span className="font-bold text-base pb-2 block">{key}</span>
+                <div className="grid grid-cols-5 gap-1">
+                    {variantSelectorOptions?.[key].map((value, index: number) => {
+                        return (
+                            <Link
+                                key={index}
+                                href={getHref({ path, name: key, value: value.value, searchParams })}
+                                className={classNames(
+                                    'bg-light rounded-lg overflow-hidden border-muted border text-xs p-1 text-center font-bold',
+                                    {
+                                        '!border-dark': value.value === searchValue || (!searchValue && index === 0),
+                                    },
+                                )}
+                            >
+                                {facetIndex === 0 && (
+                                    <div className="aspect-square overflow-hidden rounded-md">
+                                        <Image {...value.images[0]} sizes="200px" />
+                                    </div>
+                                )}
+                                <span className="py-2 block">{value.value}</span>
+                            </Link>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    });
 };

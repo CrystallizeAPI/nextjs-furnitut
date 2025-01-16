@@ -1,100 +1,95 @@
-import { FetchProductDocument, FetchProductQuery, Paragraph } from '@/generated/graphql';
-import classNames from 'classnames';
+import clsx from 'classnames';
+import Link from 'next/link';
 import { ContentTransformer } from '@crystallize/reactjs-components';
-import { TypedDocumentNode } from '@graphql-typed-document-node/core';
+
+import { FetchProductDocument, Paragraph } from '@/generated/graphql';
 import { apiRequest } from '@/utils/api-request';
-// import { generateProductAndCategoryStaticPages } from '@/utils/static-category-pages';
-import { Breadcrumb } from '@/components/breadcrumb';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Price } from '@/components/price';
 import { Image } from '@/components/image';
-import { Image as CrystallizeImage } from '@crystallize/reactjs-components';
 import { VariantSelector, findSuitableVariant } from '@/components/variant-selector';
 import { Slider } from '@/components/slider';
 import { Product } from '@/components/product';
-import { Accordination } from '@/components/accordination';
+import { Accordion } from '@/components/accordion';
 import { AddToCartButton } from '@/components/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
-import Link from 'next/link';
-
-// https://nextjs.org/docs/app/api-reference/functions/generate-static-params
-//https://developers.google.com/search/docs/appearance/structured-data/product-variants
 
 export const revalidate = 4;
-// export const dynamicParams = true;
-// export const generateStaticParams = generateProductAndCategoryStaticPages;
 
-const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Variables>, variables: Variables) => {
-    const response = (await apiRequest(query, variables)) as {
-        data: FetchProductQuery;
-    };
-    return response.data.browse?.product?.hits?.[0];
-};
-
-export default async function Products({
-    params,
-    searchParams,
-}: {
+type ProductsProps = {
+    searchParams: Record<string, string>;
     params: {
         category: string;
         product: string;
     };
-    searchParams: Record<string, string>;
-}) {
-    const product = await fetchData(FetchProductDocument, {
-        path: `/products/${params.category}/${params.product}`,
-    });
-    const details = product?.details;
-    const story = (product?.story ?? []).filter(
-        (paragraph): paragraph is Paragraph => paragraph !== null && paragraph !== undefined,
-    );
-    const currentVariant = findSuitableVariant(product?.variants, searchParams) ?? product?.variants?.[0];
+};
 
-    const brand = product?.brand?.items?.[0];
-    const { dimensions } = currentVariant;
+const fetchData = async ({ path, searchParams }: { path: string; searchParams: ProductsProps['searchParams'] }) => {
+    const response = await apiRequest(FetchProductDocument, { path });
+    const { story, variants, brand, breadcrumbs, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
+
+    return {
+        ...product,
+        variants,
+        brand: brand?.items?.[0],
+        story: story?.filter((paragraph): paragraph is Paragraph => paragraph !== null && paragraph !== undefined),
+        currentVariant: findSuitableVariant({ variants, searchParams }),
+        breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item),
+    };
+};
+
+export default async function CategoryProduct({ params, searchParams }: ProductsProps) {
+    const product = await fetchData({
+        path: `/products/${params.category}/${params.product}`,
+        searchParams,
+    });
+    const currentVariant = product.currentVariant;
+    const dimensions = currentVariant?.dimensions;
+    console.log(currentVariant);
+
     return (
         <>
             <main className="page">
                 <div className="grid grid-cols-12 gap-24 rounded-xl">
                     <div className="col-span-7">
-                        <Breadcrumb breadcrumbs={product?.breadcrumbs[0]} />
+                        <Breadcrumbs breadcrumbs={product.breadcrumbs} />
                         <div className="mt-6 grid grid-cols-2 mb-6 pb-6 gap-4 [&_.img-landscape]:col-span-2">
-                            {currentVariant?.images?.map((image, index: number) => {
+                            {product.currentVariant?.images?.map((image, index) => {
                                 return (
                                     <Image
                                         key={index}
                                         {...image}
-                                        preserveRatio={true}
-                                        className={classNames(
-                                            'overflow-hidden rounded-2xl border border-muted bg-light relative h-full max-w-full [&_img]:object-cover [&_img]:max-w-none [&_img]:w-full [&_img]:h-full [&_figure]:h-full',
-                                            {
-                                                '!col-span-2': index === 0,
-                                            },
-                                        )}
+                                        preserveRatio
                                         sizes={index > 0 ? '400px' : '800px'}
+                                        className={clsx(
+                                            index === 0 && '!col-span-2',
+                                            'overflow-hidden rounded-2xl border border-muted bg-light relative h-full max-w-full',
+                                            '[&_img]:object-cover [&_img]:max-w-none [&_img]:w-full [&_img]:h-full [&_figure]:h-full',
+                                        )}
                                     />
                                 );
                             })}
                         </div>
-                        <Accordination defaultOpen={true} className="py-8" title="Product">
+                        <Accordion defaultOpen className="py-8" title="Product">
                             <div className="text-lg leading-10 font-normal">
-                                <ParagraphCollection paragraphs={story} />
+                                <ParagraphCollection paragraphs={product.story} />
                             </div>
-                        </Accordination>
+                        </Accordion>
 
-                        {details && (
-                            <Accordination title="Details" defaultOpen={true} className="py-8">
-                                {details.map((detail, index) => (
+                        {product.details && (
+                            <Accordion title="Details" defaultOpen className="py-8">
+                                {product.details.map((detail, index) => (
                                     <div className="grid grid-cols-4 gap-y-4 py-8 pr-24 text-lg gap-4" key={index}>
-                                        <span className="font-bold">{detail.title}</span>
+                                        <span className="font-bold">{detail?.title}</span>
                                         <span className="col-span-3">
-                                            <ContentTransformer json={detail.description} />
+                                            <ContentTransformer json={detail?.description} />
                                         </span>
                                     </div>
                                 ))}
-                            </Accordination>
+                            </Accordion>
                         )}
                         {dimensions && (
-                            <Accordination title="Dimensions" defaultOpen={true} className="py-8">
+                            <Accordion title="Dimensions" defaultOpen className="py-8">
                                 <div className="grid grid-cols-2 gap-x-48 gap-y-4 py-12 pr-24 text-lg">
                                     {dimensions.height && (
                                         <div className="flex justify-between">
@@ -129,36 +124,36 @@ export default async function Products({
                                         </div>
                                     )}
                                 </div>
-                            </Accordination>
+                            </Accordion>
                         )}
                     </div>
 
                     <div className="col-span-5 relative">
                         <div className="flex justify-between items-center ">
-                            <span className="text-xs font-bold opacity-50">{currentVariant.sku}</span>
-                            {brand && (
-                                <span className="w-16 h-10 relaive flex items-center">
-                                    {!!brand?.logo?.[0] ? (
-                                        <CrystallizeImage {...brand.logo?.[0]} className="object-contain" />
+                            <span className="text-xs font-bold opacity-50">{product.currentVariant?.sku}</span>
+                            {product.brand && (
+                                <span className="w-16 h-10 flex items-center">
+                                    {'logo' in product.brand ? (
+                                        <Image className="object-contain" preserveRatio {...product.brand.logo?.[0]} />
                                     ) : (
-                                        brand.name
+                                        product.brand.name
                                     )}
                                 </span>
                             )}
                         </div>
                         <div className="py-4 sticky top-20">
                             <h1 className="text-2xl font-bold">
-                                {product?.name} {currentVariant.name}
+                                {product.name} {product.currentVariant?.name}
                             </h1>
                             <div className="line-clamp-2">
-                                <ContentTransformer json={product?.description?.[0]} />
+                                <ContentTransformer json={product.description?.[0]} />
                             </div>
-                            {[...product.variants].length > 1 && (
+                            {!!product.variants?.length && (
                                 <div className="py-4">
                                     <VariantSelector
-                                        variants={product?.variants}
+                                        variants={product.variants}
                                         searchParams={searchParams}
-                                        path={product?.path || '/'}
+                                        path={product?.path ?? '/'}
                                     />
                                 </div>
                             )}
@@ -166,71 +161,77 @@ export default async function Products({
                                 <span>
                                     <Price price={currentVariant?.priceVariants.default} />
                                 </span>
-                                <AddToCartButton
-                                    input={{
-                                        variantName: currentVariant.name || product?.name || 'Variant',
-                                        productName: product?.name || 'Variant',
-                                        sku: currentVariant.sku,
-                                        image: currentVariant.images?.[0]?.variants?.[0],
-                                        quantity: 1,
-                                        price: {
-                                            currency: currentVariant.defaultPrice?.currency || 'EUR',
-                                            gross: currentVariant.defaultPrice?.price || 0,
-                                            net: currentVariant.defaultPrice?.price || 0,
-                                            taxAmount: 0,
-                                            discounts: [],
-                                        },
-                                    }}
-                                />
+                                {!!currentVariant && !!currentVariant.sku && (
+                                    <AddToCartButton
+                                        input={{
+                                            variantName: currentVariant.name || product.name || 'Variant',
+                                            productName: product.name || 'Variant',
+                                            sku: currentVariant.sku,
+                                            image: currentVariant?.images?.[0]?.variants?.[0],
+                                            quantity: 1,
+                                            price: {
+                                                currency: currentVariant.defaultPrice?.currency || 'EUR',
+                                                gross: currentVariant.defaultPrice?.price || 0,
+                                                net: currentVariant.defaultPrice?.price || 0,
+                                                taxAmount: 0,
+                                                discounts: [],
+                                            },
+                                        }}
+                                    />
+                                )}
                             </div>
-                            {currentVariant?.matchingProducts?.variants?.length > 0 && (
-                                <Accordination
+                            {!!currentVariant?.matchingProducts?.variants?.length && (
+                                <Accordion
                                     className="py-8 text-lg"
+                                    defaultOpen={!!currentVariant?.matchingProducts?.variants?.length}
                                     title={`Matching products (${
                                         currentVariant?.matchingProducts?.variants?.length || 0
                                     })`}
-                                    defaultOpen={currentVariant?.matchingProducts?.variants?.length > 0}
                                 >
                                     {currentVariant?.matchingProducts?.variants?.map((product, index) => {
                                         return (
                                             <div
+                                                key={`${product?.sku}-featured-${index}`}
                                                 className="flex gap-3 justify-between px-4 py-3 border items-center border-muted bg-light rounded-lg last:border-b-0"
-                                                key={`${product.sku}-featured-${index}`}
                                             >
                                                 <div className="flex items-center gap-4">
                                                     <div className="w-10 h-12 rounded overflow-hidden">
-                                                        <Image {...product.firstImage} />
+                                                        <Image {...product?.firstImage} />
                                                     </div>
                                                     <div className="flex flex-col">
-                                                        <Link href={product.product.path}>{product.name}</Link>
+                                                        {!!product?.product?.path && (
+                                                            <Link href={product.product.path}>{product?.name}</Link>
+                                                        )}
                                                         <span className="text-sm font-bold">
-                                                            <Price price={product.defaultPrice} />
+                                                            <Price price={product?.defaultPrice} />
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div className="justify-end">
-                                                    <AddToCartButton
-                                                        type="micro"
-                                                        input={{
-                                                            variantName: product.name || 'Variant',
-                                                            productName: product?.name || 'Variant',
-                                                            sku: product.sku,
-                                                            image: product.firstImage?.variants?.[0],
-                                                            quantity: 1,
-                                                            price: {
-                                                                currency: product.defaultPrice?.currency || 'EUR',
-                                                                gross: product.defaultPrice?.price || 0,
-                                                                net: currentVariant.price || 0,
-                                                                taxAmount: 0,
-                                                                discounts: [],
-                                                            },
-                                                        }}
-                                                    />
+                                                    {!!product && !!product.sku && (
+                                                        <AddToCartButton
+                                                            type="micro"
+                                                            input={{
+                                                                variantName: product.name || 'Variant',
+                                                                productName: product.name || 'Variant',
+                                                                sku: product.sku,
+                                                                image: product.firstImage?.variants?.[0],
+                                                                quantity: 1,
+                                                                price: {
+                                                                    currency: product.defaultPrice?.currency || 'EUR',
+                                                                    gross: product.defaultPrice?.price || 0,
+                                                                    net: currentVariant.defaultPrice.price || 0,
+                                                                    taxAmount: 0,
+                                                                    discounts: [],
+                                                                },
+                                                            }}
+                                                        />
+                                                    )}
                                                 </div>
                                             </div>
                                         );
                                     })}
-                                </Accordination>
+                                </Accordion>
                             )}
                             <div className="border-muted border-t"></div>
                         </div>
@@ -242,9 +243,7 @@ export default async function Products({
                     <h2 className="text-2xl py-4 font-bold">Related products</h2>
 
                     <Slider type="product" options={{ loop: false, align: 'start' }}>
-                        {[...product?.relatedProducts.items].map((item, index) => {
-                            return <Product product={item} key={index} />;
-                        })}
+                        {product?.relatedProducts?.items?.map((item, index) => <Product product={item} key={index} />)}
                     </Slider>
                 </div>
             </div>
@@ -256,7 +255,7 @@ export default async function Products({
                         '@context': 'https://schema.org/',
                         '@type': 'Product',
                         name: product?.name,
-                        image: currentVariant?.[0]?.images?.[0]?.url,
+                        image: currentVariant?.images?.[0]?.url,
                         description: product?.description?.[0]?.text,
                         sku: currentVariant?.sku,
                         offers: {

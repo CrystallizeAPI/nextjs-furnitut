@@ -1,6 +1,8 @@
+import { Image } from '@/components/image';
 import { Price } from '@/components/price';
 import { crystallizeClient } from '@/core/crystallize-client.server';
-import { createOrderFetcher } from '@crystallize/js-api-client';
+import { createOrderFetcher, type Order } from '@crystallize/js-api-client';
+
 const fetchData = async (orderId: string) => {
     const response = await createOrderFetcher(crystallizeClient).byId(
         orderId,
@@ -23,18 +25,17 @@ const fetchData = async (orderId: string) => {
             },
         },
     );
-    return response;
+    return response as Order & { reference: string };
 };
 
-export default async function Order({
-    params,
-}: {
+type OrderProps = {
     params: {
         id: string;
     };
-}) {
-    const { id } = params;
+};
 
+export default async function Order({ params }: OrderProps) {
+    const { id } = params;
     const orderCart = await fetchData(id);
 
     return (
@@ -56,7 +57,7 @@ export default async function Order({
                         <p className="font-bold text-lg">{orderCart?.reference}</p>
                     </span>
 
-                    {orderCart.cart.map((item: any, index: number) => {
+                    {orderCart.cart.map((item, index) => {
                         return (
                             <div
                                 key={index}
@@ -64,11 +65,7 @@ export default async function Order({
                             >
                                 <div className="flex justify-between w-full gap-8 ">
                                     <div className="overflow-hidden relative rounded-md w-16 h-20 bg-soft border border-muted">
-                                        <img
-                                            src={item.imageUrl}
-                                            alt={item.name}
-                                            className="object-contain w-full h-full"
-                                        />
+                                        <Image src={item.imageUrl} altText={item.name} className="object-contain" />
                                     </div>
                                     <div className="flex flex-col w-full justify-center">
                                         <span className="text-base">{item.name}</span>
@@ -77,7 +74,9 @@ export default async function Order({
                                     </div>
                                 </div>
                                 <div className="text-base">
-                                    <Price price={{ price: item.price.gross }} />
+                                    {typeof item.price?.gross === 'number' && (
+                                        <Price price={{ price: item.price.gross }} />
+                                    )}
                                 </div>
                             </div>
                         );

@@ -1,20 +1,28 @@
 'use client';
 
 import { useState } from 'react';
-import { PaymentButton } from './payment-button';
-import { InputField } from './input';
+import clsx from 'classnames';
+
 import { setCustomerPlaceCart } from '@/app/actions/set-customer-place-cart';
 import { useCart } from '@/context/cart-context';
 import { CartItem } from '@/use-cases/contracts/cart';
+import { PaymentButton } from './payment-button';
+import { InputField } from './input';
 import { Price } from './price';
-import classNames from 'classnames';
-const CheckoutForm: React.FC<{
-    cartId: string;
-}> = ({ cartId }) => {
-    const [showPayment, setShowPayment] = useState(false);
-    const { cart } = useCart();
+import { Image } from '@/components/image';
 
-    if (!cartId) return null;
+type CheckoutFormProps = {
+    cartId: string;
+};
+
+const CheckoutForm = ({ cartId }: CheckoutFormProps) => {
+    const { cart } = useCart();
+    const [showPayment, setShowPayment] = useState(false);
+
+    if (!cartId) {
+        return null;
+    }
+
     return (
         <div className="grid grid-cols-12 gap-12 ">
             <div className="col-span-8">
@@ -58,11 +66,7 @@ const CheckoutForm: React.FC<{
                         </button>
                     </div>
                 </form>
-                <div
-                    className={classNames('mt-8', {
-                        'opacity-50 pointer-events-none': !showPayment,
-                    })}
-                >
+                <div className={clsx('mt-8', !showPayment && 'opacity-50 pointer-events-none')}>
                     <h2 className="font-bold mb-2">Payment</h2>
                     <div className="bg-light rounded-xl border-muted border">
                         <PaymentButton cartId={cartId} />
@@ -81,12 +85,7 @@ const CheckoutForm: React.FC<{
                                 >
                                     <div className="flex w-full">
                                         <div className="shrink-0 relative h-16 w-12 aspect-square border border-muted rounded overflow-hidden">
-                                            <img
-                                                src={item.images[0].url}
-                                                alt={item.name}
-                                                className="h-full w-full object-cover"
-                                                key={`image-${item.variant.sku}`}
-                                            />
+                                            <Image {...item.images[0]} className="object-cover" />
                                         </div>
                                         <div className="flex flex-col pl-4 text-dark w-full justify-between">
                                             <div className="flex flex-col">

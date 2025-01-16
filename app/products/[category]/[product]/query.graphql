@@ -78,49 +78,56 @@ query FetchProduct($path: String!) {
                 }
 
                 variants {
-                    name
-                    sku
-                    priceVariants
-                    attributes
-                    matchingProducts {
-                        variants {
-                            sku
-                            name
-                            product {
-                                path
-                            }
-                            defaultPrice: priceVariants(key: "default")
-                            firstImage {
-                                url
-                                variants(maxWidth: 200, types: ["avif"]) {
-                                    url
-                                    height
-                                    width
-                                }
-                            }
-                        }
-                    }
-                    dimensions {
-                        depth
-                        depthUnit
-                        height
-                        heightUnit
-                        width
-                        widthUnit
-                        weight
-                        weightUnit
-                    }
-                    images {
-                        url
-                        variants(maxWidth: 800, types: ["avif"]) {
-                            url
-                            key
-                            width
-                            height
-                        }
-                    }
+                    ...productVariant
                 }
             }
+        }
+    }
+}
+
+fragment productVariant on ProductVariantForProduct {
+    name
+    sku
+    priceVariants
+    attributes
+    defaultPrice: priceVariants(key: "default")
+
+    matchingProducts {
+        variants {
+            sku
+            name
+            product {
+                path
+            }
+            defaultPrice: priceVariants(key: "default")
+            firstImage {
+                url
+                variants(maxWidth: 200, types: ["avif"]) {
+                    url
+                    height
+                    width
+                }
+            }
+        }
+    }
+    dimensions {
+        depth
+        depthUnit
+        height
+        heightUnit
+        width
+        widthUnit
+        weight
+        weightUnit
+    }
+    images {
+        url
+        altText
+        variants(maxWidth: 800, types: ["avif"]) {
+            url
+            key
+            width
+            height
         }
     }
 }

@@ -28,7 +28,7 @@ export const Stripe = ({ cartId }: { cartId: string }) => {
             .then((data) => {
                 setClientSecret(data.clientSecret);
             });
-    }, []);
+    }, [cartId]);
 
     if (!clientSecret) {
         return null;

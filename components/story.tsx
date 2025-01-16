@@ -1,10 +1,11 @@
-import { Image } from '@/components/image';
 import Link from 'next/link';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 import { Media } from '@/components/media';
 //@TODO types
+
 export const Story: React.FC<{ story: any }> = ({ story }) => {
     const { title, intro, media, path } = story;
+
     return (
         <Link
             href={path}

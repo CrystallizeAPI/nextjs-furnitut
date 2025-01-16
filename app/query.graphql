@@ -1,29 +1,10 @@
-#import "./../components/block-pieces/banner.graphql"
-#import "./../components/block-pieces/story-slider.graphql"
-#import "./../components/block-pieces/product-slider.graphql"
-#import "./../components/block-pieces/picture-grid.graphql"
-#import "./../components/block-pieces/feature-highlight.graphql"
 query FetchLandingPage {
     browse {
         landingPage(path: "/index") {
             hits {
                 name
                 blocks {
-                    storySlider {
-                        ...storySlider
-                    }
-                    banner {
-                        ...banner
-                    }
-                    featureHighlights {
-                        ...featureHighlights
-                    }
-                    productSlider {
-                        ...productSlider
-                    }
-                    pictureGrid {
-                        ...pictureGrid
-                    }
+                    ...landingPageBlocks
                 }
             }
         }

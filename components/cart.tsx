@@ -1,9 +1,11 @@
-import React from 'react';
-import { Cart, CartItem } from '@/use-cases/contracts/cart';
+import { Cart as CartType, CartItem } from '@/use-cases/contracts/cart';
 import { Price } from './price';
 import { useCart } from '@/context/cart-context';
+import { Image } from '@/components/image';
 
-export const CartViewer = ({ cart }: { cart: Cart | null }) => {
+type CartProps = { cart: CartType | null };
+
+export const Cart = ({ cart }: CartProps) => {
     const { addToCartAction, isLoading } = useCart();
 
     if (!cart || cart.items.length === 0) {
@@ -16,12 +18,7 @@ export const CartViewer = ({ cart }: { cart: Cart | null }) => {
                 <li key={`${item.variant.sku}`} className="flex mb-4 justify-between">
                     <div className="flex w-full">
                         <div className="shrink-0 relative h-24 w-20 aspect-square border border-muted rounded overflow-hidden">
-                            <img
-                                src={item.images[0].url}
-                                alt={item.name}
-                                className="h-full w-full object-cover"
-                                key={`image-${item.variant.sku}`}
-                            />
+                            <Image {...item.images[0]} className="object-cover" />
                         </div>
                         <div className="flex flex-col pl-4 text-dark w-full justify-between">
                             <div className="flex flex-col">
@@ -86,5 +83,3 @@ export const CartViewer = ({ cart }: { cart: Cart | null }) => {
         </ul>
     );
 };
-
-export default CartViewer;

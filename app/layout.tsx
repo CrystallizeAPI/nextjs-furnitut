@@ -19,22 +19,19 @@ export const metadata: Metadata = {
     description: 'Furnitut is a boilerplate created by Crystallize using Next.js.',
 };
 
-const fetchLayout = async <Result, Variables>(query: TypedDocumentNode<Result, Variables>, variables?: Variables) => {
-    const response = (await apiRequest(query, variables)) as {
-        data: FetchLayoutQuery;
-    };
+const fetchLayout = async () => {
+    const response = await apiRequest(FetchLayoutDocument);
+
     return {
         header: response.data.browse?.header?.hits?.[0]?.children?.hits,
         footer: null,
     };
 };
 
-export default async function RootLayout({
-    children,
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
-    const layout = await fetchLayout(FetchLayoutDocument);
+type LayoutProps = { children: React.ReactNode };
+
+export default async function Layout({ children }: LayoutProps) {
+    const layout = await fetchLayout();
     const getMyCart = async () => {
         const cartId = storage.getCartId();
         const cart = cartId
@@ -50,6 +47,7 @@ export default async function RootLayout({
               };
         return cart as Cart;
     };
+
     return (
         <html lang="en">
             <head>

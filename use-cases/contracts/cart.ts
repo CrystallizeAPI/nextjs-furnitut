@@ -1,4 +1,8 @@
-import { ImageVariant } from '@crystallize/js-api-client';
+type Image = {
+    url: string | null;
+    height: number | null;
+    width: number | null;
+};
 
 export type Price = {
     net: number;
@@ -15,7 +19,7 @@ export type CartItem = {
     name: string;
     quantity: number;
     price: Price;
-    images: ImageVariant[];
+    images: Image[];
     variant: {
         name: string;
         sku: string;
@@ -35,7 +39,7 @@ export type Cart = {
 export type CartItemInput = {
     sku: string;
     price: Price;
-    image?: ImageVariant;
+    image?: Image | null;
     variantName: string;
     productName: string;
     quantity: number;

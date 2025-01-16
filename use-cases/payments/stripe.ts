@@ -1,6 +1,6 @@
 import { handleStripePaymentIntentWebhookRequestPayload } from '@crystallize/node-service-api-request-handlers';
 import { fetchOrderIntent } from '../fetch-order-intent';
-import pushCrystallizeOrder from '../push-crystallize-order';
+import { pushCrystallizeOrder } from '../push-crystallize-order';
 
 export const stripeWebhookHandler = async (signature: string, payload: any) => {
     try {

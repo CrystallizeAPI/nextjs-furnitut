@@ -17,14 +17,11 @@ import { ParagraphCollection } from '@/components/paragraph-collection';
 export const revalidate = 4;
 
 type ProductsProps = {
-    searchParams: Record<string, string>;
-    params: {
-        category: string;
-        product: string;
-    };
+    searchParams: Promise<Record<string, string>>;
+    params: Promise<{ category: string; product: string }>;
 };
 
-const fetchData = async ({ path, searchParams }: { path: string; searchParams: ProductsProps['searchParams'] }) => {
+const fetchData = async ({ path, searchParams }: { path: string; searchParams: Record<string, string> }) => {
     const response = await apiRequest(FetchProductDocument, { path });
     const { story, variants, brand, breadcrumbs, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 
@@ -38,14 +35,15 @@ const fetchData = async ({ path, searchParams }: { path: string; searchParams: P
     };
 };
 
-export default async function CategoryProduct({ params, searchParams }: ProductsProps) {
+export default async function CategoryProduct(props: ProductsProps) {
+    const searchParams = await props.searchParams;
+    const params = await props.params;
     const product = await fetchData({
         path: `/products/${params.category}/${params.product}`,
         searchParams,
     });
     const currentVariant = product.currentVariant;
     const dimensions = currentVariant?.dimensions;
-    console.log(currentVariant);
 
     return (
         <>

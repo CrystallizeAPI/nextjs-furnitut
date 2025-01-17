@@ -8,9 +8,7 @@ import classnames from 'classnames';
 export const revalidate = 4;
 
 type ProductsProps = {
-    params: {
-        category: string;
-    };
+    params: Promise<{ category: string }>;
 };
 
 const fetchData = async (path: string) => {
@@ -25,7 +23,8 @@ const fetchData = async (path: string) => {
     };
 };
 
-export default async function Products({ params }: ProductsProps) {
+export default async function Products(props: ProductsProps) {
+    const params = await props.params;
     const { breadcrumbs, name, blocks, children } = await fetchData(`/products/${params.category}`);
 
     return (
@@ -38,7 +37,9 @@ export default async function Products({ params }: ProductsProps) {
                 <Blocks blocks={blocks} />
             </div>
             <div className={classnames('grid grid-cols-4 gap-2 max-w-screen-2xl mx-auto')}>
-                {children?.map((child) => <Product key={child?.path} product={child} />)}
+                {children?.map((child) => (
+                    <Product key={child?.path} product={child} />
+                ))}
             </div>
         </main>
     );

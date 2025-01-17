@@ -27,7 +27,7 @@ export const hydrateCart = async (cartId: string | undefined, items: CartItemInp
                 input,
             },
         );
-        storage.setCartId(data.hydrate.id);
+        await storage.setCartId(data.hydrate.id);
         return data.hydrate;
     } catch (exception) {
         console.error('addSkuItemToCart without cartId', exception);

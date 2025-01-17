@@ -35,7 +35,6 @@ query FetchProduct($path: String!) {
                     title
                     body(format: json)
                     images {
-                        key
                         url
                         showcases {
                             ...showcases
@@ -125,7 +124,6 @@ fragment productVariant on ProductVariantForProduct {
         altText
         variants(maxWidth: 800, types: ["avif"]) {
             url
-            key
             width
             height
         }

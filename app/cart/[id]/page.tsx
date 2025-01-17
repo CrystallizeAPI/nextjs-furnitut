@@ -1,9 +1,10 @@
 import { Cart as CartType } from '@/use-cases/contracts/cart';
 import { fetchCart } from '@/use-cases/fetch-cart';
 
-type CartProps = { params: { id: string } };
+type CartProps = { params: Promise<{ id: string }> };
 
-export default async function Cart({ params }: CartProps) {
+export default async function Cart(props: CartProps) {
+    const params = await props.params;
     const cart = (await fetchCart(params.id)) as CartType;
 
     return (

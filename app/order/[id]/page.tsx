@@ -29,12 +29,11 @@ const fetchData = async (orderId: string) => {
 };
 
 type OrderProps = {
-    params: {
-        id: string;
-    };
+    params: Promise<{ id: string }>;
 };
 
-export default async function Order({ params }: OrderProps) {
+export default async function Order(props: OrderProps) {
+    const params = await props.params;
     const { id } = params;
     const orderCart = await fetchData(id);
 

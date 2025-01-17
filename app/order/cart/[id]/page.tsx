@@ -2,13 +2,11 @@ import { Cart } from '@/components/cart';
 import { fetchCart } from '@/use-cases/fetch-cart';
 
 type OrderCartProps = {
-    params: {
-        id: string;
-    };
-    searchParams: Record<string, string>;
+    params: Promise<{ id: string }>;
 };
 
-export default async function OrderCart({ params, searchParams }: OrderCartProps) {
+export default async function OrderCart(props: OrderCartProps) {
+    const params = await props.params;
     const cart = await fetchCart(params.id);
 
     return (

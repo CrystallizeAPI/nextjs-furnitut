@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
-import './globals.css';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { FetchLayoutDocument, MenuItemFragment } from '@/generated/graphql';
@@ -11,6 +10,8 @@ import { storage } from '@/core/storage.server';
 import { fetchCart } from '@/use-cases/fetch-cart';
 import { Cart } from '@/use-cases/contracts/cart';
 import { SidebarCart } from '@/components/sidebar-cart';
+
+import './globals.css';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -39,7 +40,7 @@ type LayoutProps = { children: React.ReactNode };
 export default async function Layout({ children }: LayoutProps) {
     const { navigation } = await fetchLayout();
     const getMyCart = async () => {
-        const cartId = storage.getCartId();
+        const cartId = await storage.getCartId();
         const cart = cartId
             ? await fetchCart(cartId)
             : {

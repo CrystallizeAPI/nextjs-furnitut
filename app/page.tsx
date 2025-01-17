@@ -12,8 +12,6 @@ const fetchLandingPage = async () => {
 export default async function LandingPage() {
     const { blocks } = await fetchLandingPage();
 
-    console.log(JSON.stringify(blocks));
-
     return (
         <main className="flex min-h-screen flex-col items-center">
             <Blocks blocks={blocks} hasFirstBlockPadding />

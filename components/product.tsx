@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Image } from '@/components/image';
-import { Product as ProductType, ProductVariant } from '@/generated/graphql';
 import { Price } from './price';
+import { Fragment } from 'react';
 
 type ProductProps = {
     product: {
@@ -28,16 +28,15 @@ export const Product = ({ product }: ProductProps) => {
                 </div>
                 {totalVariants > 1 && (
                     <div className="grid grid-cols-6 gap-1.5 pt-1.5 ">
-                        {variants?.slice(0, 5).map((variant) =>
-                            !!variant ? (
-                                <div
-                                    key={variant.sku}
-                                    className="aspect-square w-full rounded relative border border-solid  border-muted"
-                                >
-                                    <Image {...variant?.firstImage} />
-                                </div>
-                            ) : null,
-                        )}
+                        {variants?.slice(0, 5).map((variant, index) => (
+                            <Fragment key={variant?.sku ?? index}>
+                                {!!variant ? (
+                                    <div className="aspect-square w-full rounded relative border border-solid  border-muted">
+                                        <Image {...variant?.firstImage} />
+                                    </div>
+                                ) : null}
+                            </Fragment>
+                        ))}
                         {totalVariants > 5 && (
                             <span className="aspect-square flex text-sm  font-bold items-center justify-center  rounded relative border-solid overflow-hidden border border-muted">
                                 +{totalVariants - 5}

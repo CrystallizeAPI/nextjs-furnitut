@@ -8,7 +8,7 @@ export async function POST(request: Request) {
 	const { cartId } = await request.json();
 	try {
 		const payment = await crystalPaymentHandler(cartId);
-    storage.setCartId("")
+    await storage.setCartId("")
 		return NextResponse.json(payment);
 	} catch (error) {
 		console.error(error);

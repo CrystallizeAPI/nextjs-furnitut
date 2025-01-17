@@ -131,7 +131,6 @@ export const Header = ({ navigation }: HeaderProps) => {
                                     <div className="w-8 h-8 relative overflow-hidden rounded border border-muted ">
                                         <Image
                                             {...item.images?.[0]}
-                                            key="image"
                                             sizes="100px"
                                             className="relative [&_img]:object-cover"
                                         />

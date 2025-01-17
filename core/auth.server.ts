@@ -44,7 +44,7 @@ export async function login(formData: FormData) {
 }
 
 export async function logout() {
-    cookies().set('session', '', { expires: new Date(0) });
+    (await cookies()).set('session', '', { expires: new Date(0) });
 }
 
 export async function verifyToken(token: string) {
@@ -58,7 +58,7 @@ export async function verifyToken(token: string) {
         const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
         const session = await encrypt({ user: payload.user, expires });
         console.log({ session });
-        cookies().set('session', session, { expires, httpOnly: true });
+        (await cookies()).set('session', session, { expires, httpOnly: true });
         redirect('/account');
     } catch (error) {
         console.error(error);
@@ -66,7 +66,7 @@ export async function verifyToken(token: string) {
 }
 
 export async function getSession() {
-    const session = cookies().get('session')?.value;
+    const session = (await cookies()).get('session')?.value;
     if (!session) return null;
     return await decrypt(session);
 }

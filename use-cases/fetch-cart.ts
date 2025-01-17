@@ -20,7 +20,6 @@ export const FETCH_CART = `#graphql
             url
             height
             width
-            key
         }
         price {
             ...price
@@ -57,7 +56,7 @@ export const fetchCart = async (cartId: string): Promise<Cart> => {
                     },
                 },
             );
-            storage.setCartId(data.hydrate.id);
+            await storage.setCartId(data.hydrate.id);
             return data.hydrate;
         } catch (exception) {
             console.error('Fetch cart without cartId', exception);

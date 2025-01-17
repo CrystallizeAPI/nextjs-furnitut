@@ -8,7 +8,7 @@ type CartProps = { cart: CartType | null };
 export const Cart = ({ cart }: CartProps) => {
     const { addToCartAction, isLoading } = useCart();
 
-    if (!cart || cart.items.length === 0) {
+    if (!cart?.items.length) {
         return <p>Your cart is empty.</p>;
     }
 

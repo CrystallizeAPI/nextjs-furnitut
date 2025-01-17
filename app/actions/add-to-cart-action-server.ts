@@ -7,7 +7,7 @@ import { hydrateCart } from '@/use-cases/add-sku-item-to-cart.server';
 export async function addToCartServerAction(prevState: any, formData: FormData) {
     try {
         const currentCart = JSON.parse(formData.get('cart') as string);
-        const cartId = storage.getCartId();
+        const cartId = await storage.getCartId();
 
         const items: CartItemInput[] = currentCart.items.map((item: CartItem) => ({
             sku: item.variant.sku,

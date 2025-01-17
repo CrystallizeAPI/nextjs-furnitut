@@ -32,12 +32,11 @@ const fetchData = async (path: string) => {
 };
 
 type StoriesProps = {
-    params: {
-        story: string;
-    };
+    params: Promise<{ story: string }>;
 };
 
-export default async function StoryPage({ params }: StoriesProps) {
+export default async function StoryPage(props: StoriesProps) {
+    const params = await props.params;
     const { intro, featured, upNext, story, title, media } = await fetchData(`/stories/${params.story}`);
 
     return (
@@ -93,7 +92,9 @@ export default async function StoryPage({ params }: StoriesProps) {
                     <div className="px-0 border-t border-muted  pt-24  ">
                         <h2 className="text-2xl  py-4 font-bold">Up next</h2>
                         <Slider type="story" options={{ loop: false, align: 'start' }}>
-                            {upNext.items?.map((item) => <Story story={item} key={item?.path} />)}
+                            {upNext.items?.map((item) => (
+                                <Story story={item} key={item?.path} />
+                            ))}
                         </Slider>
                     </div>
                 </div>

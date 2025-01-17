@@ -33,7 +33,6 @@ query FetchStory($path: String!) {
                     body
                     images {
                         url
-                        key
                         altText
                         caption
                         focalPoint
@@ -64,7 +63,6 @@ fragment storyContent on story {
             url
             variants {
                 url
-                key
                 width
                 height
             }
@@ -77,7 +75,6 @@ fragment storyContent on story {
             title
             thumbnails {
                 url
-                key
                 altText
                 caption
                 focalPoint

@@ -1,7 +1,6 @@
 'use client';
 
-import { createContext, useContext, ReactNode, useState, use, useOptimistic } from 'react';
-import { useFormState } from 'react-dom';
+import { createContext, useContext, ReactNode, useState, use, useOptimistic, useActionState } from 'react';
 import { addToCartServerAction } from '@/app/actions/add-to-cart-action-server';
 import { Cart, CartItem } from '@/use-cases/contracts/cart';
 
@@ -18,7 +17,7 @@ export const CartContext = createContext<CartContextProps | undefined>(undefined
 
 export const CartProvider = ({ children, cartPromise }: { children: ReactNode; cartPromise: Promise<Cart> }) => {
     const cart = use(cartPromise);
-    const [formState, formAction, isPending] = useFormState(addToCartServerAction, cart);
+    const [, formAction, isPending] = useActionState(addToCartServerAction, cart);
     const [optimisticCart, setOptimisticCart] = useOptimistic(cart);
     const [isCartOpen, setIsCartOpen] = useState(false);
 

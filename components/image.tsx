@@ -17,6 +17,7 @@ type ImageProps = {
     showcases?: Array<Showcase | null> | null;
     altText?: string | null;
     src?: string;
+    url?: string | null;
 };
 
 export const Image = ({ className, focalPoint, preserveRatio, showShowcases, altText, ...image }: ImageProps) => {
@@ -44,6 +45,7 @@ export const Image = ({ className, focalPoint, preserveRatio, showShowcases, alt
             )}
             <CrystallizeImage
                 {...image}
+                url={image.url ?? undefined}
                 variants={image.variants as CrystallizeImageVariants}
                 alt={altText ?? undefined}
             />

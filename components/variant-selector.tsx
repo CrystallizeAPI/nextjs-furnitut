@@ -2,8 +2,7 @@ import { Image } from '@/components/image';
 import Link from 'next/link';
 import classNames from 'classnames';
 import { Price } from './price';
-import { type FragmentType } from '@/generated';
-import { ProductVariantFragment, ProductVariantFragmentDoc } from '@/generated/graphql';
+import { ProductVariantFragment } from '@/generated/graphql';
 
 function reduceAttributes(variants?: ProductVariantFragment[]) {
     return variants?.reduce((acc: Record<string, any[]>, variant: any) => {
@@ -33,7 +32,7 @@ const getHref = ({ path, name, value, searchParams }: GetHrefProps) => {
 
 type FindSuitableVariantProps = {
     searchParams: Record<string, string>;
-    variants?: Array<FragmentType<typeof ProductVariantFragmentDoc> | null> | null;
+    variants?: Array<ProductVariantFragment | null> | null;
 };
 
 export const findSuitableVariant = (props: FindSuitableVariantProps) => {
@@ -68,7 +67,7 @@ export const findSuitableVariant = (props: FindSuitableVariantProps) => {
 };
 
 type VariantSelectorProps = {
-    variants?: Array<FragmentType<typeof ProductVariantFragmentDoc> | null> | null;
+    variants?: Array<ProductVariantFragment | null> | null;
     searchParams: Record<string, string>;
     path: string;
 };

@@ -243,7 +243,9 @@ export default async function CategoryProduct({ params, searchParams }: Products
                     <h2 className="text-2xl py-4 font-bold">Related products</h2>
 
                     <Slider type="product" options={{ loop: false, align: 'start' }}>
-                        {product?.relatedProducts?.items?.map((item, index) => <Product product={item} key={index} />)}
+                        {product?.relatedProducts?.items?.map((item, index) =>
+                            !!item && 'path' in item ? <Product product={item} key={index} /> : null,
+                        )}
                     </Slider>
                 </div>
             </div>

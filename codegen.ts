@@ -2,7 +2,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
     schema: 'https://api.crystallize.com/furnitut/discovery',
-    documents: ['app/**/*.graphql', 'components/**/*.graphql', 'app/**/*.tsx'],
+    documents: ['app/**/*.graphql', 'components/**/*.graphql'],
     ignoreNoDocuments: true,
     overwrite: true,
     config: {
@@ -11,6 +11,9 @@ const config: CodegenConfig = {
     generates: {
         'generated/': {
             preset: 'client',
+            presetConfig: {
+                fragmentMasking: false,
+            },
         },
     },
 };

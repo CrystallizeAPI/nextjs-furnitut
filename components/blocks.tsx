@@ -4,10 +4,9 @@ import { PictureGrid } from './block-pieces/picture-grid';
 import { ProductSlider } from './block-pieces/product-slider';
 import { StorySlider } from './block-pieces/story-slider';
 import { BlockLayout } from './block-fragments/layout';
-import type { FragmentType } from '@/generated';
-import { CategoryBlocksFragmentDoc, LandingPageBlocksFragmentDoc } from '@/generated/graphql';
+import type { CategoryBlocksFragment, LandingPageBlocksFragment } from '@/generated/graphql';
 
-type Block = FragmentType<typeof CategoryBlocksFragmentDoc> | FragmentType<typeof LandingPageBlocksFragmentDoc>;
+type Block = CategoryBlocksFragment | LandingPageBlocksFragment;
 
 type BlocksProps = {
     blocks?: Array<Block | null> | null;
@@ -15,23 +14,23 @@ type BlocksProps = {
 };
 
 const BlockType = ({ block }: { block: Block }) => {
-    if ('banner' in block) {
+    if ('banner' in block && block.banner) {
         return <Banner block={block.banner} />;
     }
 
-    if ('featureHighlights' in block) {
+    if ('featureHighlights' in block && block.featureHighlights) {
         return <FeatureHighlight block={block.featureHighlights} />;
     }
 
-    if ('storySlider' in block) {
+    if ('storySlider' in block && block.storySlider) {
         return <StorySlider block={block.storySlider} />;
     }
 
-    if ('pictureGrid' in block) {
+    if ('pictureGrid' in block && block.pictureGrid) {
         return <PictureGrid block={block.pictureGrid} />;
     }
 
-    if ('productSlider' in block) {
+    if ('productSlider' in block && block.productSlider) {
         return <ProductSlider block={block.productSlider} />;
     }
 

@@ -19,7 +19,7 @@ const formatDate = (incomingDate: string) => {
 
 type OrdersPageProps = { searchParams: Promise<{ error?: string }> };
 
-export default async function OrdersPage(props: OrdersPageProps) {
+export default async function AccountPage(props: OrdersPageProps) {
     const searchParams = await props.searchParams;
     const session = await getSession();
 

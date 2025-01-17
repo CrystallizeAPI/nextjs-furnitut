@@ -1,7 +1,12 @@
-import { login } from '@/core/auth.server';
+'use client';
+
+import { useActionState } from 'react';
 import { InputField } from './input';
+import { onSubmit } from './login-form-submit';
 
 export default function LoginForm({ error }: { error?: string }) {
+    const [, formAction, isPending] = useActionState(onSubmit, null);
+
     return (
         <div className="flex flex-col justify-center items-center min-h-[50vh]">
             <div className="-translate-y-20 w-full rounded-xl max-w-96 mx-auto">
@@ -10,18 +15,14 @@ export default function LoginForm({ error }: { error?: string }) {
                     <p className="mb-4">We&apos;ll send you an email with login details.</p>
                 </div>
 
-                <form
-                    action={async (formData) => {
-                        'use server';
-                        await login(formData);
-                    }}
-                >
+                <form action={formAction}>
                     <div className="bg-light  rounded-xl w-full border border-muted">
                         <InputField type="email" name="email" label="Email" />
                     </div>
 
                     <button
                         type="submit"
+                        disabled={isPending}
                         className="px-6 py-2 mt-4 font-medium  float-right rounded-lg bg-dark text-light hover:bg-dark/90 active:bg-dark/95"
                     >
                         Login

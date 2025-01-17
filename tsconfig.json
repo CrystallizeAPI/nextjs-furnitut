@@ -25,7 +25,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "core/crystallize-client.serverts"
+    "core/crystallize-client.server"
   ],
   "exclude": [
     "node_modules"

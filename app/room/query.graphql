@@ -1,0 +1,29 @@
+query FetchAllRooms {
+    browse {
+        category(path: "/room") {
+            hits {
+                id
+                name
+                breadcrumbs {
+                    id
+                    name
+                    path
+                }
+                blocks {
+                    ...categoryBlocks
+                }
+                children {
+                    hits {
+                        id
+                        name
+                        ... on category {
+                            id
+                            name
+                            path
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

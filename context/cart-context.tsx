@@ -138,7 +138,7 @@ export const useCart = () => {
 
     if (context === undefined) {
         return {
-            isLoading: true,
+            isLoading: false,
             cart: {
                 items: [],
                 lastItemAdded: [],

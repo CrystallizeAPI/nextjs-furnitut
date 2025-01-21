@@ -16,7 +16,7 @@ import { Slider } from '@/components/slider';
 import { Story } from '@/components/story';
 import { Price } from '@/components/price';
 
-export const revalidate = 4;
+export const revalidate = 60;
 
 const fetchData = async (path: string) => {
     const response = await apiRequest(FetchStoryDocument, { path });
@@ -92,9 +92,7 @@ export default async function StoryPage(props: StoriesProps) {
                     <div className="px-0 border-t border-muted  pt-24  ">
                         <h2 className="text-2xl  py-4 font-bold">Up next</h2>
                         <Slider type="story" options={{ loop: false, align: 'start' }}>
-                            {upNext.items?.map((item) => (
-                                <Story story={item} key={item?.path} />
-                            ))}
+                            {upNext.items?.map((item) => <Story story={item} key={item?.path} />)}
                         </Slider>
                     </div>
                 </div>

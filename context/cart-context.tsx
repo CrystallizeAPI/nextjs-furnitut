@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, ReactNode, useState, use, useOptimistic, useActionState } from 'react';
+import { createContext, useContext, ReactNode, useState, use, useOptimistic, useTransition } from 'react';
 import { addToCartServerAction } from '@/app/actions/add-to-cart-action-server';
 import { Cart, CartItem } from '@/use-cases/contracts/cart';
 
@@ -17,9 +17,9 @@ export const CartContext = createContext<CartContextProps | undefined>(undefined
 
 export const CartProvider = ({ children, cartPromise }: { children: ReactNode; cartPromise: Promise<Cart> }) => {
     const cart = use(cartPromise);
-    const [, formAction, isPending] = useActionState(addToCartServerAction, cart);
     const [optimisticCart, setOptimisticCart] = useOptimistic(cart);
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const [isPending, startTransition] = useTransition();
 
     const optimisticAddToCartAction = (formData: FormData, type?: 'remove' | 'add' | 'reduce') => {
         const input = JSON.parse(formData.get('input') as string);
@@ -86,11 +86,13 @@ export const CartProvider = ({ children, cartPromise }: { children: ReactNode; c
             };
         })();
 
-        setOptimisticCart(updatedCart);
+        startTransition(async () => {
+            setOptimisticCart(updatedCart);
 
-        const serverFormData = new FormData();
-        serverFormData.set('cart', JSON.stringify(updatedCart));
-        formAction(serverFormData);
+            const serverFormData = new FormData();
+            serverFormData.set('cart', JSON.stringify(updatedCart));
+            await addToCartServerAction(cart, serverFormData);
+        });
     };
 
     const emptyCart = () => {
@@ -106,11 +108,13 @@ export const CartProvider = ({ children, cartPromise }: { children: ReactNode; c
             },
         };
 
-        setOptimisticCart(emptyCartData);
+        startTransition(async () => {
+            setOptimisticCart(emptyCartData);
 
-        const serverFormData = new FormData();
-        serverFormData.set('cart', JSON.stringify(emptyCartData));
-        formAction(serverFormData);
+            const serverFormData = new FormData();
+            serverFormData.set('cart', JSON.stringify(emptyCartData));
+            await addToCartServerAction(cart, serverFormData);
+        });
     };
 
     return (

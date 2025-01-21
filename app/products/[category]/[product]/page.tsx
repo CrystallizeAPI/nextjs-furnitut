@@ -14,7 +14,7 @@ import { Accordion } from '@/components/accordion';
 import { AddToCartButton } from '@/components/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
 
-export const revalidate = 4;
+export const revalidate = 60;
 
 type ProductsProps = {
     searchParams: Promise<Record<string, string>>;

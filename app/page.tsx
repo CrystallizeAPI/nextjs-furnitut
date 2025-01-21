@@ -2,7 +2,7 @@ import { type FetchLandingPageQuery, FetchLandingPageDocument } from '@/generate
 import { apiRequest } from '@/utils/api-request';
 import { Blocks } from '@/components/blocks';
 
-export const revalidate = 4;
+export const revalidate = 60;
 
 const fetchLandingPage = async () => {
     const { data } = await apiRequest<FetchLandingPageQuery>(FetchLandingPageDocument);

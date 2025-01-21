@@ -5,7 +5,7 @@ import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Blocks } from '@/components/blocks';
 import classnames from 'classnames';
 
-export const revalidate = 4;
+export const revalidate = 60;
 
 type ProductsProps = {
     params: Promise<{ category: string }>;
@@ -37,9 +37,7 @@ export default async function Products(props: ProductsProps) {
                 <Blocks blocks={blocks} />
             </div>
             <div className={classnames('grid grid-cols-4 gap-2 max-w-screen-2xl mx-auto')}>
-                {children?.map((child) => (
-                    <Product key={child?.path} product={child} />
-                ))}
+                {children?.map((child) => <Product key={child?.path} product={child} />)}
             </div>
         </main>
     );

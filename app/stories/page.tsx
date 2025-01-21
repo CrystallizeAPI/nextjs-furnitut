@@ -1,10 +1,9 @@
-import { FetchAllStoriesQuery } from '@/generated/graphql';
 import { FetchAllStoriesDocument } from '@/generated/graphql';
 import { apiRequest } from '@/utils/api-request';
-import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { Story } from '@/components/story';
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import Link from 'next/link';
+
+export const experimental_ppr = true;
 
 const fetchData = async () => {
     const response = await apiRequest(FetchAllStoriesDocument);
@@ -22,7 +21,7 @@ export default async function Stories() {
                 {breadcrumbs && <Breadcrumbs breadcrumbs={breadcrumbs} />}
                 <h1 className="text-4xl font-bold py-4">{title}</h1>
             </div>
-            <div className=" pt-12">
+            <div className="pt-12">
                 <div className="grid grid-cols-2 gap-4 items-stretch max-w-screen-2xl mx-auto ">
                     {children?.map((story, index) => <Story story={story} key={index} />)}
                 </div>

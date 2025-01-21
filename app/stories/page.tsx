@@ -3,8 +3,6 @@ import { apiRequest } from '@/utils/api-request';
 import { Story } from '@/components/story';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 
-export const experimental_ppr = true;
-
 const fetchData = async () => {
     const response = await apiRequest(FetchAllStoriesDocument);
     const { title, children, breadcrumbs } = response.data.browse?.category?.hits?.[0] ?? {};

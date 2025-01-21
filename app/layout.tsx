@@ -14,8 +14,6 @@ import { SidebarCart } from '@/components/sidebar-cart';
 import './globals.css';
 import { Suspense } from 'react';
 
-export const experimental_ppr = true;
-
 const manrope = Manrope({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -66,22 +64,12 @@ export default async function Layout({ children }: LayoutProps) {
                 <link rel="icon" href="/favicon.ico" />
             </head>
             <body className={`${manrope.className} bg-soft`}>
-                <Suspense
-                    fallback={
-                        <>
-                            <Header navigation={navigation} />
-                            {children}
-                            <Footer navigation={navigation} />
-                        </>
-                    }
-                >
-                    <CartProvider cartPromise={getMyCart()}>
-                        <Header navigation={navigation} />
-                        {children}
-                        <SidebarCart />
-                        <Footer navigation={navigation} />
-                    </CartProvider>
-                </Suspense>
+                <CartProvider cartPromise={getMyCart()}>
+                    <Header navigation={navigation} />
+                    {children}
+                    <SidebarCart />
+                    <Footer navigation={navigation} />
+                </CartProvider>
             </body>
         </html>
     );

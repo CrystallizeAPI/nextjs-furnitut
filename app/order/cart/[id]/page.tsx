@@ -1,4 +1,4 @@
-import { Cart } from '@/components/cart';
+import { CartItems } from '@/components/cart-items';
 import { fetchCart } from '@/use-cases/fetch-cart';
 
 type OrderCartProps = {
@@ -13,7 +13,7 @@ export default async function OrderCart(props: OrderCartProps) {
         <main className="page">
             <h1>Order Cart</h1>
             {cart && cart.items.length === 0 && <p>Your cart is empty.</p>}
-            {cart && cart.items.length > 0 && <Cart cart={cart} />}
+            {cart && cart.items.length > 0 && <CartItems cart={cart} />}
         </main>
     );
 }

@@ -5,6 +5,7 @@ import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Blocks } from '@/components/blocks';
 import classnames from 'classnames';
 
+export const experimental_ppr = true;
 export const revalidate = 60;
 
 type ProductsProps = {

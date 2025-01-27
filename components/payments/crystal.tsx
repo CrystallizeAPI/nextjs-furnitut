@@ -1,4 +1,3 @@
-import { useCart } from '@/context/cart-context';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -13,7 +12,7 @@ export const CrystalButton: React.FC<{
             onClick={onClick ? onClick : undefined}
             className="bg-darktext-light text-lg rounded-xl px-8 py-2"
         >
-            <span>{paying ? 'Processing payment' : 'Confrim payment using Crystal coin'}</span>
+            <span>{paying ? 'Processing payment' : 'Confirm payment using Crystal coin'}</span>
         </button>
     );
 };
@@ -21,7 +20,6 @@ export const CrystalButton: React.FC<{
 export const Crystal = ({ cartId }: { cartId: string }) => {
     const [isPaying, setIsPaying] = useState(false);
     const router = useRouter();
-    const { emptyCart, cart } = useCart();
 
     const handleClick = async () => {
         setIsPaying(true);
@@ -33,8 +31,9 @@ export const Crystal = ({ cartId }: { cartId: string }) => {
             body: JSON.stringify({ cartId }),
         });
         const response = await data.json();
+
         if (response.id) {
-            emptyCart();
+            // emptyCart();
             router.push(`/order/${response.id}`);
         }
     };

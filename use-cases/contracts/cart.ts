@@ -39,8 +39,8 @@ export type Cart = {
 export type CartItemInput = {
     sku: string;
     price: Price;
-    image?: Image | null;
     variantName: string;
     productName: string;
     quantity: number;
+    image?: Image | null;
 };

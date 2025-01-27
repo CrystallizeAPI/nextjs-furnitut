@@ -4,6 +4,8 @@ import { apiRequest } from '@/utils/api-request';
 import Link from 'next/link';
 import { Blocks } from '@/components/blocks';
 
+export const experimental_ppr = true;
+
 const fetchData = async () => {
     const response = await apiRequest(FetchAllCategoriesDocument);
     const { blocks, breadcrumbs, name, children } = response.data.browse?.category?.hits?.[0] ?? {};

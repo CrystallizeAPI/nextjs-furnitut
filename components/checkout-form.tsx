@@ -4,19 +4,18 @@ import { useState } from 'react';
 import clsx from 'classnames';
 
 import { setCustomerPlaceCart } from '@/app/actions/set-customer-place-cart';
-import { useCart } from '@/context/cart-context';
-import { CartItem } from '@/use-cases/contracts/cart';
+import { Cart, CartItem } from '@/use-cases/contracts/cart';
 import { PaymentButton } from './payment-button';
 import { InputField } from './input';
 import { Price } from './price';
 import { Image } from '@/components/image';
 
 type CheckoutFormProps = {
-    cartId: string;
+    cart: Cart | null;
+    cartId?: string;
 };
 
-const CheckoutForm = ({ cartId }: CheckoutFormProps) => {
-    const { cart } = useCart();
+const CheckoutForm = ({ cart, cartId }: CheckoutFormProps) => {
     const [showPayment, setShowPayment] = useState(false);
 
     if (!cartId) {

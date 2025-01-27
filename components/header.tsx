@@ -2,12 +2,10 @@ import Link from 'next/link';
 import { Cart } from './cart';
 import { Suspense } from 'react';
 import { CartButton } from './cart-button';
+import { Navigation } from './navigation';
+import { CartClient } from './cart-client';
 
-type HeaderProps = {
-    navigation?: { href: string; name: string }[];
-};
-
-export const Header = ({ navigation }: HeaderProps) => {
+export const Header = () => {
     return (
         <header className="fixed w-full top-4 z-10">
             <div className="bg-light border border-muted flex items-stretch rounded-full justify-between max-w-screen-2xl m-auto">
@@ -28,13 +26,10 @@ export const Header = ({ navigation }: HeaderProps) => {
                             </svg>
                         </div>
                     </Link>
-                    <div className="flex gap-6 min-h-full text-base self-stretch items-stretch font-medium pl-8">
-                        {navigation?.map(({ href, name }) => (
-                            <Link href={href} className="h-full flex items-center" key={name}>
-                                {name}
-                            </Link>
-                        ))}
-                    </div>
+
+                    <Suspense fallback={null}>
+                        <Navigation className="flex gap-6 min-h-full text-base self-stretch items-stretch font-medium pl-8" />
+                    </Suspense>
                 </div>
 
                 <Link
@@ -59,9 +54,7 @@ export const Header = ({ navigation }: HeaderProps) => {
                     </svg>
                     <span>Account</span>
                 </Link>
-                <Suspense fallback={<CartButton cart={null} />}>
-                    <Cart />
-                </Suspense>
+                <CartClient />
             </div>
         </header>
     );

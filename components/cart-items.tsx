@@ -1,14 +1,12 @@
-import { useActionState } from 'react';
-import { Cart, CartItem } from '@/use-cases/contracts/cart';
+'use client';
+import { CartItem } from '@/use-cases/contracts/cart';
 import { Image } from '@/components/image';
-import { addToCartServerAction } from '@/app/actions/add-to-cart-action-server';
 
 import { Price } from './price';
+import { useCart } from './cart-context';
 
-type CartProps = { cart: Cart | null };
-
-export const CartItems = ({ cart }: CartProps) => {
-    const [, addToCartAction, isPending] = useActionState(addToCartServerAction, null);
+export const CartItems = () => {
+    const { cart, isLoading: isPending, addToCartAction } = useCart();
 
     if (!cart?.items.length) {
         return <p>Your cart is empty.</p>;

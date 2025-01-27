@@ -1,15 +1,13 @@
 'use client';
 
-import { useActionState, useTransition } from 'react';
 import clsx from 'classnames';
 import { CartItemInput } from '@/use-cases/contracts/cart';
-import { addToCartServerAction } from '@/app/actions/add-to-cart-action-server';
+import { useCart } from './cart-context';
 
 type AddToCartButtonProps = { type?: string; input: CartItemInput };
 
 export const AddToCartButton = ({ input, type = 'default' }: AddToCartButtonProps) => {
-    const [, addToCartAction, isPending] = useActionState(addToCartServerAction, null);
-
+    const { isLoading: isPending, addToCartAction } = useCart();
     return (
         <form action={addToCartAction}>
             <input type="hidden" name="input" value={JSON.stringify(input)} />

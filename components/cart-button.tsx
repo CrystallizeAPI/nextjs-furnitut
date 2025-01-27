@@ -1,10 +1,11 @@
 'use client';
 
-import { Cart } from '@/use-cases/contracts/cart';
+import { useCart } from './cart-context';
 
-type CartTriggerProps = { cart: Cart | null; onClick?: () => void };
+type CartTriggerProps = { onClick?: () => void };
 
-export const CartButton = ({ cart, onClick }: CartTriggerProps) => {
+export const CartButton = ({ onClick }: CartTriggerProps) => {
+    const { cart } = useCart();
     return (
         <button
             onClick={onClick}

@@ -31,13 +31,13 @@ export const setCustomerPlaceCart = async (formData: FormData): Promise<any> => 
     const crystallizeCustomer = {
         ...customerWithoutEmail,
         addresses: [addressWithoutEmail],
-    }
-    
+    };
+
     try {
-      //@ts-expect-error enum type error
-      await createCustomerManager(crystallizeClient).create(crystallizeCustomer);
+        //@ts-expect-error enum type error
+        await createCustomerManager(crystallizeClient).create(crystallizeCustomer);
     } catch (error) {
-      console.error('Error creating customer', error);
+        console.error('Error creating customer', error);
     }
     return {
         response,

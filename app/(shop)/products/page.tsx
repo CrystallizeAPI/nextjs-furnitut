@@ -5,33 +5,15 @@ import { apiRequest } from '@/utils/api-request';
 import Link from 'next/link';
 import { Blocks } from '@/components/blocks';
 
-export const experimental_ppr = true;
-
-type Slug = 'products' | 'room';
-
-type PageProps = {
-    params: Promise<{ slug: 'products' | 'room' }>;
-};
-
-export async function generateStaticParams() {
-    return [{ slug: 'products' }, { slug: 'room' }];
-}
-
-const fetchData = async (slug: Slug) => {
-    const response = await apiRequest(FetchAllCategoriesDocument, { path: `/${slug}` });
+const fetchData = async () => {
+    const response = await apiRequest(FetchAllCategoriesDocument, { path: `/products` });
     const { blocks, breadcrumbs, name, children } = response.data.browse?.category?.hits?.[0] ?? {};
 
     return { name, blocks, breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item), children: children?.hits };
 };
 
-export default async function Page({ params }: PageProps) {
-    const { slug } = await params;
-
-    if (slug !== 'products' && slug !== 'room') {
-        return notFound();
-    }
-
-    const { name, children, breadcrumbs, blocks } = await fetchData(slug);
+export default async function Page() {
+    const { name, children, breadcrumbs, blocks } = await fetchData();
 
     return (
         <main>

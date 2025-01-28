@@ -21,7 +21,7 @@ type ProductsProps = {
     params: Promise<{ slug: string; category: string; product: string }>;
 };
 
-const fetchData = async ({ path, searchParams }: { path: string; searchParams: Record<string, string> }) => {
+const fetchData = async (path: string) => {
     const response = await apiRequest(FetchProductDocument, { path });
     const { story, variants, brand, breadcrumbs, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 
@@ -30,7 +30,7 @@ const fetchData = async ({ path, searchParams }: { path: string; searchParams: R
         variants,
         brand: brand?.items?.[0],
         story: story?.filter((paragraph): paragraph is Paragraph => paragraph !== null && paragraph !== undefined),
-        currentVariant: findSuitableVariant({ variants, searchParams }),
+
         breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item),
     };
 };
@@ -38,12 +38,11 @@ const fetchData = async ({ path, searchParams }: { path: string; searchParams: R
 export default async function CategoryProduct(props: ProductsProps) {
     const searchParams = await props.searchParams;
     const params = await props.params;
-    const product = await fetchData({
-        path: `/products/${params.category}/${params.product}`,
-        searchParams,
-    });
-    const currentVariant = product.currentVariant;
+    const product = await fetchData(`/${params.slug}/${params.category}/${params.product}`);
+    const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
     const dimensions = currentVariant?.dimensions;
+
+    console.log(searchParams);
 
     return (
         <>

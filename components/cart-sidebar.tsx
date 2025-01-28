@@ -2,14 +2,15 @@
 
 import Link from 'next/link';
 import classNames from 'classnames';
-import { Cart } from '@/use-cases/contracts/cart';
 
 import { CartItems } from './cart-items';
 import { Price } from './price';
+import { useCart } from './cart-context';
 
-type SidebarCartProps = { cart: Cart | null; isOpen: boolean; onClose: () => void };
+type SidebarCartProps = { isOpen: boolean; onClose: () => void };
 
-export const CartSidebar = ({ cart, isOpen, onClose }: SidebarCartProps) => {
+export const CartSidebar = ({ isOpen, onClose }: SidebarCartProps) => {
+    const { cart } = useCart();
     return (
         <div
             className={classNames(
@@ -29,7 +30,7 @@ export const CartSidebar = ({ cart, isOpen, onClose }: SidebarCartProps) => {
                 </button>
             </div>
             <div className="grow h-full  overflow-y-scroll">
-                <CartItems cart={cart} />
+                <CartItems />
             </div>
             <div>
                 {cart && cart.items.length > 0 && (

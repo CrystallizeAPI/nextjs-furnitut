@@ -17,5 +17,7 @@ export const getCart = async () => {
               },
           };
 
+    // make a sleep to simulate a slow network
+    // await new Promise((resolve) => setTimeout(resolve, 5000));
     return { cart: cart as Cart, cartId };
 };

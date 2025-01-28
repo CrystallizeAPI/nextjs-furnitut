@@ -2,19 +2,18 @@
 
 import { useState } from 'react';
 import { Image } from '@/components/image';
-import { Cart } from '@/use-cases/contracts/cart';
 
 import { CartSidebar } from './cart-sidebar';
 import { CartButton } from './cart-button';
+import { useCart } from './cart-context';
 
-type CartClientProps = { cart: Cart | null };
-
-export const CartClient = ({ cart }: CartClientProps) => {
+export const CartClient = () => {
+    const { cart } = useCart();
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <>
-            <CartButton cart={cart} onClick={() => setIsOpen((prev) => !prev)} />
+            <CartButton onClick={() => setIsOpen((prev) => !prev)} />
             {!!cart?.lastItemAdded?.length && (
                 <div className="starting:opacity-0 starting:translate-y-10 opacity-100 transition-all absolute border translate-y-4 border-muted top-full right-0 bg-light text-dark p-2 rounded-lg shadow">
                     {cart.lastItemAdded.map((item, index) => (
@@ -30,7 +29,7 @@ export const CartClient = ({ cart }: CartClientProps) => {
                     ))}
                 </div>
             )}
-            <CartSidebar cart={cart} isOpen={isOpen} onClose={() => setIsOpen(false)} />
+            <CartSidebar isOpen={isOpen} onClose={() => setIsOpen(false)} />
         </>
     );
 };

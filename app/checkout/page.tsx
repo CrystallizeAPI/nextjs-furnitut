@@ -7,7 +7,7 @@ export default async function Checkout() {
 
     return (
         <>
-            <header className=" fixed max-w-screen-2xl w-full px-10 top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-8">
+            <header className="fixed max-w-screen-2xl w-full px-10 top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-8">
                 <Link href="/">
                     <div className="bg-dark items-center inline-flex rounded-full my-2 mx-2 px-6 py-3 h-10">
                         <svg

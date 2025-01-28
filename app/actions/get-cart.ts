@@ -1,3 +1,5 @@
+'use server';
+
 import { storage } from '@/core/storage.server';
 import { fetchCart } from '@/use-cases/fetch-cart';
 import { Cart } from '@/use-cases/contracts/cart';
@@ -17,7 +19,5 @@ export const getCart = async () => {
               },
           };
 
-    // make a sleep to simulate a slow network
-    // await new Promise((resolve) => setTimeout(resolve, 5000));
     return { cart: cart as Cart, cartId };
 };

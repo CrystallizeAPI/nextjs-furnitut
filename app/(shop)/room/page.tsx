@@ -7,7 +7,6 @@ import { apiRequest } from '@/utils/api-request';
 
 const fetchData = async () => {
     const response = await apiRequest(FetchAllRoomsDocument);
-    console.log(response);
     const { blocks, breadcrumbs, name, children } = response.data.browse?.category?.hits?.[0] ?? {};
 
     return { name, blocks, breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item), children: children?.hits };

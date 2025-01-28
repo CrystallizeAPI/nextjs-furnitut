@@ -5,8 +5,10 @@ import Link from 'next/link';
 type NavigationProps = {
     className?: string;
 };
-export const Navigation = async ({ className }: NavigationProps) => {
+
+const fetchNavigation = async () => {
     const response = await apiRequest(FetchLayoutDocument);
+
     const navigation = (
         response.data.browse?.header?.hits?.[0]?.children?.hits as MenuItemFragment[] | undefined
     )?.reduce<{ href: string; name: string }[]>((acc, nav) => {
@@ -15,6 +17,12 @@ export const Navigation = async ({ className }: NavigationProps) => {
         !!href && acc.push({ href, name: nav.name ?? '' });
         return acc;
     }, []);
+
+    return { navigation };
+};
+
+export const Navigation = async ({ className }: NavigationProps) => {
+    const { navigation } = await fetchNavigation();
 
     return (
         <div className={className}>

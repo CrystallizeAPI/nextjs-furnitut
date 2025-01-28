@@ -4,13 +4,13 @@ import Link from 'next/link';
 import classNames from 'classnames';
 
 import { CartItems } from './cart-items';
-import { Price } from './price';
+import { Price } from '../price';
 import { useCart } from './cart-context';
 
-type SidebarCartProps = { isOpen: boolean; onClose: () => void };
+export const CartSidebar = () => {
+    const { cart, isOpen, setIsOpen } = useCart();
+    const onClose = () => setIsOpen(false);
 
-export const CartSidebar = ({ isOpen, onClose }: SidebarCartProps) => {
-    const { cart } = useCart();
     return (
         <div
             className={classNames(
@@ -20,7 +20,7 @@ export const CartSidebar = ({ isOpen, onClose }: SidebarCartProps) => {
             )}
         >
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-bold ">Cart</h2>
+                <h2 className="text-lg font-bold">Cart</h2>
                 <button
                     aria-label="Close cart button"
                     className="bg-light h-8 w-8 font-bold border border-muted rounded hover:bg-muted/50"

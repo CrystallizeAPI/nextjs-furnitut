@@ -1,12 +1,11 @@
-'use client';
 import { CartItem } from '@/use-cases/contracts/cart';
 import { Image } from '@/components/image';
 
-import { Price } from './price';
+import { Price } from '../price';
 import { useCart } from './cart-context';
 
 export const CartItems = () => {
-    const { cart, isLoading: isPending, addToCartAction } = useCart();
+    const { cart, onUpdateCart } = useCart();
 
     if (!cart?.items.length) {
         return <p>Your cart is empty.</p>;
@@ -27,7 +26,7 @@ export const CartItems = () => {
                             </div>
                             <div className="flex justify-between w-full">
                                 <div className="flex items-center rounded-lg">
-                                    <form action={addToCartAction}>
+                                    <form action={onUpdateCart}>
                                         <input
                                             type="hidden"
                                             name="input"
@@ -43,7 +42,6 @@ export const CartItems = () => {
                                         <button
                                             type="submit"
                                             className="w-8 h-8 flex items-center justify-center rounded hover:bg-muted/20 active:bg-muted/40"
-                                            disabled={isPending}
                                         >
                                             -
                                         </button>
@@ -51,7 +49,7 @@ export const CartItems = () => {
 
                                     <span className="w-8 text-center">{item.quantity}</span>
 
-                                    <form action={addToCartAction}>
+                                    <form action={onUpdateCart}>
                                         <input
                                             type="hidden"
                                             name="input"
@@ -67,7 +65,6 @@ export const CartItems = () => {
                                         <button
                                             type="submit"
                                             className="w-8 h-8 flex items-center justify-center  rounded hover:bg-muted/20 active:bg-muted/40"
-                                            disabled={isPending}
                                         >
                                             +
                                         </button>

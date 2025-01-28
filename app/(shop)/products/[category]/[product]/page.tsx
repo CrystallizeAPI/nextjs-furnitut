@@ -11,7 +11,7 @@ import { VariantSelector, findSuitableVariant } from '@/components/variant-selec
 import { Slider } from '@/components/slider';
 import { Product } from '@/components/product';
 import { Accordion } from '@/components/accordion';
-import { AddToCartButton } from '@/components/add-to-cart-button';
+import { AddToCartButton } from '@/components/cart/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
 
 export const revalidate = 60;

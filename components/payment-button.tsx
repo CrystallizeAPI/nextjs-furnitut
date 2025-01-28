@@ -39,7 +39,7 @@ export function PaymentButton({ cartId }: PaymentButtonProps) {
 
                 return (
                     <div
-                        key={`payment-method-${method.id}`}
+                        key={method.id}
                         className="py-4 border-b border-muted"
                         onClick={() => setSelectedMethod(method.id)}
                     >

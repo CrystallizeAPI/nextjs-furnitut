@@ -1,14 +1,12 @@
 import Link from 'next/link';
-import { Cart } from './cart';
 import { Suspense } from 'react';
-import { CartButton } from './cart-button';
+import { CartButton } from './cart/cart-button';
 import { Navigation } from './navigation';
-import { CartClient } from './cart-client';
 
 export const Header = () => {
     return (
-        <header className="fixed w-full top-4 z-10">
-            <div className="bg-light border border-muted flex items-stretch rounded-full justify-between max-w-screen-2xl m-auto">
+        <header className="fixed max-w-screen-2xl w-full  top-4 left-1/2 -translate-x-1/2 z-10">
+            <div className="bg-light border border-muted flex items-stretch rounded-full justify-between">
                 <div className="flex items-stretch flex-1">
                     <Link href="/">
                         <div className="bg-dark items-center inline-flex rounded-full my-2 mx-2 px-6 py-3 h-10">
@@ -54,7 +52,7 @@ export const Header = () => {
                     </svg>
                     <span>Account</span>
                 </Link>
-                <CartClient />
+                <CartButton />
             </div>
         </header>
     );

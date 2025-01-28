@@ -11,13 +11,13 @@ export const getNextCart = ({ cart, cartItem, type }: GetNextCartProps) => {
     const existingItemIndex = prevCart.items.findIndex((item) => item.variant.sku === cartItem.sku);
 
     let updatedItems = [...prevCart.items];
-    let lastItemAdded = [] as CartItem[];
+    let lastItemAdded: CartItem | undefined = undefined;
 
     if (existingItemIndex !== -1) {
         switch (type) {
             case 'remove':
                 updatedItems = updatedItems.filter((item) => item.variant.sku !== cartItem.sku);
-                lastItemAdded = [];
+                lastItemAdded = undefined;
 
                 break;
 
@@ -28,7 +28,7 @@ export const getNextCart = ({ cart, cartItem, type }: GetNextCartProps) => {
                     updatedItems = updatedItems.filter((item) => item.variant.sku !== cartItem.sku);
                 } else {
                     updatedItems[existingItemIndex] = { ...item, quantity: newQuantity };
-                    lastItemAdded = [];
+                    lastItemAdded = undefined;
                 }
                 break;
 
@@ -38,7 +38,7 @@ export const getNextCart = ({ cart, cartItem, type }: GetNextCartProps) => {
                     ...updatedItems[existingItemIndex],
                     quantity: updatedItems[existingItemIndex].quantity + 1,
                 };
-                lastItemAdded = [updatedItems[existingItemIndex]];
+                lastItemAdded = updatedItems[existingItemIndex];
 
                 break;
         }
@@ -58,7 +58,7 @@ export const getNextCart = ({ cart, cartItem, type }: GetNextCartProps) => {
             },
         };
         updatedItems = [...prevCart.items, optimisticItem];
-        lastItemAdded = [optimisticItem];
+        lastItemAdded = optimisticItem;
     }
 
     return {

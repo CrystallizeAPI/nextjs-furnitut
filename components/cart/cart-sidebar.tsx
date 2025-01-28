@@ -33,7 +33,7 @@ export const CartSidebar = () => {
                 <CartItems />
             </div>
             <div>
-                {cart && cart.items.length > 0 && (
+                {!!cart?.items.length && (
                     <div className="mt-4">
                         <div className="mb-2">
                             <span className="text-gray-900 text-xl font-bold">Total</span>

@@ -13,10 +13,6 @@ type PageProps = {
     params: Promise<{ slug: 'products' | 'room' }>;
 };
 
-export async function generateStaticParams() {
-    return [{ slug: 'products' }, { slug: 'room' }];
-}
-
 const fetchData = async (slug: Slug) => {
     const response = await apiRequest(FetchAllCategoriesDocument, { path: `/${slug}` });
     const { blocks, breadcrumbs, name, children } = response.data.browse?.category?.hits?.[0] ?? {};

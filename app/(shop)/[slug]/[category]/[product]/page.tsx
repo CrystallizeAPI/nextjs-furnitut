@@ -45,8 +45,6 @@ export default async function CategoryProduct(props: ProductsProps) {
     const currentVariant = product.currentVariant;
     const dimensions = currentVariant?.dimensions;
 
-    console.log(searchParams);
-
     return (
         <>
             <main className="page">

@@ -18,7 +18,7 @@ export const revalidate = 60;
 
 type ProductsProps = {
     searchParams: Promise<Record<string, string>>;
-    params: Promise<{ category: string; product: string }>;
+    params: Promise<{ slug: string; category: string; product: string }>;
 };
 
 const fetchData = async ({ path, searchParams }: { path: string; searchParams: Record<string, string> }) => {
@@ -39,11 +39,13 @@ export default async function CategoryProduct(props: ProductsProps) {
     const searchParams = await props.searchParams;
     const params = await props.params;
     const product = await fetchData({
-        path: `/products/${params.category}/${params.product}`,
+        path: `/${params.slug}/${params.category}/${params.product}`,
         searchParams,
     });
     const currentVariant = product.currentVariant;
     const dimensions = currentVariant?.dimensions;
+
+    console.log(searchParams);
 
     return (
         <>

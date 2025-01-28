@@ -1,9 +1,9 @@
+import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { FetchAllCategoriesDocument } from '@/generated/graphql';
 import { apiRequest } from '@/utils/api-request';
 import Link from 'next/link';
 import { Blocks } from '@/components/blocks';
-import { notFound } from 'next/navigation';
 
 export const experimental_ppr = true;
 

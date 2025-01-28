@@ -6,8 +6,6 @@ import { getCart } from './actions/get-cart';
 
 import './globals.css';
 
-export const experimental_ppr = true;
-
 const manrope = Manrope({ subsets: ['latin'] });
 
 export const metadata: Metadata = {

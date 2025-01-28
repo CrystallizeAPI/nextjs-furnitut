@@ -42,8 +42,6 @@ export default async function CategoryProduct(props: ProductsProps) {
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
     const dimensions = currentVariant?.dimensions;
 
-    console.log(searchParams);
-
     return (
         <>
             <main className="page">

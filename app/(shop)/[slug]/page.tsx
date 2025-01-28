@@ -3,18 +3,35 @@ import { FetchAllCategoriesDocument } from '@/generated/graphql';
 import { apiRequest } from '@/utils/api-request';
 import Link from 'next/link';
 import { Blocks } from '@/components/blocks';
+import { notFound } from 'next/navigation';
 
 export const experimental_ppr = true;
 
-const fetchData = async () => {
-    const response = await apiRequest(FetchAllCategoriesDocument);
+type Slug = 'products' | 'room';
+
+type PageProps = {
+    params: Promise<{ slug: 'products' | 'room' }>;
+};
+
+export async function generateStaticParams() {
+    return [{ slug: 'products' }, { slug: 'room' }];
+}
+
+const fetchData = async (slug: Slug) => {
+    const response = await apiRequest(FetchAllCategoriesDocument, { path: `/${slug}` });
     const { blocks, breadcrumbs, name, children } = response.data.browse?.category?.hits?.[0] ?? {};
 
     return { name, blocks, breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item), children: children?.hits };
 };
 
-export default async function Products() {
-    const { name, children, breadcrumbs, blocks } = await fetchData();
+export default async function Page({ params }: PageProps) {
+    const { slug } = await params;
+
+    if (slug !== 'products' && slug !== 'room') {
+        return notFound();
+    }
+
+    const { name, children, breadcrumbs, blocks } = await fetchData(slug);
 
     return (
         <main>

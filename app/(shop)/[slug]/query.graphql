@@ -1,6 +1,6 @@
-query FetchAllCategories {
+query FetchAllCategories($path: String!) {
     browse {
-        category(path: "/products") {
+        category(path: $path) {
             hits {
                 id
                 name

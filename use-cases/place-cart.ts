@@ -4,6 +4,7 @@ export const placeCart = async (cartId: string) => {
     if (!cartId) {
         return;
     }
+
     try {
         const mutation = `#graphql
         mutation PlaceCart($id: UUID) {

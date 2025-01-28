@@ -1,25 +1,29 @@
 'use server';
 
-import { CartItem, CartItemInput } from '@/use-cases/contracts/cart';
 import { storage } from '@/core/storage.server';
 import { hydrateCart } from '@/use-cases/add-sku-item-to-cart.server';
+import { getNextCart } from '@/use-cases/get-next-cart';
 
-export async function addToCartServerAction(prevState: any, formData: FormData) {
+import { getCart } from './get-cart';
+
+export async function addToCartServerAction(initialSate: null, formData: FormData) {
     try {
-        const currentCart = JSON.parse(formData.get('cart') as string);
-        const cartId = await storage.getCartId();
+        const cartItem = JSON.parse(formData.get('input') as string);
+        const type = formData.get('type') as string;
+        const { cart } = await getCart();
+        const nextCart = getNextCart({ cart, cartItem, type });
 
-        const items: CartItemInput[] = currentCart.items.map((item: CartItem) => ({
+        const items = nextCart.items.map((item) => ({
             sku: item.variant.sku,
             quantity: item.quantity,
         }));
 
+        const cartId = await storage.getCartId();
         const updatedCart = await hydrateCart(cartId, items);
 
-        const newCart = { ...updatedCart, lastItemAdded: currentCart.lastItemAdded };
-        return newCart;
+        return { ...updatedCart, lastItemAdded: nextCart.lastItemAdded };
     } catch (error) {
         console.error('Cart update failed:', error);
-        return prevState;
+        return null;
     }
 }

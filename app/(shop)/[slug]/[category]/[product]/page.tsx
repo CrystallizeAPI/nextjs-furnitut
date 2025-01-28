@@ -11,17 +11,17 @@ import { VariantSelector, findSuitableVariant } from '@/components/variant-selec
 import { Slider } from '@/components/slider';
 import { Product } from '@/components/product';
 import { Accordion } from '@/components/accordion';
-import { AddToCartButton } from '@/components/add-to-cart-button';
+import { AddToCartButton } from '@/components/cart/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
 
 export const revalidate = 60;
 
 type ProductsProps = {
     searchParams: Promise<Record<string, string>>;
-    params: Promise<{ category: string; product: string }>;
+    params: Promise<{ slug: string; category: string; product: string }>;
 };
 
-const fetchData = async ({ path, searchParams }: { path: string; searchParams: Record<string, string> }) => {
+const fetchData = async (path: string) => {
     const response = await apiRequest(FetchProductDocument, { path });
     const { story, variants, brand, breadcrumbs, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 
@@ -30,7 +30,7 @@ const fetchData = async ({ path, searchParams }: { path: string; searchParams: R
         variants,
         brand: brand?.items?.[0],
         story: story?.filter((paragraph): paragraph is Paragraph => paragraph !== null && paragraph !== undefined),
-        currentVariant: findSuitableVariant({ variants, searchParams }),
+
         breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item),
     };
 };
@@ -38,11 +38,8 @@ const fetchData = async ({ path, searchParams }: { path: string; searchParams: R
 export default async function CategoryProduct(props: ProductsProps) {
     const searchParams = await props.searchParams;
     const params = await props.params;
-    const product = await fetchData({
-        path: `/products/${params.category}/${params.product}`,
-        searchParams,
-    });
-    const currentVariant = product.currentVariant;
+    const product = await fetchData(`/${params.slug}/${params.category}/${params.product}`);
+    const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
     const dimensions = currentVariant?.dimensions;
 
     return (
@@ -52,7 +49,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                     <div className="col-span-7">
                         <Breadcrumbs breadcrumbs={product.breadcrumbs} />
                         <div className="mt-6 grid grid-cols-2 mb-6 pb-6 gap-4 [&_.img-landscape]:col-span-2">
-                            {product.currentVariant?.images?.map((image, index) => {
+                            {currentVariant?.images?.map((image, index) => {
                                 return (
                                     <Image
                                         key={index}
@@ -128,7 +125,7 @@ export default async function CategoryProduct(props: ProductsProps) {
 
                     <div className="col-span-5 relative">
                         <div className="flex justify-between items-center ">
-                            <span className="text-xs font-bold opacity-50">{product.currentVariant?.sku}</span>
+                            <span className="text-xs font-bold opacity-50">{currentVariant?.sku}</span>
                             {product.brand && (
                                 <span className="w-16 h-10 flex items-center">
                                     {'logo' in product.brand ? (
@@ -141,7 +138,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                         </div>
                         <div className="py-4 sticky top-20">
                             <h1 className="text-2xl font-bold">
-                                {product.name} {product.currentVariant?.name}
+                                {product.name} {currentVariant?.name}
                             </h1>
                             <div className="line-clamp-2">
                                 <ContentTransformer json={product.description?.[0]} />

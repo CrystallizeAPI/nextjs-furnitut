@@ -1,5 +1,6 @@
 import { ComponentPropsWithRef, useCallback, useEffect, useState } from 'react';
 import type useEmblaCarousel from 'embla-carousel-react';
+import clsx from 'classnames';
 
 type EmblaApi = ReturnType<typeof useEmblaCarousel>[1];
 
@@ -46,13 +47,12 @@ export const usePrevNextButtons = (emblaApi: EmblaApi): UsePrevNextButtonsType =
 
 type PropType = ComponentPropsWithRef<'button'> & { children?: React.ReactNode };
 
+const buttonClassName =
+    'absolute w-14 h-14 rounded-full bg-light border-muted border flex items-center justify-center top-1/2 -translate-y-1/2 max-[1680px]:translate-x-0';
+
 export const PrevButton = ({ children, ...restProps }: PropType) => {
     return (
-        <button
-            className="absolute left-0 w-14 h-14 rounded-full bg-light border-muted border flex items-center justify-center top-1/2 -translate-x-1/2 -translate-y-1/2 "
-            type="button"
-            {...restProps}
-        >
+        <button className={clsx(buttonClassName, 'left-1 -translate-x-1/2')} type="button" {...restProps}>
             <svg className="embla__button__svg" viewBox="0 0 532 532">
                 <path
                     fill="currentColor"
@@ -66,11 +66,7 @@ export const PrevButton = ({ children, ...restProps }: PropType) => {
 
 export const NextButton = ({ children, ...restProps }: PropType) => {
     return (
-        <button
-            className="absolute right-0 w-14 h-14 rounded-full bg-light border-muted border flex items-center justify-center top-1/2 translate-x-1/2 -translate-y-1/2"
-            type="button"
-            {...restProps}
-        >
+        <button className={clsx(buttonClassName, 'right-1 translate-x-1/2')} type="button" {...restProps}>
             <svg className="embla__button__svg" viewBox="0 0 532 532">
                 <path
                     fill="currentColor"

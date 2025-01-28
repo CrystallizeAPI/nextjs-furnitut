@@ -1,12 +1,11 @@
-import { Cart as CartType, CartItem } from '@/use-cases/contracts/cart';
-import { Price } from './price';
-import { useCart } from '@/context/cart-context';
+import { CartItem } from '@/use-cases/contracts/cart';
 import { Image } from '@/components/image';
 
-type CartProps = { cart: CartType | null };
+import { Price } from '../price';
+import { useCart } from './cart-context';
 
-export const Cart = ({ cart }: CartProps) => {
-    const { addToCartAction, isLoading } = useCart();
+export const CartItems = () => {
+    const { cart, onUpdateCart } = useCart();
 
     if (!cart?.items.length) {
         return <p>Your cart is empty.</p>;
@@ -27,7 +26,7 @@ export const Cart = ({ cart }: CartProps) => {
                             </div>
                             <div className="flex justify-between w-full">
                                 <div className="flex items-center rounded-lg">
-                                    <form action={(formData) => addToCartAction(formData, 'reduce')}>
+                                    <form action={onUpdateCart}>
                                         <input
                                             type="hidden"
                                             name="input"
@@ -39,10 +38,10 @@ export const Cart = ({ cart }: CartProps) => {
                                                 image: item.images[0],
                                             })}
                                         />
+                                        <input type="hidden" name="type" value="reduce" />
                                         <button
                                             type="submit"
                                             className="w-8 h-8 flex items-center justify-center rounded hover:bg-muted/20 active:bg-muted/40"
-                                            disabled={isLoading}
                                         >
                                             -
                                         </button>
@@ -50,7 +49,7 @@ export const Cart = ({ cart }: CartProps) => {
 
                                     <span className="w-8 text-center">{item.quantity}</span>
 
-                                    <form action={(formData) => addToCartAction(formData, 'add')}>
+                                    <form action={onUpdateCart}>
                                         <input
                                             type="hidden"
                                             name="input"
@@ -62,10 +61,10 @@ export const Cart = ({ cart }: CartProps) => {
                                                 image: item.images[0],
                                             })}
                                         />
+                                        <input type="hidden" name="type" value="add" />
                                         <button
                                             type="submit"
                                             className="w-8 h-8 flex items-center justify-center  rounded hover:bg-muted/20 active:bg-muted/40"
-                                            disabled={isLoading}
                                         >
                                             +
                                         </button>

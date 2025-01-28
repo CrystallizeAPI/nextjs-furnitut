@@ -1,10 +1,8 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
+import { Navigation } from './navigation';
 
-type FooterProps = {
-    navigation?: { href: string; name: string }[];
-};
-
-export const Footer = ({ navigation }: FooterProps) => {
+export const Footer = () => {
     const year = new Date().getFullYear();
 
     return (
@@ -32,13 +30,9 @@ export const Footer = ({ navigation }: FooterProps) => {
                         <p className="text-sm mt-8 ">Organization No. 9999999</p>
                         <p className="text-sm mt-1">© {year} Crystallize AS</p>
                     </div>
-                    <div className="flex flex-col gap-4 min-h-full text-base self-stretch items-stretch font-medium pl-8 mt-12">
-                        {navigation?.map(({ href, name }) => (
-                            <Link href={href} className="h-full flex items-center" key={name}>
-                                {name}
-                            </Link>
-                        ))}
-                    </div>
+                    <Suspense fallback={null}>
+                        <Navigation className="flex flex-col gap-4 min-h-full text-base self-stretch items-stretch font-medium pl-8 mt-12" />
+                    </Suspense>
                 </div>
             </div>
             <div className="px-12  max-w-screen-2xl mx-auto pt-24 pb-48">

@@ -25,9 +25,9 @@ const paymentMethods = [
     },
 ];
 
-interface PaymentButtonProps {
+type PaymentButtonProps = {
     cartId: string;
-}
+};
 
 export function PaymentButton({ cartId }: PaymentButtonProps) {
     const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>(null);
@@ -36,9 +36,10 @@ export function PaymentButton({ cartId }: PaymentButtonProps) {
         <div>
             {paymentMethods.map((method) => {
                 const PaymentGate = method.component;
+
                 return (
                     <div
-                        key={`payment-method-${method.id}`}
+                        key={method.id}
                         className="py-4 border-b border-muted"
                         onClick={() => setSelectedMethod(method.id)}
                     >
@@ -46,15 +47,14 @@ export function PaymentButton({ cartId }: PaymentButtonProps) {
                             <span
                                 className={classNames(
                                     'w-5 h-5 rounded-full border border-muted mt-1 flex items-center justify-center shrink-0',
-                                    {
-                                        '!border-dark': selectedMethod === method.id,
-                                    },
+                                    selectedMethod === method.id && '!border-dark',
                                 )}
                             >
                                 <div
-                                    className={classNames('w-2 h-2 rounded-full', {
-                                        'bg-dark ': selectedMethod === method.id,
-                                    })}
+                                    className={classNames(
+                                        'w-2 h-2 rounded-full',
+                                        selectedMethod === method.id && 'bg-dark ',
+                                    )}
                                 />
                             </span>
                             <div className="flex flex-col w-full">

@@ -5,8 +5,6 @@ import { apiRequest } from '@/utils/api-request';
 import Link from 'next/link';
 import { Blocks } from '@/components/blocks';
 
-export const experimental_ppr = true;
-
 type Slug = 'products' | 'room';
 
 type PageProps = {

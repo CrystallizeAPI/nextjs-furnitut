@@ -44,8 +44,8 @@ export const CartButton = () => {
                     <circle cx="9" cy="20.4778" r="1" fill="#222222" />
                 </svg>
                 <span className="pr-4 sm:pr-8 relative flex items-start justify-center">
-                    <span className="hidden sm:inline">Cart </span>
-                    {cart && cart?.items.length > 0 && (
+                    <span className="max-sm:sr-only">Cart </span>
+                    {!!cart?.items.length && (
                         <span className="text-sm absolute right-0 h-5 w-5 text-bold bg-vivid text-light rounded top-1/2 -translate-y-1/2">
                             {cart?.items.reduce((acc, item) => acc + (item.quantity ?? 0), 0)}
                         </span>

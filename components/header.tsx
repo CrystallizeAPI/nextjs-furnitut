@@ -65,7 +65,7 @@ export const Header = () => {
                             strokeLinecap="round"
                         />
                     </svg>
-                    <span className="hidden sm:inline">Account</span>
+                    <span className="max-sm:sr-only">Account</span>
                 </Link>
                 <CartButton />
             </div>

@@ -74,6 +74,10 @@
         @apply px-8 py-4;
     }
 
+    .block-description p {
+        @apply font-medium;
+    }
+
     .theme-muted {
         @apply bg-muted;
     }

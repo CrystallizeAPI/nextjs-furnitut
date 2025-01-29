@@ -23,6 +23,7 @@ export const Header = () => {
                                 />
                             </svg>
                         </div>
+                        <span className="sr-only">Home</span>
                     </Link>
 
                     <Suspense fallback={null}>

@@ -16,8 +16,6 @@ import { Slider } from '@/components/slider';
 import { Story } from '@/components/story';
 import { Price } from '@/components/price';
 
-export const revalidate = 60;
-
 const fetchData = async (path: string) => {
     const response = await apiRequest(FetchStoryDocument, { path });
     const data = response.data.browse?.story?.hits?.[0];

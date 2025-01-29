@@ -1,9 +1,8 @@
 import { type FetchLandingPageQuery, FetchLandingPageDocument } from '@/generated/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Blocks } from '@/components/blocks';
-import { Header } from '@/components/header';
 
-export const revalidate = 60;
+export const revalidate = 120;
 
 const fetchLandingPage = async () => {
     const { data } = await apiRequest<FetchLandingPageQuery>(FetchLandingPageDocument);

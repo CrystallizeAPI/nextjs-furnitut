@@ -5,8 +5,6 @@ import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Blocks } from '@/components/blocks';
 import classnames from 'classnames';
 
-export const revalidate = 60;
-
 type ProductsProps = {
     params: Promise<{ category: string }>;
 };

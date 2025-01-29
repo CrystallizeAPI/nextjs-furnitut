@@ -13,7 +13,7 @@ const config: Config = {
             dark: '#211A1D',
             light: '#ffffff',
             soft: '#F6F4F3',
-            accent: '#89856C',
+            accent: '#79745D',
             muted: '#dfdfdf',
             vivid: '#EE7674',
 

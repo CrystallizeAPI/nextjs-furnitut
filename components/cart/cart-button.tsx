@@ -18,7 +18,7 @@ export const CartButton = () => {
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="flex items-center font-medium px-6 gap-2 hover:bg-muted/20 active:bg-muted/40 rounded-r-full min-w-36"
+                className="flex items-center font-medium px-4 sm:px-6 gap-2 hover:bg-muted/20 active:bg-muted/40 rounded-r-full"
             >
                 <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -43,8 +43,8 @@ export const CartButton = () => {
                     <circle cx="17" cy="20.4778" r="1" fill="#222222" />
                     <circle cx="9" cy="20.4778" r="1" fill="#222222" />
                 </svg>
-                <span className="pr-8 relative flex items-start justify-center">
-                    Cart{' '}
+                <span className="pr-4 sm:pr-8 relative flex items-start justify-center">
+                    <span className="hidden sm:inline">Cart </span>
                     {cart && cart?.items.length > 0 && (
                         <span className="text-sm absolute right-0 h-5 w-5 text-bold bg-vivid text-light rounded top-1/2 -translate-y-1/2">
                             {cart?.items.reduce((acc, item) => acc + (item.quantity ?? 0), 0)}

@@ -11,7 +11,7 @@ export const StorySlider = ({ block }: StorySliderProps) => {
     const { stories } = block;
 
     return (
-        <div className="flex-col flex items-center  mx-auto">
+        <div className="flex-col flex items-center mx-auto">
             <Typography {...block} />
             {!!stories?.items?.length && (
                 <div className="w-full pb-24 ">

@@ -13,7 +13,7 @@ export const Slider = ({ options, type = 'product', children }: SliderProps) => 
     const [emblaRef, emblaApi] = useEmblaCarousel(options);
     const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
 
-    if (children === undefined) {
+    if (!children) {
         return null;
     }
 
@@ -22,19 +22,19 @@ export const Slider = ({ options, type = 'product', children }: SliderProps) => 
     } as React.CSSProperties;
 
     return (
-        <section className="embla w-full relative " style={style}>
-            <div className="embla__viewport " ref={emblaRef}>
-                <div className="embla__container ">
+        <section className="embla w-full relative" style={style}>
+            <div className="embla__viewport" ref={emblaRef}>
+                <div className="embla__container">
                     {Array.isArray(children) ? (
                         <>
                             {children.map((child: any, index: number) => (
-                                <div className="embla__slide " key={index}>
+                                <div className="embla__slide !max-sm:basis-full" key={index}>
                                     {child}
                                 </div>
                             ))}
                         </>
                     ) : (
-                        <div className="embla__slide ">{children}</div>
+                        <div className="embla__slide">{children}</div>
                     )}
                 </div>
                 {!prevBtnDisabled && <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />}

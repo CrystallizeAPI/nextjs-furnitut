@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import { CartItems } from './cart-items';
 import { Price } from '../price';
-import { useCart } from './cart-context';
+import { useCart } from './cart-provider';
 
 export const CartSidebar = () => {
     const { cart, isOpen, setIsOpen } = useCart();

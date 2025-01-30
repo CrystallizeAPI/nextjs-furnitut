@@ -1,7 +1,7 @@
 'use client';
 
 import { Image } from '@/components/image';
-import { useCart } from './cart-context';
+import { useCart } from './cart-provider';
 import { useEffect, useState } from 'react';
 
 export const CartButton = () => {

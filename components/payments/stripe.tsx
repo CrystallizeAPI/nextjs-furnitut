@@ -12,7 +12,7 @@ export const StripeButton: React.FC<{
     );
 };
 
-export const Stripe = ({ cartId }: { cartId: string }) => {
+export const Stripe = ({ cartId }: { cartId?: string }) => {
     const [clientSecret, setClientSecret] = useState<string>('');
     const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY ?? '');
 
@@ -40,7 +40,7 @@ export const Stripe = ({ cartId }: { cartId: string }) => {
     );
 };
 
-export const StripeCheckoutForm = ({ cartId }: { cartId: string }) => {
+export const StripeCheckoutForm = ({ cartId }: { cartId?: string }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [state, setState] = useState<{

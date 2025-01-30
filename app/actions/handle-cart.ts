@@ -1,16 +1,22 @@
 'use server';
 
-import { storage } from '@/core/storage.server';
 import { hydrateCart } from '@/use-cases/add-sku-item-to-cart.server';
 import { getNextCart } from '@/use-cases/get-next-cart';
 
 import { getCart } from './get-cart';
+import { Cart } from '@/use-cases/contracts/cart';
 
-export async function addToCartServerAction(initialSate: null, formData: FormData) {
+export async function handleCart(initialSate: Cart | null, formData: FormData) {
+    const type = formData.get('type') as string;
+
+    if (type === 'reset') {
+        return null;
+    }
+
     try {
         const cartItem = JSON.parse(formData.get('input') as string);
         const type = formData.get('type') as string;
-        const { cart } = await getCart();
+        const { cart, cartId } = await getCart();
         const nextCart = getNextCart({ cart, cartItem, type });
 
         const items = nextCart.items.map((item) => ({
@@ -18,7 +24,6 @@ export async function addToCartServerAction(initialSate: null, formData: FormDat
             quantity: item.quantity,
         }));
 
-        const cartId = await storage.getCartId();
         const updatedCart = await hydrateCart(cartId, items);
 
         return { ...updatedCart, lastItemAdded: nextCart.lastItemAdded };

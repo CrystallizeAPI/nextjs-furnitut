@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
 import { Footer } from '@/components/footer';
-import { CartProvider } from '@/components/cart/cart-context';
-import { getCart } from './actions/get-cart';
+import { CartProvider } from '@/components/cart/cart-provider';
 
 import './globals.css';
 
@@ -24,7 +23,7 @@ export default async function Layout({ children }: LayoutProps) {
                 <link rel="icon" href="/favicon.ico" />
             </head>
             <body className={`${manrope.className} bg-soft`}>
-                <CartProvider cartPromise={getCart()}>
+                <CartProvider>
                     {children}
                     <Footer />
                 </CartProvider>

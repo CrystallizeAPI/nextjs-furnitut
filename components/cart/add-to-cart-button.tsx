@@ -2,7 +2,7 @@
 
 import clsx from 'classnames';
 import { CartItemInput } from '@/use-cases/contracts/cart';
-import { useCart } from './cart-context';
+import { useCart } from './cart-provider';
 
 type AddToCartButtonProps = { type?: string; input: CartItemInput };
 

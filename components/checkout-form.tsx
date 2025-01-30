@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useState } from 'react';
+import { useActionState } from 'react';
 import clsx from 'classnames';
 
 import { setCustomerPlaceCart } from '@/app/actions/set-customer-place-cart';
@@ -10,18 +10,19 @@ import { InputField } from './input';
 import { Price } from './price';
 import { Image } from '@/components/image';
 import { Customer } from '@/use-cases/contracts/customer';
+import { useCart } from './cart/cart-provider';
 
-type CheckoutFormProps = {
-    cart: Cart | null;
-    cartId?: string;
-};
+type InitialState = { customer: Customer | null; cart: Cart | null; cartId?: string } | null;
 
-const CheckoutForm = ({ cart, cartId }: CheckoutFormProps) => {
-    const [data, onSubmit, isPending] = useActionState<Customer | null, FormData>(setCustomerPlaceCart, null);
+export const CheckoutForm = () => {
+    const { emptyCart, cart: clientCart } = useCart();
+    const [data, onSubmit, isPending] = useActionState<InitialState, FormData>(async (...param) => {
+        emptyCart();
+        return await setCustomerPlaceCart(...param);
+    }, null);
 
-    if (!cartId) {
-        return null;
-    }
+    const { customer, cartId, cart: serverCart } = data ?? {};
+    const cart = serverCart ?? clientCart;
 
     return (
         <div className="grid grid-cols-12 gap-12 ">
@@ -29,15 +30,12 @@ const CheckoutForm = ({ cart, cartId }: CheckoutFormProps) => {
                 <h2 className="font-bold mb-2">Customer</h2>
                 <form action={onSubmit}>
                     <div className="bg-light rounded-t-xl border-muted border">
-                        <div className="hidden">
-                            <InputField type="hidden" name="cartId" value={cartId} />
-                        </div>
                         <div className="border-b border-muted">
                             <InputField
                                 type="email"
                                 name="email"
                                 label="Email address"
-                                defaultValue={data?.addresses.email}
+                                defaultValue={customer?.addresses.email}
                             />
                         </div>
 
@@ -47,10 +45,15 @@ const CheckoutForm = ({ cart, cartId }: CheckoutFormProps) => {
                                     type="text"
                                     name="firstName"
                                     label="First name"
-                                    defaultValue={data?.firstName}
+                                    defaultValue={customer?.firstName}
                                 />
                             </div>
-                            <InputField type="text" name="lastName" label="Last name" defaultValue={data?.lastName} />
+                            <InputField
+                                type="text"
+                                name="lastName"
+                                label="Last name"
+                                defaultValue={customer?.lastName}
+                            />
                         </div>
 
                         <div className="grid md:grid-cols-2 border-b border-muted">
@@ -59,7 +62,7 @@ const CheckoutForm = ({ cart, cartId }: CheckoutFormProps) => {
                                     type="text"
                                     name="street"
                                     label="Street"
-                                    defaultValue={data?.addresses.street}
+                                    defaultValue={customer?.addresses.street}
                                 />
                             </div>
 
@@ -68,19 +71,24 @@ const CheckoutForm = ({ cart, cartId }: CheckoutFormProps) => {
                                 name="postalCode"
                                 label="Zip Code"
                                 pattern="[0-9]{4}|[0-9]{5}"
-                                defaultValue={data?.addresses.postalCode}
+                                defaultValue={customer?.addresses.postalCode}
                             />
                         </div>
 
                         <div className="grid md:grid-cols-2">
                             <div className="border-r border-muted">
-                                <InputField type="text" name="city" label="City" defaultValue={data?.addresses.city} />
+                                <InputField
+                                    type="text"
+                                    name="city"
+                                    label="City"
+                                    defaultValue={customer?.addresses.city}
+                                />
                             </div>
                             <InputField
                                 type="text"
                                 name="country"
                                 label="Country"
-                                defaultValue={data?.addresses.country}
+                                defaultValue={customer?.addresses.country}
                             />
                         </div>
                     </div>
@@ -90,13 +98,13 @@ const CheckoutForm = ({ cart, cartId }: CheckoutFormProps) => {
                         <button
                             type="submit"
                             className="bg-dark mx-auto text-light  rounded-lg px-8 py-2 mt-2"
-                            disabled={isPending || !!data}
+                            disabled={isPending || !!customer}
                         >
                             Go to payment
                         </button>
                     </div>
                 </form>
-                <div className={clsx('mt-8', !data && 'opacity-50 pointer-events-none')}>
+                <div className={clsx('mt-8', !customer && 'opacity-50 pointer-events-none')}>
                     <h2 className="font-bold mb-2">Payment</h2>
                     <div className="bg-light rounded-xl border-muted border">
                         <PaymentButton cartId={cartId} />
@@ -106,65 +114,61 @@ const CheckoutForm = ({ cart, cartId }: CheckoutFormProps) => {
             <div className="col-span-4">
                 <h2 className="font-bold mb-2">Basket</h2>
                 <div className="bg-light rounded-xl border-muted border ">
-                    {cart && cart.items.length > 0 && (
-                        <ul>
-                            {cart.items.map((item: CartItem) => (
-                                <li
-                                    key={`${item.variant.sku}`}
-                                    className="flex justify-between border-b border-muted pb-4 px-6 pt-4"
-                                >
-                                    <div className="flex w-full">
-                                        <div className="shrink-0 relative h-16 w-12 aspect-square border border-muted rounded overflow-hidden">
-                                            <Image {...item.images[0]} className="object-cover" />
-                                        </div>
-                                        <div className="flex flex-col pl-4 text-dark w-full justify-between">
-                                            <div className="flex flex-col">
-                                                <span className="text-base font-medium">{item.name}</span>
-                                                <span className="text-xs italic text-dark/70">{item.variant.sku}</span>
+                    {!!cart?.items.length && (
+                        <>
+                            <ul>
+                                {cart.items.map((item: CartItem) => (
+                                    <li
+                                        key={`${item.variant.sku}`}
+                                        className="flex justify-between border-b border-muted pb-4 px-6 pt-4"
+                                    >
+                                        <div className="flex w-full">
+                                            <div className="shrink-0 relative h-16 w-12 aspect-square border border-muted rounded overflow-hidden">
+                                                <Image {...item.images[0]} className="object-cover" />
                                             </div>
-                                            <div className="flex justify-between w-full ">
-                                                <div className="flex gap-4">
-                                                    {/* <button type="button">-</button>
-                                                    <span>{item.quantity}</span>
-                                                    <button type="button">+</button> */}
+                                            <div className="flex flex-col pl-4 text-dark w-full justify-between">
+                                                <div className="flex flex-col">
+                                                    <span className="text-base font-medium">{item.name}</span>
+                                                    <span className="text-xs italic text-dark/70">
+                                                        {item.variant.sku}
+                                                    </span>
                                                 </div>
+                                                <div className="flex justify-between w-full ">
+                                                    <div className="flex gap-4"></div>
 
-                                                <span className="font-bold text-sm">
-                                                    <Price price={{ price: item.price.gross }} />
-                                                </span>
+                                                    <span className="font-bold text-sm">
+                                                        <Price price={{ price: item.price.gross }} />
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                    {cart && cart.items.length > 0 && (
-                        <div className="mt-8 px-6">
-                            <div className="text-dark/70 text-sm flex justify-between items-center">
-                                <span>Net:</span>
-                                <span>
-                                    <Price price={{ price: cart.total.net }} />
-                                </span>
+                                    </li>
+                                ))}
+                            </ul>
+                            <div className="mt-8 px-6">
+                                <div className="text-dark/70 text-sm flex justify-between items-center">
+                                    <span>Net:</span>
+                                    <span>
+                                        <Price price={{ price: cart.total.net }} />
+                                    </span>
+                                </div>
+                                <div className="text-dark/70 text-sm flex justify-between items-center mb-4">
+                                    <span>Tax:</span>
+                                    <span>
+                                        <Price price={{ price: cart.total.taxAmount }} />
+                                    </span>
+                                </div>
+                                <div className="mt-6 mb-4 text-base">
+                                    <span className="text-gray-900  font-bold">Total</span>
+                                    <span className="text-gray-900 font-bold float-right">
+                                        <Price price={{ price: cart.total.gross }} />
+                                    </span>
+                                </div>
                             </div>
-                            <div className="text-dark/70 text-sm flex justify-between items-center mb-4">
-                                <span>Tax:</span>
-                                <span>
-                                    <Price price={{ price: cart.total.taxAmount }} />
-                                </span>
-                            </div>
-                            <div className="mt-6 mb-4 text-base">
-                                <span className="text-gray-900  font-bold">Total</span>
-                                <span className="text-gray-900 font-bold float-right">
-                                    <Price price={{ price: cart.total.gross }} />
-                                </span>
-                            </div>
-                        </div>
+                        </>
                     )}
                 </div>
             </div>
         </div>
     );
 };
-
-export default CheckoutForm;

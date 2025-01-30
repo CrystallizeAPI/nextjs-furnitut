@@ -1,7 +1,7 @@
 import type { Cart, CartItem, CartItemInput, Price } from '@/use-cases/contracts/cart';
 
 type GetNextCartProps = {
-    cart: Cart;
+    cart: Cart | null;
     cartItem: CartItemInput;
     type?: string;
 };
@@ -15,9 +15,9 @@ const getPrice = (quantity: number, { price, variant }: CartItem) => ({
 
 export const getNextCart = ({ cart, cartItem, type }: GetNextCartProps) => {
     const prevCart = structuredClone(cart);
-    const existingItemIndex = prevCart.items.findIndex((item) => item.variant.sku === cartItem.sku);
+    const existingItemIndex = prevCart?.items.findIndex((item) => item.variant.sku === cartItem.sku) ?? -1;
 
-    let updatedItems = [...prevCart.items];
+    let updatedItems = [...(prevCart?.items ?? [])];
     let lastItemAdded: CartItem | undefined = undefined;
 
     if (existingItemIndex !== -1) {
@@ -71,7 +71,7 @@ export const getNextCart = ({ cart, cartItem, type }: GetNextCartProps) => {
                 },
             },
         };
-        updatedItems = [...prevCart.items, optimisticItem];
+        updatedItems = [...(prevCart?.items ?? []), optimisticItem];
         lastItemAdded = optimisticItem;
     }
 
@@ -88,6 +88,6 @@ export const getNextCart = ({ cart, cartItem, type }: GetNextCartProps) => {
         ...prevCart,
         lastItemAdded,
         items: updatedItems,
-        total: { ...prevCart.total, gross, net, taxAmount },
-    };
+        total: { ...(prevCart?.total ?? []), gross, net, taxAmount },
+    } as Cart;
 };

@@ -26,7 +26,7 @@ const paymentMethods = [
 ];
 
 type PaymentButtonProps = {
-    cartId: string;
+    cartId?: string;
 };
 
 export function PaymentButton({ cartId }: PaymentButtonProps) {

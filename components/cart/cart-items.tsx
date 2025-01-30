@@ -2,7 +2,7 @@ import { CartItem } from '@/use-cases/contracts/cart';
 import { Image } from '@/components/image';
 
 import { Price } from '../price';
-import { useCart } from './cart-context';
+import { useCart } from './cart-provider';
 
 export const CartItems = () => {
     const { cart, onUpdateCart } = useCart();

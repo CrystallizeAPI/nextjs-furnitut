@@ -1,7 +1,7 @@
 import { makeCrystalPayment } from '@/app/actions/make-crystal-payment';
 import { useActionState } from 'react';
 
-export const Crystal = ({ cartId }: { cartId: string }) => {
+export const Crystal = ({ cartId }: { cartId?: string }) => {
     const [da, onSubmit, isPending] = useActionState(makeCrystalPayment, null);
 
     return (

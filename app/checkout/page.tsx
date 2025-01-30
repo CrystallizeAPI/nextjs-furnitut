@@ -1,10 +1,7 @@
 import Link from 'next/link';
-import Form from '@/components/checkout-form';
-import { getCart } from '@/app/actions/get-cart';
+import { CheckoutForm } from '@/components/checkout-form';
 
 export default async function Checkout() {
-    const { cart, cartId } = await getCart();
-
     return (
         <>
             <header className="fixed max-w-screen-2xl w-full px-10 top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-8">
@@ -22,7 +19,7 @@ export default async function Checkout() {
             </header>
 
             <main className="page !max-w-screen-xl">
-                <Form cart={cart} cartId={cartId} />
+                <CheckoutForm />
             </main>
         </>
     );

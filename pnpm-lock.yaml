@@ -39,7 +39,7 @@ dependencies:
     specifier: ^2.5.1
     version: 2.5.1
   embla-carousel-react:
-    specifier: ^8.3.0
+    specifier: 8.5.2
     version: 8.5.2(react@19.0.0)
   graphql:
     specifier: ^16.9.0

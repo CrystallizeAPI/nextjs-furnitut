@@ -20,9 +20,10 @@ const config: Config = {
             //Crystallize
             // dark: "#403953",
             // light: "#ffffff",
+            // soft: "#F7F6F9",
             // accent: "#699CA7",
             // muted: "#dfdfdf",
-            // soft: "#F7F6F9",
+            // vivid: '#EE7674',
         },
     },
     plugins: [
@@ -32,4 +33,3 @@ const config: Config = {
     ],
 };
 export default config;
-// Neutral, light, vidid, mutedm, dark

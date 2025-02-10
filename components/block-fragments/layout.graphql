@@ -15,7 +15,7 @@ fragment layout on LayoutPiece {
                 caption
                 meta
                 focalPoint
-                createAt
+                createdAt
             }
         }
     }

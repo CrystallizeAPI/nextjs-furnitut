@@ -1,0 +1,554 @@
+{
+    "document": {
+        "mutation": "mutation CreateDocument($language: String!, $input: CreateDocumentInput!) { document { create(language: $language, input: $input, disableComponentValidation: true) { id } } }",
+        "sets": [
+            {
+                "input": {
+                    "tenantId": "##TENANT_ID##",
+                    "tree": { "parentId": "##TENANT_ROOT_ID##" },
+                    "shapeIdentifier": "landing-page",
+                    "name": "Index",
+                    "components": {
+                        "componentId": "blocks",
+                        "componentMultipleChoice": [
+                            {
+                                "componentId": "banner",
+                                "piece": {
+                                    "identifier": "banner",
+                                    "components": [
+                                        {
+                                            "componentId": "title",
+                                            "singleLine": {
+                                                "text": "Sit back, relax, and let your furniture wow"
+                                            }
+                                        },
+                                        {
+                                            "componentId": "description",
+                                            "richText": {
+                                                "json": [
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "paragraph",
+                                                        "textContent": "Why settle for boring? Our furniture is so stylish, your guests might just forget to leave. Get comfy, get classy, and let your home do the bragging."
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "componentId": "call-to-action",
+                                            "piece": {
+                                                "identifier": "call-to-action",
+                                                "components": [
+                                                    {
+                                                        "componentId": "action",
+                                                        "contentChunk": {
+                                                            "chunks": [
+                                                                [
+                                                                    {
+                                                                        "componentId": "label",
+                                                                        "singleLine": {
+                                                                            "text": "Go to products"
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "componentId": "url",
+                                                                        "singleLine": {
+                                                                            "text": "/products/outdoor-furniture"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "componentId": "banner",
+                                            "images": [
+                                                {
+                                                    "key": "vyd-furnitut/24/9/16/1/minimal-living-room-interior-design-with-leaf-shadow-wall.jpg"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "componentId": "layout",
+                                            "piece": {
+                                                "identifier": "layout",
+                                                "components": [
+                                                    {
+                                                        "componentId": "display-width",
+                                                        "selection": {
+                                                            "keys": ["stretch"]
+                                                        }
+                                                    },
+                                                    {
+                                                        "componentId": "theme",
+                                                        "selection": {
+                                                            "keys": ["pastel"]
+                                                        }
+                                                    },
+                                                    {
+                                                        "componentId": "background-media",
+                                                        "componentChoice": null
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "componentId": "feature-highlights",
+                                "piece": {
+                                    "identifier": "feature-highlights",
+                                    "components": [
+                                        {
+                                            "componentId": "usp",
+                                            "contentChunk": {
+                                                "chunks": [
+                                                    [
+                                                        {
+                                                            "componentId": "headline",
+                                                            "singleLine": {
+                                                                "text": "Custom comfort, tailored to you"
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "description",
+                                                            "richText": {
+                                                                "json": [
+                                                                    {
+                                                                        "kind": "block",
+                                                                        "type": "paragraph",
+                                                                        "textContent": "We offer fully customizable furniture pieces designed to fit your style and space, ensuring every item is uniquely yours."
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "icon",
+                                                            "images": [
+                                                                {
+                                                                    "key": "vyd-furnitut/24/9/17/1/icon-comfort.svg"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    [
+                                                        {
+                                                            "componentId": "headline",
+                                                            "singleLine": {
+                                                                "text": "Luxury quality, affordable prices"
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "description",
+                                                            "richText": {
+                                                                "json": [
+                                                                    {
+                                                                        "kind": "block",
+                                                                        "type": "paragraph",
+                                                                        "textContent": "Enjoy high-end furniture crafted with premium materials—without the luxury price tag. Style and durability, made accessible."
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "icon",
+                                                            "images": [
+                                                                {
+                                                                    "key": "vyd-furnitut/24/9/17/2/icon-diamond.svg"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    [
+                                                        {
+                                                            "componentId": "headline",
+                                                            "singleLine": {
+                                                                "text": "Fast delivery, no compromise"
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "description",
+                                                            "richText": {
+                                                                "json": [
+                                                                    {
+                                                                        "kind": "block",
+                                                                        "type": "paragraph",
+                                                                        "textContent": "Get your dream furniture delivered quickly with our express shipping options, so you can start enjoying your space in no time!"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "icon",
+                                                            "images": [
+                                                                {
+                                                                    "key": "vyd-furnitut/24/9/17/3/icon-box.svg"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "componentId": "layout",
+                                            "piece": {
+                                                "identifier": "layout",
+                                                "components": [
+                                                    {
+                                                        "componentId": "display-width",
+                                                        "selection": {
+                                                            "keys": ["contain"]
+                                                        }
+                                                    },
+                                                    {
+                                                        "componentId": "theme",
+                                                        "selection": {
+                                                            "keys": ["light"]
+                                                        }
+                                                    },
+                                                    {
+                                                        "componentId": "background-media",
+                                                        "componentChoice": null
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "componentId": "product-slider",
+                                "piece": {
+                                    "identifier": "product-slider",
+                                    "components": [
+                                        {
+                                            "componentId": "title",
+                                            "singleLine": {
+                                                "text": "To plant a garden is to believe in tomorrow"
+                                            }
+                                        },
+                                        {
+                                            "componentId": "description",
+                                            "richText": {
+                                                "json": [
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "paragraph",
+                                                        "children": [
+                                                            {
+                                                                "kind": "inline",
+                                                                "textContent": "Our plants are sure to brighten up your home"
+                                                            },
+                                                            {
+                                                                "kind": "inline",
+                                                                "type": "line-break"
+                                                            },
+                                                            {
+                                                                "kind": "inline",
+                                                                "textContent": "(and your future)."
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "componentId": "products",
+                                            "itemRelations": {
+                                                "itemIds": [],
+                                                "skus": [
+                                                    "palissade-table-iron-red",
+                                                    "palissade-table-iron-red-small",
+                                                    "palissade-bench-olive",
+                                                    "palissade-table-sky-grey-small",
+                                                    "palissade-lounge-sofa-olive",
+                                                    "palissade-table-anthracite-small"
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "componentId": "layout",
+                                            "piece": {
+                                                "identifier": "layout",
+                                                "components": [
+                                                    {
+                                                        "componentId": "display-width",
+                                                        "selection": {
+                                                            "keys": ["contain"]
+                                                        }
+                                                    },
+                                                    {
+                                                        "componentId": "theme",
+                                                        "selection": {
+                                                            "keys": ["light"]
+                                                        }
+                                                    },
+                                                    {
+                                                        "componentId": "background-media",
+                                                        "componentChoice": null
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "componentId": "picture-grid",
+                                "piece": {
+                                    "identifier": "picture-grid",
+                                    "components": [
+                                        {
+                                            "componentId": "title",
+                                            "singleLine": {
+                                                "text": "To plant a garden is to believe in tomorrow"
+                                            }
+                                        },
+                                        {
+                                            "componentId": "description",
+                                            "richText": {
+                                                "json": [
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "paragraph",
+                                                        "textContent": "Beautiful grid below."
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "componentId": "images",
+                                            "images": [
+                                                {
+                                                    "key": "vyd-furnitut/24/9/4/1/golden-pothos.jpg",
+                                                    "altText": "Golden Pothos"
+                                                },
+                                                {
+                                                    "key": "vyd-furnitut/24/9/4/20/palissade-table-collection.jpg",
+                                                    "altText": "Palissade table collection"
+                                                },
+                                                {
+                                                    "key": "vyd-furnitut/24/9/4/18/pilea-on-shelf.jpg",
+                                                    "altText": "Pilea plant on a shelf",
+                                                    "caption": {
+                                                        "json": [
+                                                            {
+                                                                "kind": "block",
+                                                                "type": "paragraph",
+                                                                "children": [
+                                                                    {
+                                                                        "kind": "inline",
+                                                                        "textContent": "Photo by "
+                                                                    },
+                                                                    {
+                                                                        "kind": "inline",
+                                                                        "type": "link",
+                                                                        "metadata": {
+                                                                            "href": "https://unsplash.com/@zhenh2424?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                                                                        },
+                                                                        "textContent": "Zhen H"
+                                                                    },
+                                                                    {
+                                                                        "kind": "inline",
+                                                                        "textContent": " on Unsplash"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "key": "vyd-furnitut/24/9/4/14/hanging-golden-pothos.jpg",
+                                                    "altText": "Golden pothos in a pot on a self.",
+                                                    "caption": {
+                                                        "json": [
+                                                            {
+                                                                "kind": "block",
+                                                                "type": "paragraph",
+                                                                "children": [
+                                                                    {
+                                                                        "kind": "inline",
+                                                                        "textContent": "Photo by "
+                                                                    },
+                                                                    {
+                                                                        "kind": "inline",
+                                                                        "type": "link",
+                                                                        "metadata": {
+                                                                            "href": "https://unsplash.com/@ashyda?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                                                                        },
+                                                                        "textContent": "Zinah Insignia"
+                                                                    },
+                                                                    {
+                                                                        "kind": "inline",
+                                                                        "textContent": " on Unsplash"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "componentId": "layout",
+                                            "piece": {
+                                                "identifier": "layout",
+                                                "components": [
+                                                    {
+                                                        "componentId": "display-width",
+                                                        "selection": {
+                                                            "keys": ["contain"]
+                                                        }
+                                                    },
+                                                    {
+                                                        "componentId": "theme",
+                                                        "selection": {
+                                                            "keys": ["light"]
+                                                        }
+                                                    },
+                                                    {
+                                                        "componentId": "background-media",
+                                                        "componentChoice": null
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "componentId": "product-slider",
+                                "piece": {
+                                    "identifier": "product-slider",
+                                    "components": [
+                                        {
+                                            "componentId": "title",
+                                            "singleLine": {
+                                                "text": "Wide plants section"
+                                            }
+                                        },
+                                        {
+                                            "componentId": "description",
+                                            "richText": {
+                                                "json": [
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "paragraph",
+                                                        "textContent": "Disco time."
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "componentId": "products",
+                                            "itemRelations": {
+                                                "itemIds": [],
+                                                "skus": [
+                                                    "golden-pothos-large",
+                                                    "monstera-deliciosa-small",
+                                                    "pilea-large",
+                                                    "monstera-deliciosa-medium"
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "componentId": "layout",
+                                            "piece": {
+                                                "identifier": "layout",
+                                                "components": [
+                                                    {
+                                                        "componentId": "display-width",
+                                                        "selection": {
+                                                            "keys": ["stretch"]
+                                                        }
+                                                    },
+                                                    {
+                                                        "componentId": "theme",
+                                                        "selection": {
+                                                            "keys": ["dark"]
+                                                        }
+                                                    },
+                                                    {
+                                                        "componentId": "background-media",
+                                                        "componentChoice": null
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "componentId": "story-slider",
+                                "piece": {
+                                    "identifier": "story-slider",
+                                    "components": [
+                                        {
+                                            "componentId": "title",
+                                            "singleLine": {
+                                                "text": "Plants that won't judge your watering habits"
+                                            }
+                                        },
+                                        {
+                                            "componentId": "description",
+                                            "richText": {
+                                                "json": [
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "paragraph",
+                                                        "textContent": "Add a fresh touch to your home with our vibrant collection of indoor plants. Low-maintenance and full of personality, they’ll transform any room into a lush paradise!"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "componentId": "stories",
+                                            "itemRelations": {
+                                                "itemIds": [
+                                                    "66daecd3bc83cf21ce983649",
+                                                    "66d9b0e4bc83cf21ce983644",
+                                                    "66d9af02bc83cf21ce983642",
+                                                    "66dae8c4bc83cf21ce983648"
+                                                ],
+                                                "skus": []
+                                            }
+                                        },
+                                        {
+                                            "componentId": "layout",
+                                            "piece": {
+                                                "identifier": "layout",
+                                                "components": [
+                                                    {
+                                                        "componentId": "display-width",
+                                                        "selection": {
+                                                            "keys": ["contain"]
+                                                        }
+                                                    },
+                                                    {
+                                                        "componentId": "theme",
+                                                        "selection": {
+                                                            "keys": ["light"]
+                                                        }
+                                                    },
+                                                    {
+                                                        "componentId": "background-media",
+                                                        "componentChoice": null
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

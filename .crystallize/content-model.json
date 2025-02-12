@@ -9,13 +9,6 @@
       "intent": "shape/create"
     },
     {
-      "identifier": "product",
-      "name": "Product",
-      "components": [],
-      "type": "product",
-      "intent": "shape/create"
-    },
-    {
       "identifier": "brand",
       "name": "Brand",
       "components": [
@@ -193,14 +186,12 @@
         {
           "id": "title",
           "type": "singleLine",
-          "name": "Title",
-          "config": {}
+          "name": "Title"
         },
         {
           "id": "description",
           "type": "richText",
-          "name": "Description",
-          "config": {}
+          "name": "Description"
         },
         {
           "id": "call-to-action",
@@ -250,14 +241,12 @@
                 {
                   "id": "headline",
                   "type": "singleLine",
-                  "name": "Headline",
-                  "config": {}
+                  "name": "Headline"
                 },
                 {
                   "id": "description",
                   "type": "richText",
-                  "name": "Description",
-                  "config": {}
+                  "name": "Description"
                 },
                 {
                   "id": "icon",
@@ -603,14 +592,12 @@
         {
           "id": "title",
           "type": "singleLine",
-          "name": "Title",
-          "config": {}
+          "name": "Title"
         },
         {
           "id": "description",
           "type": "richText",
-          "name": "Description",
-          "config": {}
+          "name": "Description"
         },
         {
           "id": "products",
@@ -763,14 +750,12 @@
         {
           "id": "title",
           "type": "singleLine",
-          "name": "Title",
-          "config": {}
+          "name": "Title"
         },
         {
           "id": "description",
           "type": "richText",
-          "name": "Description",
-          "config": {}
+          "name": "Description"
         },
         {
           "id": "stories",

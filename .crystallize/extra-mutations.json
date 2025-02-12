@@ -1,553 +1,1385 @@
 {
-    "document": {
-        "mutation": "mutation CreateDocument($language: String!, $input: CreateDocumentInput!) { document { create(language: $language, input: $input, disableComponentValidation: true) { id } } }",
+    "create-category-folders": {
+        "target": "pim",
+        "mutation": "mutation CreateFolder($input: CreateFolderInput!) { folder { create(language: \"en\", input: $input, disableComponentValidation: true) { id } } }",
         "sets": [
             {
                 "input": {
-                    "tenantId": "##TENANT_ID##",
-                    "tree": { "parentId": "##TENANT_ROOT_ID##" },
-                    "shapeIdentifier": "landing-page",
-                    "name": "Index",
-                    "components": {
-                        "componentId": "blocks",
-                        "componentMultipleChoice": [
-                            {
-                                "componentId": "banner",
-                                "piece": {
-                                    "identifier": "banner",
-                                    "components": [
-                                        {
-                                            "componentId": "title",
-                                            "singleLine": {
-                                                "text": "Sit back, relax, and let your furniture wow"
-                                            }
-                                        },
-                                        {
-                                            "componentId": "description",
-                                            "richText": {
-                                                "json": [
-                                                    {
-                                                        "kind": "block",
-                                                        "type": "paragraph",
-                                                        "textContent": "Why settle for boring? Our furniture is so stylish, your guests might just forget to leave. Get comfy, get classy, and let your home do the bragging."
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "componentId": "call-to-action",
-                                            "piece": {
-                                                "identifier": "call-to-action",
-                                                "components": [
-                                                    {
-                                                        "componentId": "action",
-                                                        "contentChunk": {
-                                                            "chunks": [
-                                                                [
-                                                                    {
-                                                                        "componentId": "label",
-                                                                        "singleLine": {
-                                                                            "text": "Go to products"
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "componentId": "url",
-                                                                        "singleLine": {
-                                                                            "text": "/products/outdoor-furniture"
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            ]
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "componentId": "banner",
-                                            "images": [
-                                                {
-                                                    "key": "vyd-furnitut/24/9/16/1/minimal-living-room-interior-design-with-leaf-shadow-wall.jpg"
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$root.TENANT_ROOT_ID" },
+                    "shapeIdentifier": "category",
+                    "name": "Products",
+                    "components": [
+                        {
+                            "componentId": "title",
+                            "singleLine": {
+                                "text": "Products"
+                            }
+                        },
+                        {
+                            "componentId": "blocks",
+                            "componentMultipleChoice": [
+                                {
+                                    "componentId": "banner",
+                                    "piece": {
+                                        "identifier": "banner",
+                                        "components": [
+                                            {
+                                                "componentId": "title",
+                                                "singleLine": {
+                                                    "text": "Outdoor furniture"
                                                 }
-                                            ]
-                                        },
-                                        {
-                                            "componentId": "layout",
-                                            "piece": {
-                                                "identifier": "layout",
-                                                "components": [
-                                                    {
-                                                        "componentId": "display-width",
-                                                        "selection": {
-                                                            "keys": ["stretch"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "componentId": "theme",
-                                                        "selection": {
-                                                            "keys": ["pastel"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "componentId": "background-media",
-                                                        "componentChoice": null
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "componentId": "feature-highlights",
-                                "piece": {
-                                    "identifier": "feature-highlights",
-                                    "components": [
-                                        {
-                                            "componentId": "usp",
-                                            "contentChunk": {
-                                                "chunks": [
-                                                    [
+                                            },
+                                            {
+                                                "componentId": "description",
+                                                "richText": {
+                                                    "json": [
                                                         {
-                                                            "componentId": "headline",
-                                                            "singleLine": {
-                                                                "text": "Custom comfort, tailored to you"
-                                                            }
-                                                        },
-                                                        {
-                                                            "componentId": "description",
-                                                            "richText": {
-                                                                "json": [
-                                                                    {
-                                                                        "kind": "block",
-                                                                        "type": "paragraph",
-                                                                        "textContent": "We offer fully customizable furniture pieces designed to fit your style and space, ensuring every item is uniquely yours."
-                                                                    }
-                                                                ]
-                                                            }
-                                                        },
-                                                        {
-                                                            "componentId": "icon",
-                                                            "images": [
-                                                                {
-                                                                    "key": "vyd-furnitut/24/9/17/1/icon-comfort.svg"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ],
-                                                    [
-                                                        {
-                                                            "componentId": "headline",
-                                                            "singleLine": {
-                                                                "text": "Luxury quality, affordable prices"
-                                                            }
-                                                        },
-                                                        {
-                                                            "componentId": "description",
-                                                            "richText": {
-                                                                "json": [
-                                                                    {
-                                                                        "kind": "block",
-                                                                        "type": "paragraph",
-                                                                        "textContent": "Enjoy high-end furniture crafted with premium materials—without the luxury price tag. Style and durability, made accessible."
-                                                                    }
-                                                                ]
-                                                            }
-                                                        },
-                                                        {
-                                                            "componentId": "icon",
-                                                            "images": [
-                                                                {
-                                                                    "key": "vyd-furnitut/24/9/17/2/icon-diamond.svg"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ],
-                                                    [
-                                                        {
-                                                            "componentId": "headline",
-                                                            "singleLine": {
-                                                                "text": "Fast delivery, no compromise"
-                                                            }
-                                                        },
-                                                        {
-                                                            "componentId": "description",
-                                                            "richText": {
-                                                                "json": [
-                                                                    {
-                                                                        "kind": "block",
-                                                                        "type": "paragraph",
-                                                                        "textContent": "Get your dream furniture delivered quickly with our express shipping options, so you can start enjoying your space in no time!"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        },
-                                                        {
-                                                            "componentId": "icon",
-                                                            "images": [
-                                                                {
-                                                                    "key": "vyd-furnitut/24/9/17/3/icon-box.svg"
-                                                                }
-                                                            ]
+                                                            "kind": "block",
+                                                            "type": "paragraph",
+                                                            "textContent": "Designed by French brothers Ronan and Erwan Bouroullec, this outdoor collection is united by its visual simplicity and core strength. It’s designed in colour and form to integrate effortlessly into a natural landscape or urban setting."
                                                         }
                                                     ]
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "componentId": "layout",
-                                            "piece": {
-                                                "identifier": "layout",
-                                                "components": [
-                                                    {
-                                                        "componentId": "display-width",
-                                                        "selection": {
-                                                            "keys": ["contain"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "componentId": "theme",
-                                                        "selection": {
-                                                            "keys": ["light"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "componentId": "background-media",
-                                                        "componentChoice": null
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "componentId": "product-slider",
-                                "piece": {
-                                    "identifier": "product-slider",
-                                    "components": [
-                                        {
-                                            "componentId": "title",
-                                            "singleLine": {
-                                                "text": "To plant a garden is to believe in tomorrow"
-                                            }
-                                        },
-                                        {
-                                            "componentId": "description",
-                                            "richText": {
-                                                "json": [
-                                                    {
-                                                        "kind": "block",
-                                                        "type": "paragraph",
-                                                        "children": [
-                                                            {
-                                                                "kind": "inline",
-                                                                "textContent": "Our plants are sure to brighten up your home"
-                                                            },
-                                                            {
-                                                                "kind": "inline",
-                                                                "type": "line-break"
-                                                            },
-                                                            {
-                                                                "kind": "inline",
-                                                                "textContent": "(and your future)."
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "componentId": "products",
-                                            "itemRelations": {
-                                                "itemIds": [],
-                                                "skus": [
-                                                    "palissade-table-iron-red",
-                                                    "palissade-table-iron-red-small",
-                                                    "palissade-bench-olive",
-                                                    "palissade-table-sky-grey-small",
-                                                    "palissade-lounge-sofa-olive",
-                                                    "palissade-table-anthracite-small"
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "componentId": "layout",
-                                            "piece": {
-                                                "identifier": "layout",
-                                                "components": [
-                                                    {
-                                                        "componentId": "display-width",
-                                                        "selection": {
-                                                            "keys": ["contain"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "componentId": "theme",
-                                                        "selection": {
-                                                            "keys": ["light"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "componentId": "background-media",
-                                                        "componentChoice": null
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "componentId": "picture-grid",
-                                "piece": {
-                                    "identifier": "picture-grid",
-                                    "components": [
-                                        {
-                                            "componentId": "title",
-                                            "singleLine": {
-                                                "text": "To plant a garden is to believe in tomorrow"
-                                            }
-                                        },
-                                        {
-                                            "componentId": "description",
-                                            "richText": {
-                                                "json": [
-                                                    {
-                                                        "kind": "block",
-                                                        "type": "paragraph",
-                                                        "textContent": "Beautiful grid below."
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "componentId": "images",
-                                            "images": [
-                                                {
-                                                    "key": "vyd-furnitut/24/9/4/1/golden-pothos.jpg",
-                                                    "altText": "Golden Pothos"
-                                                },
-                                                {
-                                                    "key": "vyd-furnitut/24/9/4/20/palissade-table-collection.jpg",
-                                                    "altText": "Palissade table collection"
-                                                },
-                                                {
-                                                    "key": "vyd-furnitut/24/9/4/18/pilea-on-shelf.jpg",
-                                                    "altText": "Pilea plant on a shelf",
-                                                    "caption": {
-                                                        "json": [
-                                                            {
-                                                                "kind": "block",
-                                                                "type": "paragraph",
-                                                                "children": [
-                                                                    {
-                                                                        "kind": "inline",
-                                                                        "textContent": "Photo by "
-                                                                    },
-                                                                    {
-                                                                        "kind": "inline",
-                                                                        "type": "link",
-                                                                        "metadata": {
-                                                                            "href": "https://unsplash.com/@zhenh2424?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "call-to-action",
+                                                "piece": {
+                                                    "identifier": "call-to-action",
+                                                    "components": [
+                                                        {
+                                                            "componentId": "action",
+                                                            "contentChunk": {
+                                                                "chunks": [
+                                                                    [
+                                                                        {
+                                                                            "componentId": "label",
+                                                                            "singleLine": {
+                                                                                "text": "See collection"
+                                                                            }
                                                                         },
-                                                                        "textContent": "Zhen H"
-                                                                    },
-                                                                    {
-                                                                        "kind": "inline",
-                                                                        "textContent": " on Unsplash"
-                                                                    }
+                                                                        {
+                                                                            "componentId": "url",
+                                                                            "singleLine": {
+                                                                                "text": "/products/outdoor-furniture"
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 ]
                                                             }
-                                                        ]
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "componentId": "banner",
+                                                "images": [
+                                                    {
+                                                        "key": "$images.images-palissade-collection-jpg"
                                                     }
-                                                },
+                                                ]
+                                            },
+                                            {
+                                                "componentId": "layout",
+                                                "piece": {
+                                                    "identifier": "layout",
+                                                    "components": [
+                                                        {
+                                                            "componentId": "display-width",
+                                                            "selection": {
+                                                                "keys": ["contain"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "theme",
+                                                            "selection": {
+                                                                "keys": ["pastel"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "background-media",
+                                                            "componentChoice": null
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "componentId": "meta",
+                            "piece": {
+                                "identifier": "meta",
+                                "components": [
+                                    {
+                                        "componentId": "title",
+                                        "singleLine": {
+                                            "text": "Check out our products"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "description",
+                                        "richText": {
+                                            "json": [
                                                 {
-                                                    "key": "vyd-furnitut/24/9/4/14/hanging-golden-pothos.jpg",
-                                                    "altText": "Golden pothos in a pot on a self.",
-                                                    "caption": {
-                                                        "json": [
-                                                            {
-                                                                "kind": "block",
-                                                                "type": "paragraph",
-                                                                "children": [
-                                                                    {
-                                                                        "kind": "inline",
-                                                                        "textContent": "Photo by "
-                                                                    },
-                                                                    {
-                                                                        "kind": "inline",
-                                                                        "type": "link",
-                                                                        "metadata": {
-                                                                            "href": "https://unsplash.com/@ashyda?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Check out our products"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "componentId": "image",
+                                        "images": null
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$root.TENANT_ROOT_ID" },
+                    "shapeIdentifier": "category",
+                    "name": "Stories",
+                    "components": [
+                        {
+                            "componentId": "title",
+                            "singleLine": {
+                                "text": "Stories"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$root.TENANT_ROOT_ID" },
+                    "shapeIdentifier": "category",
+                    "name": "Room",
+                    "components": [
+                        {
+                            "componentId": "title",
+                            "singleLine": {
+                                "text": "Room"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$root.TENANT_ROOT_ID" },
+                    "shapeIdentifier": "category",
+                    "name": "Brands",
+                    "components": [
+                        {
+                            "componentId": "title",
+                            "singleLine": {
+                                "text": "Brands"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$create-category-folders[0].folder.create.id" },
+                    "shapeIdentifier": "category",
+                    "name": "Outdoor furniture",
+                    "components": [
+                        {
+                            "componentId": "title",
+                            "singleLine": {
+                                "text": "Palissade Collection by Ronan and Erwan Bouroullec"
+                            }
+                        },
+                        {
+                            "componentId": "description",
+                            "richText": {
+                                "json": [
+                                    {
+                                        "kind": "block",
+                                        "type": "paragraph",
+                                        "children": [
+                                            {
+                                                "kind": "inline",
+                                                "textContent": "The Palissade Collection, designed by Ronan and Erwan Bouroullec for HAY, offers a range of sleek and durable outdoor furniture crafted from steel. This collection includes chairs, benches, tables, and lounge sofas, all designed to blend seamlessly into both natural and urban environments while providing timeless style and comfort."
+                                            },
+                                            {
+                                                "kind": "inline",
+                                                "type": "line-break"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "kind": "block",
+                                        "type": "unordered-list",
+                                        "children": [
+                                            {
+                                                "kind": "block",
+                                                "type": "list-item",
+                                                "children": [
+                                                    {
+                                                        "kind": "inline",
+                                                        "type": "strong",
+                                                        "textContent": "Timeless Design:"
+                                                    },
+                                                    {
+                                                        "kind": "inline",
+                                                        "textContent": " Elegant and minimalist aesthetics that transcend trends."
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "kind": "block",
+                                                "type": "list-item",
+                                                "children": [
+                                                    {
+                                                        "kind": "inline",
+                                                        "type": "strong",
+                                                        "textContent": "Durable Construction:"
+                                                    },
+                                                    {
+                                                        "kind": "inline",
+                                                        "textContent": " Crafted from high-quality steel for lasting outdoor use."
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "kind": "block",
+                                                "type": "list-item",
+                                                "children": [
+                                                    {
+                                                        "kind": "inline",
+                                                        "type": "strong",
+                                                        "textContent": "Versatile Functionality:"
+                                                    },
+                                                    {
+                                                        "kind": "inline",
+                                                        "textContent": " Suitable for various outdoor spaces, from gardens to cafes."
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "kind": "block",
+                                                "type": "list-item",
+                                                "children": [
+                                                    {
+                                                        "kind": "inline",
+                                                        "type": "strong",
+                                                        "textContent": "Comfort and Ergonomics:"
+                                                    },
+                                                    {
+                                                        "kind": "inline",
+                                                        "textContent": " Designed for optimal relaxation and support."
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "kind": "block",
+                                                "type": "list-item",
+                                                "children": [
+                                                    {
+                                                        "kind": "inline",
+                                                        "type": "strong",
+                                                        "textContent": "Weather-Resistant:"
+                                                    },
+                                                    {
+                                                        "kind": "inline",
+                                                        "textContent": " Built to withstand the elements and maintain its beauty."
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "kind": "block",
+                                        "type": "paragraph",
+                                        "children": [
+                                            {
+                                                "kind": "inline",
+                                                "type": "line-break"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "blocks",
+                            "componentMultipleChoice": [
+                                {
+                                    "componentId": "banner",
+                                    "piece": {
+                                        "identifier": "banner",
+                                        "components": [
+                                            {
+                                                "componentId": "title",
+                                                "singleLine": {
+                                                    "text": "Balcony collection"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "description",
+                                                "richText": {
+                                                    "json": [
+                                                        {
+                                                            "kind": "block",
+                                                            "type": "paragraph",
+                                                            "textContent": "Designed by French brothers Ronan and Erwan Bouroullec, this outdoor collection is united by its visual simplicity and core strength. It’s designed in colour and form to integrate effortlessly into a natural landscape or urban setting."
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "componentId": "call-to-action",
+                                                "piece": {
+                                                    "identifier": "call-to-action",
+                                                    "components": [
+                                                        {
+                                                            "componentId": "action",
+                                                            "contentChunk": {
+                                                                "chunks": [
+                                                                    [
+                                                                        {
+                                                                            "componentId": "label",
+                                                                            "singleLine": {
+                                                                                "text": "Read the story"
+                                                                            }
                                                                         },
-                                                                        "textContent": "Zinah Insignia"
-                                                                    },
-                                                                    {
-                                                                        "kind": "inline",
-                                                                        "textContent": " on Unsplash"
-                                                                    }
+                                                                        {
+                                                                            "componentId": "url",
+                                                                            "singleLine": { "text": "/" }
+                                                                        }
+                                                                    ]
                                                                 ]
                                                             }
-                                                        ]
-                                                    }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "componentId": "banner",
+                                                "images": [{ "key": "$images.images-palissade-collection-jpg" }]
+                                            },
+                                            {
+                                                "componentId": "layout",
+                                                "piece": {
+                                                    "identifier": "layout",
+                                                    "components": [
+                                                        {
+                                                            "componentId": "display-width",
+                                                            "selection": {
+                                                                "keys": ["contain"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "theme",
+                                                            "selection": {
+                                                                "keys": ["muted"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "background-media",
+                                                            "componentChoice": null
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$create-category-folders[0].folder.create.id" },
+                    "shapeIdentifier": "category",
+                    "name": "Accessories",
+                    "components": [
+                        {
+                            "componentId": "title",
+                            "singleLine": {
+                                "text": "Accessories"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "create-menu-folders": {
+        "target": "pim",
+        "mutation": "mutation CreateFolder($input: CreateFolderInput!) { folder { create(language: \"en\", input: $input, disableComponentValidation: true) { id } } }",
+        "sets": [
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$root.TENANT_ROOT_ID" },
+                    "shapeIdentifier": "menu-item",
+                    "name": "Menu"
+                }
+            },
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$create-menu-folders[0].folder.create.id" },
+                    "shapeIdentifier": "menu-item",
+                    "name": "Top"
+                }
+            },
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$create-menu-folders[1].folder.create.id" },
+                    "shapeIdentifier": "menu-item",
+                    "name": "Products",
+                    "components": [
+                        {
+                            "componentId": "label",
+                            "singleLine": { "text": "Products" }
+                        },
+                        {
+                            "componentId": "link",
+                            "componentChoice": {
+                                "componentId": "item",
+                                "itemRelations": {
+                                    "itemIds": ["$create-category-folders[0].folder.create.id"],
+                                    "skus": []
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$create-menu-folders[1].folder.create.id" },
+                    "shapeIdentifier": "menu-item",
+                    "name": "Stories",
+                    "components": [
+                        {
+                            "componentId": "label",
+                            "singleLine": { "text": "Stories" }
+                        },
+                        {
+                            "componentId": "link",
+                            "componentChoice": {
+                                "componentId": "item",
+                                "itemRelations": {
+                                    "itemIds": ["$create-category-folders[1].folder.create.id"],
+                                    "skus": []
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$create-menu-folders[1].folder.create.id" },
+                    "shapeIdentifier": "menu-item",
+                    "name": "Room",
+                    "components": [
+                        {
+                            "componentId": "label",
+                            "singleLine": { "text": "Room" }
+                        },
+                        {
+                            "componentId": "link",
+                            "componentChoice": {
+                                "componentId": "item",
+                                "itemRelations": {
+                                    "itemIds": ["$create-category-folders[2].folder.create.id"],
+                                    "skus": []
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "create-brands": {
+        "target": "pim",
+        "mutation": "mutation CreateDocument($input: CreateDocumentInput!) { document { create(language: \"en\", input: $input, disableComponentValidation: true) { id } } }",
+        "sets": [
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$create-category-folders[3].folder.create.id" },
+                    "shapeIdentifier": "brand",
+                    "name": "HAY",
+                    "components": [
+                        {
+                            "componentId": "logo",
+                            "images": [{ "key": "$images.images-hay-logo-svg" }]
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "create-products": {
+        "target": "pim",
+        "mutation": "mutation CreateProduct($input: CreateProductInput!) { product { create(language: \"en\", input: $input, disableComponentValidation: true) { id } } }",
+        "sets": [
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$create-category-folders[5].folder.create.id" },
+                    "shapeIdentifier": "product",
+                    "name": "Quilted Cushion",
+                    "vatTypeId": "$root.TENANT_DEFAULT_VATTYPE_ID",
+                    "variants": [
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Anthracite"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-palissade_dining_bench_quilted_cushion_anthracite-jpg"
+                                },
+                                {
+                                    "key": "$images.images-palissade_dining_bench_anthracite_palissade_dining_bench_quilted_cushion_anthracite-jpg"
+                                }
+                            ],
+                            "isDefault": true,
+                            "name": "Quilted Cushion Anthracite",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 99
+                                }
+                            ],
+                            "sku": "quilted-cushion-anthracite",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 0
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": []
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Sky grey"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-palissade_dining_bench_quilted_cushion_sky_grey-jpg"
+                                },
+                                {
+                                    "key": "$images.images-palissade_dining_bench_sky_grey_palissade_dining_bench_quilted_cushion_sky_grey-jpg"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Quilted Cushion Sky grey",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 99
+                                }
+                            ],
+                            "sku": "quilted-cushion-sky-grey",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 0
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": []
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Olive"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-palissade_dining_bench_quilted_cushion_olive-jpg"
+                                },
+                                {
+                                    "key": "$images.images-palissade_dining_bench_olive_palissade_dining_bench_quilted_cushion_olive-jpg"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Quilted Cushion Olive",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 99
+                                }
+                            ],
+                            "sku": "quilted-cushion-olive",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 0
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": []
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Iron red"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-palissade_dining_bench_quilted_cushion_iron_red-jpg"
+                                },
+                                {
+                                    "key": "$images.images-palissade_dining_bench_iron_red_palissade_dining_bench_quilted_cushion_without_armrest_iron_red-jpg"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Quilted Cushion Iron red",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 99
+                                }
+                            ],
+                            "sku": "quilted-cushion-iron-red",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 0
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": []
+                        }
+                    ],
+                    "components": [
+                        {
+                            "componentId": "title",
+                            "singleLine": { "text": "Palissade Dining Bench Quilted Cushion" }
+                        },
+                        {
+                            "componentId": "description",
+                            "richText": {
+                                "json": [
+                                    {
+                                        "kind": "block",
+                                        "type": "paragraph",
+                                        "textContent": "Adding extra comfort and functionality to Palissade’s collection of chairs and benches, the Palissade Soft Quilted Cushion is specially formed to fit the majority of the Palissade models. Crafted in fabric with a water-repellent finish, the cushion features an anti-slip backing and is filled with a soft and thick foam crumb and silicon fibre ball padding. The fabric has a high UV resistance, meaning it is fade-resistant with good colour fastness properties. The cushions are available in three colours and can be used all year round."
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "brand",
+                            "itemRelations": {
+                                "itemIds": ["$create-brands[0].document.create.id"],
+                                "skus": []
+                            }
+                        },
+                        {
+                            "componentId": "dimensions",
+                            "piece": {
+                                "identifier": "dimensions",
+                                "components": [
+                                    {
+                                        "componentId": "width",
+                                        "numeric": {
+                                            "number": 110,
+                                            "unit": "cm"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "height",
+                                        "numeric": {
+                                            "number": 89,
+                                            "unit": "cm"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "depth",
+                                        "numeric": {
+                                            "number": 6,
+                                            "unit": "cm"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "weight",
+                                        "numeric": {
+                                            "number": 600,
+                                            "unit": "g"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$create-category-folders[4].folder.create.id" },
+                    "shapeIdentifier": "product",
+                    "name": "Palissade lounge sofa",
+                    "vatTypeId": "$root.TENANT_DEFAULT_VATTYPE_ID",
+                    "variants": [
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Iron red"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-palissade-lounge-sofa-jpg",
+                                    "altText": "Iron red Palissade lounge sofa"
+                                },
+                                {
+                                    "key": "$images.images-palissade-lounge-chair-low-iron-red_palissade-low-table-iron-red-powder-coated-steel_palissade-lounge-sofa-iron-red-jpg"
+                                },
+                                {
+                                    "key": "$images.images-palissade-lounge-sofa_palissade-low-table-iron-red-jpg"
+                                }
+                            ],
+                            "isDefault": true,
+                            "name": "Palissade lounge sofa Iron Red",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 1000
+                                },
+                                {
+                                    "identifier": "membership",
+                                    "price": 500
+                                },
+                                {
+                                    "identifier": "norway-b2b",
+                                    "price": 13748
+                                }
+                            ],
+                            "sku": "palissade-lounge-sofa-iron-red",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 1001
+                                },
+                                {
+                                    "identifier": "oslo",
+                                    "stock": 14
+                                },
+                                {
+                                    "identifier": "toronto",
+                                    "stock": 0
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 139,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 70,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 88,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "componentId": "matching-products",
+                                    "itemRelations": {
+                                        "itemIds": [],
+                                        "skus": ["quilted-cushion-iron-red"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Olive"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-palissade-lounge-sofa-olive-jpg",
+                                    "altText": "Olive Palissade lounge sofa"
+                                },
+                                {
+                                    "key": "$images.images-palissade-lounge-sofa-olive_palissade-quiltet-cushion-olive-jpg"
+                                },
+                                {
+                                    "key": "$images.images-palissade-lounge-sofa-olive_palissade-lounge-sofa-soft-quilted-seat-cushion-olive-jpg"
+                                },
+                                {
+                                    "key": "$images.images-palissade-lounge-chair-low_palissade-lounge-chair-low-quilted-cushion_palissade-lounge-sofa_palissade-lounge-sofa-quilted-cushion_olive-jpg"
+                                },
+                                {
+                                    "key": "$images.images-palissade-lounge-sofa-olive_palissade-ottoman-olive_pc-portable-cream-white-jpg"
+                                },
+                                {
+                                    "key": "$images.images-palissade-lounge-sofa-olive_palissade-lounge-chair-low-olive_palisadde-ottoman-olive-jpg"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Palissade lounge sofa Olive",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 1000
+                                },
+                                {
+                                    "identifier": "membership",
+                                    "price": 500
+                                },
+                                {
+                                    "identifier": "norway-b2b",
+                                    "price": 750
+                                }
+                            ],
+                            "sku": "palissade-lounge-sofa-olive",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 10
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 139,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 70,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 88,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "componentId": "matching-products",
+                                    "itemRelations": {
+                                        "itemIds": [],
+                                        "skus": ["quilted-cushion-olive"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Sky grey"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-palissade-lounge-sofa-sky-grey-jpg",
+                                    "altText": "Sky grey Palissade lounge sofa"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Palissade lounge sofa Sky Grey",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 1250
+                                },
+                                {
+                                    "identifier": "membership",
+                                    "price": 938
+                                },
+                                {
+                                    "identifier": "norway-b2b",
+                                    "price": 13748
+                                }
+                            ],
+                            "sku": "palissade-lounge-sofa-sky-grey",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 20
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 139,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 70,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 88,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "componentId": "matching-products",
+                                    "itemRelations": {
+                                        "itemIds": [],
+                                        "skus": ["quilted-cushion-sky-grey"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Steel"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-palissade-lounge-sofa-galvanised-steel-jpg",
+                                    "altText": "Galvanised steel Palissade lounge sofa"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Palissade lounge sofa Galvanised Steel",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 1900
+                                },
+                                {
+                                    "identifier": "membership",
+                                    "price": 1428
+                                },
+                                {
+                                    "identifier": "norway-b2b",
+                                    "price": 20898
+                                }
+                            ],
+                            "sku": "palissade-lounge-sofa-galvanised-steel",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 100
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 139,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 70,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 88,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Anthracite"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-palissade-lounge-sofa-anthracite-jpg",
+                                    "altText": "Anthracite Palissade lounge sofa"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Palissade lounge sofa Anthracite",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 1250
+                                },
+                                {
+                                    "identifier": "membership",
+                                    "price": 938
+                                },
+                                {
+                                    "identifier": "norway-b2b",
+                                    "price": 13748
+                                }
+                            ],
+                            "sku": "palissade-lounge-sofa-anthracite",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 10
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 139,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 70,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 88,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "componentId": "matching-products",
+                                    "itemRelations": {
+                                        "itemIds": [],
+                                        "skus": ["quilted-cushion-anthracite"]
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "components": [
+                        {
+                            "componentId": "title",
+                            "singleLine": { "text": "Palissade Lounge Sofa" }
+                        },
+                        {
+                            "componentId": "description",
+                            "richText": {
+                                "json": [
+                                    {
+                                        "kind": "block",
+                                        "type": "paragraph",
+                                        "textContent": "Discover the Palissade lounge sofa, a masterful creation by French designers Ronan and Erwan Bouroullec for HAY. This piece combines sleek, geometric design with exceptional durability, crafted from powder-coated or hot-galvanised steel. Perfect for both urban and natural settings, the Palissade lounge sofa offers sophisticated comfort and style for any outdoor space."
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "story",
+                            "paragraphCollection": {
+                                "paragraphs": [
+                                    {
+                                        "body": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "The Palissade lounge sofa embodies the visionary design ethos of French brothers Ronan and Erwan Bouroullec, crafted for HAY to transform outdoor living. With its elegant yet robust construction, this sofa is a testament to the beauty of symmetrical geometry and minimalist aesthetics. Made from either powder-coated or hot-galvanised steel, the Palissade lounge sofa is built to withstand the rigors of outdoor environments while maintaining its refined look."
+                                                },
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Designed to seamlessly integrate into various settings—from chic city terraces to tranquil garden retreats—the Palissade lounge sofa provides not just seating but a sophisticated lounging experience. Its clean lines and balanced proportions create a visually striking piece that complements any outdoor décor."
+                                                },
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Over time, the sofa's resilient materials will develop a unique patina, adding to its charm and character. This piece is more than just furniture; it’s an investment in enduring style and comfort, designed to become an integral part of your outdoor living space for years to come. Whether hosting a lively gathering or enjoying a quiet moment, the Palissade lounge sofa offers an inviting blend of elegance and practicality."
                                                 }
                                             ]
                                         },
-                                        {
-                                            "componentId": "layout",
-                                            "piece": {
-                                                "identifier": "layout",
-                                                "components": [
-                                                    {
-                                                        "componentId": "display-width",
-                                                        "selection": {
-                                                            "keys": ["contain"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "componentId": "theme",
-                                                        "selection": {
-                                                            "keys": ["light"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "componentId": "background-media",
-                                                        "componentChoice": null
-                                                    }
-                                                ]
+                                        "title": { "text": "About the Lounge Sofa" },
+                                        "images": [
+                                            {
+                                                "key": "$images.images-palissade-lounge-sofa-jpg",
+                                                "altText": "Sky grey Palissade lounge sofa on a pool deck"
                                             }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "componentId": "product-slider",
-                                "piece": {
-                                    "identifier": "product-slider",
-                                    "components": [
-                                        {
-                                            "componentId": "title",
-                                            "singleLine": {
-                                                "text": "Wide plants section"
-                                            }
-                                        },
-                                        {
-                                            "componentId": "description",
-                                            "richText": {
-                                                "json": [
-                                                    {
-                                                        "kind": "block",
-                                                        "type": "paragraph",
-                                                        "textContent": "Disco time."
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "componentId": "products",
-                                            "itemRelations": {
-                                                "itemIds": [],
-                                                "skus": [
-                                                    "golden-pothos-large",
-                                                    "monstera-deliciosa-small",
-                                                    "pilea-large",
-                                                    "monstera-deliciosa-medium"
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "componentId": "layout",
-                                            "piece": {
-                                                "identifier": "layout",
-                                                "components": [
-                                                    {
-                                                        "componentId": "display-width",
-                                                        "selection": {
-                                                            "keys": ["stretch"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "componentId": "theme",
-                                                        "selection": {
-                                                            "keys": ["dark"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "componentId": "background-media",
-                                                        "componentChoice": null
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "componentId": "story-slider",
-                                "piece": {
-                                    "identifier": "story-slider",
-                                    "components": [
-                                        {
-                                            "componentId": "title",
-                                            "singleLine": {
-                                                "text": "Plants that won't judge your watering habits"
-                                            }
-                                        },
-                                        {
-                                            "componentId": "description",
-                                            "richText": {
-                                                "json": [
-                                                    {
-                                                        "kind": "block",
-                                                        "type": "paragraph",
-                                                        "textContent": "Add a fresh touch to your home with our vibrant collection of indoor plants. Low-maintenance and full of personality, they’ll transform any room into a lush paradise!"
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "componentId": "stories",
-                                            "itemRelations": {
-                                                "itemIds": [
-                                                    "66daecd3bc83cf21ce983649",
-                                                    "66d9b0e4bc83cf21ce983644",
-                                                    "66d9af02bc83cf21ce983642",
-                                                    "66dae8c4bc83cf21ce983648"
-                                                ],
-                                                "skus": []
-                                            }
-                                        },
-                                        {
-                                            "componentId": "layout",
-                                            "piece": {
-                                                "identifier": "layout",
-                                                "components": [
-                                                    {
-                                                        "componentId": "display-width",
-                                                        "selection": {
-                                                            "keys": ["contain"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "componentId": "theme",
-                                                        "selection": {
-                                                            "keys": ["light"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "componentId": "background-media",
-                                                        "componentChoice": null
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
+                                        ],
+                                        "videos": null
+                                    }
+                                ]
                             }
-                        ]
-                    }
+                        },
+                        {
+                            "componentId": "brand",
+                            "itemRelations": {
+                                "itemIds": ["$create-brands[0].document.create.id"],
+                                "skus": []
+                            }
+                        },
+                        {
+                            "componentId": "dimensions",
+                            "piece": {
+                                "identifier": "dimensions",
+                                "components": [
+                                    {
+                                        "componentId": "width",
+                                        "numeric": {
+                                            "number": 65,
+                                            "unit": "cm"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "height",
+                                        "numeric": {
+                                            "number": 70,
+                                            "unit": "cm"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "depth",
+                                        "numeric": {
+                                            "number": 165,
+                                            "unit": "cm"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "weight",
+                                        "numeric": {
+                                            "number": 35,
+                                            "unit": "kg"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "meta",
+                            "piece": {
+                                "identifier": "meta",
+                                "components": [
+                                    {
+                                        "componentId": "title",
+                                        "singleLine": {
+                                            "text": "Palissade Lounge Sofa"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "description",
+                                        "richText": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Discover the Palissade lounge sofa, a masterful creation by French designers Ronan and Erwan Bouroullec for HAY. This piece combines sleek, geometric design with exceptional durability, crafted from powder-coated or hot-galvanised steel. Perfect for both urban and natural settings, the Palissade lounge sofa offers sophisticated comfort and style for any outdoor space."
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "componentId": "image",
+                                        "images": [
+                                            {
+                                                "key": "$images.images-palissade-lounge-sofa-jpg",
+                                                "altText": "Sky grey Palissade lounge sofa on a pool deck"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
                 }
+            }
+        ]
+    },
+    "publish-category-folders": {
+        "mutation": "mutation PublishItems($ids: [ID!]!) { publishItems(language: \"en\", ids: $ids) { ... on PublishItemsRequest { success { itemId } } } }",
+        "target": "core",
+        "sets": [
+            {
+                "ids": [
+                    "$create-category-folders[0].folder.create.id",
+                    "$create-category-folders[1].folder.create.id",
+                    "$create-category-folders[2].folder.create.id",
+                    "$create-category-folders[3].folder.create.id",
+                    "$create-category-folders[4].folder.create.id",
+                    "$create-category-folders[5].folder.create.id"
+                ]
+            }
+        ]
+    },
+    "publish-menu-folders": {
+        "mutation": "mutation PublishItems($ids: [ID!]!) { publishItems(language: \"en\", ids: $ids) { ... on PublishItemsRequest { success { itemId } } } }",
+        "target": "core",
+        "sets": [
+            {
+                "ids": [
+                    "$create-menu-folders[0].folder.create.id",
+                    "$create-menu-folders[1].folder.create.id",
+                    "$create-menu-folders[2].folder.create.id",
+                    "$create-menu-folders[3].folder.create.id",
+                    "$create-menu-folders[4].folder.create.id"
+                ]
+            }
+        ]
+    },
+    "publish-items": {
+        "mutation": "mutation PublishItems($ids: [ID!]!) { publishItems(language: \"en\", ids: $ids) { ... on PublishItemsRequest { success { itemId } } } }",
+        "target": "core",
+        "sets": [
+            {
+                "ids": [
+                    "$create-brands[0].document.create.id",
+                    "$create-products[0].product.create.id",
+                    "$create-products[1].product.create.id"
+                ]
             }
         ]
     }

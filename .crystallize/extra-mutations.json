@@ -769,11 +769,11 @@
                             "externalReference": null,
                             "images": [
                                 {
-                                    "key": "$images.images-palissade-lounge-sofa-jpg",
+                                    "key": "$images.images-palissade-lounge-sofa-iron-red-jpg",
                                     "altText": "Iron red Palissade lounge sofa"
                                 },
                                 {
-                                    "key": "$images.images-palissade-lounge-sofa-iron-red-jpg"
+                                    "key": "$images.images-palissade-lounge-chair-low-iron-red_palissade-low-table-iron-red-powder-coated-steel_palissade-lounge-sofa-iron-red-jpg"
                                 },
                                 {
                                     "key": "$images.images-palissade-lounge-sofa_palissade-low-table-iron-red-jpg"
@@ -2218,6 +2218,23 @@
             }
         ]
     },
+    "add-item-relations": {
+        "target": "pim",
+        "mutation": "mutation UpdateComponent($itemId: ID!, $input: ComponentInput!) { item { updateComponent(itemId: $itemId, language: \"en\", input: $input, disableValidation: true) { id }}}",
+        "sets": [
+            {
+                "itemId": "$create-products[1].product.create.id",
+                "language": "en",
+                "input": {
+                    "componentId": "related-products",
+                    "itemRelations": {
+                        "itemIds": ["$create-products[2].product.create.id"],
+                        "skus": []
+                    }
+                }
+            }
+        ]
+    },
     "create-stories": {
         "target": "pim",
         "mutation": "mutation CreateDocument($input: CreateDocumentInput!) { document { create(language: \"en\", input: $input, disableComponentValidation: true) { id } } }",
@@ -2249,11 +2266,7 @@
                             "componentId": "media",
                             "componentChoice": {
                                 "componentId": "image",
-                                "images": [
-                                    {
-                                        "key": "$images.images-zen-garden-jpg"
-                                    }
-                                ]
+                                "images": [{ "key": "$images.images-zen-garden-jpg" }]
                             }
                         },
                         {
@@ -2385,6 +2398,744 @@
                         }
                     ]
                 }
+            },
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$create-category-folders[1].folder.create.id" },
+                    "shapeIdentifier": "story",
+                    "name": "Designing Your Outdoor Oasis",
+                    "components": [
+                        {
+                            "componentId": "title",
+                            "singleLine": { "text": "Designing Your Outdoor Oasis: Furniture and Plant Pairings" }
+                        },
+                        {
+                            "componentId": "intro",
+                            "richText": {
+                                "json": [
+                                    {
+                                        "kind": "block",
+                                        "type": "paragraph",
+                                        "textContent": "Your outdoor space is an extension of your home, and with the right design, it can become a place of relaxation and joy. From selecting the perfect furniture to incorporating plants that enhance your garden’s beauty, creating a harmonious balance is key. In this article, we’ll show you how to pair outdoor furniture with plants to design a space that feels like a personal retreat."
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "media",
+                            "componentChoice": {
+                                "componentId": "image",
+                                "images": [
+                                    {
+                                        "key": "$images.images-palissade-collection-sky-grey-webp"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "story",
+                            "paragraphCollection": {
+                                "paragraphs": [
+                                    {
+                                        "body": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Before you choose furniture or plants, consider how you want to use your outdoor area. Do you need a space for entertaining, relaxing, or dining? Knowing the purpose will help you select the right pieces to meet your needs."
+                                                },
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Durable, weather-resistant materials like teak, metal, or wicker are ideal for outdoor furniture. Whether you're looking for a large dining table or a cozy set of lounge chairs, it's important to choose furniture that fits your lifestyle."
+                                                }
+                                            ]
+                                        },
+                                        "title": {
+                                            "text": "Defining the Purpose of Your Outdoor Space"
+                                        },
+                                        "images": null,
+                                        "videos": null
+                                    },
+                                    {
+                                        "body": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Plants are essential in transforming your outdoor space. Use large potted plants or trees to create privacy, and choose flowering plants for pops of colour. Mixing textures with ferns, succulents, and trailing plants can create visual interest."
+                                                }
+                                            ]
+                                        },
+                                        "title": {
+                                            "text": "Adding Plants for Colour and Texture"
+                                        },
+                                        "images": null,
+                                        "videos": null
+                                    },
+                                    {
+                                        "body": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Accessories like cushions, outdoor rugs, and lighting add comfort and style to your outdoor space. Soft furnishings can make your outdoor furniture more inviting, while lanterns and string lights create a cozy ambiance at night."
+                                                }
+                                            ]
+                                        },
+                                        "title": {
+                                            "text": "Accessorizing Your Space for Comfort"
+                                        },
+                                        "images": null,
+                                        "videos": null
+                                    },
+                                    {
+                                        "body": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "When designing your outdoor oasis, balance is key. Ensure that neither the plants nor the furniture overwhelms the space, and choose items that complement each other to create a harmonious, inviting atmosphere."
+                                                }
+                                            ]
+                                        },
+                                        "title": {
+                                            "text": "Creating Balance Between Furniture and Plants"
+                                        },
+                                        "images": null,
+                                        "videos": null
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "featured",
+                            "itemRelations": {
+                                "itemIds": [
+                                    "$create-products[1].product.create.id",
+                                    "$create-products[2].product.create.id"
+                                ],
+                                "skus": []
+                            }
+                        },
+                        {
+                            "componentId": "up-next",
+                            "itemRelations": {
+                                "itemIds": ["$create-stories[0].document.create.id"],
+                                "skus": []
+                            }
+                        },
+                        {
+                            "componentId": "meta",
+                            "piece": {
+                                "identifier": "meta",
+                                "components": [
+                                    {
+                                        "componentId": "title",
+                                        "singleLine": {
+                                            "text": "Designing Your Outdoor Oasis: Furniture and Plant Pairings"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "description",
+                                        "richText": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Your outdoor space is an extension of your home, and with the right design, it can become a place of relaxation and joy."
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "componentId": "image",
+                                        "images": [{ "key": "$images.images-palissade-collection-sky-grey-webp" }]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "create-home-page": {
+        "target": "pim",
+        "mutation": "mutation CreateDocument($input: CreateDocumentInput!) { document { create(language: \"en\", input: $input, disableComponentValidation: true) { id } } }",
+        "sets": [
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$root.TENANT_ROOT_ID" },
+                    "shapeIdentifier": "landing-page",
+                    "name": "Index",
+                    "components": [
+                        {
+                            "componentId": "blocks",
+                            "componentMultipleChoice": [
+                                {
+                                    "componentId": "banner",
+                                    "piece": {
+                                        "identifier": "banner",
+                                        "components": [
+                                            {
+                                                "componentId": "title",
+                                                "singleLine": {
+                                                    "text": "Sit back, relax, and let your furniture wow"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "description",
+                                                "richText": {
+                                                    "json": [
+                                                        {
+                                                            "kind": "block",
+                                                            "type": "paragraph",
+                                                            "textContent": "Why settle for boring? Our furniture is so stylish, your guests might just forget to leave. Get comfy, get classy, and let your home do the bragging."
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "componentId": "call-to-action",
+                                                "piece": {
+                                                    "identifier": "call-to-action",
+                                                    "components": [
+                                                        {
+                                                            "componentId": "action",
+                                                            "contentChunk": {
+                                                                "chunks": [
+                                                                    [
+                                                                        {
+                                                                            "componentId": "label",
+                                                                            "singleLine": {
+                                                                                "text": "Go to products"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "componentId": "url",
+                                                                            "singleLine": {
+                                                                                "text": "/products/outdoor-furniture"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "componentId": "banner",
+                                                "images": [
+                                                    {
+                                                        "key": "$images.images-minimal-living-room-interior-design-with-leaf-shadow-wall-jpg"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "componentId": "layout",
+                                                "piece": {
+                                                    "identifier": "layout",
+                                                    "components": [
+                                                        {
+                                                            "componentId": "display-width",
+                                                            "selection": {
+                                                                "keys": ["stretch"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "theme",
+                                                            "selection": {
+                                                                "keys": ["pastel"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "background-media",
+                                                            "componentChoice": null
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "componentId": "feature-highlights",
+                                    "piece": {
+                                        "identifier": "feature-highlights",
+                                        "components": [
+                                            {
+                                                "componentId": "usp",
+                                                "contentChunk": {
+                                                    "chunks": [
+                                                        [
+                                                            {
+                                                                "componentId": "headline",
+                                                                "singleLine": {
+                                                                    "text": "Custom comfort, tailored to you"
+                                                                }
+                                                            },
+                                                            {
+                                                                "componentId": "description",
+                                                                "richText": {
+                                                                    "json": [
+                                                                        {
+                                                                            "kind": "block",
+                                                                            "type": "paragraph",
+                                                                            "textContent": "We offer fully customizable furniture pieces designed to fit your style and space, ensuring every item is uniquely yours."
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "componentId": "icon",
+                                                                "images": [
+                                                                    {
+                                                                        "key": "$images.images-icon-comfort-svg"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ],
+                                                        [
+                                                            {
+                                                                "componentId": "headline",
+                                                                "singleLine": {
+                                                                    "text": "Luxury quality, affordable prices"
+                                                                }
+                                                            },
+                                                            {
+                                                                "componentId": "description",
+                                                                "richText": {
+                                                                    "json": [
+                                                                        {
+                                                                            "kind": "block",
+                                                                            "type": "paragraph",
+                                                                            "textContent": "Enjoy high-end furniture crafted with premium materials—without the luxury price tag. Style and durability, made accessible."
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "componentId": "icon",
+                                                                "images": [
+                                                                    {
+                                                                        "key": "$images.images-icon-diamond-svg"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ],
+                                                        [
+                                                            {
+                                                                "componentId": "headline",
+                                                                "singleLine": {
+                                                                    "text": "Fast delivery, no compromise"
+                                                                }
+                                                            },
+                                                            {
+                                                                "componentId": "description",
+                                                                "richText": {
+                                                                    "json": [
+                                                                        {
+                                                                            "kind": "block",
+                                                                            "type": "paragraph",
+                                                                            "textContent": "Get your dream furniture delivered quickly with our express shipping options, so you can start enjoying your space in no time!"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "componentId": "icon",
+                                                                "images": [{ "key": "$images.images-icon-box-svg" }]
+                                                            }
+                                                        ]
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "componentId": "layout",
+                                                "piece": {
+                                                    "identifier": "layout",
+                                                    "components": [
+                                                        {
+                                                            "componentId": "display-width",
+                                                            "selection": {
+                                                                "keys": ["contain"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "theme",
+                                                            "selection": {
+                                                                "keys": ["light"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "background-media",
+                                                            "componentChoice": null
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "componentId": "product-slider",
+                                    "piece": {
+                                        "identifier": "product-slider",
+                                        "components": [
+                                            {
+                                                "componentId": "title",
+                                                "singleLine": {
+                                                    "text": "To plant a garden is to believe in tomorrow"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "description",
+                                                "richText": {
+                                                    "json": [
+                                                        {
+                                                            "kind": "block",
+                                                            "type": "paragraph",
+                                                            "children": [
+                                                                {
+                                                                    "kind": "inline",
+                                                                    "textContent": "Our plants are sure to brighten up your home"
+                                                                },
+                                                                {
+                                                                    "kind": "inline",
+                                                                    "type": "line-break"
+                                                                },
+                                                                {
+                                                                    "kind": "inline",
+                                                                    "textContent": "(and your future)."
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "componentId": "products",
+                                                "itemRelations": {
+                                                    "itemIds": [],
+                                                    "skus": [
+                                                        "palissade-table-iron-red",
+                                                        "palissade-table-iron-red-small",
+                                                        "palissade-table-sky-grey-small",
+                                                        "palissade-lounge-sofa-olive",
+                                                        "palissade-table-anthracite-small"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "componentId": "layout",
+                                                "piece": {
+                                                    "identifier": "layout",
+                                                    "components": [
+                                                        {
+                                                            "componentId": "display-width",
+                                                            "selection": {
+                                                                "keys": ["contain"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "theme",
+                                                            "selection": {
+                                                                "keys": ["light"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "background-media",
+                                                            "componentChoice": null
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "componentId": "picture-grid",
+                                    "piece": {
+                                        "identifier": "picture-grid",
+                                        "components": [
+                                            {
+                                                "componentId": "title",
+                                                "singleLine": {
+                                                    "text": "To plant a garden is to believe in tomorrow"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "description",
+                                                "richText": {
+                                                    "json": [
+                                                        {
+                                                            "kind": "block",
+                                                            "type": "paragraph",
+                                                            "textContent": "Beautiful grid below."
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "componentId": "images",
+                                                "images": [
+                                                    {
+                                                        "key": "$images.images-golden-pothos-jpg",
+                                                        "altText": "Golden Pothos"
+                                                    },
+                                                    {
+                                                        "key": "$images.images-palissade-table-collection-jpg",
+                                                        "altText": "Palissade table collection"
+                                                    },
+                                                    {
+                                                        "key": "$images.images-pilea-on-shelf-jpg",
+                                                        "altText": "Pilea plant on a shelf",
+                                                        "caption": {
+                                                            "json": [
+                                                                {
+                                                                    "kind": "block",
+                                                                    "type": "paragraph",
+                                                                    "children": [
+                                                                        {
+                                                                            "kind": "inline",
+                                                                            "textContent": "Photo by "
+                                                                        },
+                                                                        {
+                                                                            "kind": "inline",
+                                                                            "type": "link",
+                                                                            "metadata": {
+                                                                                "href": "https://unsplash.com/@zhenh2424?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                                                                            },
+                                                                            "textContent": "Zhen H"
+                                                                        },
+                                                                        {
+                                                                            "kind": "inline",
+                                                                            "textContent": " on Unsplash"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "key": "$images.images-hanging-golden-pothos-jpg",
+                                                        "altText": "Golden pothos in a pot on a self.",
+                                                        "caption": {
+                                                            "json": [
+                                                                {
+                                                                    "kind": "block",
+                                                                    "type": "paragraph",
+                                                                    "children": [
+                                                                        {
+                                                                            "kind": "inline",
+                                                                            "textContent": "Photo by "
+                                                                        },
+                                                                        {
+                                                                            "kind": "inline",
+                                                                            "type": "link",
+                                                                            "metadata": {
+                                                                                "href": "https://unsplash.com/@ashyda?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                                                                            },
+                                                                            "textContent": "Zinah Insignia"
+                                                                        },
+                                                                        {
+                                                                            "kind": "inline",
+                                                                            "textContent": " on Unsplash"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "componentId": "layout",
+                                                "piece": {
+                                                    "identifier": "layout",
+                                                    "components": [
+                                                        {
+                                                            "componentId": "display-width",
+                                                            "selection": {
+                                                                "keys": ["contain"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "theme",
+                                                            "selection": {
+                                                                "keys": ["light"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "background-media",
+                                                            "componentChoice": null
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "componentId": "product-slider",
+                                    "piece": {
+                                        "identifier": "product-slider",
+                                        "components": [
+                                            {
+                                                "componentId": "title",
+                                                "singleLine": {
+                                                    "text": "Wide plants section"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "description",
+                                                "richText": {
+                                                    "json": [
+                                                        {
+                                                            "kind": "block",
+                                                            "type": "paragraph",
+                                                            "textContent": "Disco time."
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "componentId": "products",
+                                                "itemRelations": {
+                                                    "itemIds": [],
+                                                    "skus": [
+                                                        "palissade-table-iron-red",
+                                                        "palissade-lounge-sofa-olive",
+                                                        "quilted-cushion-olive",
+                                                        "palissade-table-anthracite-powder"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "componentId": "layout",
+                                                "piece": {
+                                                    "identifier": "layout",
+                                                    "components": [
+                                                        {
+                                                            "componentId": "display-width",
+                                                            "selection": {
+                                                                "keys": ["stretch"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "theme",
+                                                            "selection": {
+                                                                "keys": ["dark"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "background-media",
+                                                            "componentChoice": null
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "componentId": "story-slider",
+                                    "piece": {
+                                        "identifier": "story-slider",
+                                        "components": [
+                                            {
+                                                "componentId": "title",
+                                                "singleLine": {
+                                                    "text": "Plants that won't judge your watering habits"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "description",
+                                                "richText": {
+                                                    "json": [
+                                                        {
+                                                            "kind": "block",
+                                                            "type": "paragraph",
+                                                            "textContent": "Add a fresh touch to your home with our vibrant collection of indoor plants. Low-maintenance and full of personality, they’ll transform any room into a lush paradise!"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "componentId": "stories",
+                                                "itemRelations": {
+                                                    "itemIds": [
+                                                        "$create-stories[0].document.create.id",
+                                                        "$create-stories[1].document.create.id"
+                                                    ],
+                                                    "skus": []
+                                                }
+                                            },
+                                            {
+                                                "componentId": "layout",
+                                                "piece": {
+                                                    "identifier": "layout",
+                                                    "components": [
+                                                        {
+                                                            "componentId": "display-width",
+                                                            "selection": {
+                                                                "keys": ["contain"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "theme",
+                                                            "selection": {
+                                                                "keys": ["light"]
+                                                            }
+                                                        },
+                                                        {
+                                                            "componentId": "background-media",
+                                                            "componentChoice": null
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "componentId": "meta",
+                            "piece": {
+                                "identifier": "meta",
+                                "components": [
+                                    {
+                                        "componentId": "title",
+                                        "singleLine": {
+                                            "text": "Welcome to the Crystallize storefront accelerator"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "description",
+                                        "richText": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Powered by Crystallize and Nextjs."
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "componentId": "image",
+                                        "images": null
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
             }
         ]
     },
@@ -2428,7 +3179,10 @@
                     "$create-brands[0].document.create.id",
                     "$create-products[0].product.create.id",
                     "$create-products[1].product.create.id",
-                    "$create-products[2].product.create.id"
+                    "$create-products[2].product.create.id",
+                    "$create-stories[0].document.create.id",
+                    "$create-stories[1].document.create.id",
+                    "$create-home-page[0].document.create.id"
                 ]
             }
         ]

@@ -527,6 +527,10 @@
                     "name": "HAY",
                     "components": [
                         {
+                            "componentId": "name",
+                            "singleLine": { "text": "HAY" }
+                        },
+                        {
                             "componentId": "logo",
                             "images": [{ "key": "$images.images-hay-logo-svg" }]
                         }
@@ -769,7 +773,7 @@
                                     "altText": "Iron red Palissade lounge sofa"
                                 },
                                 {
-                                    "key": "$images.images-palissade-lounge-chair-low-iron-red_palissade-low-table-iron-red-powder-coated-steel_palissade-lounge-sofa-iron-red-jpg"
+                                    "key": "$images.images-palissade-lounge-sofa-iron-red-jpg"
                                 },
                                 {
                                     "key": "$images.images-palissade-lounge-sofa_palissade-low-table-iron-red-jpg"
@@ -781,14 +785,6 @@
                                 {
                                     "identifier": "default",
                                     "price": 1000
-                                },
-                                {
-                                    "identifier": "membership",
-                                    "price": 500
-                                },
-                                {
-                                    "identifier": "norway-b2b",
-                                    "price": 13748
                                 }
                             ],
                             "sku": "palissade-lounge-sofa-iron-red",
@@ -889,14 +885,6 @@
                                 {
                                     "identifier": "default",
                                     "price": 1000
-                                },
-                                {
-                                    "identifier": "membership",
-                                    "price": 500
-                                },
-                                {
-                                    "identifier": "norway-b2b",
-                                    "price": 750
                                 }
                             ],
                             "sku": "palissade-lounge-sofa-olive",
@@ -974,14 +962,6 @@
                                 {
                                     "identifier": "default",
                                     "price": 1250
-                                },
-                                {
-                                    "identifier": "membership",
-                                    "price": 938
-                                },
-                                {
-                                    "identifier": "norway-b2b",
-                                    "price": 13748
                                 }
                             ],
                             "sku": "palissade-lounge-sofa-sky-grey",
@@ -1059,14 +1039,6 @@
                                 {
                                     "identifier": "default",
                                     "price": 1900
-                                },
-                                {
-                                    "identifier": "membership",
-                                    "price": 1428
-                                },
-                                {
-                                    "identifier": "norway-b2b",
-                                    "price": 20898
                                 }
                             ],
                             "sku": "palissade-lounge-sofa-galvanised-steel",
@@ -1137,14 +1109,6 @@
                                 {
                                     "identifier": "default",
                                     "price": 1250
-                                },
-                                {
-                                    "identifier": "membership",
-                                    "price": 938
-                                },
-                                {
-                                    "identifier": "norway-b2b",
-                                    "price": 13748
                                 }
                             ],
                             "sku": "palissade-lounge-sofa-anthracite",
@@ -1336,6 +1300,1091 @@
                         }
                     ]
                 }
+            },
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$create-category-folders[4].folder.create.id" },
+                    "shapeIdentifier": "product",
+                    "name": "Palissade table",
+                    "vatTypeId": "$root.TENANT_DEFAULT_VATTYPE_ID",
+                    "variants": [
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Iron red"
+                                },
+                                {
+                                    "attribute": "Size",
+                                    "value": "Large"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-palissade-table-red-jpg",
+                                    "altText": "Iron red Palissade table"
+                                }
+                            ],
+                            "isDefault": true,
+                            "name": "Palissade table iron Red",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 1200
+                                }
+                            ],
+                            "sku": "palissade-table-iron-red",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 100
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 90,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 75,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 832,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Olive"
+                                },
+                                {
+                                    "attribute": "Size",
+                                    "value": "Large"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-palissade-table-green-jpg",
+                                    "altText": "Olive powder palissade table"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Palissade table Olive",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 1200
+                                }
+                            ],
+                            "sku": "palissade-table-olive-powder",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 40
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 90,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 75,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 832,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Steel"
+                                },
+                                {
+                                    "attribute": "Size",
+                                    "value": "Large"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-palissade-table-steel-jpg",
+                                    "altText": "Hot galvanised steel Palissade table"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Palissade table Galvanised Steel",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 2000
+                                }
+                            ],
+                            "sku": "palissade-table-galvanised-steel",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 100
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 90,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 75,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 832,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Anthracite"
+                                },
+                                {
+                                    "attribute": "Size",
+                                    "value": "Large"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-anthracite-palissade-table-jpg",
+                                    "altText": "Anthracite Palissade table"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Palissade table Anthracite Powder",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 1200
+                                }
+                            ],
+                            "sku": "palissade-table-anthracite-powder",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 98
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 90,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 75,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 832,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Iron red"
+                                },
+                                {
+                                    "attribute": "Size",
+                                    "value": "Small"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-iron-red-palissade-table-small-jpg",
+                                    "altText": "Small iron red Palissade table"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Palissade table Iron Red Small",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 900
+                                }
+                            ],
+                            "sku": "palissade-table-iron-red-small",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 120
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 90,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 75,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 832,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Sky grey"
+                                },
+                                {
+                                    "attribute": "Size",
+                                    "value": "Small"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-sky-grey-palissade-table-jpg",
+                                    "altText": "Sky Grey small Palissade table"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Palissade table Sky Grey Small",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 900
+                                }
+                            ],
+                            "sku": "palissade-table-sky-grey-small",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 200
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 90,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 75,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 832,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Anthracite"
+                                },
+                                {
+                                    "attribute": "Size",
+                                    "value": "Small"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-anthracit-small-palissade-table-jpg",
+                                    "altText": "Anthracite small Palissade table"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Palissade table Anthracite small",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 900
+                                }
+                            ],
+                            "sku": "palissade-table-anthracite-small",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 30
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 90,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 75,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 832,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Olive"
+                                },
+                                {
+                                    "attribute": "Size",
+                                    "value": "Small"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-olive-small-palissade-table-jpg",
+                                    "altText": "Olive powdered small Palissade table"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Palissade table Olive Small",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 900
+                                }
+                            ],
+                            "sku": "palissade-table-olive-small",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 25
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 90,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 75,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 832,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "attribute": "Color",
+                                    "value": "Steel"
+                                },
+                                {
+                                    "attribute": "Size",
+                                    "value": "Small"
+                                }
+                            ],
+                            "externalReference": null,
+                            "images": [
+                                {
+                                    "key": "$images.images-galvanised-steel-small-palissade-table-jpg",
+                                    "altText": "Galvanised steel small Palissade table"
+                                }
+                            ],
+                            "isDefault": false,
+                            "name": "Palissade table Galvanised Steel Small",
+                            "priceVariants": [
+                                {
+                                    "identifier": "default",
+                                    "price": 1200
+                                }
+                            ],
+                            "sku": "palissade-table-galvanised-steel-small",
+                            "stockLocations": [
+                                {
+                                    "identifier": "default",
+                                    "stock": 7
+                                }
+                            ],
+                            "subscriptionPlans": [],
+                            "videos": [],
+                            "components": [
+                                {
+                                    "componentId": "dimensions",
+                                    "piece": {
+                                        "identifier": "dimensions",
+                                        "components": [
+                                            {
+                                                "componentId": "width",
+                                                "numeric": {
+                                                    "number": 90,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "height",
+                                                "numeric": {
+                                                    "number": 75,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "depth",
+                                                "numeric": {
+                                                    "number": 832,
+                                                    "unit": "cm"
+                                                }
+                                            },
+                                            {
+                                                "componentId": "weight",
+                                                "numeric": {
+                                                    "number": 45,
+                                                    "unit": "kg"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "components": [
+                        {
+                            "componentId": "title",
+                            "singleLine": { "text": "Palissade Table" }
+                        },
+                        {
+                            "componentId": "description",
+                            "richText": {
+                                "json": [
+                                    {
+                                        "kind": "block",
+                                        "type": "paragraph",
+                                        "textContent": "Timeless Elegance in Every Outdoor Setting"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "story",
+                            "paragraphCollection": {
+                                "paragraphs": [
+                                    {
+                                        "body": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Designed by French brothers Ronan and Erwan Bouroullec, Palissade is a collection of outdoor furniture for HAY in powder coated or hot galvanised steel. United by a common principle of symmetrical geometry, the Palissade collection is engineered to reproduce the same visual simplicity and core strength throughout. Designed in colour and form to integrate effortlessly into a natural landscape or urban setting, Palissade is intended to be used over a longer period of time and become more beautiful over the years. The collection is suited to a wide variety of environments, from cafés and restaurants to gardens, terraces and balconies"
+                                                }
+                                            ]
+                                        },
+                                        "title": {
+                                            "text": "Elevate your outdoors"
+                                        },
+                                        "images": [
+                                            {
+                                                "key": "$images.images-palissade-table-collection-jpg",
+                                                "altText": "Palissade table collection"
+                                            }
+                                        ],
+                                        "videos": null
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "brand",
+                            "itemRelations": {
+                                "itemIds": ["$create-brands[0].document.create.id"],
+                                "skus": []
+                            }
+                        },
+                        {
+                            "componentId": "details",
+                            "contentChunk": {
+                                "chunks": [
+                                    [
+                                        {
+                                            "componentId": "title",
+                                            "singleLine": {
+                                                "text": "Materials"
+                                            }
+                                        },
+                                        {
+                                            "componentId": "description",
+                                            "richText": {
+                                                "json": [
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "paragraph",
+                                                        "textContent": "Powder coated steel with a two-component coating; a primer and an outdoor powder coating which provides a barrier to corrosive elements, making it suitable for outdoor use "
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "componentId": "title",
+                                            "singleLine": {
+                                                "text": "Sustainability"
+                                            }
+                                        },
+                                        {
+                                            "componentId": "description",
+                                            "richText": {
+                                                "json": [
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "paragraph",
+                                                        "textContent": "HAY focuses on developing long-lasting products that minimise our environmental impact. We optimise the use of sustainable materials such as recycled materials, FSC-certified wood and water-based lacquer, with a growing number of eco-certified products. We have strict regulatory requirements, and the majority of our products are tested to comply with international standards for strength, durability and safety"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "componentId": "title",
+                                            "singleLine": {
+                                                "text": "Care & maintenance"
+                                            }
+                                        },
+                                        {
+                                            "componentId": "description",
+                                            "richText": {
+                                                "json": [
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "paragraph",
+                                                        "textContent": "Our Care & Maintenance offers guidance for optimal maintenance of your HAY product. It includes advice and instructions on cleaning and caring for specific materials to prolong the life of your furniture. Find the guide at hay.com."
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "componentId": "title",
+                                            "singleLine": {
+                                                "text": "Color & finish"
+                                            }
+                                        },
+                                        {
+                                            "componentId": "description",
+                                            "richText": {
+                                                "json": [
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "paragraph",
+                                                        "textContent": "Take care not to scratch the chairs against each other when stacking them. Do not move or drag the chairs around when stacked as the weight will damage the legs."
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "componentId": "title",
+                                            "singleLine": {
+                                                "text": "Country of origin"
+                                            }
+                                        },
+                                        {
+                                            "componentId": "description",
+                                            "richText": {
+                                                "json": [
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "paragraph",
+                                                        "textContent": "Latvia"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "dimensions",
+                            "piece": {
+                                "identifier": "dimensions",
+                                "components": [
+                                    {
+                                        "componentId": "width",
+                                        "numeric": {
+                                            "number": 90,
+                                            "unit": "cm"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "height",
+                                        "numeric": {
+                                            "number": 75,
+                                            "unit": "cm"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "depth",
+                                        "numeric": {
+                                            "number": 170,
+                                            "unit": "cm"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "weight",
+                                        "numeric": {
+                                            "number": 35,
+                                            "unit": "kg"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "related-products",
+                            "itemRelations": {
+                                "itemIds": ["$create-products[1].product.create.id"],
+                                "skus": []
+                            }
+                        },
+                        {
+                            "componentId": "meta",
+                            "piece": {
+                                "identifier": "meta",
+                                "components": [
+                                    {
+                                        "componentId": "title",
+                                        "singleLine": {
+                                            "text": "Palissade Table"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "description",
+                                        "richText": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Timeless Elegance in Every Outdoor Setting."
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "componentId": "image",
+                                        "images": [
+                                            {
+                                                "key": "$images.images-palissade-table-collection-jpg",
+                                                "altText": "Palissade table collection"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "create-stories": {
+        "target": "pim",
+        "mutation": "mutation CreateDocument($input: CreateDocumentInput!) { document { create(language: \"en\", input: $input, disableComponentValidation: true) { id } } }",
+        "sets": [
+            {
+                "input": {
+                    "tenantId": "$root.TENANT_ID",
+                    "tree": { "parentId": "$create-category-folders[1].folder.create.id" },
+                    "shapeIdentifier": "story",
+                    "name": "Zen Garden",
+                    "components": [
+                        {
+                            "componentId": "title",
+                            "singleLine": { "text": "How to Create a Zen Garden with Minimalist Furniture and Plants" }
+                        },
+                        {
+                            "componentId": "intro",
+                            "richText": {
+                                "json": [
+                                    {
+                                        "kind": "block",
+                                        "type": "paragraph",
+                                        "textContent": "A Zen garden is a space designed to foster tranquility and mindfulness, making it a perfect escape from the stress of daily life. With minimalist furniture and carefully selected plants, you can create a peaceful oasis in your backyard or patio. This article will guide you through the essential steps to design your very own Zen garden."
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "media",
+                            "componentChoice": {
+                                "componentId": "image",
+                                "images": [
+                                    {
+                                        "key": "$images.images-zen-garden-jpg"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "story",
+                            "paragraphCollection": {
+                                "paragraphs": [
+                                    {
+                                        "body": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Minimalism is key when designing a Zen garden. Opt for furniture with clean lines and simple shapes to avoid overwhelming the space. Low seating arrangements like wooden benches or cushions placed on stone platforms blend seamlessly into the garden's natural environment. Using neutral-colored furniture, such as beige, gray, or natural wood tones, further contributes to the calm, minimalist aesthetic."
+                                                }
+                                            ]
+                                        },
+                                        "title": {
+                                            "text": "The Art of Minimalist Furniture in Zen Gardens"
+                                        },
+                                        "images": null,
+                                        "videos": null
+                                    },
+                                    {
+                                        "body": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Plants are integral to a Zen garden, as they symbolize growth, life, and renewal. Bamboo, moss, and ferns are common in Zen-inspired designs due to their soft, soothing presence. Opt for plants that require minimal care but offer maximum visual impact, such as Japanese maples, which add striking color and texture. Incorporating small water features, like a pond or fountain, enhances the calming atmosphere with the sound of trickling water."
+                                                }
+                                            ]
+                                        },
+                                        "title": {
+                                            "text": "Selecting Plants for Serenity"
+                                        },
+                                        "images": null,
+                                        "videos": null
+                                    },
+                                    {
+                                        "body": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "A key element in many Zen gardens is the inclusion of pathways for mindful walks. These paths can be made of stepping stones, gravel, or smooth wooden planks and should guide you through the garden at a leisurely pace. Incorporating small benches or resting areas along the path encourages moments of reflection and stillness, helping you connect with your surroundings."
+                                                }
+                                            ]
+                                        },
+                                        "title": {
+                                            "text": "Creating Pathways for Mindful Walks"
+                                        },
+                                        "images": null,
+                                        "videos": null
+                                    },
+                                    {
+                                        "body": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "A Zen garden relies on the balance between hardscape elements (such as stone, wood, and gravel) and softscape elements (such as plants, moss, and sand). Use natural stones to create boundaries, define areas, or form focal points within the garden. The softscaping—your plants and greenery—should be carefully placed to accentuate the hard elements without overpowering them, maintaining harmony and balance throughout."
+                                                }
+                                            ]
+                                        },
+                                        "title": {
+                                            "text": "Balancing Hardscaping and Softscaping"
+                                        },
+                                        "images": null,
+                                        "videos": null
+                                    },
+                                    {
+                                        "body": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "Designing a Zen garden requires thoughtful choices that prioritize simplicity, balance, and mindfulness. By incorporating minimalist furniture, soothing plants, and serene pathways, you can create a space that serves as a personal sanctuary, promoting peace and calm in your daily life."
+                                                }
+                                            ]
+                                        },
+                                        "title": {
+                                            "text": "Closing Thoughts: A Sanctuary of Calm"
+                                        },
+                                        "images": null,
+                                        "videos": null
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "componentId": "featured",
+                            "itemRelations": {
+                                "itemIds": [
+                                    "$create-products[1].product.create.id",
+                                    "$create-products[2].product.create.id"
+                                ],
+                                "skus": []
+                            }
+                        },
+                        {
+                            "componentId": "meta",
+                            "piece": {
+                                "identifier": "meta",
+                                "components": [
+                                    {
+                                        "componentId": "title",
+                                        "singleLine": {
+                                            "text": "How to Create a Zen Garden with Minimalist Furniture and Plants"
+                                        }
+                                    },
+                                    {
+                                        "componentId": "description",
+                                        "richText": {
+                                            "json": [
+                                                {
+                                                    "kind": "block",
+                                                    "type": "paragraph",
+                                                    "textContent": "A Zen garden is a space designed to foster tranquility and mindfulness, making it a perfect escape from the stress of daily life. With minimalist furniture and carefully selected plants, you can create a peaceful oasis in your backyard or pati"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "componentId": "image",
+                                        "images": [{ "key": "$images.images-zen-garden-jpg" }]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
             }
         ]
     },
@@ -1378,7 +2427,8 @@
                 "ids": [
                     "$create-brands[0].document.create.id",
                     "$create-products[0].product.create.id",
-                    "$create-products[1].product.create.id"
+                    "$create-products[1].product.create.id",
+                    "$create-products[2].product.create.id"
                 ]
             }
         ]

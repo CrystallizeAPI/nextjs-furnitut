@@ -3132,7 +3132,7 @@
         ]
     },
     "publish-category-folders": {
-        "mutation": "mutation PublishItems($ids: [ID!]!) { publishItems(language: \"en\", ids: $ids) { ... on PublishItemsRequest { success { itemId } } } }",
+        "mutation": "mutation PublishItems($ids: [ID!]!) { publishItems(language: \"en\", ids: $ids, disableComponentValidation: true) { ... on PublishItemsRequest { success { itemId } } } }",
         "target": "core",
         "sets": [
             {
@@ -3148,7 +3148,7 @@
         ]
     },
     "publish-menu-folders": {
-        "mutation": "mutation PublishItems($ids: [ID!]!) { publishItems(language: \"en\", ids: $ids) { ... on PublishItemsRequest { success { itemId } } } }",
+        "mutation": "mutation PublishItems($ids: [ID!]!) { publishItems(language: \"en\", ids: $ids, disableComponentValidation: true) { ... on PublishItemsRequest { success { itemId } } } }",
         "target": "core",
         "sets": [
             {
@@ -3163,7 +3163,7 @@
         ]
     },
     "publish-items": {
-        "mutation": "mutation PublishItems($ids: [ID!]!) { publishItems(language: \"en\", ids: $ids) { ... on PublishItemsRequest { success { itemId } } } }",
+        "mutation": "mutation PublishItems($ids: [ID!]!) { publishItems(language: \"en\", ids: $ids, disableComponentValidation: true) { ... on PublishItemsRequest { success { itemId } } } }",
         "target": "core",
         "sets": [
             {

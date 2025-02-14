@@ -792,14 +792,6 @@
                                 {
                                     "identifier": "default",
                                     "stock": 1001
-                                },
-                                {
-                                    "identifier": "oslo",
-                                    "stock": 14
-                                },
-                                {
-                                    "identifier": "toronto",
-                                    "stock": 0
                                 }
                             ],
                             "subscriptionPlans": [],

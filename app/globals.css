@@ -40,7 +40,7 @@
     }
 
     .page {
-        @apply max-w-screen-2xl mx-auto px-12 pt-32;
+        @apply max-w-screen-2xl mx-auto px-4 2xl:px-0 pt-32;
     }
 
     details.accordination {

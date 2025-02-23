@@ -43,7 +43,7 @@ export default async function CategoryProduct(props: ProductsProps) {
     return (
         <>
             <main className="page">
-                <div className="lg:grid lg:grid-cols-12 lg:gap-24 rounded-xl">
+                <div className="lg:grid lg:grid-cols-12 lg:gap-8 xl:gap-12 ">
                     <div className="col-span-7">
                         <Breadcrumbs breadcrumbs={product.breadcrumbs} />
                         <div className="mt-6 grid grid-cols-2 mb-6 pb-6 gap-4 [&_.img-landscape]:col-span-2">
@@ -81,7 +81,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                 )}
                             </div>
                             <div className="py-4 sticky top-20">
-                                <h1 className="text-4xl font-bold mb-4">
+                                <h1 className="text-3xl font-bold mb-4">
                                     {product.name} {currentVariant?.name}
                                 </h1>
                                 <div className="line-clamp-2">

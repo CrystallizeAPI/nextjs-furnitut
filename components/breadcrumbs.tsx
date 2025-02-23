@@ -31,7 +31,12 @@ export const Breadcrumbs = ({ breadcrumbs, isCenter }: BreadcrumbsProps) => {
     }
 
     return (
-        <div className={classNames('flex gap-3 items-center font-medium text-dark', isCenter && 'justify-center')}>
+        <div
+            className={classNames(
+                'flex gap-3 items-center whitespace-nowrap overflow-y-auto font-medium text-dark',
+                isCenter && 'justify-center',
+            )}
+        >
             <Link href="/">
                 <HomeIcon />
             </Link>

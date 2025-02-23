@@ -64,6 +64,16 @@
         margin-bottom: 0.5rem;
     }
 
+    /* remove default arrow for summary */
+    details > summary {
+        list-style: none;
+    }
+
+    details > summary::marker,
+    details > summary::-webkit-details-marker {
+        display: none;
+    }
+
     .btn {
         @apply inline-block px-6 py-3 text-light bg-dark rounded-lg font-medium hover:bg-opacity-90;
     }

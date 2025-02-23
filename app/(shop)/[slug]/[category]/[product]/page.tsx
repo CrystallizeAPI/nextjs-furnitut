@@ -43,7 +43,7 @@ export default async function CategoryProduct(props: ProductsProps) {
     return (
         <>
             <main className="page">
-                <div className="grid grid-cols-12 gap-24 rounded-xl">
+                <div className="lg:grid lg:grid-cols-12 lg:gap-24 rounded-xl">
                     <div className="col-span-7">
                         <Breadcrumbs breadcrumbs={product.breadcrumbs} />
                         <div className="mt-6 grid grid-cols-2 mb-6 pb-6 gap-4 [&_.img-landscape]:col-span-2">
@@ -62,6 +62,118 @@ export default async function CategoryProduct(props: ProductsProps) {
                                     />
                                 );
                             })}
+                        </div>
+                        <div className="lg:hidden col-span-5 relative">
+                            <div className="flex justify-between items-center ">
+                                <span className="text-xs font-bold opacity-50">{currentVariant?.sku}</span>
+                                {product.brand && (
+                                    <span className="w-16 h-10 flex items-center">
+                                        {'logo' in product.brand ? (
+                                            <Image
+                                                className="object-contain"
+                                                preserveRatio
+                                                {...product.brand.logo?.[0]}
+                                            />
+                                        ) : (
+                                            product.brand.name
+                                        )}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="py-4 sticky top-20">
+                                <h1 className="text-4xl font-bold mb-4">
+                                    {product.name} {currentVariant?.name}
+                                </h1>
+                                <div className="line-clamp-2">
+                                    <ContentTransformer json={product.description?.[0]} />
+                                </div>
+                                {!!product.variants?.length && (
+                                    <div className="py-4">
+                                        <VariantSelector
+                                            variants={product.variants}
+                                            searchParams={searchParams}
+                                            path={product?.path ?? '/'}
+                                        />
+                                    </div>
+                                )}
+                                <div className="text-4xl flex items-center font-bold py-4 justify-between w-full">
+                                    <span>
+                                        <Price price={currentVariant?.priceVariants.default} />
+                                    </span>
+                                    {!!currentVariant && !!currentVariant.sku && (
+                                        <AddToCartButton
+                                            input={{
+                                                variantName: currentVariant.name || product.name || 'Variant',
+                                                productName: product.name || 'Variant',
+                                                sku: currentVariant.sku,
+                                                image: currentVariant?.images?.[0]?.variants?.[0],
+                                                quantity: 1,
+                                                price: {
+                                                    currency: currentVariant.defaultPrice?.currency || 'EUR',
+                                                    gross: currentVariant.defaultPrice?.price || 0,
+                                                    net: currentVariant.defaultPrice?.price || 0,
+                                                    taxAmount: 0,
+                                                    discounts: [],
+                                                },
+                                            }}
+                                        />
+                                    )}
+                                </div>
+                                {!!currentVariant?.matchingProducts?.variants?.length && (
+                                    <Accordion
+                                        className="py-8 text-lg"
+                                        defaultOpen={!!currentVariant?.matchingProducts?.variants?.length}
+                                        title={`Matching products (${
+                                            currentVariant?.matchingProducts?.variants?.length || 0
+                                        })`}
+                                    >
+                                        {currentVariant?.matchingProducts?.variants?.map((product, index) => {
+                                            return (
+                                                <div
+                                                    key={`${product?.sku}-featured-${index}`}
+                                                    className="flex gap-3 justify-between px-4 py-3 border items-center border-muted bg-light rounded-lg last:border-b-0"
+                                                >
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="w-10 h-12 rounded overflow-hidden">
+                                                            <Image {...product?.firstImage} />
+                                                        </div>
+                                                        <div className="flex flex-col">
+                                                            {!!product?.product?.path && (
+                                                                <Link href={product.product.path}>{product?.name}</Link>
+                                                            )}
+                                                            <span className="text-sm font-bold">
+                                                                <Price price={product?.defaultPrice} />
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="justify-end">
+                                                        {!!product && !!product.sku && (
+                                                            <AddToCartButton
+                                                                type="micro"
+                                                                input={{
+                                                                    variantName: product.name || 'Variant',
+                                                                    productName: product.name || 'Variant',
+                                                                    sku: product.sku,
+                                                                    image: product.firstImage?.variants?.[0],
+                                                                    quantity: 1,
+                                                                    price: {
+                                                                        currency:
+                                                                            product.defaultPrice?.currency || 'EUR',
+                                                                        gross: product.defaultPrice?.price || 0,
+                                                                        net: currentVariant.defaultPrice.price || 0,
+                                                                        taxAmount: 0,
+                                                                        discounts: [],
+                                                                    },
+                                                                }}
+                                                            />
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </Accordion>
+                                )}
+                            </div>
                         </div>
                         <Accordion defaultOpen className="py-8" title="Product">
                             <div className="text-lg leading-10 font-normal">
@@ -121,7 +233,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                         )}
                     </div>
 
-                    <div className="col-span-5 relative">
+                    <div className="hidden lg:block col-span-5 relative">
                         <div className="flex justify-between items-center ">
                             <span className="text-xs font-bold opacity-50">{currentVariant?.sku}</span>
                             {product.brand && (
@@ -231,7 +343,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                     </div>
                 </div>
             </main>
-            <div className="mt-24 border-t border-muted">
+            <div className="mt-24 border-t border-muted px-4 2xl:px-0">
                 <div className="px-0  max-w-screen-2xl pt-24  mx-auto ">
                     <h2 className="text-2xl py-4 font-bold">Related products</h2>
 

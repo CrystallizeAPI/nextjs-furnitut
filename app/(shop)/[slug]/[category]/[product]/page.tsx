@@ -13,6 +13,7 @@ import { Product } from '@/components/product';
 import { Accordion } from '@/components/accordion';
 import { AddToCartButton } from '@/components/cart/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
+import { formatVariantName } from '@/utils/format-variant-name';
 
 type ProductsProps = {
     searchParams: Promise<Record<string, string>>;
@@ -39,7 +40,6 @@ export default async function CategoryProduct(props: ProductsProps) {
     const product = await fetchData(`/${params.slug}/${params.category}/${params.product}`);
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
     const dimensions = currentVariant?.dimensions;
-
     return (
         <>
             <main className="page">
@@ -82,7 +82,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                             </div>
                             <div className="py-4 sticky top-20">
                                 <h1 className="text-3xl font-bold mb-4">
-                                    {product.name} {currentVariant?.name}
+                                    {formatVariantName(product.name, currentVariant?.name)}
                                 </h1>
                                 <div className="line-clamp-2">
                                     <ContentTransformer json={product.description?.[0]} />

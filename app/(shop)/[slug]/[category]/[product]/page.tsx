@@ -81,7 +81,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                 )}
                             </div>
                             <div className="py-4 sticky top-20">
-                                <h1 className="text-3xl font-bold mb-4">
+                                <h1 className="text-3xl font-bold pb-8">
                                     {formatVariantName(product.name, currentVariant?.name)}
                                 </h1>
                                 <div className="line-clamp-2">
@@ -247,8 +247,8 @@ export default async function CategoryProduct(props: ProductsProps) {
                             )}
                         </div>
                         <div className="py-4 sticky top-20">
-                            <h1 className="text-2xl font-bold">
-                                {product.name} {currentVariant?.name}
+                            <h1 className="text-2xl font-bold mb-8">
+                                {formatVariantName(product.name, currentVariant?.name)}
                             </h1>
                             <div className="line-clamp-2">
                                 <ContentTransformer json={product.description?.[0]} />

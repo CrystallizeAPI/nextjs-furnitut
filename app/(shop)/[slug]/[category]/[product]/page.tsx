@@ -195,7 +195,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                         )}
                         {dimensions && (
                             <Accordion title="Dimensions" defaultOpen className="py-8">
-                                <div className="grid grid-cols-2 gap-x-48 gap-y-4 py-12 pr-24 text-lg">
+                                <div className="grid lg:grid-cols-2 lg:gap-x-48 gap-y-4 py-12 pr-24 text-lg">
                                     {dimensions.height && (
                                         <div className="flex justify-between">
                                             <span className="font-bold">Height</span>

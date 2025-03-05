@@ -9,7 +9,7 @@ export const InputField = ({ label, required = true, ...delegated }: InputFieldP
             {label}
         </label>
         <input
-            className="bg-transparent pb-4 outline-none px-6 font-bold text-dark"
+            className="bg-transparent pb-4 outline-hidden px-6 font-bold text-dark"
             required={required}
             id={delegated.name}
             {...delegated}

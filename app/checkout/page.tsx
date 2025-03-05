@@ -4,7 +4,7 @@ import { CheckoutForm } from '@/components/checkout-form';
 export default async function Checkout() {
     return (
         <>
-            <header className="fixed max-w-screen-2xl w-full px-10 top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-8">
+            <header className="fixed max-w-(--breakpoint-2xl) w-full px-10 top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-8">
                 <Link href="/">
                     <div className="bg-dark items-center inline-flex rounded-full my-2 mx-2 px-6 py-3 h-10">
                         <svg height="100%" viewBox="0 0 89 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +18,7 @@ export default async function Checkout() {
                 <h1 className="text-xl font-bold">Checkout</h1>
             </header>
 
-            <main className="page !max-w-screen-xl">
+            <main className="page max-w-(--breakpoint-xl)!">
                 <CheckoutForm />
             </main>
         </>

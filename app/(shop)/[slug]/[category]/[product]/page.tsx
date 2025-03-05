@@ -16,7 +16,6 @@ import { Accordion } from '@/components/accordion';
 import { AddToCartButton } from '@/components/cart/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
 
-
 type ProductsProps = {
     searchParams: Promise<Record<string, string>>;
     params: Promise<{ slug: string; category: string; product: string }>;
@@ -51,18 +50,20 @@ export async function generateMetadata(props: ProductsProps): Promise<Metadata> 
     const productUrl = new URL(url, baseUrl);
 
     return {
-        title: `${title} | Furnitut`,
+        title: `${title}`,
         description,
         openGraph: {
             title: `${title} | Furnitut`,
             description,
             url: encodeURI(`${productUrl}?Color=${currentVariant?.attributes?.Color}`),
-            images: [{
-                url: ogImage?.url ?? '',
-                alt: image?.altText ?? '',
-                height: ogImage?.height ?? 0,
-                width: ogImage?.width ?? 0,
-            }],
+            images: [
+                {
+                    url: ogImage?.url ?? '',
+                    alt: image?.altText ?? '',
+                    height: ogImage?.height ?? 0,
+                    width: ogImage?.width ?? 0,
+                },
+            ],
         },
     };
 }
@@ -80,25 +81,26 @@ export default async function CategoryProduct(props: ProductsProps) {
     const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_URL;
     const productUrl = new URL(url, baseUrl);
 
-    const productVariantsSchema = product.variants?.map<schemas.WithContext<schemas.Product>>((variant) => ({
-        '@context': 'https://schema.org',
-        '@type': 'Product',
-        name: variant?.name ?? '',
-        image: variant?.images?.[0]?.url ?? '',
-        description: variant?.description?.extraDescription ?? '',
-        url: encodeURI(`${productUrl}?Color=${variant?.attributes?.Color}`),
-        sku: variant?.sku ?? '',
-        // TODO: Enable the color, to display the variant varies by the color.
-        // color: variant?.attributes?.Color,
-        offers: {
-            '@type': 'Offer',
-            itemCondition: 'https://schema.org/NewCondition',
-            availability: 'https://schema.org/InStock',
-            price: variant?.defaultPrice.price ?? '',
-            priceCurrency: variant?.defaultPrice.currency ?? '',
-            priceValidUntil: TWO_DAYS_FROM_NOW.toLocaleString(),
-        },
-    })) ?? [];
+    const productVariantsSchema =
+        product.variants?.map<schemas.WithContext<schemas.Product>>((variant) => ({
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: variant?.name ?? '',
+            image: variant?.images?.[0]?.url ?? '',
+            description: variant?.description?.extraDescription ?? '',
+            url: encodeURI(`${productUrl}?Color=${variant?.attributes?.Color}`),
+            sku: variant?.sku ?? '',
+            // TODO: Enable the color, to display the variant varies by the color.
+            // color: variant?.attributes?.Color,
+            offers: {
+                '@type': 'Offer',
+                itemCondition: 'https://schema.org/NewCondition',
+                availability: 'https://schema.org/InStock',
+                price: variant?.defaultPrice.price ?? '',
+                priceCurrency: variant?.defaultPrice.currency ?? '',
+                priceValidUntil: TWO_DAYS_FROM_NOW.toLocaleString(),
+            },
+        })) ?? [];
 
     const productSchema: schemas.WithContext<schemas.ProductGroup> = {
         '@context': 'https://schema.org',
@@ -117,18 +119,20 @@ export default async function CategoryProduct(props: ProductsProps) {
             name: 'HAY',
         },
         // TODO: replace with actual reviews from users
-        review: [{
-            '@type': 'Review',
-            author: {
-                '@type': 'Person',
-                name: 'John Doe',
+        review: [
+            {
+                '@type': 'Review',
+                author: {
+                    '@type': 'Person',
+                    name: 'John Doe',
+                },
+                reviewRating: {
+                    '@type': 'Rating',
+                    ratingValue: '5',
+                    bestRating: '5',
+                },
             },
-            reviewRating: {
-                '@type': 'Rating',
-                ratingValue: '5',
-                bestRating: '5',
-            },
-        }],
+        ],
     };
 
     return (
@@ -146,7 +150,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                         preserveRatio
                                         sizes={index > 0 ? '400px' : '800px'}
                                         className={clsx(
-                                            index === 0 && '!col-span-2',
+                                            index === 0 && 'col-span-2!',
                                             'overflow-hidden rounded-2xl border border-muted bg-light relative h-full max-w-full',
                                             '[&_img]:object-cover [&_img]:max-w-none [&_img]:w-full [&_img]:h-full [&_figure]:h-full',
                                         )}
@@ -226,9 +230,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                             )}
                         </div>
                         <div className="py-4 sticky top-20">
-                            <h1 className="text-2xl font-bold">
-                                {currentVariant?.name ?? product.name}
-                            </h1>
+                            <h1 className="text-2xl font-bold">{currentVariant?.name ?? product.name}</h1>
                             <div className="line-clamp-2">
                                 <ContentTransformer json={product.description?.[0]} />
                             </div>
@@ -279,7 +281,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                                 className="flex gap-3 justify-between px-4 py-3 border items-center border-muted bg-light rounded-lg last:border-b-0"
                                             >
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-12 rounded overflow-hidden">
+                                                    <div className="w-10 h-12 rounded-sm overflow-hidden">
                                                         <Image {...product?.firstImage} />
                                                     </div>
                                                     <div className="flex flex-col">
@@ -323,7 +325,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                 </div>
             </main>
             <div className="mt-24 border-t border-muted">
-                <div className="px-0  max-w-screen-2xl pt-24  mx-auto ">
+                <div className="px-0  max-w-(--breakpoint-2xl) pt-24  mx-auto ">
                     <h2 className="text-2xl py-4 font-bold">Related products</h2>
 
                     <Slider type="product" options={{ loop: false, align: 'start' }}>

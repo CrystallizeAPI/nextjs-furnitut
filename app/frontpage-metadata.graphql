@@ -1,6 +1,6 @@
 query FrontPageMetadata {
     browse {
-        landingPage(path:"/index") {
+        landingPage(path: "/index") {
             hits {
                 meta {
                     ...metadata

@@ -6,7 +6,7 @@ import { MenuWrapper } from './menu-wrapper';
 
 export const Header = () => {
     return (
-        <header className="fixed max-w-screen-2xl w-full top-4 left-1/2 -translate-x-1/2 z-10">
+        <header className="fixed max-w-(--breakpoint-2xl) w-full top-4 left-1/2 -translate-x-1/2 z-10">
             <div className="bg-light border border-muted flex items-stretch rounded-full justify-between">
                 <div className="flex items-stretch flex-1">
                     <Link href="/">

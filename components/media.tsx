@@ -30,11 +30,12 @@ export const Media = ({
                 sizes={sizes}
                 {...imageProps}
                 preserveRatio={preserveRatio}
+                loading="lazy"
             />
         );
     }
     if (image?.[0]) {
-        return <Image {...image[0]} {...imageProps} sizes={sizes} preserveRatio={preserveRatio} />;
+        return <Image {...image[0]} {...imageProps} sizes={sizes} preserveRatio={preserveRatio} loading="lazy" />;
     }
     return null;
 };

@@ -18,7 +18,7 @@ export const FeatureHighlight = ({ block }: FeatureHighlightProps) => {
                 return (
                     <div key={index} className="flex items-start gap-2 sm:gap-6">
                         <div className="w-1/12 aspect-square sm:mt-1 min-w-1/12 shrink-0">
-                            <Image {...image} />
+                            <Image {...image} loading={'lazy'} />
                         </div>
                         <div className="w-11/12">
                             <h3 className="block-title text-xl font-bold pb-2">{headline}</h3>

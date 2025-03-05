@@ -12,7 +12,7 @@ export const Crystal = ({ cartId }: { cartId?: string }) => {
                 <button
                     type="submit"
                     disabled={isPending}
-                    className="bg-dark text-light font-medium rounded px-6 py-2 text-nowrap"
+                    className="bg-dark text-light font-medium rounded-sm px-6 py-2 text-nowrap"
                 >
                     {isPending ? 'Processing payment' : 'Confirm payment'}
                 </button>

@@ -130,12 +130,12 @@ fragment productVariant on ProductVariantForProduct {
         altText
         width
         height
-        variants(minWidth:400, maxWidth: 800, types: ["avif"]) {
+        variants(maxWidth: 800, types: ["avif"]) {
             url
             width
             height
         }
-        ogVariants: variants(minWidth:1200, maxWidth: 1500, types: ["webp"]) {
+        ogVariants: variants(minWidth: 1200, maxWidth: 1500, types: ["webp"]) {
             url
             width
             height

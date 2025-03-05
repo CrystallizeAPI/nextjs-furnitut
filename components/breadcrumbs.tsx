@@ -32,14 +32,14 @@ export const Breadcrumbs = ({ breadcrumbs, isCenter }: BreadcrumbsProps) => {
 
     return (
         <div className={classNames('flex gap-3 items-center font-medium text-dark', isCenter && 'justify-center')}>
-            <Link href="/">
+            <Link href="/" aria-label="Home">
                 <HomeIcon />
             </Link>
             <span className="opacity-30"> / </span>
             {breadcrumbs.map((item, index) => (
                 <Fragment key={index}>
                     {index === breadcrumbs.length - 1 ? (
-                        <span className="opacity-50">{item.name}</span>
+                        <span className="opacity-65">{item.name}</span>
                     ) : (
                         <div>
                             {!!item.path && <Link href={item.path}>{item.name}</Link>}

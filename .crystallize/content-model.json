@@ -1,1084 +1,1062 @@
 {
-  "version": "0.0.1",
-  "operations": [
-    {
-      "identifier": "product",
-      "name": "Product",
-      "components": [],
-      "type": "product",
-      "intent": "shape/create"
-    },
-    {
-      "identifier": "brand",
-      "name": "Brand",
-      "components": [
+    "version": "0.0.1",
+    "operations": [
         {
-          "id": "name",
-          "type": "singleLine",
-          "name": "Name",
-          "config": {
-            "singleLine": {
-              "multilingual": true
-            }
-          }
+            "identifier": "product",
+            "name": "Product",
+            "components": [],
+            "type": "product",
+            "intent": "shape/create"
         },
         {
-          "id": "description",
-          "type": "richText",
-          "name": "Description",
-          "config": {
-            "richText": {
-              "multilingual": true
-            }
-          }
-        },
-        {
-          "id": "logo",
-          "type": "images",
-          "name": "Logo",
-          "config": {
-            "images": {
-              "multilingual": false,
-              "min": 1,
-              "max": 1
-            }
-          }
-        }
-      ],
-      "type": "document",
-      "intent": "shape/upsert"
-    },
-    {
-      "identifier": "call-to-action",
-      "name": "call-to-action",
-      "components": [
-        {
-          "id": "action",
-          "type": "contentChunk",
-          "name": "Action",
-          "config": {
-            "contentChunk": {
-              "components": [
+            "identifier": "brand",
+            "name": "Brand",
+            "components": [
                 {
-                  "id": "label",
-                  "type": "singleLine",
-                  "name": "Label",
-                  "config": {
-                    "singleLine": {}
-                  }
+                    "id": "name",
+                    "type": "singleLine",
+                    "name": "Name",
+                    "config": {
+                        "singleLine": {
+                            "multilingual": true
+                        }
+                    }
                 },
                 {
-                  "id": "url",
-                  "type": "singleLine",
-                  "name": "URL",
-                  "config": {
-                    "singleLine": {}
-                  }
+                    "id": "description",
+                    "type": "richText",
+                    "name": "Description",
+                    "config": {
+                        "richText": {
+                            "multilingual": true
+                        }
+                    }
+                },
+                {
+                    "id": "logo",
+                    "type": "images",
+                    "name": "Logo",
+                    "config": {
+                        "images": {
+                            "multilingual": false,
+                            "min": 1,
+                            "max": 1
+                        }
+                    }
                 }
-              ],
-              "repeatable": true
-            }
-          }
-        }
-      ],
-      "intent": "piece/upsert"
-    },
-    {
-      "identifier": "layout",
-      "name": "layout",
-      "components": [
+            ],
+            "type": "document",
+            "intent": "shape/upsert"
+        },
         {
-          "id": "display-width",
-          "type": "selection",
-          "name": "Display width",
-          "config": {
-            "selection": {
-              "min": 1,
-              "max": 1,
-              "options": [
+            "identifier": "call-to-action",
+            "name": "call-to-action",
+            "components": [
                 {
-                  "key": "stretch",
-                  "value": "Stretch"
-                },
-                {
-                  "key": "contain",
-                  "value": "Contain",
-                  "isPreselected": true
+                    "id": "action",
+                    "type": "contentChunk",
+                    "name": "Action",
+                    "config": {
+                        "contentChunk": {
+                            "components": [
+                                {
+                                    "id": "label",
+                                    "type": "singleLine",
+                                    "name": "Label",
+                                    "config": {
+                                        "singleLine": {}
+                                    }
+                                },
+                                {
+                                    "id": "url",
+                                    "type": "singleLine",
+                                    "name": "URL",
+                                    "config": {
+                                        "singleLine": {}
+                                    }
+                                }
+                            ],
+                            "repeatable": true
+                        }
+                    }
                 }
-              ]
-            }
-          }
+            ],
+            "intent": "piece/upsert"
         },
         {
-          "id": "theme",
-          "type": "selection",
-          "name": "Theme",
-          "config": {
-            "selection": {
-              "min": 1,
-              "max": 1,
-              "options": [
+            "identifier": "layout",
+            "name": "layout",
+            "components": [
                 {
-                  "key": "light",
-                  "value": "Light",
-                  "isPreselected": true
+                    "id": "display-width",
+                    "type": "selection",
+                    "name": "Display width",
+                    "config": {
+                        "selection": {
+                            "min": 1,
+                            "max": 1,
+                            "options": [
+                                {
+                                    "key": "stretch",
+                                    "value": "Stretch"
+                                },
+                                {
+                                    "key": "contain",
+                                    "value": "Contain",
+                                    "isPreselected": true
+                                }
+                            ]
+                        }
+                    }
                 },
                 {
-                  "key": "dark",
-                  "value": "Dark"
+                    "id": "theme",
+                    "type": "selection",
+                    "name": "Theme",
+                    "config": {
+                        "selection": {
+                            "min": 1,
+                            "max": 1,
+                            "options": [
+                                {
+                                    "key": "light",
+                                    "value": "Light",
+                                    "isPreselected": true
+                                },
+                                {
+                                    "key": "dark",
+                                    "value": "Dark"
+                                },
+                                {
+                                    "key": "muted",
+                                    "value": "Muted"
+                                },
+                                {
+                                    "key": "pastel",
+                                    "value": "Pastel"
+                                },
+                                {
+                                    "key": "vivid",
+                                    "value": "Vivid"
+                                }
+                            ]
+                        }
+                    }
                 },
                 {
-                  "key": "muted",
-                  "value": "Muted"
-                },
-                {
-                  "key": "pastel",
-                  "value": "Pastel"
-                },
-                {
-                  "key": "vivid",
-                  "value": "Vivid"
+                    "id": "background-media",
+                    "type": "componentChoice",
+                    "name": "Background media",
+                    "config": {
+                        "componentChoice": {
+                            "choices": [
+                                {
+                                    "id": "image",
+                                    "type": "images",
+                                    "name": "Image",
+                                    "config": {
+                                        "images": {
+                                            "min": 1,
+                                            "max": 1
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "video",
+                                    "type": "videos",
+                                    "name": "Video",
+                                    "config": {
+                                        "videos": {
+                                            "min": 1,
+                                            "max": 1
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
                 }
-              ]
-            }
-          }
+            ],
+            "intent": "piece/upsert"
         },
         {
-          "id": "background-media",
-          "type": "componentChoice",
-          "name": "Background media",
-          "config": {
-            "componentChoice": {
-              "choices": [
+            "identifier": "banner",
+            "name": "banner",
+            "components": [
                 {
-                  "id": "image",
-                  "type": "images",
-                  "name": "Image",
-                  "config": {
-                    "images": {
-                      "min": 1,
-                      "max": 1
-                    }
-                  }
+                    "id": "title",
+                    "type": "singleLine",
+                    "name": "Title"
                 },
                 {
-                  "id": "video",
-                  "type": "videos",
-                  "name": "Video",
-                  "config": {
-                    "videos": {
-                      "min": 1,
-                      "max": 1
+                    "id": "description",
+                    "type": "richText",
+                    "name": "Description"
+                },
+                {
+                    "id": "call-to-action",
+                    "type": "piece",
+                    "name": "Call to action",
+                    "config": {
+                        "piece": {
+                            "identifier": "call-to-action"
+                        }
                     }
-                  }
+                },
+                {
+                    "id": "banner",
+                    "type": "images",
+                    "name": "Banner",
+                    "config": {
+                        "images": {
+                            "min": 0,
+                            "max": 1
+                        }
+                    }
+                },
+                {
+                    "id": "layout",
+                    "type": "piece",
+                    "name": "Layout",
+                    "config": {
+                        "piece": {
+                            "identifier": "layout"
+                        }
+                    }
                 }
-              ]
-            }
-          }
-        }
-      ],
-      "intent": "piece/upsert"
-    },
-    {
-      "identifier": "banner",
-      "name": "banner",
-      "components": [
-        {
-          "id": "title",
-          "type": "singleLine",
-          "name": "Title"
+            ],
+            "intent": "piece/upsert"
         },
         {
-          "id": "description",
-          "type": "richText",
-          "name": "Description"
-        },
-        {
-          "id": "call-to-action",
-          "type": "piece",
-          "name": "Call to action",
-          "config": {
-            "piece": {
-              "identifier": "call-to-action"
-            }
-          }
-        },
-        {
-          "id": "banner",
-          "type": "images",
-          "name": "Banner",
-          "config": {
-            "images": {
-              "min": 0,
-              "max": 1
-            }
-          }
-        },
-        {
-          "id": "layout",
-          "type": "piece",
-          "name": "Layout",
-          "config": {
-            "piece": {
-              "identifier": "layout"
-            }
-          }
-        }
-      ],
-      "intent": "piece/upsert"
-    },
-    {
-      "identifier": "feature-highlights",
-      "name": "feature-highlights",
-      "components": [
-        {
-          "id": "usp",
-          "type": "contentChunk",
-          "name": "USP",
-          "config": {
-            "contentChunk": {
-              "components": [
+            "identifier": "feature-highlights",
+            "name": "feature-highlights",
+            "components": [
                 {
-                  "id": "headline",
-                  "type": "singleLine",
-                  "name": "Headline"
+                    "id": "usp",
+                    "type": "contentChunk",
+                    "name": "USP",
+                    "config": {
+                        "contentChunk": {
+                            "components": [
+                                {
+                                    "id": "headline",
+                                    "type": "singleLine",
+                                    "name": "Headline"
+                                },
+                                {
+                                    "id": "description",
+                                    "type": "richText",
+                                    "name": "Description"
+                                },
+                                {
+                                    "id": "icon",
+                                    "type": "images",
+                                    "name": "Icon",
+                                    "config": {
+                                        "images": {}
+                                    }
+                                }
+                            ],
+                            "repeatable": true
+                        }
+                    }
                 },
                 {
-                  "id": "description",
-                  "type": "richText",
-                  "name": "Description"
-                },
-                {
-                  "id": "icon",
-                  "type": "images",
-                  "name": "Icon",
-                  "config": {
-                    "images": {}
-                  }
+                    "id": "layout",
+                    "type": "piece",
+                    "name": "Layout",
+                    "config": {
+                        "piece": {
+                            "identifier": "layout"
+                        }
+                    }
                 }
-              ],
-              "repeatable": true
-            }
-          }
+            ],
+            "intent": "piece/upsert"
         },
         {
-          "id": "layout",
-          "type": "piece",
-          "name": "Layout",
-          "config": {
-            "piece": {
-              "identifier": "layout"
-            }
-          }
-        }
-      ],
-      "intent": "piece/upsert"
-    },
-    {
-      "identifier": "dimensions",
-      "name": "dimensions",
-      "components": [
-        {
-          "id": "width",
-          "type": "numeric",
-          "name": "Width",
-          "config": {
-            "numeric": {
-              "units": [
-                "cm",
-                "mm"
-              ]
-            }
-          }
-        },
-        {
-          "id": "height",
-          "type": "numeric",
-          "name": "Height",
-          "config": {
-            "numeric": {
-              "units": [
-                "cm",
-                "mm"
-              ]
-            }
-          }
-        },
-        {
-          "id": "depth",
-          "type": "numeric",
-          "name": "Depth",
-          "config": {
-            "numeric": {
-              "units": [
-                "cm",
-                "mm"
-              ]
-            }
-          }
-        },
-        {
-          "id": "weight",
-          "type": "numeric",
-          "name": "Weight",
-          "config": {
-            "numeric": {
-              "units": [
-                "g",
-                "kg"
-              ]
-            }
-          }
-        }
-      ],
-      "intent": "piece/upsert"
-    },
-    {
-      "identifier": "meta",
-      "name": "meta",
-      "components": [
-        {
-          "id": "title",
-          "type": "singleLine",
-          "name": "Title",
-          "config": {
-            "singleLine": {}
-          }
-        },
-        {
-          "id": "description",
-          "type": "richText",
-          "name": "Description",
-          "config": {
-            "richText": {}
-          }
-        },
-        {
-          "id": "image",
-          "type": "images",
-          "name": "Image",
-          "config": {
-            "images": {}
-          }
-        }
-      ],
-      "intent": "piece/upsert"
-    },
-    {
-      "identifier": "product",
-      "name": "Product",
-      "components": [
-        {
-          "id": "title",
-          "type": "singleLine",
-          "name": "Title",
-          "config": {
-            "singleLine": {}
-          }
-        },
-        {
-          "id": "description",
-          "type": "richText",
-          "name": "Description",
-          "description": "This is the short description of your product. Keep it to max 3 sentences and keep in mind SEO. If you do not fill in SEO meta, this field will be used for Web channels.",
-          "config": {
-            "richText": {}
-          }
-        },
-        {
-          "id": "story",
-          "type": "paragraphCollection",
-          "name": "Story",
-          "config": {
-            "paragraphCollection": {
-              "multilingual": []
-            }
-          }
-        },
-        {
-          "id": "brand",
-          "type": "itemRelations",
-          "name": "Brand",
-          "description": "A relation to the brand document. Select the brand from the quickselect.",
-          "config": {
-            "itemRelations": {
-              "multilingual": false,
-              "minItems": 0,
-              "maxItems": 1,
-              "minSkus": 0,
-              "maxSkus": 0,
-              "acceptedShapeIdentifiers": [
-                "brand"
-              ],
-              "quickSelect": {
-                "folders": []
-              }
-            }
-          }
-        },
-        {
-          "id": "details",
-          "type": "contentChunk",
-          "name": "Details",
-          "config": {
-            "contentChunk": {
-              "components": [
+            "identifier": "dimensions",
+            "name": "dimensions",
+            "components": [
                 {
-                  "id": "title",
-                  "type": "singleLine",
-                  "name": "Title",
-                  "config": {
-                    "singleLine": {
-                      "multilingual": true
+                    "id": "width",
+                    "type": "numeric",
+                    "name": "Width",
+                    "config": {
+                        "numeric": {
+                            "units": ["cm", "mm"]
+                        }
                     }
-                  }
                 },
                 {
-                  "id": "description",
-                  "type": "richText",
-                  "name": "Description",
-                  "config": {
-                    "richText": {
-                      "multilingual": true
+                    "id": "height",
+                    "type": "numeric",
+                    "name": "Height",
+                    "config": {
+                        "numeric": {
+                            "units": ["cm", "mm"]
+                        }
                     }
-                  }
+                },
+                {
+                    "id": "depth",
+                    "type": "numeric",
+                    "name": "Depth",
+                    "config": {
+                        "numeric": {
+                            "units": ["cm", "mm"]
+                        }
+                    }
+                },
+                {
+                    "id": "weight",
+                    "type": "numeric",
+                    "name": "Weight",
+                    "config": {
+                        "numeric": {
+                            "units": ["g", "kg"]
+                        }
+                    }
                 }
-              ],
-              "repeatable": true
-            }
-          }
+            ],
+            "intent": "piece/upsert"
         },
         {
-          "id": "dimensions",
-          "type": "piece",
-          "name": "Dimensions",
-          "config": {
-            "piece": {
-              "identifier": "dimensions"
-            }
-          }
-        },
-        {
-          "id": "related-products",
-          "type": "itemRelations",
-          "name": "Related products",
-          "config": {
-            "itemRelations": {
-              "multilingual": false,
-              "minItems": 0,
-              "minSkus": 0,
-              "acceptedShapeIdentifiers": [
-                "product"
-              ]
-            }
-          }
-        },
-        {
-          "id": "downloads",
-          "type": "contentChunk",
-          "name": "Downloads",
-          "config": {
-            "contentChunk": {
-              "components": [
+            "identifier": "meta",
+            "name": "meta",
+            "components": [
                 {
-                  "id": "title",
-                  "type": "singleLine",
-                  "name": "Title",
-                  "config": {
-                    "singleLine": {}
-                  }
-                },
-                {
-                  "id": "description",
-                  "type": "richText",
-                  "name": "Description",
-                  "config": {
-                    "richText": {}
-                  }
-                },
-                {
-                  "id": "files",
-                  "type": "files",
-                  "name": "Files",
-                  "config": {
-                    "files": {
-                      "acceptedContentTypes": [],
-                      "maxFileSize": {
-                        "size": 50,
-                        "unit": "MiB"
-                      }
+                    "id": "title",
+                    "type": "singleLine",
+                    "name": "Title",
+                    "config": {
+                        "singleLine": {}
                     }
-                  }
+                },
+                {
+                    "id": "description",
+                    "type": "richText",
+                    "name": "Description",
+                    "config": {
+                        "richText": {}
+                    }
+                },
+                {
+                    "id": "image",
+                    "type": "images",
+                    "name": "Image",
+                    "config": {
+                        "images": {}
+                    }
                 }
-              ],
-              "repeatable": true
-            }
-          }
+            ],
+            "intent": "piece/upsert"
         },
         {
-          "id": "meta",
-          "type": "piece",
-          "name": "Meta",
-          "config": {
-            "piece": {
-              "identifier": "meta"
-            }
-          }
-        }
-      ],
-      "variantComponents": [
-        {
-          "id": "description",
-          "type": "componentChoice",
-          "name": "Description",
-          "config": {
-            "componentChoice": {
-              "choices": [
+            "identifier": "product",
+            "name": "Product",
+            "components": [
                 {
-                  "id": "extra-description",
-                  "type": "richText",
-                  "name": "Extra description",
-                  "config": {
-                    "richText": {}
-                  }
+                    "id": "title",
+                    "type": "singleLine",
+                    "name": "Title",
+                    "config": {
+                        "singleLine": {}
+                    }
                 },
                 {
-                  "id": "alternative-description",
-                  "type": "richText",
-                  "name": "Alternative description",
-                  "config": {
-                    "richText": {}
-                  }
+                    "id": "description",
+                    "type": "richText",
+                    "name": "Description",
+                    "description": "This is the short description of your product. Keep it to max 3 sentences and keep in mind SEO. If you do not fill in SEO meta, this field will be used for Web channels.",
+                    "config": {
+                        "richText": {}
+                    }
+                },
+                {
+                    "id": "story",
+                    "type": "paragraphCollection",
+                    "name": "Story",
+                    "config": {
+                        "paragraphCollection": {
+                            "multilingual": []
+                        }
+                    }
+                },
+                {
+                    "id": "brand",
+                    "type": "itemRelations",
+                    "name": "Brand",
+                    "description": "A relation to the brand document. Select the brand from the quickselect.",
+                    "config": {
+                        "itemRelations": {
+                            "multilingual": false,
+                            "minItems": 0,
+                            "maxItems": 1,
+                            "minSkus": 0,
+                            "maxSkus": 0,
+                            "acceptedShapeIdentifiers": ["brand"],
+                            "quickSelect": {
+                                "folders": []
+                            }
+                        }
+                    }
+                },
+                {
+                    "id": "details",
+                    "type": "contentChunk",
+                    "name": "Details",
+                    "config": {
+                        "contentChunk": {
+                            "components": [
+                                {
+                                    "id": "title",
+                                    "type": "singleLine",
+                                    "name": "Title",
+                                    "config": {
+                                        "singleLine": {
+                                            "multilingual": true
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "description",
+                                    "type": "richText",
+                                    "name": "Description",
+                                    "config": {
+                                        "richText": {
+                                            "multilingual": true
+                                        }
+                                    }
+                                }
+                            ],
+                            "repeatable": true
+                        }
+                    }
+                },
+                {
+                    "id": "dimensions",
+                    "type": "piece",
+                    "name": "Dimensions",
+                    "config": {
+                        "piece": {
+                            "identifier": "dimensions"
+                        }
+                    }
+                },
+                {
+                    "id": "related-products",
+                    "type": "itemRelations",
+                    "name": "Related products",
+                    "config": {
+                        "itemRelations": {
+                            "multilingual": false,
+                            "minItems": 0,
+                            "minSkus": 0,
+                            "acceptedShapeIdentifiers": ["product"]
+                        }
+                    }
+                },
+                {
+                    "id": "downloads",
+                    "type": "contentChunk",
+                    "name": "Downloads",
+                    "config": {
+                        "contentChunk": {
+                            "components": [
+                                {
+                                    "id": "title",
+                                    "type": "singleLine",
+                                    "name": "Title",
+                                    "config": {
+                                        "singleLine": {}
+                                    }
+                                },
+                                {
+                                    "id": "description",
+                                    "type": "richText",
+                                    "name": "Description",
+                                    "config": {
+                                        "richText": {}
+                                    }
+                                },
+                                {
+                                    "id": "files",
+                                    "type": "files",
+                                    "name": "Files",
+                                    "config": {
+                                        "files": {
+                                            "acceptedContentTypes": [],
+                                            "maxFileSize": {
+                                                "size": 50,
+                                                "unit": "MiB"
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "repeatable": true
+                        }
+                    }
+                },
+                {
+                    "id": "meta",
+                    "type": "piece",
+                    "name": "Meta",
+                    "config": {
+                        "piece": {
+                            "identifier": "meta"
+                        }
+                    }
                 }
-              ]
-            }
-          }
-        },
-        {
-          "id": "dimensions",
-          "type": "piece",
-          "name": "Dimensions",
-          "config": {
-            "piece": {
-              "identifier": "dimensions"
-            }
-          }
-        },
-        {
-          "id": "matching-products",
-          "type": "itemRelations",
-          "name": "Matching Products",
-          "config": {
-            "itemRelations": {
-              "multilingual": false,
-              "minItems": 0,
-              "maxItems": 0,
-              "minSkus": 0
-            }
-          }
-        }
-      ],
-      "type": "product",
-      "intent": "shape/upsert"
-    },
-    {
-      "identifier": "product-slider",
-      "name": "product-slider",
-      "components": [
-        {
-          "id": "title",
-          "type": "singleLine",
-          "name": "Title"
-        },
-        {
-          "id": "description",
-          "type": "richText",
-          "name": "Description"
-        },
-        {
-          "id": "products",
-          "type": "itemRelations",
-          "name": "Products",
-          "description": " ",
-          "config": {
-            "itemRelations": {
-              "minItems": 0,
-              "maxItems": 0,
-              "minSkus": 0,
-              "acceptedShapeIdentifiers": [
-                "product"
-              ]
-            }
-          }
-        },
-        {
-          "id": "layout",
-          "type": "piece",
-          "name": "Layout",
-          "config": {
-            "piece": {
-              "identifier": "layout"
-            }
-          }
-        }
-      ],
-      "intent": "piece/upsert"
-    },
-    {
-      "identifier": "story",
-      "name": "Story",
-      "components": [
-        {
-          "id": "title",
-          "type": "singleLine",
-          "name": "Title",
-          "config": {
-            "singleLine": {}
-          }
-        },
-        {
-          "id": "intro",
-          "type": "richText",
-          "name": "Intro",
-          "config": {
-            "richText": {}
-          }
-        },
-        {
-          "id": "media",
-          "type": "componentChoice",
-          "name": "Media",
-          "config": {
-            "componentChoice": {
-              "choices": [
+            ],
+            "variantComponents": [
                 {
-                  "id": "image",
-                  "type": "images",
-                  "name": "Image",
-                  "config": {
-                    "images": {
-                      "min": 1,
-                      "max": 1
+                    "id": "description",
+                    "type": "componentChoice",
+                    "name": "Description",
+                    "config": {
+                        "componentChoice": {
+                            "choices": [
+                                {
+                                    "id": "extra-description",
+                                    "type": "richText",
+                                    "name": "Extra description",
+                                    "config": {
+                                        "richText": {}
+                                    }
+                                },
+                                {
+                                    "id": "alternative-description",
+                                    "type": "richText",
+                                    "name": "Alternative description",
+                                    "config": {
+                                        "richText": {}
+                                    }
+                                }
+                            ]
+                        }
                     }
-                  }
                 },
                 {
-                  "id": "shoppable-image",
-                  "type": "images",
-                  "name": "Shoppable image",
-                  "config": {
-                    "images": {
-                      "min": 1,
-                      "max": 1
+                    "id": "dimensions",
+                    "type": "piece",
+                    "name": "Dimensions",
+                    "config": {
+                        "piece": {
+                            "identifier": "dimensions"
+                        }
                     }
-                  }
                 },
                 {
-                  "id": "video",
-                  "type": "videos",
-                  "name": "Video",
-                  "config": {
-                    "videos": {
-                      "min": 1,
-                      "max": 1
+                    "id": "matching-products",
+                    "type": "itemRelations",
+                    "name": "Matching Products",
+                    "config": {
+                        "itemRelations": {
+                            "multilingual": false,
+                            "minItems": 0,
+                            "maxItems": 0,
+                            "minSkus": 0
+                        }
                     }
-                  }
                 }
-              ]
-            }
-          }
+            ],
+            "type": "product",
+            "intent": "shape/upsert"
         },
         {
-          "id": "story",
-          "type": "paragraphCollection",
-          "name": "Story",
-          "config": {
-            "paragraphCollection": {
-              "multilingual": []
-            }
-          }
-        },
-        {
-          "id": "featured",
-          "type": "itemRelations",
-          "name": "Featured",
-          "config": {
-            "itemRelations": {
-              "minItems": 0,
-              "minSkus": 0,
-              "maxSkus": 0,
-              "acceptedShapeIdentifiers": [
-                "product"
-              ]
-            }
-          }
-        },
-        {
-          "id": "up-next",
-          "type": "itemRelations",
-          "name": "Up next",
-          "config": {
-            "itemRelations": {
-              "minItems": 0,
-              "minSkus": 0,
-              "maxSkus": 0
-            }
-          }
-        },
-        {
-          "id": "meta",
-          "type": "piece",
-          "name": "Meta",
-          "config": {
-            "piece": {
-              "identifier": "meta"
-            }
-          }
-        }
-      ],
-      "type": "document",
-      "intent": "shape/upsert"
-    },
-    {
-      "identifier": "story-slider",
-      "name": "story-slider",
-      "components": [
-        {
-          "id": "title",
-          "type": "singleLine",
-          "name": "Title"
-        },
-        {
-          "id": "description",
-          "type": "richText",
-          "name": "Description"
-        },
-        {
-          "id": "stories",
-          "type": "itemRelations",
-          "name": "Stories",
-          "config": {
-            "itemRelations": {
-              "minItems": 1,
-              "minSkus": 0,
-              "maxSkus": 0,
-              "acceptedShapeIdentifiers": [
-                "story"
-              ],
-              "quickSelect": {
-                "folders": []
-              }
-            }
-          }
-        },
-        {
-          "id": "layout",
-          "type": "piece",
-          "name": "Layout",
-          "config": {
-            "piece": {
-              "identifier": "layout"
-            }
-          }
-        }
-      ],
-      "intent": "piece/upsert"
-    },
-    {
-      "identifier": "picture-grid",
-      "name": "picture-grid",
-      "components": [
-        {
-          "id": "title",
-          "type": "singleLine",
-          "name": "Title",
-          "config": {
-            "singleLine": {}
-          }
-        },
-        {
-          "id": "description",
-          "type": "richText",
-          "name": "Description",
-          "config": {
-            "richText": {}
-          }
-        },
-        {
-          "id": "images",
-          "type": "images",
-          "name": "Images",
-          "config": {
-            "images": {
-              "min": 4,
-              "max": 4
-            }
-          }
-        },
-        {
-          "id": "layout",
-          "type": "piece",
-          "name": "Layout",
-          "config": {
-            "piece": {
-              "identifier": "layout"
-            }
-          }
-        }
-      ],
-      "intent": "piece/upsert"
-    },
-    {
-      "identifier": "category",
-      "name": "Category",
-      "components": [
-        {
-          "id": "title",
-          "type": "singleLine",
-          "name": "Title",
-          "config": {
-            "singleLine": {}
-          }
-        },
-        {
-          "id": "description",
-          "type": "richText",
-          "name": "Description",
-          "config": {
-            "richText": {
-              "multilingual": true
-            }
-          }
-        },
-        {
-          "id": "image",
-          "type": "images",
-          "name": "Image",
-          "config": {
-            "images": {
-              "multilingual": false
-            }
-          }
-        },
-        {
-          "id": "blocks",
-          "type": "componentMultipleChoice",
-          "name": "Blocks",
-          "config": {
-            "componentMultipleChoice": {
-              "choices": [
+            "identifier": "product-slider",
+            "name": "product-slider",
+            "components": [
                 {
-                  "id": "banner",
-                  "type": "piece",
-                  "name": "Banner",
-                  "config": {
-                    "piece": {
-                      "identifier": "banner"
-                    }
-                  }
+                    "id": "title",
+                    "type": "singleLine",
+                    "name": "Title"
                 },
                 {
-                  "id": "feature-highlights",
-                  "type": "piece",
-                  "name": "Feature highlights",
-                  "config": {
-                    "piece": {
-                      "identifier": "feature-highlights"
-                    }
-                  }
+                    "id": "description",
+                    "type": "richText",
+                    "name": "Description"
                 },
                 {
-                  "id": "product-slider",
-                  "type": "piece",
-                  "name": "Product slider",
-                  "config": {
-                    "piece": {
-                      "identifier": "product-slider"
+                    "id": "products",
+                    "type": "itemRelations",
+                    "name": "Products",
+                    "description": " ",
+                    "config": {
+                        "itemRelations": {
+                            "minItems": 0,
+                            "maxItems": 0,
+                            "minSkus": 0,
+                            "acceptedShapeIdentifiers": ["product"]
+                        }
                     }
-                  }
                 },
                 {
-                  "id": "story-slider",
-                  "type": "piece",
-                  "name": "Story slider",
-                  "config": {
-                    "piece": {
-                      "identifier": "story-slider"
+                    "id": "layout",
+                    "type": "piece",
+                    "name": "Layout",
+                    "config": {
+                        "piece": {
+                            "identifier": "layout"
+                        }
                     }
-                  }
-                },
-                {
-                  "id": "picture-grid",
-                  "type": "piece",
-                  "name": "Picture grid",
-                  "config": {
-                    "piece": {
-                      "identifier": "picture-grid"
-                    }
-                  }
                 }
-              ]
-            }
-          }
+            ],
+            "intent": "piece/upsert"
         },
         {
-          "id": "meta",
-          "type": "piece",
-          "name": "Meta",
-          "config": {
-            "piece": {
-              "identifier": "meta"
-            }
-          }
-        }
-      ],
-      "type": "folder",
-      "intent": "shape/upsert"
-    },
-    {
-      "identifier": "landing-page",
-      "name": "Landing page",
-      "components": [
-        {
-          "id": "blocks",
-          "type": "componentMultipleChoice",
-          "name": "Blocks",
-          "config": {
-            "componentMultipleChoice": {
-              "choices": [
+            "identifier": "story",
+            "name": "Story",
+            "components": [
                 {
-                  "id": "banner",
-                  "type": "piece",
-                  "name": "Banner",
-                  "config": {
-                    "piece": {
-                      "identifier": "banner"
+                    "id": "title",
+                    "type": "singleLine",
+                    "name": "Title",
+                    "config": {
+                        "singleLine": {}
                     }
-                  }
                 },
                 {
-                  "id": "feature-highlights",
-                  "type": "piece",
-                  "name": "Feature highlights",
-                  "config": {
-                    "piece": {
-                      "identifier": "feature-highlights"
+                    "id": "intro",
+                    "type": "richText",
+                    "name": "Intro",
+                    "config": {
+                        "richText": {}
                     }
-                  }
                 },
                 {
-                  "id": "product-slider",
-                  "type": "piece",
-                  "name": "Product slider",
-                  "config": {
-                    "piece": {
-                      "identifier": "product-slider"
+                    "id": "media",
+                    "type": "componentChoice",
+                    "name": "Media",
+                    "config": {
+                        "componentChoice": {
+                            "choices": [
+                                {
+                                    "id": "image",
+                                    "type": "images",
+                                    "name": "Image",
+                                    "config": {
+                                        "images": {
+                                            "min": 1,
+                                            "max": 1
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "shoppable-image",
+                                    "type": "images",
+                                    "name": "Shoppable image",
+                                    "config": {
+                                        "images": {
+                                            "min": 1,
+                                            "max": 1
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "video",
+                                    "type": "videos",
+                                    "name": "Video",
+                                    "config": {
+                                        "videos": {
+                                            "min": 1,
+                                            "max": 1
+                                        }
+                                    }
+                                }
+                            ]
+                        }
                     }
-                  }
                 },
                 {
-                  "id": "story-slider",
-                  "type": "piece",
-                  "name": "Story slider",
-                  "config": {
-                    "piece": {
-                      "identifier": "story-slider"
+                    "id": "story",
+                    "type": "paragraphCollection",
+                    "name": "Story",
+                    "config": {
+                        "paragraphCollection": {
+                            "multilingual": []
+                        }
                     }
-                  }
                 },
                 {
-                  "id": "picture-grid",
-                  "type": "piece",
-                  "name": "Picture grid",
-                  "config": {
-                    "piece": {
-                      "identifier": "picture-grid"
+                    "id": "featured",
+                    "type": "itemRelations",
+                    "name": "Featured",
+                    "config": {
+                        "itemRelations": {
+                            "minItems": 0,
+                            "minSkus": 0,
+                            "maxSkus": 0,
+                            "acceptedShapeIdentifiers": ["product"]
+                        }
                     }
-                  }
+                },
+                {
+                    "id": "up-next",
+                    "type": "itemRelations",
+                    "name": "Up next",
+                    "config": {
+                        "itemRelations": {
+                            "minItems": 0,
+                            "minSkus": 0,
+                            "maxSkus": 0
+                        }
+                    }
+                },
+                {
+                    "id": "meta",
+                    "type": "piece",
+                    "name": "Meta",
+                    "config": {
+                        "piece": {
+                            "identifier": "meta"
+                        }
+                    }
                 }
-              ]
-            }
-          }
+            ],
+            "type": "document",
+            "intent": "shape/upsert"
         },
         {
-          "id": "meta",
-          "type": "piece",
-          "name": "Meta",
-          "config": {
-            "piece": {
-              "identifier": "meta"
-            }
-          }
-        }
-      ],
-      "type": "document",
-      "intent": "shape/upsert"
-    },
-    {
-      "identifier": "menu-item",
-      "name": "Menu item",
-      "components": [
-        {
-          "id": "label",
-          "type": "singleLine",
-          "name": "Label",
-          "config": {
-            "singleLine": {}
-          }
-        },
-        {
-          "id": "link",
-          "type": "componentChoice",
-          "name": "Link",
-          "config": {
-            "componentChoice": {
-              "choices": [
+            "identifier": "story-slider",
+            "name": "story-slider",
+            "components": [
                 {
-                  "id": "url",
-                  "type": "singleLine",
-                  "name": "URL",
-                  "config": {
-                    "singleLine": {}
-                  }
+                    "id": "title",
+                    "type": "singleLine",
+                    "name": "Title"
                 },
                 {
-                  "id": "item",
-                  "type": "itemRelations",
-                  "name": "Item",
-                  "config": {
-                    "itemRelations": {
-                      "minItems": 1,
-                      "maxItems": 1,
-                      "minSkus": 0,
-                      "maxSkus": 0
+                    "id": "description",
+                    "type": "richText",
+                    "name": "Description"
+                },
+                {
+                    "id": "stories",
+                    "type": "itemRelations",
+                    "name": "Stories",
+                    "config": {
+                        "itemRelations": {
+                            "minItems": 1,
+                            "minSkus": 0,
+                            "maxSkus": 0,
+                            "acceptedShapeIdentifiers": ["story"],
+                            "quickSelect": {
+                                "folders": []
+                            }
+                        }
                     }
-                  }
+                },
+                {
+                    "id": "layout",
+                    "type": "piece",
+                    "name": "Layout",
+                    "config": {
+                        "piece": {
+                            "identifier": "layout"
+                        }
+                    }
                 }
-              ]
-            }
-          }
+            ],
+            "intent": "piece/upsert"
         },
         {
-          "id": "description",
-          "type": "richText",
-          "name": "Description",
-          "config": {
-            "richText": {}
-          }
+            "identifier": "picture-grid",
+            "name": "picture-grid",
+            "components": [
+                {
+                    "id": "title",
+                    "type": "singleLine",
+                    "name": "Title",
+                    "config": {
+                        "singleLine": {}
+                    }
+                },
+                {
+                    "id": "description",
+                    "type": "richText",
+                    "name": "Description",
+                    "config": {
+                        "richText": {}
+                    }
+                },
+                {
+                    "id": "images",
+                    "type": "images",
+                    "name": "Images",
+                    "config": {
+                        "images": {
+                            "min": 4,
+                            "max": 4
+                        }
+                    }
+                },
+                {
+                    "id": "layout",
+                    "type": "piece",
+                    "name": "Layout",
+                    "config": {
+                        "piece": {
+                            "identifier": "layout"
+                        }
+                    }
+                }
+            ],
+            "intent": "piece/upsert"
         },
         {
-          "id": "icon",
-          "type": "images",
-          "name": "Icon",
-          "config": {
-            "images": {
-              "max": 1
-            }
-          }
+            "identifier": "category",
+            "name": "Category",
+            "components": [
+                {
+                    "id": "title",
+                    "type": "singleLine",
+                    "name": "Title",
+                    "config": {
+                        "singleLine": {}
+                    }
+                },
+                {
+                    "id": "description",
+                    "type": "richText",
+                    "name": "Description",
+                    "config": {
+                        "richText": {
+                            "multilingual": true
+                        }
+                    }
+                },
+                {
+                    "id": "image",
+                    "type": "images",
+                    "name": "Image",
+                    "config": {
+                        "images": {
+                            "multilingual": false
+                        }
+                    }
+                },
+                {
+                    "id": "blocks",
+                    "type": "componentMultipleChoice",
+                    "name": "Blocks",
+                    "config": {
+                        "componentMultipleChoice": {
+                            "choices": [
+                                {
+                                    "id": "banner",
+                                    "type": "piece",
+                                    "name": "Banner",
+                                    "config": {
+                                        "piece": {
+                                            "identifier": "banner"
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "feature-highlights",
+                                    "type": "piece",
+                                    "name": "Feature highlights",
+                                    "config": {
+                                        "piece": {
+                                            "identifier": "feature-highlights"
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "product-slider",
+                                    "type": "piece",
+                                    "name": "Product slider",
+                                    "config": {
+                                        "piece": {
+                                            "identifier": "product-slider"
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "story-slider",
+                                    "type": "piece",
+                                    "name": "Story slider",
+                                    "config": {
+                                        "piece": {
+                                            "identifier": "story-slider"
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "picture-grid",
+                                    "type": "piece",
+                                    "name": "Picture grid",
+                                    "config": {
+                                        "piece": {
+                                            "identifier": "picture-grid"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": "meta",
+                    "type": "piece",
+                    "name": "Meta",
+                    "config": {
+                        "piece": {
+                            "identifier": "meta"
+                        }
+                    }
+                }
+            ],
+            "type": "folder",
+            "intent": "shape/upsert"
+        },
+        {
+            "identifier": "landing-page",
+            "name": "Landing page",
+            "components": [
+                {
+                    "id": "blocks",
+                    "type": "componentMultipleChoice",
+                    "name": "Blocks",
+                    "config": {
+                        "componentMultipleChoice": {
+                            "choices": [
+                                {
+                                    "id": "banner",
+                                    "type": "piece",
+                                    "name": "Banner",
+                                    "config": {
+                                        "piece": {
+                                            "identifier": "banner"
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "feature-highlights",
+                                    "type": "piece",
+                                    "name": "Feature highlights",
+                                    "config": {
+                                        "piece": {
+                                            "identifier": "feature-highlights"
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "product-slider",
+                                    "type": "piece",
+                                    "name": "Product slider",
+                                    "config": {
+                                        "piece": {
+                                            "identifier": "product-slider"
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "story-slider",
+                                    "type": "piece",
+                                    "name": "Story slider",
+                                    "config": {
+                                        "piece": {
+                                            "identifier": "story-slider"
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "picture-grid",
+                                    "type": "piece",
+                                    "name": "Picture grid",
+                                    "config": {
+                                        "piece": {
+                                            "identifier": "picture-grid"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": "meta",
+                    "type": "piece",
+                    "name": "Meta",
+                    "config": {
+                        "piece": {
+                            "identifier": "meta"
+                        }
+                    }
+                }
+            ],
+            "type": "document",
+            "intent": "shape/upsert"
+        },
+        {
+            "identifier": "menu-item",
+            "name": "Menu item",
+            "components": [
+                {
+                    "id": "label",
+                    "type": "singleLine",
+                    "name": "Label",
+                    "config": {
+                        "singleLine": {}
+                    }
+                },
+                {
+                    "id": "link",
+                    "type": "componentChoice",
+                    "name": "Link",
+                    "config": {
+                        "componentChoice": {
+                            "choices": [
+                                {
+                                    "id": "url",
+                                    "type": "singleLine",
+                                    "name": "URL",
+                                    "config": {
+                                        "singleLine": {}
+                                    }
+                                },
+                                {
+                                    "id": "item",
+                                    "type": "itemRelations",
+                                    "name": "Item",
+                                    "config": {
+                                        "itemRelations": {
+                                            "minItems": 1,
+                                            "maxItems": 1,
+                                            "minSkus": 0,
+                                            "maxSkus": 0
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": "description",
+                    "type": "richText",
+                    "name": "Description",
+                    "config": {
+                        "richText": {}
+                    }
+                },
+                {
+                    "id": "icon",
+                    "type": "images",
+                    "name": "Icon",
+                    "config": {
+                        "images": {
+                            "max": 1
+                        }
+                    }
+                }
+            ],
+            "type": "folder",
+            "intent": "shape/upsert"
         }
-      ],
-      "type": "folder",
-      "intent": "shape/upsert"
-    }
-  ]
+    ]
 }

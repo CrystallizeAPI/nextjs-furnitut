@@ -16,7 +16,7 @@ export const ParagraphCollection = ({ paragraphs }: ParagraphCollectionProps) =>
                 </div>
                 {paragraph.images?.map((image, index) => (
                     <div key={index} className="rounded-2xl my-6 overflow-hidden">
-                        <Image {...image} preserveRatio showShowcases={!!image?.showcases?.length} />
+                        <Image {...image} preserveRatio showShowcases={!!image?.showcases?.length} loading={'lazy'} />
                     </div>
                 ))}
             </div>

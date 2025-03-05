@@ -23,8 +23,8 @@ export const BlockLayout = ({ block, children }: BlockLayoutProps) => {
             className={clsx(
                 `w-full mx-auto block  block-bg relative`,
                 isFirstBlock && 'pt-24 sm:pt-60',
-                isFullWidth ? 'max-w-full' : 'max-w-screen-2xl rounded-2xl px-4 sm:px-0',
-                hasBackgroundMedia ? '!bg-transparent' : 'pt-0  pb-0',
+                isFullWidth ? 'max-w-full' : 'max-w-(--breakpoint-2xl) rounded-2xl px-4 sm:px-0',
+                hasBackgroundMedia ? 'bg-transparent!' : 'pt-0  pb-0',
                 themeMap[selectedTheme as keyof typeof themeMap],
             )}
         >

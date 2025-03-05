@@ -38,7 +38,7 @@ export default async function Order(props: OrderProps) {
     const orderCart = await fetchData(id);
 
     return (
-        <main className="mt-48 max-w-screen-md mx-auto">
+        <main className="mt-48 max-w-(--breakpoint-md) mx-auto">
             <div className="mt-10 ">
                 <h1 className="font-bold text-3xl text-center text-balance">
                     Thank you {orderCart.customer?.firstName}!

@@ -123,7 +123,7 @@ export const CheckoutForm = () => {
                                         className="flex justify-between border-b border-muted pb-4 px-6 pt-4"
                                     >
                                         <div className="flex w-full">
-                                            <div className="shrink-0 relative h-16 w-12 aspect-square border border-muted rounded overflow-hidden">
+                                            <div className="shrink-0 relative h-16 w-12 aspect-square border border-muted rounded-sm overflow-hidden">
                                                 <Image {...item.images[0]} className="object-cover" />
                                             </div>
                                             <div className="flex flex-col pl-4 text-dark w-full justify-between">

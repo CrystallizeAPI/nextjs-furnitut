@@ -13,14 +13,26 @@ type ImageProps = {
     showShowcases?: boolean;
     className?: string;
     variants?: Array<Omit<ImageVariant, 'size' | 'key'> | null> | null;
+    ogVariants?: Array<Omit<ImageVariant, 'size' | 'key'> | null> | null;
     sizes?: string;
     showcases?: Array<Showcase | null> | null;
     altText?: string | null;
     src?: string;
     url?: string | null;
+    loading?: 'eager' | 'lazy';
 };
 
-export const Image = ({ className, focalPoint, preserveRatio, showShowcases, altText, ...image }: ImageProps) => {
+export const Image = ({
+    className,
+    focalPoint,
+    preserveRatio,
+    showShowcases,
+    altText,
+    loading,
+    ogVariants,
+    sizes,
+    ...image
+}: ImageProps) => {
     const styles = {
         '--focus-x': focalPoint?.x,
         '--focus-y': focalPoint?.y,
@@ -48,6 +60,8 @@ export const Image = ({ className, focalPoint, preserveRatio, showShowcases, alt
                 url={image.url ?? undefined}
                 variants={image.variants as CrystallizeImageVariants}
                 alt={altText ?? undefined}
+                loading={loading}
+                sizes={sizes ?? '(max-width: 640px) 500w, 768w'}
             />
         </div>
     );
@@ -95,11 +109,16 @@ export const HotSpot = ({ showcase }: { showcase: any }) => {
             >
                 {product && (
                     <div className=" gap-4 flex w-full text-light py-2 pr-6 text-sm items-center">
-                        <div className="w-12 overflow-hidden rounded shrink-0 [&_img]:object-cover">
-                            <CrystallizeImage {...image} alt={image?.altText} className="h-full w-full" />
+                        <div className="w-12 overflow-hidden rounded-sm shrink-0 [&_img]:object-cover">
+                            <CrystallizeImage
+                                {...image}
+                                alt={image?.altText}
+                                className="h-full w-full"
+                                loading={'lazy'}
+                            />
                         </div>
                         <div className="flex flex-col overflow-hidden gap-1">
-                            <span className="overflow-ellipsis text-nowrap w-full">{product.name}</span>
+                            <span className="text-ellipsis text-nowrap w-full">{product.name}</span>
                             <span className="text-xs font-medium">
                                 <Price price={price} />
                             </span>

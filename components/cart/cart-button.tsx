@@ -46,7 +46,7 @@ export const CartButton = () => {
                 <span className="pr-4 sm:pr-8 relative flex items-start justify-center">
                     <span className="max-sm:sr-only">Cart </span>
                     {!!cart?.items.length && (
-                        <span className="text-sm absolute right-0 h-5 w-5 text-bold bg-vivid text-light rounded top-1/2 -translate-y-1/2">
+                        <span className="text-sm absolute right-0 h-5 w-5 text-bold bg-vivid text-light rounded-sm top-1/2 -translate-y-1/2">
                             {cart?.items.reduce((acc, item) => acc + (item.quantity ?? 0), 0)}
                         </span>
                     )}
@@ -55,10 +55,10 @@ export const CartButton = () => {
             {!!item && (
                 <div
                     key={item.variant.sku}
-                    className="starting:opacity-0 starting:translate-y-10 opacity-100 transition-all absolute border translate-y-4 border-muted top-full right-0 bg-light text-dark p-2 rounded-lg shadow"
+                    className="starting:opacity-0 starting:translate-y-10 opacity-100 transition-all absolute border translate-y-4 border-muted top-full right-0 bg-light text-dark p-2 rounded-lg shadow-sm"
                 >
                     <div className="flex gap-2 items-center pr-6">
-                        <div className="w-8 h-8 relative overflow-hidden rounded border border-muted ">
+                        <div className="w-8 h-8 relative overflow-hidden rounded-sm border border-muted ">
                             <Image {...item.images?.[0]} sizes="100px" className="relative [&_img]:object-cover" />
                         </div>
                         <div className="flex gap-1">

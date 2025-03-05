@@ -16,14 +16,14 @@ export const CartSidebar = () => {
             className={classNames(
                 'bg-light transition-all border-l-muted border-l py-8 px-10 w-[500px] h-full z-10 overflow-y-auto',
                 'flex flex-col fixed top-0 right-0',
-                !isOpen && '!-right-[505px]',
+                !isOpen && '-right-[505px]!',
             )}
         >
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-bold">Cart</h2>
                 <button
                     aria-label="Close cart button"
-                    className="bg-light h-8 w-8 font-bold border border-muted rounded hover:bg-muted/50"
+                    className="bg-light h-8 w-8 font-bold border border-muted rounded-sm hover:bg-muted/50"
                     onClick={onClose}
                 >
                     x

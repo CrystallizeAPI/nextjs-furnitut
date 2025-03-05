@@ -39,19 +39,19 @@ export default async function StoryPage(props: StoriesProps) {
 
     return (
         <main className="mt-40">
-            <div className="max-w-screen-lg mx-auto text-center mb-12">
+            <div className="max-w-(--breakpoint-lg) mx-auto text-center mb-12">
                 <h1 className="text-dark text-5xl font-medium py-4 text-balance">{title}</h1>
                 <div className="text-lg  text-center mx-auto leading-8 font-medium text-dark">
                     <ContentTransformer json={intro} />
                 </div>
             </div>
-            <div className="max-w-screen-xl mx-auto [&_img]:w-full [&_img]:max-w-none overflow-hidden rounded-2xl ">
+            <div className="max-w-(--breakpoint-xl) mx-auto [&_img]:w-full [&_img]:max-w-none overflow-hidden rounded-2xl ">
                 <Media {...media} preserveRatio sizes="(max-width: 600px) 100vw, 1280px" />
             </div>
-            <div className="grid grid-cols-5 max-w-screen-xl mx-auto mt-24">
+            <div className="grid grid-cols-5 max-w-(--breakpoint-xl) mx-auto mt-24">
                 <div
                     className={clsx('col-span-3 gap-24 px-12', {
-                        '!col-span-5 max-w-screen-md mx-auto': featured === null,
+                        'col-span-5! max-w-(--breakpoint-md) mx-auto': featured === null,
                     })}
                 >
                     <ParagraphCollection paragraphs={story} />
@@ -69,7 +69,7 @@ export default async function StoryPage(props: StoriesProps) {
                                         className="flex gap-3 px-4 py-3 border-b border-muted"
                                         key={`${product.defaultVariant?.sku}-featured-${index}`}
                                     >
-                                        <div className="w-10 h-12 rounded overflow-hidden">
+                                        <div className="w-10 h-12 rounded-sm overflow-hidden">
                                             <Image {...product.defaultVariant?.firstImage} />
                                         </div>
                                         <div className="flex flex-col">
@@ -86,7 +86,7 @@ export default async function StoryPage(props: StoriesProps) {
                 )}
             </div>
             {upNext && (
-                <div className="mt-24 px-12 max-w-screen-2xl mx-auto">
+                <div className="mt-24 px-12 max-w-(--breakpoint-2xl) mx-auto">
                     <div className="px-0 border-t border-muted  pt-24  ">
                         <h2 className="text-2xl  py-4 font-bold">Up next</h2>
                         <Slider type="story" options={{ loop: false, align: 'start' }}>

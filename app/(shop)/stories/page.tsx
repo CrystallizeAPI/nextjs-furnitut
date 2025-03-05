@@ -20,7 +20,7 @@ export default async function Stories() {
                 <h1 className="text-4xl font-bold py-4">{title}</h1>
             </div>
             <div className="pt-12">
-                <div className="grid grid-cols-2 gap-4 items-stretch max-w-screen-2xl mx-auto ">
+                <div className="grid grid-cols-2 gap-4 items-stretch max-w-(--breakpoint-2xl) mx-auto ">
                     {children?.map((story, index) => <Story story={story} key={index} />)}
                 </div>
             </div>

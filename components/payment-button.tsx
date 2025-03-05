@@ -47,7 +47,7 @@ export function PaymentButton({ cartId }: PaymentButtonProps) {
                             <span
                                 className={classNames(
                                     'w-5 h-5 rounded-full border border-muted mt-1 flex items-center justify-center shrink-0',
-                                    selectedMethod === method.id && '!border-dark',
+                                    selectedMethod === method.id && 'border-dark!',
                                 )}
                             >
                                 <div

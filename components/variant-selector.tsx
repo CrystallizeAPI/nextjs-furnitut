@@ -95,11 +95,11 @@ export const VariantSelector = (props: VariantSelectorProps) => {
                             href={path + '?sku=' + variant.sku}
                             className={classNames(
                                 'bg-light rounded-lg overflow-hidden flex border-muted border p-1 gap-4 items-center',
-                                { '!border-dark': variant.sku === currentSku },
+                                { 'border-dark!': variant.sku === currentSku },
                             )}
                         >
                             <div className=" overflow-hidden h-16 w-16 shrink-0 rounded-md border border-muted  ">
-                                <Image {...variant.images?.[0]} sizes="200px" />
+                                <Image {...variant.images?.[0]} sizes="(max-width: 640px) 100w, 200w" />
                             </div>
                             <div className="flex py-2 w-full justify-between px-4">
                                 <span className=" flex-col flex ">
@@ -133,13 +133,13 @@ export const VariantSelector = (props: VariantSelectorProps) => {
                                 className={classNames(
                                     'bg-light rounded-lg overflow-hidden border-muted border text-xs p-1 text-center font-bold',
                                     {
-                                        '!border-dark': value.value === searchValue || (!searchValue && index === 0),
+                                        'border-dark!': value.value === searchValue || (!searchValue && index === 0),
                                     },
                                 )}
                             >
                                 {facetIndex === 0 && (
                                     <div className="aspect-square overflow-hidden rounded-md">
-                                        <Image {...value.images[0]} sizes="200px" />
+                                        <Image {...value.images[0]} sizes="(max-width: 640px) 100w, 200w" />
                                     </div>
                                 )}
                                 <span className="py-2 block">{value.value}</span>

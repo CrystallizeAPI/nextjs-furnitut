@@ -1,33 +1,56 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@layer utilities {
-    .text-balance {
-        text-wrap: balance;
-    }
+@theme {
+    --color-*: initial;
+    --color-transparent: transparent;
+    --color-dark: #211a1d;
+    --color-light: #ffffff;
+    --color-soft: #f6f4f3;
+    --color-accent: #79745d;
+    --color-muted: #dfdfdf;
+    --color-vivid: #ee7674;
+}
 
-    .aspect-portrait {
-        aspect-ratio: 3 / 4;
-    }
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
 
-    .crystallize-image {
-        @apply h-full w-full relative;
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
     }
-    .crystallize-image figure {
+}
+
+@utility text-balance {
+    text-wrap: balance;
+}
+
+@utility aspect-portrait {
+    aspect-ratio: 3 / 4;
+}
+
+@utility crystallize-image {
+    @apply h-full w-full relative;
+    & figure {
         @apply w-full h-full flex;
     }
 
-    .crystallize-image picture {
+    & picture {
         container-type: size;
 
         @apply w-full h-full;
     }
-    .crystallize-image {
-        --crop-focus-x: var(--focus-x, 0.5);
-        --crop-focus-y: var(--focus-y, 0.5);
-    }
-    .crystallize-image img {
+    --crop-focus-x: var(--focus-x, 0.5);
+    --crop-focus-y: var(--focus-y, 0.5);
+    & img {
         --container-width: 100cqw;
         --container-height: 100cqh;
         --image-width: calc(var(--container-width) - 100%);
@@ -38,160 +61,231 @@
             clamp(100%, 0.5 * var(--container-height) - var(--crop-focus-y) * var(--image-height), 0%);
         object-fit: cover;
     }
+}
 
-    .page {
-        @apply max-w-screen-2xl mx-auto px-12 pt-32;
-    }
+@utility page {
+    @apply max-w-(--breakpoint-2xl) mx-auto px-12 pt-32;
+}
 
-    details.accordination {
+@utility accordination {
+    &details {
         @apply relative border-t border-muted;
     }
-    details.accordination > summary {
+    &details > summary {
         list-style-type: none;
         @apply cursor-pointer;
     }
     /* details.accordination > summary .accordination-arrow {
     @apply rotate-180;
   } */
-    details.accordination > summary .accordination-arrow {
+    &details > summary .accordination-arrow {
         @apply -rotate-180;
     }
-    details[open].accordination > summary .accordination-arrow {
+    &details[open] > summary .accordination-arrow {
         @apply rotate-0;
     }
+}
 
-    details[open] > summary {
-        margin-bottom: 0.5rem;
+@utility accordination-arrow {
+    /* details.accordination > summary .accordination-arrow {
+    @apply rotate-180;
+  } */
+    details.accordination > summary & {
+        @apply -rotate-180;
     }
+    details[open].accordination > summary & {
+        @apply rotate-0;
+    }
+}
 
-    .btn {
-        @apply inline-block px-6 py-3 text-light bg-dark rounded-lg font-medium hover:bg-opacity-90;
-    }
-    .btn.small {
+@utility btn {
+    @apply inline-block px-6 py-3 text-light bg-dark rounded-lg font-medium hover:bg-dark/90;
+    &.small {
         @apply px-4 py-1.5;
     }
-    .btn.large {
+    &.large {
         @apply px-8 py-4;
     }
+}
 
-    .block-description p {
+@utility small {
+    &.btn {
+        @apply px-4 py-1.5;
+    }
+}
+
+@utility large {
+    &.btn {
+        @apply px-8 py-4;
+    }
+}
+
+@utility block-description {
+    & p {
         @apply font-medium;
     }
-
-    .theme-muted {
-        @apply bg-muted;
-    }
-    .theme-muted .block-title {
+    .theme-muted & p {
         @apply text-dark;
     }
-    .theme-muted .block-description p {
+    .theme-pastel & p {
+        @apply text-light;
+    }
+    .theme-dark & p {
+        @apply text-light;
+    }
+    .theme-vivid & p {
         @apply text-dark;
     }
+}
 
-    .theme-pastel {
-        @apply bg-accent;
-    }
-    .theme-pastel .block-title {
-        @apply text-light;
-    }
-    .theme-pastel .block-description p {
-        @apply text-light;
-    }
-
-    .theme-light {
-        @apply bg-soft;
-    }
-    .theme-light .block-title {
+@utility theme-muted {
+    @apply bg-muted;
+    & .block-title {
         @apply text-dark;
     }
+    & .block-description p {
+        @apply text-dark;
+    }
+}
 
-    .theme-dark {
-        @apply bg-dark;
+@utility block-title {
+    .theme-muted & {
+        @apply text-dark;
     }
-    .theme-dark .block-title {
+    .theme-pastel & {
         @apply text-light;
     }
-    .theme-dark .block-description p {
+    .theme-light & {
+        @apply text-dark;
+    }
+    .theme-dark & {
         @apply text-light;
     }
-    .theme-dark .block-btn {
+    .theme-vivid & {
+        @apply text-dark;
+    }
+}
+
+@utility theme-pastel {
+    @apply bg-accent;
+    & .block-title {
+        @apply text-light;
+    }
+    & .block-description p {
+        @apply text-light;
+    }
+}
+
+@utility theme-light {
+    @apply bg-soft;
+    & .block-title {
+        @apply text-dark;
+    }
+}
+
+@utility theme-dark {
+    @apply bg-dark;
+    & .block-title {
+        @apply text-light;
+    }
+    & .block-description p {
+        @apply text-light;
+    }
+    & .block-btn {
         @apply bg-light text-dark;
     }
+}
 
-    .theme-vivid {
-        @apply bg-vivid;
+@utility block-btn {
+    .theme-dark & {
+        @apply bg-light text-dark;
     }
-    .theme-vivid .block-title {
-        @apply text-dark;
-    }
-    .theme-vivid .block-description p {
-        @apply text-dark;
-    }
-    .theme-vivid .block-btn {
+    .theme-vivid & {
         @apply bg-dark text-light;
     }
+}
 
-    .embla {
-        max-width: 100rem;
-        margin: auto;
-        --slide-height: 19rem;
-        --slide-spacing: 1rem;
-        --slide-size: 50%;
+@utility theme-vivid {
+    @apply bg-vivid;
+    & .block-title {
+        @apply text-dark;
+    }
+    & .block-description p {
+        @apply text-dark;
+    }
+    & .block-btn {
+        @apply bg-dark text-light;
+    }
+}
 
-        @media (width < 40rem) {
-            --slide-size: 100% !important;
-            --slide-spacing: 0rem !important;
-        }
-    }
-    .embla__viewport {
-        overflow: hidden;
-    }
-    .embla__container {
-        display: flex;
-        touch-action: pan-y pinch-zoom;
-        margin-left: calc(var(--slide-spacing) * -1);
-    }
-    .embla__slide {
-        transform: translate3d(0, 0, 0);
-        flex: 0 0 var(--slide-size);
-        min-width: 0;
-        padding-left: var(--slide-spacing);
-    }
+@utility embla {
+    max-width: 100rem;
+    margin: auto;
+    --slide-height: 19rem;
+    --slide-spacing: 1rem;
+    --slide-size: 50%;
 
-    .embla__button:disabled {
+    @media (width < 40rem) {
+        --slide-size: 100% !important;
+        --slide-spacing: 0rem !important;
+    }
+}
+
+@utility embla__viewport {
+    overflow: hidden;
+}
+
+@utility embla__container {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+    margin-left: calc(var(--slide-spacing) * -1);
+}
+
+@utility embla__slide {
+    transform: translate3d(0, 0, 0);
+    flex: 0 0 var(--slide-size);
+    min-width: 0;
+    padding-left: var(--slide-spacing);
+}
+
+@utility embla__button {
+    &:disabled {
         color: var(--detail-high-contrast);
     }
-    .embla__button__svg {
-        width: 35%;
-        height: 35%;
-    }
-    .embla__dots {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        align-items: center;
-        margin-right: calc((2.6rem - 1.4rem) / 2 * -1);
-    }
-    .embla__dot {
-        -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
-        -webkit-appearance: none;
-        appearance: none;
-        background-color: transparent;
-        touch-action: manipulation;
-        display: inline-flex;
-        text-decoration: none;
-        cursor: pointer;
-        border: 0;
-        padding: 0;
-        margin: 0;
-        width: 2.6rem;
-        height: 2.6rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-    }
-    .embla__dot:after {
+}
+
+@utility embla__button__svg {
+    width: 35%;
+    height: 35%;
+}
+
+@utility embla__dots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: calc((2.6rem - 1.4rem) / 2 * -1);
+}
+
+@utility embla__dot {
+    -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    touch-action: manipulation;
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    width: 2.6rem;
+    height: 2.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    &:after {
         box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
         width: 1.4rem;
         height: 1.4rem;
@@ -200,7 +294,16 @@
         align-items: center;
         content: '';
     }
-    .embla__dot--selected:after {
+}
+
+@utility embla__dot--selected {
+    &:after {
         box-shadow: inset 0 0 0 0.2rem var(--text-body);
+    }
+}
+
+@layer utilities {
+    details[open] > summary {
+        margin-bottom: 0.5rem;
     }
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js/pure';
 import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
 export const StripeButton: React.FC<{
@@ -12,9 +12,10 @@ export const StripeButton: React.FC<{
     );
 };
 
+const stripePromise = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY ?? '');
+
 export const Stripe = ({ cartId }: { cartId?: string }) => {
     const [clientSecret, setClientSecret] = useState<string>('');
-    const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY ?? '');
 
     useEffect(() => {
         fetch('/api/payments/stripe', {

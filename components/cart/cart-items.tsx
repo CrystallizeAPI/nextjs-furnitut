@@ -16,7 +16,7 @@ export const CartItems = () => {
             {cart.items.map((item: CartItem) => (
                 <li key={`${item.variant.sku}`} className="flex mb-4 justify-between">
                     <div className="flex w-full">
-                        <div className="shrink-0 relative h-24 w-20 aspect-square border border-muted rounded overflow-hidden">
+                        <div className="shrink-0 relative h-24 w-20 aspect-square border border-muted rounded-sm overflow-hidden">
                             <Image {...item.images[0]} className="object-cover" />
                         </div>
                         <div className="flex flex-col pl-4 text-dark w-full justify-between">
@@ -41,7 +41,7 @@ export const CartItems = () => {
                                         <input type="hidden" name="type" value="reduce" />
                                         <button
                                             type="submit"
-                                            className="w-8 h-8 flex items-center justify-center rounded hover:bg-muted/20 active:bg-muted/40"
+                                            className="w-8 h-8 flex items-center justify-center rounded-sm hover:bg-muted/20 active:bg-muted/40"
                                         >
                                             -
                                         </button>
@@ -64,7 +64,7 @@ export const CartItems = () => {
                                         <input type="hidden" name="type" value="add" />
                                         <button
                                             type="submit"
-                                            className="w-8 h-8 flex items-center justify-center  rounded hover:bg-muted/20 active:bg-muted/40"
+                                            className="w-8 h-8 flex items-center justify-center  rounded-sm hover:bg-muted/20 active:bg-muted/40"
                                         >
                                             +
                                         </button>

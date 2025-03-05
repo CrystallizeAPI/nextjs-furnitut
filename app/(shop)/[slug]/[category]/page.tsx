@@ -34,7 +34,7 @@ export default async function Products(props: ProductsProps) {
             <div className={classnames('flex flex-col items-center pt-12', !!blocks?.length && 'pb-12')}>
                 <Blocks blocks={blocks} />
             </div>
-            <div className={classnames('grid grid-cols-4 gap-2 max-w-screen-2xl mx-auto')}>
+            <div className={classnames('grid grid-cols-4 gap-2 max-w-(--breakpoint-2xl) mx-auto')}>
                 {children?.map((child) => <Product key={child?.path} product={child} />)}
             </div>
         </main>

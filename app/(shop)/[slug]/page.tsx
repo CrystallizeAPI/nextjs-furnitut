@@ -27,7 +27,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const { slug } = await params;
     const { meta } = await fetchData(slug);
     const { title, description, image } = meta ?? {};
-    const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_URL;
 
     return {
         title,
@@ -35,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         openGraph: {
             title: `${title} | Furnitut`,
             description: description?.[0].textContent ?? '',
-            url: encodeURI(`${baseUrl}/${slug}`),
+            url: `/${slug}`,
             images: [
                 {
                     url: image?.[0]?.url ?? '',

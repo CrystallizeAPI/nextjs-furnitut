@@ -39,7 +39,6 @@ export async function generateMetadata({ params }: StoriesProps): Promise<Metada
     const { story } = await params;
     const { meta, media } = await fetchData(`/stories/${story}`);
     const { title, description } = meta ?? {};
-    const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_URL;
     const image = media?.image?.[0]?.variants?.find((image) => image?.width === 1024);
 
     return {
@@ -48,7 +47,7 @@ export async function generateMetadata({ params }: StoriesProps): Promise<Metada
         openGraph: {
             title: `${title} | Furnitut`,
             description: description?.[0].textContent ?? '',
-            url: encodeURI(`${baseUrl}/stories/${story}`),
+            url: `/stories/${story}`,
             images: [
                 {
                     url: image?.url ?? '',
@@ -66,7 +65,6 @@ export default async function StoryPage(props: StoriesProps) {
     const { intro, featured, upNext, story, title, media, publishedAt } = await fetchData(
         `/stories/${params.story}`,
     );
-    const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_URL;
 
     const storySchema: WithContext<Article> = {
         '@context': 'https://schema.org',
@@ -89,7 +87,6 @@ export default async function StoryPage(props: StoriesProps) {
         image: (item as Product)?.defaultVariant?.firstImage?.url ?? '',
         // @ts-expect-error complains about the description
         description: (item as ProductVariantForProduct)?.description?.[0].textContent ?? '',
-        url: new URL((item as Product)?.path ?? '', baseUrl).toString(),
         sku: (item as Product)?.defaultVariant?.sku ?? '',
         offers: {
             '@type': 'Offer',

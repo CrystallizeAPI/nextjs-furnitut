@@ -46,8 +46,7 @@ export async function generateMetadata(props: ProductsProps): Promise<Metadata> 
     const description = meta?.description[0].textContent;
     const image = currentVariant?.images?.[0];
     const ogImage = image?.ogVariants?.[0];
-    const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_URL;
-    const productUrl = new URL(url, baseUrl);
+    const attributesQueryParams = new URLSearchParams(currentVariant?.attributes ?? {})
 
     return {
         title: `${title}`,
@@ -55,7 +54,7 @@ export async function generateMetadata(props: ProductsProps): Promise<Metadata> 
         openGraph: {
             title: `${title} | Furnitut`,
             description,
-            url: encodeURI(`${productUrl}?Color=${currentVariant?.attributes?.Color}`),
+            url: `${url}?${attributesQueryParams.toString()}`,
             images: [
                 {
                     url: ogImage?.url ?? '',
@@ -78,9 +77,6 @@ export default async function CategoryProduct(props: ProductsProps) {
     // TODO: this should be for how long the price will be valid
     const TWO_DAYS_FROM_NOW = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
 
-    const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_URL;
-    const productUrl = new URL(url, baseUrl);
-
     const productVariantsSchema =
         product.variants?.map<schemas.WithContext<schemas.Product>>((variant) => ({
             '@context': 'https://schema.org',
@@ -88,7 +84,6 @@ export default async function CategoryProduct(props: ProductsProps) {
             name: variant?.name ?? '',
             image: variant?.images?.[0]?.url ?? '',
             description: variant?.description?.extraDescription ?? '',
-            url: encodeURI(`${productUrl}?Color=${variant?.attributes?.Color}`),
             sku: variant?.sku ?? '',
             // TODO: Enable the color, to display the variant varies by the color.
             // color: variant?.attributes?.Color,
@@ -107,7 +102,6 @@ export default async function CategoryProduct(props: ProductsProps) {
         '@type': 'ProductGroup',
         name: product?.name ?? '',
         description: product?.description?.[0]?.text,
-        url: productUrl.toString(),
         // TODO: Enable the variesBy, to display by which the variants in the ProductGroup vary.
         //  See: https://schema.org/variesBy
         // variesBy: [

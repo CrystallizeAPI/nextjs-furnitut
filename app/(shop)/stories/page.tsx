@@ -14,7 +14,6 @@ const fetchData = async () => {
 export async function generateMetadata(): Promise<Metadata> {
     const { meta } = await fetchData();
     const { title, description, image } = meta ?? {};
-    const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_URL;
 
     return {
         title,
@@ -22,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
         openGraph: {
             title: `${title} | Furnitut`,
             description: description?.[0].textContent ?? '',
-            url: encodeURI(`${baseUrl}/stories`),
+            url: `/stories`,
             images: [
                 {
                     url: image?.[0]?.url ?? '',

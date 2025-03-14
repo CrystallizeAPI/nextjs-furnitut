@@ -135,7 +135,7 @@ fragment productVariant on ProductVariantForProduct {
             width
             height
         }
-        ogVariants: variants(minWidth: 1200, maxWidth: 1500, types: ["webp"]) {
+        ogVariants: variants(minWidth: 800, maxWidth: 1500, types: ["webp"]) {
             url
             width
             height

@@ -28,6 +28,14 @@ export const FETCH_CART = `#graphql
     total {
         ...price
     }
+    appliedPromotions {
+        identifier
+        name
+        mechanism {
+            type
+            value
+        }
+    }
 `;
 
 export const PRICE_FRAGMENT = `#graphql

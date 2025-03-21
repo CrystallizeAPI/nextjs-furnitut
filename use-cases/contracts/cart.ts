@@ -30,10 +30,25 @@ export type CartItem = {
     };
 };
 
+export type MechanismEnumType = 'Percentage' | 'Fixed' | 'DynamicFixed' | 'XforY';
+
+export type PromotionSlimMechanism = {
+    type: MechanismEnumType;
+    value: number;
+};
+
+export type PromotionSlim = {
+    identifier: string;
+    name: string;
+    mechanism: PromotionSlimMechanism;
+};
+
 export type Cart = {
+    id: string;
     items: CartItem[];
     total: Price;
     lastItemAdded?: CartItem;
+    appliedPromotions: PromotionSlim[];
 };
 
 export type CartItemInput = {

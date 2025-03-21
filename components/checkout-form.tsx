@@ -11,6 +11,7 @@ import { Price } from './price';
 import { Image } from '@/components/image';
 import { Customer } from '@/use-cases/contracts/customer';
 import { useCart } from './cart/cart-provider';
+import { Badge } from '@/components/badge';
 
 type InitialState = { customer: Customer | null; cart: Cart | null; cartId?: string } | null;
 
@@ -112,7 +113,7 @@ export const CheckoutForm = () => {
                 </div>
             </div>
             <div className="col-span-4">
-                <h2 className="font-bold mb-2">Basket</h2>
+                <h2 className="font-bold mb-2">Shopping Cart</h2>
                 <div className="bg-light rounded-xl border-muted border ">
                     {!!cart?.items.length && (
                         <>
@@ -123,7 +124,7 @@ export const CheckoutForm = () => {
                                         className="flex justify-between border-b border-muted pb-4 px-6 pt-4"
                                     >
                                         <div className="flex w-full">
-                                            <div className="shrink-0 relative h-16 w-12 aspect-square border border-muted rounded-sm overflow-hidden">
+                                            <div className="shrink-0 relative h-full w-12 aspect-square border border-muted rounded-sm overflow-hidden">
                                                 <Image {...item.images[0]} className="object-cover" />
                                             </div>
                                             <div className="flex flex-col pl-4 text-dark w-full justify-between">
@@ -136,7 +137,16 @@ export const CheckoutForm = () => {
                                                 <div className="flex justify-between w-full ">
                                                     <div className="flex gap-4"></div>
 
-                                                    <span className="font-bold text-sm">
+                                                    <span className="font-bold text-sm text-end">
+                                                        <s className="text-sm text-dark/60">
+                                                            <Price price={{ price: item.variant.price.gross }} />
+                                                        </s>
+                                                        <br />
+                                                        {item.price.discounts?.length > 0 && (
+                                                            <Badge className={'text-xs mr-2'}>
+                                                                -{item.price.discounts?.[0].percent}%
+                                                            </Badge>
+                                                        )}
                                                         <Price price={{ price: item.price.gross }} />
                                                     </span>
                                                 </div>
@@ -152,13 +162,21 @@ export const CheckoutForm = () => {
                                         <Price price={{ price: cart.total.net }} />
                                     </span>
                                 </div>
-                                <div className="text-dark/70 text-sm flex justify-between items-center mb-4">
+                                <div className="text-dark/70 text-sm flex justify-between items-center mb-3">
                                     <span>Tax:</span>
                                     <span>
                                         <Price price={{ price: cart.total.taxAmount }} />
                                     </span>
                                 </div>
-                                <div className="mt-6 mb-4 text-base">
+                                {cart.total.discounts.length > 0 && (
+                                    <div className="text-dark/70 text-sm flex justify-between items-center mb-4">
+                                        <span>Total savings:</span>
+                                        <span>
+                                            -<Price price={{ price: cart.total.discounts[0].amount }} />
+                                        </span>
+                                    </div>
+                                )}
+                                <div className="my-4 text-base">
                                     <span className="text-gray-900  font-bold">Total</span>
                                     <span className="text-gray-900 font-bold float-right">
                                         <Price price={{ price: cart.total.gross }} />

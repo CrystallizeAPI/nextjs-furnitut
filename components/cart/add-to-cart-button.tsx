@@ -4,7 +4,7 @@ import clsx from 'classnames';
 import { CartItemInput } from '@/use-cases/contracts/cart';
 import { useCart } from './cart-provider';
 
-type AddToCartButtonProps = { type?: string; input: CartItemInput };
+type AddToCartButtonProps = { type?: 'default' | 'micro'; input: CartItemInput };
 
 export const AddToCartButton = ({ input, type = 'default' }: AddToCartButtonProps) => {
     const { isLoading, onUpdateCart } = useCart();

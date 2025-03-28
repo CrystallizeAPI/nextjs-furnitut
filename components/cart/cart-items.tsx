@@ -76,14 +76,16 @@ export const CartItems = () => {
                                     </div>
 
                                     <span className="font-bold text-end">
-                                        <s className="text-sm text-dark/60">
-                                            <Price price={{ price: item.variant.price.gross }} />
-                                        </s>
-                                        <br />
                                         {item.price.discounts?.length > 0 && (
-                                            <Badge className={'text-xs mr-2'}>
-                                                -{item.price.discounts?.[0].percent}%
-                                            </Badge>
+                                            <>
+                                                <s className="text-sm text-dark/60">
+                                                    <Price price={{ price: item.variant.price.gross }} />
+                                                </s>
+                                                <br />
+                                                <Badge className={'text-xs mr-2'}>
+                                                    -{item.price.discounts?.[0].percent}%
+                                                </Badge>
+                                            </>
                                         )}
                                         <Price price={{ price: item.price.gross }} />
                                     </span>

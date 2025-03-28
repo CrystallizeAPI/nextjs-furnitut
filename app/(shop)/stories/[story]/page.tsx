@@ -17,6 +17,7 @@ import { Story } from '@/components/story';
 import { Price } from '@/components/price';
 import { Metadata } from 'next';
 import { WithContext, Article, Product as ProductSchema } from 'schema-dts';
+import { AddToCartButton } from '@/components/cart/add-to-cart-button';
 
 const fetchData = async (path: string) => {
     const response = await apiRequest(FetchStoryDocument, { path });
@@ -120,6 +121,19 @@ export default async function StoryPage(props: StoriesProps) {
                     <span className="text-sm font-bold">
                         <Price price={variant.defaultPrice} />
                     </span>
+                </div>
+                <div className={'ml-auto self-center'}>
+                    <AddToCartButton
+                        type="micro"
+                        input={{
+                            sku: variant.sku!,
+                            image: variant.firstImage?.variants?.[0],
+                            price: variant.defaultPrice!,
+                            variantName: variant.name!,
+                            productName: '',
+                            quantity: 1,
+                        }}
+                    />
                 </div>
             </div>
         );

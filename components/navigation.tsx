@@ -1,7 +1,7 @@
 import { FetchLayoutDocument, MenuItemFragment } from '@/generated/graphql';
 import { apiRequest } from '@/utils/api-request';
 import Link from 'next/link';
-import { SearchBar } from '@/components/SearchBar';
+import { CommandPalette } from '@/components/SearchBar';
 
 type NavigationProps = {
     className?: string;
@@ -38,7 +38,7 @@ export const Navigation = async ({ className, withSearch }: NavigationProps) => 
                     {name}
                 </Link>
             ))}
-            {withSearch && <SearchBar />}
+            {withSearch && <CommandPalette />}
         </div>
     );
 };

@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 import { GlobalSearchDocument } from '@/generated/graphql';
 import { apiRequest } from '@/utils/api-request';
 
+const DEBOUNCE_TIME = 300;
+
 export function SearchBar() {
     interface SearchResult {
         id: string;
@@ -19,6 +21,7 @@ export function SearchBar() {
             };
         };
     }
+
     const [results, setResults] = useState<SearchResult[]>([]);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -39,11 +42,11 @@ export function SearchBar() {
         // @ts-expect-error
         setResults(results);
         setIsOpen(!!results.length);
-    }, 300);
+    }, DEBOUNCE_TIME);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         // remove focus from input
-        if (event.key === "Escape") {
+        if (event.key === 'Escape') {
             inputRef.current?.blur();
         }
 
@@ -100,7 +103,7 @@ export function SearchBar() {
         };
 
         if (typeof window === 'undefined') {
-            return
+            return;
         }
 
         document.addEventListener('mousedown', handleClickOutside);
@@ -150,6 +153,10 @@ export function SearchBar() {
                     role="listbox"
                     id="search-results"
                 >
+                    {results.length === 0 && (
+                        <p className="p-4 text-sm text-gray-500">Nothing found with that search string</p>
+                    )}
+
                     {results.map((result, index) => (
                         <a key={result.id} href={result.path} onClick={handleSelect}>
                             <li

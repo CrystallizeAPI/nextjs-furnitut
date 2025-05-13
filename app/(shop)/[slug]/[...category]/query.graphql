@@ -64,7 +64,7 @@ query FetchCategory($path: String!, $limit: Int = 25, $skip: Int = 0) {
 query SearchCategory(
     $path: String!
     $browsePath: String!
-    $limit: Int = 25
+    $limit: Int!
     $skip: Int = 0
     $filters: TenantFilter
 ) {

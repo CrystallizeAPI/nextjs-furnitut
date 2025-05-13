@@ -14,12 +14,13 @@ query GlobalSearch($term: String!) {
             ... on Product {
                 defaultVariant {
                     firstImage {
-                        url
                         variants(maxWidth: 100, types: ["avif"]) {
                             url
+                            height
                             width
                         }
                     }
+                    defaultPrice
                 }
             }
         }

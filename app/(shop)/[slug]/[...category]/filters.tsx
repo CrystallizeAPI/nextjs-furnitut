@@ -19,7 +19,6 @@ import {
     PopoverGroup,
     PopoverPanel,
     Switch,
-    Checkbox,
 } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
@@ -58,6 +57,11 @@ const filters = [
     //     ],
     // },
     {
+        id: 'parentPaths',
+        name: 'Path',
+        options: [],
+    },
+    {
         id: 'price',
         name: 'Price',
         options: [
@@ -87,21 +91,25 @@ function classNames(...classes: string[]) {
 const PRICE_RANGE_KEY = 'priceRange';
 const IN_STOCK_KEY = 'inStock';
 const SORTING_KEY = 'sort';
+const PARENT_PATHS_KEY = 'parentPath';
 
 interface FiltersProps {
     priceRange: TransformedRange[];
     selectedPriceRange?: string | `${string},${string}`;
     inStock?: boolean;
     sorting: SortingOption;
+    paths: { value: string; label: string; count: number }[];
+    selectedParentPath?: string;
 }
 
-export function Filters({ inStock, priceRange, selectedPriceRange, sorting }: FiltersProps) {
+export function Filters({ inStock, priceRange, selectedPriceRange, sorting, paths, selectedParentPath }: FiltersProps) {
     const searchParam = useSearchParams();
     const pathname = usePathname();
     const router = useRouter();
     const [open, setOpen] = useState(false);
 
-    console.log(priceRange);
+    // @ts-expect-error - TODO: fix me
+    filters.find((filter) => filter.id === 'parentPaths').options = paths;
 
     const updateUrlParams = (params: URLSearchParams, key: string, value: string | null) => {
         if (value === null) {
@@ -121,10 +129,17 @@ export function Filters({ inStock, priceRange, selectedPriceRange, sorting }: Fi
 
     const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
         const params = new URLSearchParams(searchParam);
-        console.log(e.target.value, e.target.checked, e.target.name);
-        const value = e.target.checked ? e.target.value : null;
 
-        router.push(updateUrlParams(params, PRICE_RANGE_KEY, value));
+        const { checked, name } = e.target;
+        const value = checked ? e.target.value : null;
+
+        if (name === 'parentPaths') {
+            return router.push(updateUrlParams(params, PARENT_PATHS_KEY, value));
+        }
+
+        if (name === 'price') {
+            return router.push(updateUrlParams(params, PRICE_RANGE_KEY, value));
+        }
     };
 
     const handleSortingChange = (value: SortingOption) => {
@@ -321,7 +336,10 @@ export function Filters({ inStock, priceRange, selectedPriceRange, sorting }: Fi
                                                                 <div className="group grid size-4 grid-cols-1">
                                                                     <input
                                                                         defaultValue={option.value}
-                                                                        defaultChecked={option.value === selectedPriceRange}
+                                                                        defaultChecked={
+                                                                            option.value === selectedPriceRange ||
+                                                                            option.value === selectedParentPath
+                                                                        }
                                                                         onChange={handleCheckboxChange}
                                                                         id={`filter-${section.id}-${optionIdx}`}
                                                                         name={`${section.id}`}

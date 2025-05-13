@@ -64,9 +64,20 @@ const fetchItemShape = async (path: string): Promise<ItemShape> => {
 const STOCK_FIELD = 'stock_default' as const;
 const PRICE_FIELD = 'price_default' as const;
 
-function buildFilterCriteria(inStock: boolean | undefined, priceRange: string | undefined): TenantFilter {
+function buildFilterCriteria(
+    inStock: boolean | undefined,
+    priceRange: string | undefined,
+    parentPath: string | undefined,
+): TenantFilter {
     // @ts-expect-error
     const filterCriteria: TenantFilter = {};
+
+    if (parentPath) {
+        // @ts-expect-error
+        filterCriteria.parentPaths = {
+            equals: parentPath,
+        };
+    }
 
     if (inStock) {
         // @ts-expect-error
@@ -88,13 +99,14 @@ function buildFilterCriteria(inStock: boolean | undefined, priceRange: string | 
     return filterCriteria;
 }
 
-export type SortingOption = 'popular' | 'rating' | 'newest' | 'priceLow' |  'priceHigh';
+export type SortingOption = 'popular' | 'rating' | 'newest' | 'priceLow' | 'priceHigh';
 
 interface SearchParams {
     page?: string;
     priceRange?: string;
     inStock?: string;
     sort?: SortingOption;
+    parentPath?: string;
 }
 
 const SORTING_CONFIGS: Record<NonNullable<SortingOption>, Partial<TenantSort>> = {
@@ -112,7 +124,7 @@ interface CategoryOrProductProps {
 
 export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     const params = await props.params;
-    const { page, priceRange, inStock, sort = 'popular' } = await props.searchParams;
+    const { page, priceRange, inStock, sort = 'popular', parentPath } = await props.searchParams;
     const currentPage = Number(page ?? 1);
     const limit = ITEMS_PER_PAGE;
     const skip = currentPage ? (currentPage - 1) * limit : 0;
@@ -132,11 +144,21 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
         path,
         limit,
         skip,
-        filters: buildFilterCriteria(!!inStock, priceRange),
+        filters: buildFilterCriteria(!!inStock, priceRange, parentPath),
         sorting: SORTING_CONFIGS[sort] as TenantSort,
     });
-    const { totalHits, hasPreviousHits, hasMoreHits, price } = summary ?? {};
+    const { totalHits, hasPreviousHits, hasMoreHits, price, parentPaths } = summary ?? {};
     const transformed = transformPriceRanges(price);
+
+    type ParentPathFacet = Record<string, { count: number; label: string }>;
+
+    const paths = Object.entries(parentPaths as ParentPathFacet)
+        .map(([key, value]) => ({
+            value: key,
+            label: value.label,
+            count: value.count,
+        }))
+        .sort((a, b) => a.value.localeCompare(b.value));
 
     return (
         <main>
@@ -150,6 +172,8 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
                         selectedPriceRange={priceRange}
                         inStock={!!inStock}
                         sorting={sort}
+                        paths={paths}
+                        selectedParentPath={parentPath}
                     />
                 </Suspense>
             </div>

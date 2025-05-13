@@ -1,4 +1,10 @@
-import { FetchItemShapeDocument, SearchCategoryDocument, TenantFilter } from '@/generated/graphql';
+import {
+    FetchItemShapeDocument,
+    SearchCategoryDocument,
+    SortOrder,
+    TenantFilter,
+    TenantSort,
+} from '@/generated/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Product } from '@/components/product';
 import { Breadcrumbs } from '@/components/breadcrumbs';
@@ -13,20 +19,20 @@ import { Suspense } from 'react';
 
 interface FetchCategoryProps {
     path: string;
-    limit?: number;
+    limit: number;
     skip?: number;
     filters: TenantFilter;
+    sorting: TenantSort;
 }
 
-const searchCategory = async ({ path, limit = 25, skip = 0, filters }: FetchCategoryProps) => {
-    console.log(filters);
-
+const searchCategory = async ({ path, limit, skip = 0, filters, sorting }: FetchCategoryProps) => {
     const response = await apiRequest(SearchCategoryDocument, {
         path: `${path}/*`,
         browsePath: path,
         limit,
         skip,
         filters,
+        sorting,
     });
     const { hits, summary } = response.data.search ?? {};
     const { breadcrumbs, name, blocks, children } = response.data.browse?.category?.hits?.[0] ?? {};
@@ -82,11 +88,22 @@ function buildFilterCriteria(inStock: boolean | undefined, priceRange: string | 
     return filterCriteria;
 }
 
+export type SortingOption = 'popular' | 'rating' | 'newest' | 'priceLow' |  'priceHigh';
+
 interface SearchParams {
     page?: string;
     priceRange?: string;
     inStock?: string;
+    sort?: SortingOption;
 }
+
+const SORTING_CONFIGS: Record<NonNullable<SortingOption>, Partial<TenantSort>> = {
+    newest: { publishedAt: SortOrder.Asc },
+    popular: { position: SortOrder.Asc },
+    rating: { score: SortOrder.Asc },
+    priceLow: { price_default: SortOrder.Asc },
+    priceHigh: { price_default: SortOrder.Desc },
+} as const;
 
 interface CategoryOrProductProps {
     params: Promise<{ slug: string; category: string[] }>;
@@ -95,7 +112,7 @@ interface CategoryOrProductProps {
 
 export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     const params = await props.params;
-    const { page, priceRange, inStock } = await props.searchParams;
+    const { page, priceRange, inStock, sort = 'popular' } = await props.searchParams;
     const currentPage = Number(page ?? 1);
     const limit = ITEMS_PER_PAGE;
     const skip = currentPage ? (currentPage - 1) * limit : 0;
@@ -116,6 +133,7 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
         limit,
         skip,
         filters: buildFilterCriteria(!!inStock, priceRange),
+        sorting: SORTING_CONFIGS[sort] as TenantSort,
     });
     const { totalHits, hasPreviousHits, hasMoreHits, price } = summary ?? {};
     const transformed = transformPriceRanges(price);
@@ -127,7 +145,12 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
                 <h1 className="text-4xl font-bold py-4">{name}</h1>
                 {/* Filters */}
                 <Suspense fallback={null}>
-                    <Filters priceRange={transformed} selectedPriceRange={priceRange} inStock={!!inStock} />
+                    <Filters
+                        priceRange={transformed}
+                        selectedPriceRange={priceRange}
+                        inStock={!!inStock}
+                        sorting={sort}
+                    />
                 </Suspense>
             </div>
             {blocks && (

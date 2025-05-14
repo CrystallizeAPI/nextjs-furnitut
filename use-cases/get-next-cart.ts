@@ -4,6 +4,7 @@ type GetNextCartProps = {
     cart: Cart | null;
     cartItem: CartItemInput;
     type?: string;
+    itemIndex?: string;
 };
 
 const getPrice = (quantity: number, { price, variant }: CartItem) => ({
@@ -13,9 +14,11 @@ const getPrice = (quantity: number, { price, variant }: CartItem) => ({
     taxAmount: quantity * variant.price.taxAmount,
 });
 
-export const getNextCart = ({ cart, cartItem, type }: GetNextCartProps) => {
+export const getNextCart = ({ cart, cartItem, type, itemIndex }: GetNextCartProps) => {
     const prevCart = structuredClone(cart);
-    const existingItemIndex = prevCart?.items.findIndex((item) => item.variant.sku === cartItem.sku) ?? -1;
+    const existingItemIndex = !!itemIndex
+        ? Number(itemIndex)
+        : (prevCart?.items.findIndex((item) => item.variant.sku === cartItem.sku) ?? -1);
 
     let updatedItems = [...(prevCart?.items ?? [])];
     let lastItemAdded: CartItem | undefined = undefined;
@@ -27,10 +30,10 @@ export const getNextCart = ({ cart, cartItem, type }: GetNextCartProps) => {
                 lastItemAdded = undefined;
 
                 break;
-
             case 'reduce':
                 const item = updatedItems[existingItemIndex];
                 const quantity = Math.max(0, item.quantity - 1);
+
                 if (quantity === 0) {
                     updatedItems = updatedItems.filter((item) => item.variant.sku !== cartItem.sku);
                 } else {

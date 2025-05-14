@@ -18,7 +18,7 @@ export const CartItems = () => {
     return (
         <ul>
             {items.map((item: CartItem, index) => (
-                <Fragment key={item.variant.sku}>
+                <Fragment key={`sku-${item.variant.sku}-at-index-${index}`}>
                     <li className="flex mb-4 justify-between">
                         <div className="flex w-full">
                             <div className="shrink-0 relative h-24 w-20 aspect-square border border-muted rounded-sm overflow-hidden">
@@ -44,6 +44,7 @@ export const CartItems = () => {
                                                 })}
                                             />
                                             <input type="hidden" name="type" value="reduce" />
+                                            <input type="hidden" name="index" value={index.toString()} />
                                             <button
                                                 type="submit"
                                                 className="w-8 h-8 flex items-center justify-center rounded-sm hover:bg-muted/20 active:bg-muted/40"

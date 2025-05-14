@@ -27,8 +27,8 @@ export async function handleCart(initialSate: Cart | null, formData: FormData) {
     try {
         const cartItem = JSON.parse(formData.get('input') as string);
         const type = formData.get('type') as string;
-        const nextCart = getNextCart({ cart, cartItem, type });
-
+        const index = formData.get('index') as string;
+        const nextCart = getNextCart({ cart, cartItem, type, itemIndex: index });
         const items = nextCart.items.map((item) => ({
             sku: item.variant.sku,
             quantity: item.quantity,

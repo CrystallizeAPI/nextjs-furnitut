@@ -8,15 +8,25 @@ import { Cart } from '@/use-cases/contracts/cart';
 
 export async function handleCart(initialSate: Cart | null, formData: FormData) {
     const type = formData.get('type') as string;
+    const { cart, cartId } = await getCart();
 
     if (type === 'reset') {
         return null;
     }
 
+    if (type === 'voucher-code') {
+        const voucherCode = formData.get('voucher-code') as string;
+        const items = cart.items.map((item) => ({
+            sku: item.variant.sku,
+            quantity: item.quantity,
+        }));
+
+        return await hydrateCart(cartId, items, { price: { voucherCode } });
+    }
+
     try {
         const cartItem = JSON.parse(formData.get('input') as string);
         const type = formData.get('type') as string;
-        const { cart, cartId } = await getCart();
         const nextCart = getNextCart({ cart, cartItem, type });
 
         const items = nextCart.items.map((item) => ({

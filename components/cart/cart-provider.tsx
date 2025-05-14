@@ -13,6 +13,7 @@ type CartContextProps = {
     emptyCart: () => void;
     setIsOpen: (isOpen: boolean) => void;
     onUpdateCart: (formData: FormData) => void;
+    handleVoucherCode: (voucherCode: string) => void;
 };
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -56,8 +57,20 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         });
     };
 
+    const handleVoucherCode = (voucherCode: string) => {
+        startTransition(() => {
+            const formData = new FormData();
+            formData.append('type', 'voucher-code');
+            formData.append('voucher-code', voucherCode);
+
+            handleCartAction(formData);
+        });
+    };
+
     return (
-        <CartContext.Provider value={{ cart, isOpen, setIsOpen, isLoading, emptyCart, onUpdateCart }}>
+        <CartContext.Provider
+            value={{ cart, isOpen, setIsOpen, isLoading, emptyCart, onUpdateCart, handleVoucherCode }}
+        >
             {children}
             <CartSidebar />
         </CartContext.Provider>

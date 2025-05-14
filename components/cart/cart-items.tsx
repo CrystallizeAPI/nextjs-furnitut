@@ -9,14 +9,15 @@ import { Fragment } from 'react';
 
 export const CartItems = () => {
     const { cart, onUpdateCart } = useCart();
+    const { items } = cart ?? {};
 
-    if (!cart?.items.length) {
+    if (!items?.length) {
         return <p>Your cart is empty.</p>;
     }
 
     return (
         <ul>
-            {cart.items.map((item: CartItem, index) => (
+            {items.map((item: CartItem, index) => (
                 <Fragment key={item.variant.sku}>
                     <li className="flex mb-4 justify-between">
                         <div className="flex w-full">
@@ -95,7 +96,7 @@ export const CartItems = () => {
                     </li>
                     <hr
                         className={clsx('my-4 text-dark/20', {
-                            hidden: index === cart.items.length - 1,
+                            hidden: index === items.length - 1,
                         })}
                     />
                 </Fragment>

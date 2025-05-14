@@ -1,4 +1,4 @@
-import type { Cart, CartItem, CartItemInput, Price } from '@/use-cases/contracts/cart';
+import type { Cart, CartItem, CartItemInput } from '@/use-cases/contracts/cart';
 
 type GetNextCartProps = {
     cart: Cart | null;

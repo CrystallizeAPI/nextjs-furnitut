@@ -12,17 +12,11 @@ import {
     DialogBackdrop,
 } from '@headlessui/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
-import {
-    ExclamationCircleIcon,
-} from '@heroicons/react/24/outline';
-import { useCallback, useEffect, useState } from 'react';
+import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
 import { apiRequest } from '@/utils/api-request';
 import { GlobalSearchDocument } from '@/generated/graphql';
 import { debounce } from '@/utils/debounce';
-
-function classNames(...classes:string[]) {
-    return classes.filter(Boolean).join(' ');
-}
 
 export function CommandPalette() {
     const [query, setQuery] = useState('');
@@ -127,9 +121,9 @@ export function CommandPalette() {
                                             className="group flex cursor-default rounded-xl p-3 select-none data-focus:bg-dark/10 data-focus:outline-hidden"
                                         >
                                             <div
-                                                className={classNames(
-                                                    'flex size-10 flex-none items-center justify-center rounded-lg',
-                                                )}
+                                                className={
+                                                    'flex size-10 flex-none items-center justify-center rounded-lg'
+                                                }
                                             >
                                                 {/*<item.icon className="size-6 text-white" aria-hidden="true" />*/}
                                                 <img

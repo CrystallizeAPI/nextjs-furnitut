@@ -10,12 +10,14 @@ import { Product } from '@/components/product';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Blocks } from '@/components/blocks';
 import ProductPage from '@/components/ProductPage';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import Link from 'next/link';
 import { Filters } from './filters';
-import { transformPriceRanges } from '@/utils/price-range';
 import { ITEMS_PER_PAGE, Pagination } from '@/components/Pagination';
 import { Suspense } from 'react';
+import { buildFilterCriteria } from './utils';
+import { EntertainmentPriceRange, ProductsPriceRange, SORTING_CONFIGS } from './constants';
+import { SortingOption } from './types';
 
 interface FetchCategoryProps {
     path: string;
@@ -25,8 +27,15 @@ interface FetchCategoryProps {
     sorting: TenantSort;
 }
 
-const EntertainmentPriceRange = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
-const ProductsPriceRange = [0, 10, 100, 1000, 10000];
+type ItemShape = 'category' | 'product' | null;
+
+interface SearchParams {
+    page?: string;
+    priceRange?: string;
+    inStock?: string;
+    sort?: SortingOption;
+    parentPath?: string;
+}
 
 const searchCategory = async ({ path, limit, skip = 0, filters, sorting }: FetchCategoryProps) => {
     const response = await apiRequest(SearchCategoryDocument, {
@@ -51,8 +60,6 @@ const searchCategory = async ({ path, limit, skip = 0, filters, sorting }: Fetch
     };
 };
 
-type ItemShape = 'category' | 'product' | null;
-
 const fetchItemShape = async (path: string): Promise<ItemShape> => {
     const response = await apiRequest(FetchItemShapeDocument, { path });
 
@@ -65,64 +72,7 @@ const fetchItemShape = async (path: string): Promise<ItemShape> => {
     return itemShape as ItemShape;
 };
 
-const STOCK_FIELD = 'stock_default' as const;
-const PRICE_FIELD = 'price_default' as const;
-
-function buildFilterCriteria(
-    inStock: boolean | undefined,
-    priceRange: string | undefined,
-    parentPath: string | undefined,
-): TenantFilter {
-    // @ts-expect-error
-    const filterCriteria: TenantFilter = {};
-
-    if (parentPath) {
-        // @ts-expect-error
-        filterCriteria.parentPaths = {
-            equals: parentPath,
-        };
-    }
-
-    if (inStock) {
-        // @ts-expect-error
-        filterCriteria[STOCK_FIELD] = { exists: true };
-    }
-
-    if (priceRange) {
-        const [min = '', max = ''] = priceRange.split(',');
-
-        filterCriteria[PRICE_FIELD] = {
-            // @ts-expect-error
-            range: {
-                gte: Number(min),
-                ...(max ? { lt: Number(max) } : {}),
-            },
-        };
-    }
-
-    return filterCriteria;
-}
-
-export type SortingOption = 'popular' | 'rating' | 'newest' | 'priceLow' | 'priceHigh';
-
-interface SearchParams {
-    page?: string;
-    priceRange?: string;
-    inStock?: string;
-    sort?: SortingOption;
-    parentPath?: string;
-}
-
-const SORTING_CONFIGS: Record<NonNullable<SortingOption>, Partial<TenantSort>> = {
-    newest: { publishedAt: SortOrder.Asc },
-    popular: { position: SortOrder.Asc },
-    rating: { score: SortOrder.Asc },
-    priceLow: { price_default: SortOrder.Asc },
-    priceHigh: { price_default: SortOrder.Desc },
-} as const;
-
 function createAdjacentPairs<T>(array: T[]): { value: string; label: string }[] {
-    // return array.slice(0, -1).map((item, index) => {
     return array.map((item, index) => {
         const nextElement = array[index + 1] ?? '+';
 
@@ -201,13 +151,13 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
                 </Suspense>
             </div>
             {blocks && (
-                <div className={classnames('flex flex-col items-center pt-12', !!blocks?.length && 'pb-12')}>
+                <div className={classNames('flex flex-col items-center pt-12', !!blocks?.length && 'pb-12')}>
                     <Blocks blocks={blocks} />
                 </div>
             )}
 
             {/* Categories List */}
-            <div className={classnames('flex gap-4 max-w-(--breakpoint-2xl) mx-auto my-4')}>
+            <div className={classNames('flex flex-wrap mx-auto gap-x-2 gap-y-2 max-w-(--breakpoint-2xl) px-12')}>
                 {categories?.map((child) => (
                     // @ts-expect-error
                     <Link className="bg-dark text-light rounded-full px-4 py-2" href={child?.path} key={child?.id}>
@@ -218,7 +168,11 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
             </div>
 
             {/* Products List */}
-            <div className={classnames('grid grid-cols-4 gap-2 max-w-(--breakpoint-2xl) mx-auto my-8')}>
+            <div
+                className={classNames(
+                    'grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-4 max-w-(--breakpoint-2xl) mx-auto my-8',
+                )}
+            >
                 {/*@ts-expect-error*/}
                 {products?.map((child) => <Product key={child?.path} product={child} />)}
             </div>

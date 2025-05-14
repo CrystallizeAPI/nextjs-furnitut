@@ -22,9 +22,9 @@ import {
 } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import { TransformedRange } from '@/utils/price-range';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { SortingOption } from '@/app/(shop)/[slug]/[...category]/page';
+import { SortingOption } from './types';
+import classNames from 'classnames';
 
 const sortOptions: { label: string; value: SortingOption }[] = [
     { label: 'Most Popular', value: 'popular' },
@@ -56,14 +56,6 @@ const filters: Filter[] = [
         options: [],
     },
 ];
-const activeFilters = [
-    { value: 'genre', label: 'Rock' },
-    { value: 'style', label: 'Alternative Rock' },
-];
-
-function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ');
-}
 
 const PRICE_RANGE_KEY = 'priceRange';
 const IN_STOCK_KEY = 'inStock';
@@ -85,10 +77,8 @@ export function Filters({ inStock, priceRange, selectedPriceRange, sorting, path
     const router = useRouter();
     const [open, setOpen] = useState(false);
 
-    // @ts-expect-error - TODO: fix me
-    filters.find((filter) => filter.id === 'parentPaths').options = paths;
-    // @ts-expect-error - TODO: fix me
-    filters.find((filter) => filter.id === 'price').options = priceRange;
+    filters.find((filter) => filter.id === 'parentPaths')!.options = paths;
+    filters.find((filter) => filter.id === 'price')!.options = priceRange;
 
     const updateUrlParams = (params: URLSearchParams, key: string, value: string | null) => {
         if (value === null) {
@@ -128,8 +118,6 @@ export function Filters({ inStock, priceRange, selectedPriceRange, sorting, path
 
         router.push(updateUrlParams(params, SORTING_KEY, sortingValue));
     };
-
-    // console.log(priceRange);
 
     return (
         <div className="">
@@ -211,9 +199,12 @@ export function Filters({ inStock, priceRange, selectedPriceRange, sorting, path
                                                     </div>
                                                     <label
                                                         htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                                        className="text-sm text-dark/50"
+                                                        className="text-sm text-dark/50 flex justify-between w-full"
                                                     >
                                                         {option.label}
+                                                        <span className="ml-4 text-dark/50">
+                                                                    {option.count}
+                                                                </span>
                                                     </label>
                                                 </div>
                                             ))}
@@ -222,7 +213,9 @@ export function Filters({ inStock, priceRange, selectedPriceRange, sorting, path
                                 </Disclosure>
                             ))}
                             <Field className="px-4 flex items-center">
-                                <Label>In Stock</Label>
+                                <Label as="span" className="mr-3 text-sm">
+                                    In Stock
+                                </Label>
                                 <Switch
                                     checked={inStock}
                                     onChange={handleStockChange}
@@ -381,40 +374,6 @@ export function Filters({ inStock, priceRange, selectedPriceRange, sorting, path
                         </div>
                     </div>
                 </div>
-
-                {/* Active filters */}
-                {/*<div className="bg-dark/10">*/}
-                {/*    <div className="mx-auto px-4 py-3 sm:flex sm:items-center sm:px-6 lg:px-8">*/}
-                {/*        <h3 className="text-sm font-medium text-dark/50">*/}
-                {/*            Filters*/}
-                {/*            <span className="sr-only">, active</span>*/}
-                {/*        </h3>*/}
-
-                {/*        <div aria-hidden="true" className="hidden h-5 w-px bg-dark/30 sm:ml-4 sm:block" />*/}
-
-                {/*        <div className="mt-2 sm:mt-0 sm:ml-4">*/}
-                {/*            <div className="-m-1 flex flex-wrap items-center">*/}
-                {/*                {activeFilters.map((activeFilter) => (*/}
-                {/*                    <span*/}
-                {/*                        key={activeFilter.value}*/}
-                {/*                        className="m-1 inline-flex items-center rounded-full border border-dark/20 bg-light py-1.5 pr-2 pl-3 text-sm font-medium text-dark/90"*/}
-                {/*                    >*/}
-                {/*                        <span>{activeFilter.label}</span>*/}
-                {/*                        <button*/}
-                {/*                            type="button"*/}
-                {/*                            className="ml-1 inline-flex size-4 shrink-0 rounded-full p-1 text-dark/40 hover:bg-dark/20 hover:text-dark/50"*/}
-                {/*                        >*/}
-                {/*                            <span className="sr-only">Remove filter for {activeFilter.label}</span>*/}
-                {/*                            <svg fill="none" stroke="currentColor" viewBox="0 0 8 8" className="size-2">*/}
-                {/*                                <path d="M1 1l6 6m0-6L1 7" strokeWidth="1.5" strokeLinecap="round" />*/}
-                {/*                            </svg>*/}
-                {/*                        </button>*/}
-                {/*                    </span>*/}
-                {/*                ))}*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </section>
         </div>
     );

@@ -25,6 +25,9 @@ interface FetchCategoryProps {
     sorting: TenantSort;
 }
 
+const EntertainmentPriceRange = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+const ProductsPriceRange = [0, 10, 100, 1000, 10000];
+
 const searchCategory = async ({ path, limit, skip = 0, filters, sorting }: FetchCategoryProps) => {
     const response = await apiRequest(SearchCategoryDocument, {
         path: `${path}/*`,
@@ -33,6 +36,7 @@ const searchCategory = async ({ path, limit, skip = 0, filters, sorting }: Fetch
         skip,
         filters,
         sorting,
+        boundaries: path.includes('entertainment') ? EntertainmentPriceRange : ProductsPriceRange,
     });
     const { hits, summary } = response.data.search ?? {};
     const { breadcrumbs, name, blocks, children } = response.data.browse?.category?.hits?.[0] ?? {};
@@ -117,6 +121,18 @@ const SORTING_CONFIGS: Record<NonNullable<SortingOption>, Partial<TenantSort>> =
     priceHigh: { price_default: SortOrder.Desc },
 } as const;
 
+function createAdjacentPairs<T>(array: T[]): { value: string; label: string }[] {
+    // return array.slice(0, -1).map((item, index) => {
+    return array.map((item, index) => {
+        const nextElement = array[index + 1] ?? '+';
+
+        return {
+            value: nextElement === '+' ? `${item}` : `${item},${nextElement}`,
+            label: nextElement === '+' ? `${item}${nextElement}` : `${item}-${nextElement}`,
+        };
+    });
+}
+
 interface CategoryOrProductProps {
     params: Promise<{ slug: string; category: string[] }>;
     searchParams: Promise<SearchParams>;
@@ -148,9 +164,16 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
         sorting: SORTING_CONFIGS[sort] as TenantSort,
     });
     const { totalHits, hasPreviousHits, hasMoreHits, price, parentPaths } = summary ?? {};
-    const transformed = transformPriceRanges(price);
 
     type ParentPathFacet = Record<string, { count: number; label: string }>;
+    const priceCounts = Object.values(price) as { count: number }[];
+    const pairs = createAdjacentPairs(path.includes('entertainment') ? EntertainmentPriceRange : ProductsPriceRange);
+
+    const priceRangeOptions = pairs.map((pair, index) => ({
+        value: pair.value,
+        label: pair.label,
+        count: priceCounts[index].count,
+    }));
 
     const paths = Object.entries(parentPaths as ParentPathFacet)
         .map(([key, value]) => ({
@@ -168,7 +191,7 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
                 {/* Filters */}
                 <Suspense fallback={null}>
                     <Filters
-                        priceRange={transformed}
+                        priceRange={priceRangeOptions}
                         selectedPriceRange={priceRange}
                         inStock={!!inStock}
                         sorting={sort}

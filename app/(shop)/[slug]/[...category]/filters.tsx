@@ -34,28 +34,17 @@ const sortOptions: { label: string; value: SortingOption }[] = [
     { label: 'Price Lowest', value: 'priceLow' },
 ];
 
-const filters = [
-    // {
-    //     id: 'category',
-    //     name: 'Category',
-    //     options: [
-    //         { value: 'new-arrivals', label: 'All New Arrivals', checked: false },
-    //         { value: 'tees', label: 'Tees', checked: false },
-    //         { value: 'objects', label: 'Objects', checked: true },
-    //     ],
-    // },
-    // {
-    //     id: 'genre',
-    //     name: 'Genre',
-    //     options: [
-    //         { value: 'rock', label: 'Rock', checked: true },
-    //         { value: 'pop', label: 'Pop', checked: false },
-    //         { value: 'electronic', label: 'Electronic', checked: false },
-    //         { value: 'funk-soul', label: 'Funk Soul', checked: false },
-    //         { value: 'hip-hop', label: 'Hip Hop', checked: false },
-    //         { value: 'reggae', label: 'Reggae', checked: false },
-    //     ],
-    // },
+interface Filter {
+    id: string;
+    name: string;
+    options: {
+        value: string;
+        label: string;
+        count: number;
+    }[];
+}
+
+const filters: Filter[] = [
     {
         id: 'parentPaths',
         name: 'Path',
@@ -64,19 +53,7 @@ const filters = [
     {
         id: 'price',
         name: 'Price',
-        options: [
-            { value: '0,5', label: '0-5' },
-            { value: '5,10', label: '5-10' },
-            { value: '10,15', label: '10-15' },
-            { value: '15,20', label: '15-20' },
-            { value: '20,25', label: '20-25' },
-            { value: '25,30', label: '25-30' },
-            { value: '30,35', label: '30-35' },
-            { value: '35,40', label: '35-40' },
-            { value: '40,45', label: '40-45' },
-            { value: '45,50', label: '45-50' },
-            { value: '50', label: '50+' },
-        ],
+        options: [],
     },
 ];
 const activeFilters = [
@@ -94,7 +71,7 @@ const SORTING_KEY = 'sort';
 const PARENT_PATHS_KEY = 'parentPath';
 
 interface FiltersProps {
-    priceRange: TransformedRange[];
+    priceRange: { value: string; label: string; count: number }[];
     selectedPriceRange?: string | `${string},${string}`;
     inStock?: boolean;
     sorting: SortingOption;
@@ -110,6 +87,8 @@ export function Filters({ inStock, priceRange, selectedPriceRange, sorting, path
 
     // @ts-expect-error - TODO: fix me
     filters.find((filter) => filter.id === 'parentPaths').options = paths;
+    // @ts-expect-error - TODO: fix me
+    filters.find((filter) => filter.id === 'price').options = priceRange;
 
     const updateUrlParams = (params: URLSearchParams, key: string, value: string | null) => {
         if (value === null) {
@@ -149,6 +128,8 @@ export function Filters({ inStock, priceRange, selectedPriceRange, sorting, path
 
         router.push(updateUrlParams(params, SORTING_KEY, sortingValue));
     };
+
+    // console.log(priceRange);
 
     return (
         <div className="">
@@ -367,34 +348,15 @@ export function Filters({ inStock, priceRange, selectedPriceRange, sorting, path
                                                                         />
                                                                     </svg>
                                                                 </div>
-                                                                {/*<div className="group grid size-4 grid-cols-1">*/}
-                                                                {/*<Checkbox*/}
-                                                                {/*    checked={option.checked}*/}
-                                                                {/*    onChange={() => {}}*/}
-                                                                {/*    className="group block size-4 rounded border bg-light data-checked:bg-accent/50"*/}
-                                                                {/*    // className="col-start-1 row-start-1 appearance-none rounded-sm border border-dark/30 bg-light checked:border-accent/60 checked:bg-accent/60 indeterminate:border-accent/60 indeterminate:bg-accent/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent/60 disabled:border-dark/30 disabled:bg-dark/10 disabled:checked:bg-dark/10 forced-colors:appearance-auto"*/}
-                                                                {/*>*/}
-                                                                {/*    /!* Checkmark icon *!/*/}
-                                                                {/*    <svg*/}
-                                                                {/*        className="stroke-light opacity-0 group-data-checked:opacity-100"*/}
-                                                                {/*        viewBox="0 0 14 14"*/}
-                                                                {/*        fill="none"*/}
-                                                                {/*    >*/}
-                                                                {/*        <path*/}
-                                                                {/*            d="M3 8L6 11L11 3.5"*/}
-                                                                {/*            strokeWidth={2}*/}
-                                                                {/*            strokeLinecap="round"*/}
-                                                                {/*            strokeLinejoin="round"*/}
-                                                                {/*        />*/}
-                                                                {/*    </svg>*/}
-                                                                {/*</Checkbox>*/}
-                                                                {/*</div>*/}
                                                             </div>
                                                             <label
                                                                 htmlFor={`filter-${section.id}-${optionIdx}`}
-                                                                className="pr-6 text-sm font-medium whitespace-nowrap text-dark/90"
+                                                                className="pr-6 text-sm font-medium whitespace-nowrap text-dark/90 w-full flex justify-between"
                                                             >
                                                                 {option.label}
+                                                                <span className="ml-4 text-dark/50">
+                                                                    {option.count}
+                                                                </span>
                                                             </label>
                                                         </div>
                                                     ))}

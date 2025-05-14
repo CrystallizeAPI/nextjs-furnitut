@@ -68,13 +68,14 @@ query SearchCategory(
     $skip: Int = 0
     $filters: TenantFilter
     $sorting: TenantSort
+    $boundaries: [Int]!
 ) {
     search(
         path: $path
         pagination: { limit: $limit, skip: $skip }
         facets: {
             price_default: {
-                boundaries: [0, 10, 100, 1000, 10000]
+                boundaries: $boundaries
                 key: "price"
             }
             parentPaths: { key: "parentPaths", limit: 10 }

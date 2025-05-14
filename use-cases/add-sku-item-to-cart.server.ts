@@ -9,7 +9,9 @@ type CartInput = {
     id?: string;
     context?: {
         price: {
-            voucherCode: string;
+            voucherCode?: string;
+            decimals?: number;
+            currency?: string;
         };
     };
 };
@@ -17,17 +19,21 @@ type CartInput = {
 export const hydrateCart = async (cartId: string | undefined, items: Item[], context?: CartInput['context']) => {
     const input: CartInput = {
         items,
-        ...(context ? { context } : {}),
+        context: {
+            price: {
+                ...(context?.price ?? {}),
+                decimals: 2, currency: 'EUR',
+            },
+        },
     };
 
     if (cartId) {
         input.id = cartId;
-        input.context = { price: { decimals: 2, currency: 'EUR' } };
     }
 
     try {
         const data = await crystallizeClient.shopCartApi(
-            `#graphql
+                `#graphql
             mutation HYDRATE_CART($input: CartInput!){ hydrate(input: $input) { ${FETCH_CART} } }
             ${PRICE_FRAGMENT}
             `,

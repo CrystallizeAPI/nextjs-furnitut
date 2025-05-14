@@ -1,5 +1,5 @@
 import { SortOrder, TenantSort } from '@/generated/graphql';
-import { SortingOption } from '@/app/(shop)/[slug]/[...category]/page';
+import { SortingOption } from './types';
 
 export const STOCK_FIELD = 'stock_default' as const;
 export const PRICE_FIELD = 'price_default' as const;

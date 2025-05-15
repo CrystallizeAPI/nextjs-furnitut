@@ -1,0 +1,6 @@
+schema:
+  - https://shop-api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/cart:
+      headers:
+        Authorization: Bearer ${BEARER_TOKEN}
+  - https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/discovery
+documents: '**/*.graphql'

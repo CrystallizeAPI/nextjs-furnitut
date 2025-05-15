@@ -2,7 +2,7 @@
 
 import { storage } from '@/core/storage.server';
 import { fetchCart } from '@/use-cases/fetch-cart';
-import { Cart } from '@/use-cases/contracts/cart';
+import { Cart } from '@/generated/shop/graphql';
 
 export const getCart = async () => {
     const cartId = await storage.getCartId();

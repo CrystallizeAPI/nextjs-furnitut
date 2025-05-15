@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { FetchAllCategoriesDocument } from '@/generated/graphql';
+import { FetchAllCategoriesDocument } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import Link from 'next/link';
 import { Blocks } from '@/components/blocks';

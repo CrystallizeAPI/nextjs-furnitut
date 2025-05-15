@@ -1,3 +1,5 @@
+import { CartItem } from '@/generated/shop/graphql';
+
 type Image = {
     url: string | null;
     height: number | null;
@@ -13,21 +15,6 @@ export type Price = {
         percent: number;
         amount: number;
     }[];
-};
-
-export type CartItem = {
-    name: string;
-    quantity: number;
-    price: Price;
-    images: Image[];
-    variant: {
-        name: string;
-        sku: string;
-        product: {
-            name: string;
-        };
-        price: Price;
-    };
 };
 
 export type MechanismEnumType = 'Percentage' | 'Fixed' | 'DynamicFixed' | 'XforY';

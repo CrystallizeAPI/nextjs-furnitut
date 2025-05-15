@@ -2,9 +2,10 @@
 
 import { createContext, useActionState, useContext, useEffect, useOptimistic, useState, useTransition } from 'react';
 import { handleCart } from '@/app/actions/handle-cart';
-import { Cart } from '@/use-cases/contracts/cart';
 import { getNextCart } from '@/use-cases/get-next-cart';
+import { CART_ACTION, CartAction } from '@/use-cases/types';
 import { CartSidebar } from './cart-sidebar';
+import { Cart, CartItem } from '@/generated/shop/graphql';
 
 type CartContextProps = {
     cart: Cart | null;
@@ -39,11 +40,12 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     }, []);
 
     const onUpdateCart = (formData: FormData) => {
-        setOptimisticCart((prevCart: Cart | null) => {
-            const cartItem = JSON.parse(formData.get('input') as string);
-            const type = formData.get('type') as string;
+        setOptimisticCart(() => {
+            const cartItem = JSON.parse(formData.get('input') as string) as CartItem;
+            const action = formData.get('action') as CartAction;
             const index = formData.get('index') as string;
-            return getNextCart({ cart, cartItem, type, itemIndex: index });
+
+            return getNextCart({ cart, cartItem, action, itemIndex: index });
         });
 
         handleCartAction(formData);
@@ -52,7 +54,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     const emptyCart = () => {
         startTransition(() => {
             const formData = new FormData();
-            formData.append('type', 'reset');
+            formData.append('action', CART_ACTION.reset);
             handleCartAction(formData);
             setInitialCart(null);
         });
@@ -61,7 +63,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     const handleVoucherCode = (voucherCode: string) => {
         startTransition(() => {
             const formData = new FormData();
-            formData.append('type', 'voucher-code');
             formData.append('voucher-code', voucherCode);
 
             handleCartAction(formData);

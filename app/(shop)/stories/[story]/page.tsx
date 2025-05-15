@@ -6,7 +6,7 @@ import {
     Paragraph,
     Product,
     ProductVariantForProduct,
-} from '@/generated/graphql';
+} from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 import { Image } from '@/components/image';
@@ -126,11 +126,13 @@ export default async function StoryPage(props: StoriesProps) {
                     <AddToCartButton
                         type="micro"
                         input={{
-                            sku: variant.sku!,
-                            image: variant.firstImage?.variants?.[0],
-                            price: variant.defaultPrice!,
-                            variantName: variant.name!,
-                            productName: '',
+                            price: variant.defaultPrice,
+                            // @ts-expect-error
+                            variant,
+                            // @ts-expect-error
+                            images: variant.firstImage?.variants,
+                            // @ts-expect-error
+                            name: variant.name,
                             quantity: 1,
                         }}
                     />

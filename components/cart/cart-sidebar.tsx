@@ -7,12 +7,11 @@ import { CartItems } from './cart-items';
 import { Price } from '../price';
 import { useCart } from './cart-provider';
 import { Badge } from '@/components/badge';
-import { cn } from '@/utils/cn';
 
 const COUPON_CODE_NAME = 'voucher-code';
 
 export const CartSidebar = () => {
-    const { cart, isOpen, setIsOpen, handleVoucherCode, isLoading } = useCart();
+    const { cart, isOpen, setIsOpen, handleVoucherCode, isLoading, emptyCart } = useCart();
     const onClose = () => setIsOpen(false);
 
     const handleApplyCoupon = async (formData: FormData) => {
@@ -59,7 +58,7 @@ export const CartSidebar = () => {
             <div className="grow h-full  overflow-y-scroll">
                 <CartItems />
             </div>
-            <div className={cn('flex flex-row my-3 justify-between', cart.items.length ? '' : 'hidden')}>
+            <div className={classNames('flex flex-row my-3 justify-between', { hidden: !cart.items.length })}>
                 <form className="flex-1" action={handleApplyCoupon}>
                     <label htmlFor={COUPON_CODE_NAME} className="block text-sm/6 font-medium text-dark/70">
                         Coupon code
@@ -73,9 +72,9 @@ export const CartSidebar = () => {
                         />
                         <button
                             type="submit"
-                            className={cn(
+                            className={classNames(
                                 'rounded-md bg-dark px-4 text-sm font-medium text-light hover:bg-dark/30 focus:ring-2 focus:ring-accent/50 focus:ring-offset-2 focus:ring-offset-dark/5 focus:outline-hidden',
-                                isLoading ? 'opacity-50 cursor-not-allowed' : '',
+                                { 'opacity-50 cursor-not-allowed': isLoading },
                             )}
                             disabled={isLoading}
                         >
@@ -84,7 +83,7 @@ export const CartSidebar = () => {
                     </div>
                 </form>
             </div>
-            {cart.appliedPromotions?.length > 0 && (
+            {!!cart.appliedPromotions?.length && (
                 <div className="flex flex-row my-1 justify-between">
                     <span className="text-dark/90 font-bold text-sm">
                         Applied Promotion{cart.appliedPromotions.length > 1 ? '(s)' : ''}
@@ -119,7 +118,7 @@ export const CartSidebar = () => {
                                 <Price price={{ price: cart.total.taxAmount }} />
                             </span>
                         </div>
-                        {cart.total.discounts?.length > 0 && (
+                        {!!cart.total.discounts?.length && (
                             <div className="text-dark/70 text-sm flex justify-between items-center mb-4">
                                 <span>Total savings:</span>
                                 <span>

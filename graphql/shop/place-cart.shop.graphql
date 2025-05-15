@@ -1,0 +1,5 @@
+mutation PlaceCart($id: UUID!) {
+    place(id: $id) {
+        id
+    }
+}

@@ -1,4 +1,4 @@
-import { FetchAllStoriesDocument } from '@/generated/graphql';
+import { FetchAllStoriesDocument } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Story } from '@/components/story';
 import { Breadcrumbs } from '@/components/breadcrumbs';

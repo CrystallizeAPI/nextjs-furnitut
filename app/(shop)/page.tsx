@@ -1,4 +1,4 @@
-import { type FetchLandingPageQuery, FetchLandingPageDocument } from '@/generated/graphql';
+import { type FetchLandingPageQuery, FetchLandingPageDocument } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Blocks } from '@/components/blocks';
 

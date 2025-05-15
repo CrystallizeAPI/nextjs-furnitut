@@ -1,4 +1,6 @@
 import { crystallizeClient } from '@/core/crystallize-client.server';
+import { print } from 'graphql';
+import { PlaceCartDocument } from '@/generated/shop/graphql';
 
 export const placeCart = async (cartId: string) => {
     if (!cartId) {
@@ -6,14 +8,7 @@ export const placeCart = async (cartId: string) => {
     }
 
     try {
-        const mutation = `#graphql
-        mutation PlaceCart($id: UUID) {
-          place(id: $id) {
-            id
-          }
-        }
-      `;
-        const cart = await crystallizeClient.shopCartApi(mutation, {
+        const cart = await crystallizeClient.shopCartApi(print(PlaceCartDocument), {
             id: cartId,
         });
         return cart.place.id;

@@ -1,11 +1,5 @@
-import type { Cart, CartItem, CartItemInput } from '@/use-cases/contracts/cart';
-
-type GetNextCartProps = {
-    cart: Cart | null;
-    cartItem: CartItemInput;
-    type?: string;
-    itemIndex?: string;
-};
+import { Cart, CartItem } from '@/generated/shop/graphql';
+import { CART_ACTION, CartAction } from '@/use-cases/types';
 
 const getPrice = (quantity: number, { price, variant }: CartItem) => ({
     ...price,
@@ -14,83 +8,58 @@ const getPrice = (quantity: number, { price, variant }: CartItem) => ({
     taxAmount: quantity * variant.price.taxAmount,
 });
 
-export const getNextCart = ({ cart, cartItem, type, itemIndex }: GetNextCartProps) => {
-    const prevCart = structuredClone(cart);
-    const existingItemIndex = !!itemIndex
-        ? Number(itemIndex)
-        : (prevCart?.items.findIndex((item) => item.variant.sku === cartItem.sku) ?? -1);
+interface GetNextCartProps {
+    cart: Cart | null;
+    cartItem: CartItem;
+    action: CartAction;
+    itemIndex: string;
+}
 
-    let updatedItems = [...(prevCart?.items ?? [])];
-    let lastItemAdded: CartItem | undefined = undefined;
+export const getNextCart = ({ cart, cartItem, action, itemIndex }: GetNextCartProps) => {
+    const updatedCart = structuredClone(cart);
+    const itemIndexNumber = Number(itemIndex);
 
-    if (existingItemIndex !== -1) {
-        switch (type) {
-            case 'remove':
-                updatedItems = updatedItems.filter((item) => item.variant.sku !== cartItem.sku);
-                lastItemAdded = undefined;
+    if (!updatedCart) {
+        throw new Error('Cart not found');
+    }
+    const item = updatedCart.items[itemIndexNumber];
 
-                break;
-            case 'reduce':
-                const item = updatedItems[existingItemIndex];
-                const quantity = Math.max(0, item.quantity - 1);
+    switch (action) {
+        case CART_ACTION.increase:
+            const updatedQuantity = item.quantity + 1;
+            updatedCart.items[itemIndexNumber] = {
+                ...item,
+                quantity: updatedQuantity,
+                price: getPrice(updatedQuantity, item),
+            };
+            break;
 
-                if (quantity === 0) {
-                    updatedItems = updatedItems.filter((item) => item.variant.sku !== cartItem.sku);
-                } else {
-                    updatedItems[existingItemIndex] = {
-                        ...item,
-                        quantity,
-                        price: getPrice(quantity, item),
-                    };
-                    lastItemAdded = undefined;
-                }
-                break;
+        case CART_ACTION.decrease:
+            if (item.quantity === 1) {
+                updatedCart.items.splice(itemIndexNumber, 1);
+            } else {
+                const updatedQuantity = item.quantity - 1;
 
-            case 'add':
-            default: {
-                const item = updatedItems[existingItemIndex];
-                const quantity = item.quantity + 1;
-
-                updatedItems[existingItemIndex] = {
+                updatedCart.items[itemIndexNumber] = {
                     ...item,
-                    quantity,
-                    price: getPrice(quantity, item),
+                    quantity: updatedQuantity,
+                    price: getPrice(updatedQuantity, item),
                 };
-                lastItemAdded = updatedItems[existingItemIndex];
             }
-        }
-    } else {
-        const optimisticItem: CartItem = {
-            name: cartItem.variantName,
-            images: cartItem.image ? [cartItem.image] : [],
-            price: cartItem.price,
-            quantity: 1,
-            variant: {
-                sku: cartItem.sku,
-                name: cartItem.variantName,
-                price: cartItem.price,
-                product: {
-                    name: cartItem.productName,
-                },
-            },
-        };
-        updatedItems = [...(prevCart?.items ?? []), optimisticItem];
-        lastItemAdded = optimisticItem;
+            break;
+
+        case CART_ACTION.add:
+            updatedCart.items.push(cartItem);
+            break;
+
+        case CART_ACTION.remove:
+            updatedCart.items.splice(itemIndexNumber, 1);
+            break;
+
+        default:
+            console.error(`Unknown action: ${action}`);
+            break;
     }
 
-    const { gross, net, taxAmount } = updatedItems.reduce<{ gross: number; net: number; taxAmount: number }>(
-        (acc, item) => ({
-            gross: acc.gross + item.price.gross,
-            net: acc.net + item.price.net,
-            taxAmount: acc.taxAmount + item.price.taxAmount,
-        }),
-        { gross: 0, net: 0, taxAmount: 0 },
-    );
-
-    return {
-        ...prevCart,
-        lastItemAdded,
-        items: updatedItems,
-        total: { ...(prevCart?.total ?? []), gross, net, taxAmount },
-    } as Cart;
+    return updatedCart;
 };

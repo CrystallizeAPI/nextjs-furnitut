@@ -1,0 +1,52 @@
+query GetCart($id: UUID!) {
+    cart(id: $id) {
+        ...cart
+    }
+}
+
+fragment cart on Cart {
+    id
+    items {
+        quantity
+        variant {
+            sku
+            product {
+                name
+            }
+            price {
+                ...price
+            }
+        }
+        name
+        images {
+            url
+            height
+            width
+        }
+        price {
+            ...price
+        }
+    }
+    total {
+        ...price
+    }
+    appliedPromotions {
+        identifier
+        name
+        mechanism {
+            type
+            value
+        }
+    }
+}
+
+fragment price on Price {
+    gross
+    net
+    taxAmount
+    currency
+    discounts {
+        percent
+        amount
+    }
+}

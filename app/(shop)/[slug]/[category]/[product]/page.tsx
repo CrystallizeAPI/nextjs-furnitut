@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import schemas from 'schema-dts';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 
-import { FetchProductDocument, Paragraph } from '@/generated/graphql';
+import { FetchProductDocument, Paragraph } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Price } from '@/components/price';
@@ -244,20 +244,13 @@ export default async function CategoryProduct(props: ProductsProps) {
                                 {!!currentVariant && !!currentVariant.sku && (
                                     <AddToCartButton
                                         input={{
-                                            variantName: currentVariant.name || product.name || 'Variant',
-                                            productName: product.name || 'Variant',
-                                            sku: currentVariant.sku,
-                                            image:
-                                                currentVariant?.images?.[0]?.variants?.[0] ??
-                                                currentVariant?.images?.[0],
+                                            price: currentVariant.priceVariants.default,
+                                            name: currentVariant.name || product.name || 'Variant',
+                                            // @ts-expect-error
+                                            images: currentVariant.images,
                                             quantity: 1,
-                                            price: {
-                                                currency: currentVariant.defaultPrice?.currency || 'EUR',
-                                                gross: currentVariant.defaultPrice?.price || 0,
-                                                net: currentVariant.defaultPrice?.price || 0,
-                                                taxAmount: 0,
-                                                discounts: [],
-                                            },
+                                            // @ts-expect-error
+                                            variant: currentVariant,
                                         }}
                                     />
                                 )}
@@ -294,18 +287,13 @@ export default async function CategoryProduct(props: ProductsProps) {
                                                         <AddToCartButton
                                                             type="micro"
                                                             input={{
-                                                                variantName: product.name || 'Variant',
-                                                                productName: product.name || 'Variant',
-                                                                sku: product.sku,
-                                                                image: product.firstImage?.variants?.[0],
+                                                                // @ts-expect-error
+                                                                variant: product,
                                                                 quantity: 1,
-                                                                price: {
-                                                                    currency: product.defaultPrice?.currency || 'EUR',
-                                                                    gross: product.defaultPrice?.price || 0,
-                                                                    net: currentVariant.defaultPrice.price || 0,
-                                                                    taxAmount: 0,
-                                                                    discounts: [],
-                                                                },
+                                                                price: product.defaultPrice,
+                                                                name: product.name || 'Variant',
+                                                                // @ts-expect-error
+                                                                images: product.firstImage?.variants,
                                                             }}
                                                         />
                                                     )}

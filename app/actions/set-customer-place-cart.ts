@@ -1,12 +1,12 @@
 'use server';
 
 import { crystallizeClient } from '@/core/crystallize-client.server';
-import { Customer } from '@/use-cases/contracts/customer';
 import { placeCart } from '@/use-cases/place-cart';
 import { setCartCustomer } from '@/use-cases/set-customer';
 import { createCustomerManager } from '@crystallize/js-api-client';
 import { Cart } from '@/use-cases/contracts/cart';
 import { getCart } from './get-cart';
+import { Address, Customer } from '@/generated/shop/graphql';
 
 type Data = Record<(typeof formFields)[number], string>;
 type InitialState = { customer: Customer | null; cart: Cart | null; cartId?: string };
@@ -20,16 +20,17 @@ export const setCustomerPlaceCart = async (initialSate: InitialState | null, for
     }, {} as Data);
 
     const { firstName, lastName, email, ...rest } = data;
-    const address = { ...rest, type: 'delivery' } as const;
+    const address = { ...rest, type: 'delivery' } as Address;
     const customer = { firstName, lastName, identifier: email };
-    const cartCustomer: Customer = { ...customer, addresses: { ...address, email } };
+    const cartCustomer = { ...customer, addresses: [{ ...address, email }] } as Customer;
 
     const { cart, cartId } = await getCart();
 
     if (!cartId) {
         throw Error('cartId not found');
     }
-    await setCartCustomer(cartId, { ...customer, addresses: { ...address, email } });
+
+    await setCartCustomer(cartId, { ...customer, addresses: [address] } as Customer);
     await placeCart(cartId);
 
     try {

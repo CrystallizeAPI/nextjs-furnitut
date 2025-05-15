@@ -52,6 +52,9 @@ query FetchProduct($path: String!) {
                                         height
                                     }
                                 }
+                                product {
+                                    name
+                                }
                             }
                             defaultVariant {
                                 defaultPrice: priceVariants(key: "default")
@@ -62,6 +65,9 @@ query FetchProduct($path: String!) {
                                         width
                                         height
                                     }
+                                }
+                                product {
+                                    name
                                 }
                             }
                         }
@@ -95,6 +101,7 @@ fragment productVariant on ProductVariantForProduct {
             name
             product {
                 path
+                name
             }
             defaultPrice: priceVariants(key: "default")
             firstImage {

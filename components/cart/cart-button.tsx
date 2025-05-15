@@ -14,6 +14,8 @@ export const CartButton = () => {
         return () => clearTimeout(timeout);
     }, [cart?.lastItemAdded]);
 
+    console.log(cart);
+
     return (
         <>
             <button

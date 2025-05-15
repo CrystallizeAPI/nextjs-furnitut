@@ -7,8 +7,12 @@ import { CART_ACTION, CartAction } from '@/use-cases/types';
 import { CartSidebar } from './cart-sidebar';
 import { Cart, CartItem } from '@/generated/shop/graphql';
 
+interface ExtendedCart extends Cart {
+    lastItemAdded: CartItem | null;
+}
+
 type CartContextProps = {
-    cart: Cart | null;
+    cart: ExtendedCart | null;
     isLoading: boolean;
     isOpen: boolean;
     emptyCart: () => void;
@@ -25,7 +29,7 @@ type CartProviderProps = {
 
 export const CartProvider = ({ children }: CartProviderProps) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [initialCart, setInitialCart] = useState<Cart | null>(null);
+    const [initialCart, setInitialCart] = useState<ExtendedCart | null>(null);
     const [serverCart, handleCartAction, isLoading] = useActionState(handleCart, initialCart);
     const [cart, setOptimisticCart] = useOptimistic(serverCart ?? initialCart);
     const [, startTransition] = useTransition();

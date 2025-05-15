@@ -92,11 +92,16 @@ export async function handleCart(initialSate: Cart | null, formData: FormData) {
     }
 
     try {
-        return await hydrateCart({
+        const hydratedCart = await hydrateCart({
             id: cartId,
             items: mergeItemsBySku(items) as CartSkuItemInput[],
             voucherCode,
         });
+
+        return {
+            ...hydratedCart,
+            lastItemAdded: cartItem ?? item,
+        };
     } catch (e) {
         console.error('Error hydrating cart: ', e);
         return null;

@@ -61,5 +61,8 @@ export const getNextCart = ({ cart, cartItem, action, itemIndex }: GetNextCartPr
             break;
     }
 
-    return updatedCart;
+    return {
+        ...updatedCart,
+        lastItemAdded: cartItem ?? item,
+    };
 };

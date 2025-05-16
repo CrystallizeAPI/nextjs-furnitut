@@ -1,6 +1,7 @@
 import { storage } from '@/core/storage.server';
 import { crystallizeClient } from '@/core/crystallize-client.server';
-import { FETCH_CART, PRICE_FRAGMENT } from './fetch-cart';
+import { HydrateCartDocument } from '@/generated/shop/graphql';
+import { print } from 'graphql';
 
 interface Item {
     sku: string;
@@ -39,18 +40,8 @@ export const hydrateCart = async ({ id, items, voucherCode }: HydrateCartProps) 
         input.id = id;
     }
 
-    const mutation = `#graphql
-        mutation HYDRATE_CART($input: CartInput!) { 
-            hydrate(input: $input) { 
-                ${FETCH_CART} 
-            } 
-        }
-        
-        ${PRICE_FRAGMENT}
-    `;
-
     try {
-        const data = await crystallizeClient.shopCartApi(mutation, { input });
+        const data = await crystallizeClient.shopCartApi(print(HydrateCartDocument), { input });
 
         await storage.setCartId(data.hydrate.id);
         return data.hydrate;

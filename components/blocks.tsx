@@ -4,7 +4,7 @@ import { PictureGrid } from './block-pieces/picture-grid';
 import { ProductSlider } from './block-pieces/product-slider';
 import { StorySlider } from './block-pieces/story-slider';
 import { BlockLayout } from './block-fragments/layout';
-import type { CategoryBlocksFragment, LandingPageBlocksFragment } from '@/generated/graphql';
+import type { CategoryBlocksFragment, LandingPageBlocksFragment } from '@/generated/discovery/graphql';
 
 type Block = CategoryBlocksFragment | LandingPageBlocksFragment;
 

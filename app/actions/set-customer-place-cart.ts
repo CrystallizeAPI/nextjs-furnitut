@@ -36,7 +36,7 @@ export const setCustomerPlaceCart = async (initialSate: InitialState | null, for
         // @ts-expect-error address.type requires enum type delivery
         await createCustomerManager(crystallizeClient).create({ ...customer, email, addresses: [address] });
     } catch (error) {
-        console.error('Error creating customer', error);
+        console.error('Error creating customer', JSON.stringify(error, null, 3));
     }
 
     return { customer: cartCustomer, cart, cartId };

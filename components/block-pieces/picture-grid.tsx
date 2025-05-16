@@ -1,6 +1,6 @@
 import { Typography } from '../block-fragments/typography';
 import { Image } from '@/components/image';
-import { PictureGridFragment } from '@/generated/graphql';
+import { PictureGridFragment } from '@/generated/discovery/graphql';
 import clsx from 'classnames';
 
 type PictureGridProps = {

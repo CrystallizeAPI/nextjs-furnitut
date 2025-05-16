@@ -1,5 +1,5 @@
 import { ContentTransformer } from '@crystallize/reactjs-components';
-import { Paragraph, VideoComponent } from '@/generated/graphql';
+import { Paragraph, VideoComponent } from '@/generated/discovery/graphql';
 import { Image } from './image';
 import { Video } from './video';
 import clsx from 'classnames';

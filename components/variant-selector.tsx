@@ -2,7 +2,7 @@ import { Image } from '@/components/image';
 import Link from 'next/link';
 import classNames from 'classnames';
 import { Price } from './price';
-import { ProductVariantFragment } from '@/generated/graphql';
+import { ProductVariantFragment } from '@/generated/discovery/graphql';
 
 function reduceAttributes(variants?: ProductVariantFragment[]) {
     return variants?.reduce((acc: Record<string, any[]>, variant: any) => {

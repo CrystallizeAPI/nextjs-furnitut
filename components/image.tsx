@@ -1,7 +1,7 @@
 import clsx from 'classnames';
 import { Image as CrystallizeImage } from '@crystallize/reactjs-components';
 
-import { ImageVariant, Showcase } from '@/generated/graphql';
+import { ImageVariant, Showcase } from '@/generated/discovery/graphql';
 import { HotSpot } from './hot-spot';
 
 type CrystallizeImageVariants = React.ComponentProps<typeof CrystallizeImage>['variants'];

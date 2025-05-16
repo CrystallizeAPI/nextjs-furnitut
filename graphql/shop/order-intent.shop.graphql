@@ -1,0 +1,5 @@
+query OrderIntent($id: UUID!) {
+    orderIntent(id: $id ) {
+        order
+    }
+}

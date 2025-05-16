@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Fragment } from 'react';
 import classNames from 'classnames';
-import type { Breadcrumb } from '@/generated/graphql';
+import type { Breadcrumb } from '@/generated/discovery/graphql';
 
 type BreadcrumbsProps = {
     breadcrumbs?: Pick<Breadcrumb, 'name' | 'path'>[] | null;

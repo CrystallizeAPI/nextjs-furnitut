@@ -1,0 +1,10 @@
+fragment price on Price {
+    gross
+    net
+    taxAmount
+    currency
+    discounts {
+        percent
+        amount
+    }
+}

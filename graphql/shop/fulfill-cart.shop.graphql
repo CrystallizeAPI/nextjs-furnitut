@@ -1,0 +1,5 @@
+mutation FulfillCart($id: UUID!, $orderId: String!) {
+    fulfill(id: $id, orderId: $orderId) {
+        id
+    }
+}

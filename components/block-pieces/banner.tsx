@@ -1,6 +1,6 @@
 import { Image } from '@/components/image';
 import { Typography } from '../block-fragments/typography';
-import { BannerFragment, Showcase } from '@/generated/graphql';
+import { BannerFragment, Showcase } from '@/generated/discovery/graphql';
 
 type BannerProps = {
     block: BannerFragment;

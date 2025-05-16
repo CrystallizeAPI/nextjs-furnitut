@@ -1,0 +1,5 @@
+query GetCart($id: UUID!) {
+    cart(id: $id) {
+        ...cart
+    }
+}

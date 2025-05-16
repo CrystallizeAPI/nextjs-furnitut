@@ -1,69 +1,17 @@
 import { storage } from '@/core/storage.server';
 import { crystallizeClient } from '@/core/crystallize-client.server';
 import { Cart } from './contracts/cart';
-
-export const FETCH_CART = `#graphql
-    id
-    items {
-        quantity
-        variant {
-            sku
-            product {
-                name
-            }
-            price {
-                ...price
-            }
-        }
-        name
-        images {
-            url
-            height
-            width
-        }
-        price {
-            ...price
-        }
-    }
-    total {
-        ...price
-    }
-    appliedPromotions {
-        identifier
-        name
-        mechanism {
-            type
-            value
-        }
-    }
-`;
-
-export const PRICE_FRAGMENT = `#graphql
-  fragment price on Price {
-      gross
-      net
-      taxAmount
-      currency
-      discounts {
-        percent
-        amount
-      }
-    }
-  `;
+import { print } from 'graphql';
+import { GetCartDocument, HydrateCartDocument } from '@/generated/shop/graphql';
 
 export const fetchCart = async (cartId: string): Promise<Cart> => {
     if (!cartId) {
         try {
-            const data = await crystallizeClient.shopCartApi(
-                `#graphql
-            mutation HYDRATE_CART($input: CartInput!){ hydrate(input: $input) { ${FETCH_CART} } } 
-            ${PRICE_FRAGMENT}`,
-                {
-                    input: {
-                        items: [],
-                    },
+            const data = await crystallizeClient.shopCartApi(print(HydrateCartDocument), {
+                input: {
+                    items: [],
                 },
-            );
+            });
             await storage.setCartId(data.hydrate.id);
             return data.hydrate;
         } catch (exception) {
@@ -73,14 +21,9 @@ export const fetchCart = async (cartId: string): Promise<Cart> => {
     }
 
     try {
-        const data = await crystallizeClient.shopCartApi(
-            `#graphql
-            query GET_CART($cartId: UUID!){ cart(id: $cartId) { ${FETCH_CART} } },
-            ${PRICE_FRAGMENT}`,
-            {
-                cartId,
-            },
-        );
+        const data = await crystallizeClient.shopCartApi(print(GetCartDocument), {
+            id: cartId,
+        });
         return data.cart;
     } catch (exception) {
         console.error('Fetch cart with cartId', exception);

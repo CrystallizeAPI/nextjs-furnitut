@@ -1,15 +1,10 @@
 import { crystallizeClient } from '@/core/crystallize-client.server';
+import { print } from 'graphql';
+import { FulfillCartDocument } from '@/generated/shop/graphql';
 
 export const fulfillCart = async (cartId: string, orderId: string) => {
     try {
-        const mutation = `#graphql
-        mutation FulFillCart($id: UUID, $orderId: String!) {
-          fulfill(id: $id, orderId: $orderId) {
-            id
-          }
-        }
-      `;
-        const cart = await crystallizeClient.shopCartApi(mutation, {
+        const cart = await crystallizeClient.shopCartApi(print(FulfillCartDocument), {
             id: cartId,
             orderId,
         });

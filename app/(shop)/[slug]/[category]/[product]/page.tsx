@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import schemas from 'schema-dts';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 
-import { FetchProductDocument, Paragraph } from '@/generated/graphql';
+import { FetchProductDocument, Paragraph } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Price } from '@/components/price';

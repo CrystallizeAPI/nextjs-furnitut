@@ -5,7 +5,7 @@ import { CartProvider } from '@/components/cart/cart-provider';
 
 import './globals.css';
 import { apiRequest } from '@/utils/api-request';
-import { FrontPageMetadataDocument } from '@/generated/graphql';
+import { FrontPageMetadataDocument } from '@/generated/discovery/graphql';
 
 const manrope = Manrope({ subsets: ['latin'], display: 'swap' });
 

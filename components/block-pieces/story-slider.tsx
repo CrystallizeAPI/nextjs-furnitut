@@ -1,4 +1,4 @@
-import { StorySliderFragment } from '@/generated/graphql';
+import { StorySliderFragment } from '@/generated/discovery/graphql';
 import { Typography } from '../block-fragments/typography';
 import { Slider } from '../slider/index';
 import { Story } from '@/components/story';

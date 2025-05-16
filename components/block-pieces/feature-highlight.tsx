@@ -1,6 +1,6 @@
 import { ContentTransformer } from '@crystallize/reactjs-components';
 import { Image } from '../image';
-import { FeatureHighlightsFragment } from '@/generated/graphql';
+import { FeatureHighlightsFragment } from '@/generated/discovery/graphql';
 
 type FeatureHighlightProps = {
     block: FeatureHighlightsFragment;

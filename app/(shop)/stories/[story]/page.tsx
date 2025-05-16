@@ -6,7 +6,7 @@ import {
     Paragraph,
     Product,
     ProductVariantForProduct,
-} from '@/generated/graphql';
+} from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 import { Image } from '@/components/image';

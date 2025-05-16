@@ -1,4 +1,4 @@
-import { FetchLayoutDocument, MenuItemFragment } from '@/generated/graphql';
+import { FetchLayoutDocument, MenuItemFragment } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import Link from 'next/link';
 

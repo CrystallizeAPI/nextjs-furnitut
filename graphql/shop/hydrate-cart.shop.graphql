@@ -1,0 +1,5 @@
+mutation HydrateCart($input: CartInput!) {
+    hydrate(input: $input) {
+        ...cart
+    }
+}

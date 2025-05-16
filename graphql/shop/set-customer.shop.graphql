@@ -1,0 +1,5 @@
+mutation SetCustomer($id: UUID!, $customer: CustomerInput!) {
+    setCustomer(id: $id, input: $customer) {
+        id
+    }
+}

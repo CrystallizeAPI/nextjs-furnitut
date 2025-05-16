@@ -1,10 +1,11 @@
 'use client';
 
-import { createContext, useContext, useActionState, useOptimistic, useEffect, useState, useTransition } from 'react';
+import { createContext, useActionState, useContext, useEffect, useOptimistic, useState, useTransition } from 'react';
 import { handleCart } from '@/app/actions/handle-cart';
 import { Cart } from '@/use-cases/contracts/cart';
 import { getNextCart } from '@/use-cases/get-next-cart';
 import { CartSidebar } from './cart-sidebar';
+import { CartAction } from '@/use-cases/types';
 
 type CartContextProps = {
     cart: Cart | null;
@@ -41,8 +42,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     const onUpdateCart = (formData: FormData) => {
         setOptimisticCart((prevCart: Cart | null) => {
             const cartItem = JSON.parse(formData.get('input') as string);
-            const type = formData.get('type') as string;
-            return getNextCart({ cart: prevCart, cartItem, type });
+            const itemIndex = JSON.parse(formData.get('index') as string);
+            const action = formData.get('action') as CartAction;
+
+            return getNextCart({ cart: prevCart, cartItem, action, itemIndex });
         });
 
         handleCartAction(formData);

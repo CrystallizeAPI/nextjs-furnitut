@@ -6,6 +6,7 @@ import { useCart } from './cart-provider';
 import clsx from 'classnames';
 import { Badge } from '@/components/badge';
 import { Fragment } from 'react';
+import { CART_ACTION } from '@/use-cases/types';
 
 export const CartItems = () => {
     const { cart, onUpdateCart } = useCart();
@@ -43,7 +44,8 @@ export const CartItems = () => {
                                                     image: item.images[0],
                                                 })}
                                             />
-                                            <input type="hidden" name="type" value="reduce" />
+                                            <input type="hidden" name="action" value={CART_ACTION.decrease} />
+                                            <input type="hidden" name="index" value={index.toString()} />
                                             <button
                                                 type="submit"
                                                 className="w-8 h-8 flex items-center justify-center rounded-sm hover:bg-muted/20 active:bg-muted/40"
@@ -66,7 +68,8 @@ export const CartItems = () => {
                                                     image: item.images[0],
                                                 })}
                                             />
-                                            <input type="hidden" name="type" value="add" />
+                                            <input type="hidden" name="action" value={CART_ACTION.increase} />
+                                            <input type="hidden" name="index" value={index.toString()} />
                                             <button
                                                 type="submit"
                                                 className="w-8 h-8 flex items-center justify-center  rounded-sm hover:bg-muted/20 active:bg-muted/40"

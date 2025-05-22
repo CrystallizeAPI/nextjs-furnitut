@@ -180,7 +180,7 @@ export default async function StoryPage(props: StoriesProps) {
                 <div className="max-w-(--breakpoint-xl) mx-auto [&_img]:w-full [&_img]:max-w-none overflow-hidden rounded-2xl ">
                     <Media {...media} preserveRatio sizes="(max-width: 600px) 100vw, 1280px" />
                 </div>
-                <div className="grid grid-cols-5 max-w-(--breakpoint-xl) mx-auto mt-24">
+                <div className="lg:grid grid-cols-5 max-w-(--breakpoint-xl) mx-auto mt-24">
                     <div
                         className={clsx('col-span-3 gap-24 px-12', {
                             'col-span-5! max-w-(--breakpoint-md) mx-auto': featured === null,

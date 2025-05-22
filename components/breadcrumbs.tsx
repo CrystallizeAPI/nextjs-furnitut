@@ -31,7 +31,11 @@ export const Breadcrumbs = ({ breadcrumbs, isCenter }: BreadcrumbsProps) => {
     }
 
     return (
-        <div className={classNames('flex gap-3 items-center font-medium text-dark', isCenter && 'justify-center')}>
+        <div
+            className={classNames('flex gap-3 items-center flex-wrap font-medium text-dark', {
+                'justify-center': isCenter,
+            })}
+        >
             <Link href="/" aria-label="Home">
                 <HomeIcon />
             </Link>
@@ -41,10 +45,14 @@ export const Breadcrumbs = ({ breadcrumbs, isCenter }: BreadcrumbsProps) => {
                     {index === breadcrumbs.length - 1 ? (
                         <span className="opacity-65">{item.name}</span>
                     ) : (
-                        <div>
-                            {!!item.path && <Link href={item.path}>{item.name}</Link>}
+                        <>
+                            {!!item.path && (
+                                <Link href={item.path} aria-label={item.name ?? ''}>
+                                    {item.name}
+                                </Link>
+                            )}
                             {index !== breadcrumbs.length - 1 && <span className="opacity-30"> / </span>}
-                        </div>
+                        </>
                     )}
                 </Fragment>
             ))}

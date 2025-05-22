@@ -26,7 +26,7 @@ const HotspotWrapper = ({
 
     return (
         <Tag
-            href={link ?? ''}
+            href={link ?? '#'}
             className={clsx(classes, isActive && 'z-10')}
             style={{ left: `${x}%`, top: `${y}%` }}
             onMouseEnter={() => setIsActive(true)}

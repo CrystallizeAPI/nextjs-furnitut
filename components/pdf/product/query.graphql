@@ -1,0 +1,101 @@
+query FetchProductForPDF($path: String!) {
+    browse {
+        product(path: $path) {
+            hits {
+                shape
+                name
+                path
+                description(format: json)
+                descriptionPlain: description(format: plainText)
+                details {
+                    title
+                    description
+                }
+                brand {
+                    items {
+                        id
+                        name
+                        ... on brand {
+                            component_name
+                            logo {
+                                url
+                                variants(maxWidth: 200) {
+                                    url
+                                    height
+                                    width
+                                }
+                            }
+                        }
+                    }
+                }
+
+                story {
+                    title
+                    body(format: json)
+                    images {
+                        ...showCaseImage
+                    }
+                }
+
+                variants {
+                    ...productVariant
+                }
+            }
+        }
+    }
+}
+
+fragment productVariant on ProductVariantForProduct {
+    name
+    sku
+    priceVariants
+    attributes
+    defaultPrice: priceVariants(key: "default")
+    description {
+        extraDescription
+    }
+    matchingProducts {
+        variants {
+            sku
+            name
+            product {
+                path
+            }
+            defaultPrice: priceVariants(key: "default")
+            firstImage {
+                url
+                variants(maxWidth: 200, types: ["avif"]) {
+                    url
+                    height
+                    width
+                }
+            }
+        }
+    }
+    dimensions {
+        depth
+        depthUnit
+        height
+        heightUnit
+        width
+        widthUnit
+        weight
+        weightUnit
+    }
+    images {
+        url
+        altText
+        width
+        height
+        variants(maxWidth: 800, types: ["avif"]) {
+            url
+            width
+            height
+        }
+        ogVariants: variants(minWidth: 800, maxWidth: 1500, types: ["webp"]) {
+            url
+            width
+            height
+        }
+    }
+}

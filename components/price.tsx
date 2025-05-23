@@ -1,5 +1,7 @@
+export type Price = { price: number; currency?: string };
+
 type PriceProps = {
-    price?: { price: number; currency?: string } | null;
+    price?: Price | null;
 };
 
 export const Price = ({ price }: PriceProps) => {
@@ -12,5 +14,5 @@ export const Price = ({ price }: PriceProps) => {
         currency: price?.currency || 'EUR',
     });
 
-    return <>{formatter.format(price.price)}</>;
+    return formatter.format(price.price);
 };

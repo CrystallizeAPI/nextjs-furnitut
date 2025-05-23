@@ -6,3 +6,12 @@ export type FilterOption = {
     count: number;
     checked: boolean;
 };
+
+export type SearchParams = {
+    page?: string;
+    priceRange?: string | string[];
+    sort?: SortingOption;
+    parentPath?: string | string[];
+    stock?: string | string[];
+    sku?: string | string[];
+};

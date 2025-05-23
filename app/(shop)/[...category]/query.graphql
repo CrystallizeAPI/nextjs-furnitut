@@ -1,75 +1,3 @@
-query FetchCategory($path: String!, $limit: Int = 25, $skip: Int = 0) {
-    browse {
-        category(path: $path, pagination: { limit: $limit, skip: $skip }) {
-            hits {
-                name
-                breadcrumbs {
-                    name
-                    path
-                    id
-                }
-                blocks {
-                    ...categoryBlocks
-                }
-                children {
-                    hits {
-                        shape
-                        ... on category {
-                            id
-                            name
-                            path
-                            image {
-                                url
-                                altText
-                                variants(maxWidth: 200, types: ["avif"]) {
-                                    url
-                                    width
-                                    height
-                                }
-                            }
-                        }
-                        ... on product {
-                            id
-                            name
-                            path
-                            description(format: json)
-                            defaultVariant {
-                                sku
-                                defaultPrice: priceVariants(key: "default")
-                                firstImage {
-                                    url
-                                    altText
-                                    focalPoint
-                                    variants(maxWidth: 500, types: ["avif"]) {
-                                        url
-                                        width
-                                        height
-                                    }
-                                }
-                            }
-                            variants {
-                                sku
-                                isDefault
-                                name
-                                firstImage {
-                                    url
-                                    altText
-                                    focalPoint
-                                    variants(maxWidth: 100, types: ["avif"]) {
-                                        url
-                                        width
-                                        height
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 query SearchCategory(
     $path: String!
     $browsePath: String!
@@ -506,6 +434,9 @@ query SearchCategory(
                             }
                         }
                     }
+                }
+                meta {
+                    ...metadata
                 }
             }
         }

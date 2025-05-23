@@ -68,8 +68,6 @@ export function CommandPalette() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedApiCall = useCallback(
         debounce(async (term: string) => {
-            console.log({ term });
-
             const response = await apiRequest(GlobalSearchDocument, { term });
             const results = response?.data?.search?.hits ?? [];
 

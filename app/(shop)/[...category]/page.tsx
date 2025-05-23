@@ -10,7 +10,7 @@ import { apiRequest } from '@/utils/api-request';
 import { Product } from '@/components/product';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Blocks } from '@/components/blocks';
-import ProductPage from '@/components/ProductPage';
+import ProductPage, { fetchProductData } from '@/components/ProductPage';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { Filters } from './filters';
@@ -25,10 +25,12 @@ import {
     StockLocation,
 } from './utils';
 import { ENTERTAINMENT_PRICE_RANGE, PRODUCTS_PRICE_RANGE, SORTING_CONFIGS, STOCK_RANGE } from './constants';
-import { FilterOption, SortingOption } from './types';
+import { FilterOption, SearchParams } from './types';
 import { notFound } from 'next/navigation';
 
 import { Image } from '@/components/image';
+import type { Metadata } from 'next';
+import { findSuitableVariant } from '@/components/variant-selector';
 
 interface FetchCategoryProps {
     path: string;
@@ -39,14 +41,6 @@ interface FetchCategoryProps {
 }
 
 type ItemShape = 'category' | 'product' | null;
-
-type SearchParams = {
-    page?: string;
-    priceRange?: string | string[];
-    sort?: SortingOption;
-    parentPath?: string | string[];
-    stock?: string | string[];
-};
 
 const searchCategory = async ({ path, limit, skip = 0, filters, sorting }: FetchCategoryProps) => {
     const response = await apiRequest(SearchCategoryDocument, {
@@ -59,9 +53,10 @@ const searchCategory = async ({ path, limit, skip = 0, filters, sorting }: Fetch
         boundaries: path.includes('entertainment') ? ENTERTAINMENT_PRICE_RANGE : PRODUCTS_PRICE_RANGE,
         stockBoundaries: STOCK_RANGE,
     });
+
     const { hits, summary: searchSummary } = response.data.search ?? {};
     const { summary: filterSummary } = response.data.filters ?? {};
-    const { breadcrumbs, name, blocks, children } = response.data.browse?.category?.hits?.[0] ?? {};
+    const { breadcrumbs, name, blocks, children, meta } = response.data.browse?.category?.hits?.[0] ?? {};
 
     return {
         name,
@@ -73,6 +68,7 @@ const searchCategory = async ({ path, limit, skip = 0, filters, sorting }: Fetch
             ...searchSummary,
             ...filterSummary,
         },
+        meta,
     };
 };
 
@@ -92,6 +88,72 @@ type CategoryOrProductProps = {
     params: Promise<{ slug: string; category: string[] }>;
     searchParams: Promise<SearchParams>;
 };
+
+export async function generateMetadata(props: CategoryOrProductProps): Promise<Metadata> {
+    const searchParams = await props.searchParams;
+    const params = await props.params;
+    const url = `/${params.category.join('/')}`;
+    const { page, priceRange, sort = 'popular', parentPath, stock } = await props.searchParams;
+    const currentPage = Number(page ?? 1);
+    const limit = ITEMS_PER_PAGE;
+    const skip = currentPage ? (currentPage - 1) * limit : 0;
+    const itemShape = await fetchItemShape(url);
+
+    if (itemShape === 'product') {
+        const { meta, variants } = await fetchProductData(url);
+        const currentVariant = findSuitableVariant({ variants: variants, searchParams });
+        const title = currentVariant?.name ?? '';
+        const description = meta?.description?.[0]?.textContent;
+        const image = currentVariant?.images?.[0];
+        const ogImage = image?.ogVariants?.[0];
+        const attributesQueryParams = new URLSearchParams(currentVariant?.attributes ?? {});
+
+        return {
+            title: `${title}`,
+            description,
+            openGraph: {
+                title: `${title} | Furnitut`,
+                description,
+                url: `${url}?${attributesQueryParams.toString()}`,
+                images: [
+                    {
+                        url: ogImage?.url ?? '',
+                        alt: image?.altText ?? '',
+                        height: ogImage?.height ?? 0,
+                        width: ogImage?.width ?? 0,
+                    },
+                ],
+            },
+        };
+    }
+
+    const { meta } = await searchCategory({
+        path: url,
+        limit,
+        skip,
+        filters: buildFilterCriteria({ priceRange, parentPath, stock }),
+        sorting: SORTING_CONFIGS[sort] as TenantSort,
+    });
+    const { title, description, image } = meta ?? {};
+
+    return {
+        title,
+        description: description?.[0].textContent ?? '',
+        openGraph: {
+            title: `${title} | Furnitut`,
+            description: description?.[0].textContent ?? '',
+            url: `/${url}`,
+            images: [
+                {
+                    url: image?.[0]?.url ?? '',
+                    alt: image?.[0]?.altText ?? '',
+                    height: image?.[0]?.height ?? 0,
+                    width: image?.[0]?.width ?? 0,
+                },
+            ],
+        },
+    };
+}
 
 export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     const params = await props.params;

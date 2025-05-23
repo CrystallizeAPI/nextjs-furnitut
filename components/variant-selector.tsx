@@ -3,6 +3,7 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import { Price } from './price';
 import { ProductVariantFragment } from '@/generated/discovery/graphql';
+import { SearchParams } from '@/app/(shop)/[...category]/types';
 
 function reduceAttributes(variants?: ProductVariantFragment[]) {
     return variants?.reduce((acc: Record<string, any[]>, variant: any) => {
@@ -22,16 +23,16 @@ function reduceAttributes(variants?: ProductVariantFragment[]) {
     }, {});
 }
 
-type GetHrefProps = { path: string; name: string; value: string; searchParams: Record<string, string> };
+type GetHrefProps = { path: string; name: string; value: string; searchParams: SearchParams };
 
 const getHref = ({ path, name, value, searchParams }: GetHrefProps) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams as unknown as URLSearchParams);
     params.set(name, value);
     return `${path}?${params.toString()}`;
 };
 
 type FindSuitableVariantProps = {
-    searchParams: Record<string, string>;
+    searchParams: SearchParams;
     variants?: Array<ProductVariantFragment | null> | null;
 };
 
@@ -60,7 +61,7 @@ export const findSuitableVariant = (props: FindSuitableVariantProps) => {
                     }
                 }
 
-                return !!properKey ? variant?.attributes[properKey] === searchParams[key] : false;
+                return !!properKey ? variant?.attributes[properKey] === searchParams[key as keyof SearchParams] : false;
             });
         }) ?? variants?.[0]
     );
@@ -68,7 +69,7 @@ export const findSuitableVariant = (props: FindSuitableVariantProps) => {
 
 type VariantSelectorProps = {
     variants?: Array<ProductVariantFragment | null> | null;
-    searchParams: Record<string, string>;
+    searchParams: SearchParams;
     path: string;
 };
 
@@ -120,7 +121,7 @@ export const VariantSelector = (props: VariantSelectorProps) => {
     const variantSelectorOptions = reduceAttributes(variants);
 
     return Object.keys(variantSelectorOptions ?? {}).map((key, facetIndex) => {
-        const searchValue = searchParams[key];
+        const searchValue = searchParams[key as keyof SearchParams];
         return (
             <div className="py-2" key={`${key}-${facetIndex}-selector`}>
                 <span className="font-bold text-base pb-2 block">{key}</span>

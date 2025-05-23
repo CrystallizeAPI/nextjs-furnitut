@@ -1,6 +1,5 @@
 import clsx from 'classnames';
 import Link from 'next/link';
-import type { Metadata } from 'next';
 import schemas from 'schema-dts';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 
@@ -15,13 +14,14 @@ import { Product } from '@/components/product';
 import { Accordion } from '@/components/accordion';
 import { AddToCartButton } from '@/components/cart/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
+import { SearchParams } from '@/app/(shop)/[...category]/types';
 
 type ProductsProps = {
-    searchParams: Promise<{ page?: string }>;
+    searchParams: Promise<SearchParams>;
     params: Promise<{ slug: string; category: string[] }>;
 };
 
-const fetchData = async (path: string) => {
+export const fetchProductData = async (path: string) => {
     const response = await apiRequest(FetchProductDocument, { path });
     const { story, variants, brand, breadcrumbs, meta, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 
@@ -35,43 +35,11 @@ const fetchData = async (path: string) => {
     };
 };
 
-export async function generateMetadata(props: ProductsProps): Promise<Metadata> {
-    const searchParams = await props.searchParams;
-    const params = await props.params;
-    const url = `/${params.category.join('/')}`;
-    const { meta, variants } = await fetchData(url);
-    const currentVariant = findSuitableVariant({ variants: variants, searchParams });
-
-    const title = currentVariant?.name ?? '';
-    const description = meta?.description[0].textContent;
-    const image = currentVariant?.images?.[0];
-    const ogImage = image?.ogVariants?.[0];
-    const attributesQueryParams = new URLSearchParams(currentVariant?.attributes ?? {});
-
-    return {
-        title: `${title}`,
-        description,
-        openGraph: {
-            title: `${title} | Furnitut`,
-            description,
-            url: `${url}?${attributesQueryParams.toString()}`,
-            images: [
-                {
-                    url: ogImage?.url ?? '',
-                    alt: image?.altText ?? '',
-                    height: ogImage?.height ?? 0,
-                    width: ogImage?.width ?? 0,
-                },
-            ],
-        },
-    };
-}
-
 export default async function CategoryProduct(props: ProductsProps) {
     const searchParams = await props.searchParams;
     const params = await props.params;
     const url = `/${params.category.join('/')}`;
-    const product = await fetchData(url);
+    const product = await fetchProductData(url);
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
     const dimensions = currentVariant?.dimensions;
     // TODO: this should be for how long the price will be valid

@@ -13,7 +13,17 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
-const documents = {
+type Documents = {
+    "fragment cart on Cart {\n  id\n  items {\n    quantity\n    variant {\n      sku\n      product {\n        name\n      }\n      price {\n        ...price\n      }\n    }\n    name\n    images {\n      url\n      height\n      width\n    }\n    price {\n      ...price\n    }\n  }\n  total {\n    ...price\n  }\n  appliedPromotions {\n    identifier\n    name\n    mechanism {\n      type\n      value\n    }\n  }\n}": typeof types.CartFragmentDoc,
+    "mutation FulfillCart($id: UUID!, $orderId: String!) {\n  fulfill(id: $id, orderId: $orderId) {\n    id\n  }\n}": typeof types.FulfillCartDocument,
+    "query GetCart($id: UUID!) {\n  cart(id: $id) {\n    ...cart\n  }\n}": typeof types.GetCartDocument,
+    "mutation HydrateCart($input: CartInput!) {\n  hydrate(input: $input) {\n    ...cart\n  }\n}": typeof types.HydrateCartDocument,
+    "query OrderIntent($id: UUID!) {\n  orderIntent(id: $id) {\n    order\n  }\n}": typeof types.OrderIntentDocument,
+    "mutation PlaceCart($id: UUID!) {\n  place(id: $id) {\n    id\n  }\n}": typeof types.PlaceCartDocument,
+    "fragment price on Price {\n  gross\n  net\n  taxAmount\n  currency\n  discounts {\n    percent\n    amount\n  }\n}": typeof types.PriceFragmentDoc,
+    "mutation SetCustomer($id: UUID!, $customer: CustomerInput!) {\n  setCustomer(id: $id, input: $customer) {\n    id\n  }\n}": typeof types.SetCustomerDocument,
+};
+const documents: Documents = {
     "fragment cart on Cart {\n  id\n  items {\n    quantity\n    variant {\n      sku\n      product {\n        name\n      }\n      price {\n        ...price\n      }\n    }\n    name\n    images {\n      url\n      height\n      width\n    }\n    price {\n      ...price\n    }\n  }\n  total {\n    ...price\n  }\n  appliedPromotions {\n    identifier\n    name\n    mechanism {\n      type\n      value\n    }\n  }\n}": types.CartFragmentDoc,
     "mutation FulfillCart($id: UUID!, $orderId: String!) {\n  fulfill(id: $id, orderId: $orderId) {\n    id\n  }\n}": types.FulfillCartDocument,
     "query GetCart($id: UUID!) {\n  cart(id: $id) {\n    ...cart\n  }\n}": types.GetCartDocument,

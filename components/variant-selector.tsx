@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Price } from './price';
 import { ProductVariantFragment } from '@/generated/discovery/graphql';
 import { SearchParams } from '@/app/(shop)/[...category]/types';
+import { getPrice } from '@/utils/price';
 
 function reduceAttributes(variants?: ProductVariantFragment[]) {
     return variants?.reduce((acc: Record<string, any[]>, variant: any) => {
@@ -92,6 +93,12 @@ export const VariantSelector = (props: VariantSelectorProps) => {
             <div className="py-2 flex gap-y-1 flex-col">
                 <span className="font-bold text-base pb-2 block">Variants</span>
                 {variants?.map((variant, index) => {
+                    const variantPrice = getPrice({
+                        base: variant.basePrice,
+                        selected: variant.selectedPrice,
+                        market: variant.marketPrice,
+                    });
+
                     return (
                         <Link
                             key={`variant-${index}`}
@@ -110,7 +117,7 @@ export const VariantSelector = (props: VariantSelectorProps) => {
                                     <span className="text-xs ">{variant.sku}</span>
                                 </span>
                                 <span className="font-bold text-sm">
-                                    <Price price={variant.defaultPrice} />
+                                    <Price price={{ price: variantPrice.lowest, currency: variantPrice.currency }} />
                                 </span>
                             </div>
                         </Link>

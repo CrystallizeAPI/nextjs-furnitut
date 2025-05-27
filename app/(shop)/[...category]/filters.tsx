@@ -255,9 +255,6 @@ export function Filters({ priceRange, sorting, paths, stockOptions, totalHits }:
                                         <MenuItems
                                             transition
                                             className="absolute left-0 z-10 mt-2 w-40 origin-top-left rounded-md bg-light shadow-2xl ring-1 ring-dark/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-                                            onChange={(e) => {
-                                                console.log(e);
-                                            }}
                                         >
                                             <div className="py-1">
                                                 {sortOptions.map((option) => (

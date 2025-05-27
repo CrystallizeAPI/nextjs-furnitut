@@ -147,7 +147,7 @@ export const CheckoutForm = () => {
                                                                 </s>
                                                                 <br />
                                                                 <Badge className={'text-xs mr-2'}>
-                                                                    -{item.price.discounts?.[0].percent}%
+                                                                    -{Math.round((item.price.discounts?.[0].percent + Number.EPSILON) * 100) / 100}%
                                                                 </Badge>
                                                             </>
                                                         )}

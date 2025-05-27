@@ -1,9 +1,8 @@
-import { getSession } from '@/core/auth.server';
+import { getSession, logout } from '@/core/auth.server';
 import LoginForm from '@/components/login-form';
 import { createOrderFetcher, type Order } from '@crystallize/js-api-client';
 import { crystallizeClient } from '@/core/crystallize-client.server';
 import { Price } from '@/components/price';
-import { logout } from '@/core/auth.server';
 import { Image } from '@/components/image';
 
 const formatDate = (incomingDate: string) => {
@@ -17,11 +16,37 @@ const formatDate = (incomingDate: string) => {
     });
 };
 
+const CUSTOMER_QUERY = `#graphql
+query GetCustomer($identifier: String!) {
+    customer(identifier: $identifier) {
+        ... on Customer {
+            identifier
+            firstName
+            lastName
+            email
+            type
+            addresses {
+                city
+                country
+                postalCode
+                state
+                street
+                type
+            }
+            parents {
+                identifier
+                type
+            }
+        }
+    }
+}`;
+
 type OrdersPageProps = { searchParams: Promise<{ error?: string }> };
 
 export default async function AccountPage(props: OrdersPageProps) {
     const searchParams = await props.searchParams;
     const session = await getSession();
+    const markets = [] as string[];
 
     if (!session) {
         return (
@@ -31,30 +56,32 @@ export default async function AccountPage(props: OrdersPageProps) {
         );
     }
 
-    const customer = await crystallizeClient.nextPimApi(
-        `#graphql
-            query GetCustomer($identifier: String!) {
-                customer(identifier: $identifier) {
-                ... on Customer {
-                        identifier
-                        firstName
-                        lastName
-                        email
-                        addresses {
-                            city
-                            country
-                            postalCode
-                            state
-                            street
-                            type
-                        }
-                    }
-                }
-          }`,
-        {
-            identifier: session.user.email,
-        },
-    );
+    const customer = await crystallizeClient.nextPimApi(CUSTOMER_QUERY, {
+        identifier: session.user.email,
+    });
+
+    // get the grandparent
+    if (customer.customer?.parents?.[0].identifier) {
+        markets.push(customer.customer?.parents[0].identifier);
+        const grandParentCustomer = await crystallizeClient.nextPimApi(CUSTOMER_QUERY, {
+            identifier: customer.customer.parents[0].identifier,
+        });
+
+        if (grandParentCustomer.customer?.parents?.[0].identifier) {
+            markets.push(grandParentCustomer.customer?.parents[0].identifier);
+        }
+    }
+
+    if (markets.length) {
+        console.info('we need to set customer markets');
+        // await fetch('/api/markets', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ markets }),
+        // });
+    }
 
     const orders = await createOrderFetcher(crystallizeClient).byCustomerIdentifier(
         session.user.email,
@@ -185,7 +212,7 @@ export default async function AccountPage(props: OrdersPageProps) {
                             type="submit"
                             className="px-6 py-2 mt-4 font-medium  float-right rounded-lg bg-dark text-light hover:bg-dark/90 active:bg-dark/95"
                         >
-                            Logut
+                            Logout
                         </button>
                     </form>
                 </div>

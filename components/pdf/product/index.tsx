@@ -4,7 +4,8 @@ import { Page, Text, View, Document, Link, Image } from '@react-pdf/renderer';
 import { ContentTransformer, NodeContent } from '@crystallize/reactjs-components';
 import { styles } from './styles';
 import { Price } from '@/components/price';
-import { Brand, Paragraph, ProductVariant } from '@/generated/discovery/graphql';
+import { Brand, Paragraph, ProductVariantFragment } from '@/generated/discovery/graphql';
+import { getPrice } from '@/utils/price';
 
 const overrides = {
     link: (props: any) => (
@@ -40,7 +41,7 @@ const overrides = {
     ),
 };
 
-type ExtendedProductVariant = ProductVariant & {
+type ExtendedProductVariant = ProductVariantFragment & {
     dimensions?: {
         depth: number;
         depthUnit: string;
@@ -65,11 +66,16 @@ export const ProductPDF = ({ product }: { product: ProductPDFProps }) => {
     const { story, variants, brand, descriptionPlain, details } = product;
     const logoUrl = brand?.logo?.[0]?.url;
     const logoIsSvg = logoUrl?.endsWith('.svg');
-
+    const defaultVariant = variants?.[0];
+    const defaultVariantPrice = getPrice({
+        base: defaultVariant?.basePrice,
+        selected: defaultVariant?.selectedPrice,
+        market: defaultVariant?.marketPrice ?? null,
+    });
     return (
         <Document title={`${product.name} | ${brand.name}`} author="Furnitut" subject="Product PDF">
             <Page style={styles.indexPage}>
-                {variants?.[0]?.images?.[0]?.url && <Image style={styles.image} src={variants[0]?.images[0].url} />}
+                {defaultVariant?.images?.[0]?.url && <Image style={styles.image} src={defaultVariant?.images[0].url} />}
                 <View style={styles.productDescriptionContainer}>
                     <Text style={styles.title}>{product.name}</Text>
                     <Text style={styles.productDescription}>
@@ -80,8 +86,21 @@ export const ProductPDF = ({ product }: { product: ProductPDFProps }) => {
                     </Text>
 
                     <Text style={styles.price}>
-                        {variants?.[0].defaultPrice && <Price price={variants?.[0].defaultPrice as unknown as Price} />}
+                        <Price
+                            price={{
+                                price: defaultVariantPrice.lowest,
+                                currency: defaultVariantPrice.currency,
+                            }}
+                        />
                     </Text>
+                    {/*<Text style={styles.priceLineThrough}>*/}
+                    {/*    <Price*/}
+                    {/*        price={{*/}
+                    {/*            price: defaultVariantPrice.highest,*/}
+                    {/*            currency: defaultVariantPrice.currency,*/}
+                    {/*        }}*/}
+                    {/*    />*/}
+                    {/*</Text>*/}
                 </View>
                 <View
                     style={{
@@ -171,6 +190,12 @@ export const ProductPDF = ({ product }: { product: ProductPDFProps }) => {
                 <View style={styles.table}>
                     {variants.map((variant, i) => {
                         const { dimensions } = variant;
+                        const currentVariantPrice = getPrice({
+                            base: variant?.basePrice!,
+                            selected: variant?.selectedPrice!,
+                            market: variant?.marketPrice ?? null,
+                        });
+
                         return (
                             <View
                                 key={`main-row-${i}`}
@@ -213,8 +238,21 @@ export const ProductPDF = ({ product }: { product: ProductPDFProps }) => {
                                         }}
                                     >
                                         <Text style={{ fontSize: 10, fontWeight: 600 }}>
-                                            <Price price={variant.defaultPrice as unknown as Price} />
+                                            <Price
+                                                price={{
+                                                    price: currentVariantPrice.lowest,
+                                                    currency: currentVariantPrice.currency,
+                                                }}
+                                            />
                                         </Text>
+                                        {/*<Text style={{ fontSize: 9, fontWeight: 400, textDecoration: 'line-through' }}>*/}
+                                        {/*    <Price*/}
+                                        {/*        price={{*/}
+                                        {/*            price: currentVariantPrice.highest,*/}
+                                        {/*            currency: currentVariantPrice.currency,*/}
+                                        {/*        }}*/}
+                                        {/*    />*/}
+                                        {/*</Text>*/}
                                     </View>
                                 </View>
                                 <View

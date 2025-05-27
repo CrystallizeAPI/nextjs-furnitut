@@ -49,6 +49,15 @@ export const styles = StyleSheet.create({
         fontSize: 12,
         textAlign: 'left',
     },
+    priceLineThrough: {
+        color: '#211a1d',
+        marginTop: 4,
+        fontWeight: 400,
+        borderRadius: 8,
+        fontSize: 10,
+        textAlign: 'left',
+        textDecoration: 'line-through',
+    },
     productName: {
         fontSize: 16,
         marginBottom: 10,

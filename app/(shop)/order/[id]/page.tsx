@@ -1,9 +1,9 @@
-import { Image } from '@/components/image';
-import { Price } from '@/components/price';
+import { CartOrderItem } from '@/components/order-page/item';
+import { CartOrderTotal } from '@/components/order-page/total';
 import { crystallizeClient } from '@/core/crystallize-client.server';
 import { createOrderFetcher, type Order } from '@crystallize/js-api-client';
 
-const fetchData = async (orderId: string) => {
+export const fetchData = async (orderId: string) => {
     const response = await createOrderFetcher(crystallizeClient).byId(
         orderId,
         {},
@@ -44,8 +44,8 @@ export default async function Order(props: OrderProps) {
                     Thank you {orderCart.customer?.firstName}!
                 </h1>
                 <p className="mt-4 text-center text-balance">
-                    We’re on it! Your order is already in motion, and a confirmation email is on its way to{' '}
-                    <i>{orderCart?.customer?.identifier}</i>. Keep an eye out—it’ll be there shortly!
+                    We&apos;re on it! Your order is already in motion, and a confirmation email is on its way to{' '}
+                    <i>{orderCart?.customer?.identifier}</i>. Keep an eye out—it&apos;ll be there shortly!
                 </p>
                 <div className="mt-8 bg-light rounded-2xl border border-muted">
                     <span className="px-6  border-b border-muted flex justify-between py-4">
@@ -56,52 +56,11 @@ export default async function Order(props: OrderProps) {
                         <p className="font-bold text-lg">{orderCart?.reference}</p>
                     </span>
 
-                    {orderCart.cart.map((item, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className="px-6 py-2 mb-2 gap-2 w-full flex items-center border-b border-muted"
-                            >
-                                <div className="flex justify-between w-full gap-8 ">
-                                    <div className="overflow-hidden relative rounded-md w-16 h-20 bg-soft border border-muted">
-                                        <Image src={item.imageUrl} altText={item.name} className="object-contain" />
-                                    </div>
-                                    <div className="flex flex-col w-full justify-center">
-                                        <span className="text-base">{item.name}</span>
-                                        <span className="text-sm italic text-dark/70">{item.sku}</span>
-                                        <span className="text-sm">Qty: {item.quantity}</span>
-                                    </div>
-                                </div>
-                                <div className="text-base">
-                                    {typeof item.price?.gross === 'number' && (
-                                        <Price price={{ price: item.price.gross }} />
-                                    )}
-                                </div>
-                            </div>
-                        );
-                    })}
-                    <div className="flex flex-col gap-2  py-4 items-end mt-2 px-6">
-                        <div className="flex justify-between w-60 text-sm text-dark/70">
-                            <p>Net</p>
-                            <Price price={{ price: orderCart?.total?.net ?? 0 }} />
-                        </div>
-                        <div className="flex justify-between w-60 text-sm text-dark/70">
-                            <p>Tax</p>
-                            <p>
-                                <Price
-                                    price={{
-                                        price: (orderCart?.total?.gross ?? 0) - (orderCart?.total?.net ?? 0),
-                                    }}
-                                />
-                            </p>
-                        </div>
-                        <div className="flex font-bold text-lgxl justify-between w-60">
-                            <p>Paid</p>
-                            <p>
-                                <Price price={{ price: orderCart?.total?.gross ?? 0 }} />
-                            </p>
-                        </div>
-                    </div>
+                    {orderCart.cart.map((item, index) => <CartOrderItem key={index} item={item} />)}
+                    <CartOrderTotal total={{
+                        gross: orderCart.total?.gross || 0,
+                        net: orderCart.total?.net || 0,
+                    }} />
                 </div>
             </div>
         </main>

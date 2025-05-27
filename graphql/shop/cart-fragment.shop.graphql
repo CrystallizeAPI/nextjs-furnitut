@@ -24,6 +24,8 @@ fragment cart on Cart {
     total {
         ...price
     }
+    state
+    orderId
     appliedPromotions {
         identifier
         name

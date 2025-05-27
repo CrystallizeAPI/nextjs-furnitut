@@ -98,7 +98,7 @@ export const CheckoutForm = () => {
                         <p className="text-xs italic">Create a user and locking the cart</p>
                         <button
                             type="submit"
-                            className="bg-dark mx-auto text-light  rounded-lg px-8 py-2 mt-2"
+                            className="bg-dark mx-auto text-light  rounded-lg px-8 py-2 mt-2 cursor-pointer"
                             disabled={isPending || !!customer}
                         >
                             Go to payment

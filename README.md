@@ -41,3 +41,12 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Testing
 Attributes with `data-testid` have been added to elements to simplify test implementation. You can use any testing library of your choice to create the tests.
+
+
+## Basic Auth
+For basic authentication,
+you can use the `BASIC_AUTH` and `BASIC_USER` and `BASIC_PASSWORD` environment variables to enable basic auth.
+To enable it, set the `BASIC_AUTH` to some string, preferable `true`,
+and choose a **username** and **password** to the other two variables.
+
+To disable it, set `BASIC_AUTH` to empty string.

@@ -11,7 +11,7 @@ import { getCart } from './get-cart';
 type Data = Record<(typeof formFields)[number], string>;
 type InitialState = { customer: Customer | null; cart: Cart | null; cartId?: string };
 
-const formFields = ['firstName', 'lastName', 'email', 'city', 'street', 'country', 'postalCode'] as const;
+const formFields = ['firstName', 'lastName', 'email', 'companyName', 'taxNumber', 'city', 'street', 'country', 'postalCode'] as const;
 
 export const setCustomerPlaceCart = async (initialSate: InitialState | null, formData: FormData) => {
     const data = formFields.reduce((acc, field) => {
@@ -19,9 +19,9 @@ export const setCustomerPlaceCart = async (initialSate: InitialState | null, for
         return acc;
     }, {} as Data);
 
-    const { firstName, lastName, email, ...rest } = data;
+    const { firstName, lastName, email, companyName, taxNumber, ...rest } = data;
     const address = { ...rest, type: 'delivery' } as const;
-    const customer = { firstName, lastName, identifier: email };
+    const customer = { firstName, lastName, identifier: email, companyName, taxNumber };
     const cartCustomer: Customer = { ...customer, addresses: { ...address, email } };
 
     const { cart, cartId } = await getCart();

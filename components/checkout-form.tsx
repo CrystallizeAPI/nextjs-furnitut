@@ -56,6 +56,22 @@ export const CheckoutForm = () => {
                                 defaultValue={customer?.lastName}
                             />
                         </div>
+                        <div className="grid md:grid-cols-2 border-b border-muted">
+                            <div className="border-r border-muted">
+                                <InputField
+                                    type="text"
+                                    name="companyName"
+                                    label="Company name"
+                                    defaultValue={customer?.companyName}
+                                />
+                            </div>
+                            <InputField
+                                type="text"
+                                name="taxNumber"
+                                label="Tax number"
+                                defaultValue={customer?.companyTaxNumber}
+                            />
+                        </div>
 
                         <div className="grid md:grid-cols-2 border-b border-muted">
                             <div className="border-r border-muted">

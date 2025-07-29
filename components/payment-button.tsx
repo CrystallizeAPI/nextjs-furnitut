@@ -52,7 +52,7 @@ export function PaymentButton({ cartId }: PaymentButtonProps) {
                         className="py-4 border-b border-muted"
                         onClick={() => setSelectedMethod(method.id)}
                     >
-                        <button type="button" className="flex text-left px-3  gap-3 w-full">
+                        <button type="button" id={method.id} className="flex text-left px-3  gap-3 w-full">
                             <span
                                 className={classNames(
                                     'w-5 h-5 rounded-full border border-muted mt-1 flex items-center justify-center shrink-0',

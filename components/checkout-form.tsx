@@ -69,7 +69,7 @@ export const CheckoutForm = () => {
                                 type="text"
                                 name="taxNumber"
                                 label="Tax number"
-                                defaultValue={customer?.companyTaxNumber}
+                                defaultValue={customer?.taxNumber}
                             />
                         </div>
 

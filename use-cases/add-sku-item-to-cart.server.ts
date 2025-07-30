@@ -1,4 +1,6 @@
 import { storage } from '@/core/storage.server';
+import { getSession } from '@/core/auth.server';
+
 import { crystallizeClient } from '@/core/crystallize-client.server';
 import { HydrateCartDocument } from '@/generated/shop/graphql';
 import { print } from 'graphql';
@@ -15,6 +17,7 @@ type CartInput = {
         price?: {
             voucherCode?: string;
             decimals?: number;
+            customerGroup?: string;
         };
     };
 };
@@ -26,12 +29,16 @@ type HydrateCartProps = {
 };
 
 export const hydrateCart = async ({ id, items, voucherCode }: HydrateCartProps) => {
+    const user = await getSession();
+    const customerGroup = user?.user?.email;
+
     const input: CartInput = {
         items,
         context: {
             price: {
                 voucherCode: voucherCode ?? '',
                 decimals: 4,
+                customerGroup: customerGroup ?? '',
             },
         },
     };

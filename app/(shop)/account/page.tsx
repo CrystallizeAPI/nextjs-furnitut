@@ -40,6 +40,7 @@ export default async function AccountPage(props: OrdersPageProps) {
                         firstName
                         lastName
                         email
+                        companyName
                         addresses {
                             city
                             country

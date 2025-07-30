@@ -3,6 +3,7 @@ import Link from 'next/link';
 import schemas from 'schema-dts';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 
+import { getSession } from '@/core/auth.server';
 import { FetchProductDocument, Paragraph, PublicationState } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Breadcrumbs } from '@/components/breadcrumbs';
@@ -25,9 +26,12 @@ type ProductsProps = {
 };
 
 export const fetchProductData = async ({ path, isPreview = false }: { path: string; isPreview?: boolean }) => {
+    // const session = await getSession();
     const response = await apiRequest(FetchProductDocument, {
         path,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
+        // For when we can use the customer identifier on prices
+        // customerIdentifier: session?.user?.email || null,
     });
     const { story, variants, brand, breadcrumbs, meta, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 

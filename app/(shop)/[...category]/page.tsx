@@ -17,15 +17,8 @@ import Link from 'next/link';
 import { Filters } from './filters';
 import { ITEMS_PER_PAGE, Pagination } from '@/components/pagination';
 import { Suspense } from 'react';
-import {
-    buildFilterCriteria,
-    createAdjacentPairs,
-    createStockFilterOptions,
-    isChecked,
-    ParentPathFacet,
-    StockLocation,
-} from './utils';
-import { ENTERTAINMENT_PRICE_RANGE, PRODUCTS_PRICE_RANGE, SORTING_CONFIGS, STOCK_RANGE } from './constants';
+import { buildFilterCriteria, createAdjacentPairs, isChecked, ParentPathFacet } from './utils';
+import { ENTERTAINMENT_PRICE_RANGE, PRODUCTS_PRICE_RANGE, SORTING_CONFIGS } from './constants';
 import { FilterOption, SearchParams } from './types';
 import { notFound } from 'next/navigation';
 
@@ -53,7 +46,6 @@ const searchCategory = async ({ path, limit, skip = 0, filters, sorting, isPrevi
         filters,
         sorting,
         boundaries: path.includes('entertainment') ? ENTERTAINMENT_PRICE_RANGE : PRODUCTS_PRICE_RANGE,
-        stockBoundaries: STOCK_RANGE,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
     });
 
@@ -95,7 +87,7 @@ export async function generateMetadata(props: CategoryOrProductProps): Promise<M
     const searchParams = await props.searchParams;
     const params = await props.params;
     const url = `/${params.category.join('/')}`;
-    const { page, priceRange, sort = 'popular', parentPath, stock } = await props.searchParams;
+    const { page, priceRange, sort = 'popular', parentPath, inStock } = await props.searchParams;
     const currentPage = Number(page ?? 1);
     const limit = ITEMS_PER_PAGE;
     const skip = currentPage ? (currentPage - 1) * limit : 0;
@@ -133,7 +125,7 @@ export async function generateMetadata(props: CategoryOrProductProps): Promise<M
         path: url,
         limit,
         skip,
-        filters: buildFilterCriteria({ priceRange, parentPath, stock }),
+        filters: buildFilterCriteria({ priceRange, parentPath, inStock: !!inStock }),
         sorting: SORTING_CONFIGS[sort] as TenantSort,
     });
     const { title, description, image } = meta ?? {};
@@ -159,7 +151,7 @@ export async function generateMetadata(props: CategoryOrProductProps): Promise<M
 
 export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     const params = await props.params;
-    const { page, priceRange, sort = 'popular', parentPath, stock, preview } = await props.searchParams;
+    const { page, priceRange, sort = 'popular', parentPath, preview, inStock } = await props.searchParams;
     const currentPage = Number(page ?? 1);
     const limit = ITEMS_PER_PAGE;
     const skip = currentPage ? (currentPage - 1) * limit : 0;
@@ -179,11 +171,11 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
         path,
         limit,
         skip,
-        filters: buildFilterCriteria({ priceRange, parentPath, stock }),
+        filters: buildFilterCriteria({ priceRange, parentPath, inStock: !!inStock }),
         sorting: SORTING_CONFIGS[sort] as TenantSort,
         isPreview: !!preview,
     });
-    const { totalHits, hasPreviousHits, hasMoreHits, price, parentPaths, toronto, online, oslo } = summary ?? {};
+    const { totalHits, hasPreviousHits, hasMoreHits, price, parentPaths } = summary ?? {};
 
     const priceCounts = Object.values(price) as { count: number }[];
     const pairs = createAdjacentPairs(
@@ -208,14 +200,6 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
             }),
         }))
         .sort((a, b) => a.label.localeCompare(b.label));
-
-    const stockLocations: StockLocation[] = [
-        { data: online as ParentPathFacet, label: 'Online' },
-        { data: oslo as ParentPathFacet, label: 'Oslo' },
-        { data: toronto as ParentPathFacet, label: 'Toronto' },
-    ];
-
-    const stockOptions = createStockFilterOptions(stockLocations, stock);
 
     return (
         <main>
@@ -275,7 +259,7 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
                             sorting={sort}
                             totalHits={totalHits ?? 0}
                             paths={paths}
-                            stockOptions={stockOptions}
+                            inStock={!!inStock}
                         />
                     </Suspense>
                 </div>

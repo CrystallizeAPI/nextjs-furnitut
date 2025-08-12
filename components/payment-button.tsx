@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Stripe } from './payments/stripe';
 import { Crystal } from './payments/crystal';
+import { Qliro } from './payments/qliro';
+import QliroLogo from '@/assets/qlrio-mint.png';
 import StripeLogo from '@/assets/stripe-logo.svg';
 import CrystallizeLogo from '@/assets/crystallize-logo.svg';
 import Image from 'next/image';
@@ -18,6 +20,13 @@ const paymentMethods = [
     },
     {
         id: 2,
+        name: 'Qliro',
+        description: 'Pay with Qliro',
+        component: Qliro,
+        img: QliroLogo
+    },
+    {
+        id: 3,
         name: 'Stripe',
         component: Stripe,
         description: 'Pay with your credit card',
@@ -43,7 +52,7 @@ export function PaymentButton({ cartId }: PaymentButtonProps) {
                         className="py-4 border-b border-muted"
                         onClick={() => setSelectedMethod(method.id)}
                     >
-                        <button type="button" className="flex text-left px-3  gap-3 w-full">
+                        <button type="button" id={method.id.toString()} className="flex text-left px-3  gap-3 w-full">
                             <span
                                 className={classNames(
                                     'w-5 h-5 rounded-full border border-muted mt-1 flex items-center justify-center shrink-0',

@@ -37,8 +37,8 @@ export async function login(formData: FormData) {
 
     const mailer = createMailer(process.env.MAILER_DSN!);
     await mailer('Magic Link', email, 'hello@crystallize.com', {
-        html: `<a href=${process.env.NEXT_PUBLIC_CANONICAL_URL}/account/verify?token=${token}">Click here to log in</a>`,
-        text: `Click here to log in: ${process.env.NEXT_PUBLIC_CANONICAL_URL}/account/verify?token=${token}`,
+        html: `<a href=${process.env.CANONICAL_URL}/account/verify?token=${token}">Click here to log in</a>`,
+        text: `Click here to log in: ${process.env.CANONICAL_URL}/account/verify?token=${token}`,
     });
 
     return { success: true };

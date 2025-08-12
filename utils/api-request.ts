@@ -16,8 +16,10 @@ export const apiRequest = async <TResult, TVariables = {}>(
         body: JSON.stringify({ query: print(query), variables }),
     });
 
+    
     if (!response.ok) {
-        throw new Error();
+
+        throw new Error(response.statusText);
     }
 
     const result = await response.json();

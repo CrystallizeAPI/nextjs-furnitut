@@ -12,7 +12,7 @@ fi
 # Note that Crystallize CLI is acting before this script.
 
 echo "Setup ${PROJECT_PATH}"
-cp ${PROJECT_PATH}/.crystallize/env ${PROJECT_PATH}/.env.local
+cp ${PROJECT_PATH}/.crystallize/env ${PROJECT_PATH}/.env
 cp ${PROJECT_PATH}/.crystallize/robots.txt ${PROJECT_PATH}/public/robots.txt
 
 #---
@@ -21,8 +21,10 @@ echo "Running command ${PROJECT_PATH}"
 
 if ! command -v pnpm &> /dev/null; then
     cd ${PROJECT_PATH} && npm install --no-progress --no-color
+    cd ${PROJECT_PATH} && npm run codegen
 else 
     cd ${PROJECT_PATH} && pnpm install --silent --no-color
+    cd ${PROJECT_PATH} && npm run codegen
 fi
 #---
 

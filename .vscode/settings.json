@@ -1,0 +1,40 @@
+{
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "typescript.suggest.paths": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/node_modules": true,
+        "**/.contentlayer": true,
+        "**/build": true,
+        "**/dist": true,
+        "**/.next": true,
+        "**/.astro": true,
+        "**/.turbo": true,
+        "**/.cache": true,
+        "**/.react-router": true
+    },
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/dist/*/**": true,
+        "**/build/*/**": true,
+        "**/.astro/*/**": true,
+        "**/.wrangler/*/**": true,
+        "**/coverage/*/**": true,
+        "**/tmp/*/**": true,
+        "**/.nx/*/**": true,
+        "**/.run/*/**": true
+    },
+    "files.associations": {
+        "**/app/**/*.css": "tailwindcss"
+    }
+}

@@ -8,6 +8,8 @@ import {
     Disclosure,
     DisclosureButton,
     DisclosurePanel,
+    Field,
+    Label,
     Menu,
     MenuButton,
     MenuItem,
@@ -16,6 +18,7 @@ import {
     PopoverButton,
     PopoverGroup,
     PopoverPanel,
+    Switch,
 } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
@@ -55,27 +58,22 @@ const filters: Filter[] = [
         symbol: '€',
         options: [],
     },
-    {
-        id: 'stock',
-        name: 'Stock',
-        options: [],
-    },
 ];
 
 const PRICE_RANGE_KEY = 'priceRange';
-const STOCK_KEY = 'stock';
 const SORTING_KEY = 'sort';
 const PARENT_PATHS_KEY = 'parentPath';
+const IN_STOCK_KEY = 'inStock';
 
 type FiltersProps = {
     priceRange: FilterOption[];
     sorting: SortingOption;
     paths: FilterOption[];
-    stockOptions: FilterOption[];
     totalHits: number;
+    inStock: boolean;
 };
 
-export function Filters({ priceRange, sorting, paths, stockOptions, totalHits }: FiltersProps) {
+export function Filters({ priceRange, sorting, paths, totalHits, inStock }: FiltersProps) {
     const searchParam = useSearchParams();
     const pathname = usePathname();
     const router = useRouter();
@@ -83,7 +81,6 @@ export function Filters({ priceRange, sorting, paths, stockOptions, totalHits }:
 
     filters.find((filter) => filter.id === 'parentPaths')!.options = paths;
     filters.find((filter) => filter.id === 'price')!.options = priceRange;
-    filters.find((filter) => filter.id === 'stock')!.options = stockOptions;
 
     const updateUrlParams = (params: URLSearchParams, key: string, value: string | null) => {
         if (value === null) {
@@ -92,6 +89,13 @@ export function Filters({ priceRange, sorting, paths, stockOptions, totalHits }:
             params.append(key, value);
         }
         return `${pathname}${params.toString() ? `?${params.toString()}` : ''}`;
+    };
+
+    const handleStockChange = (checked: boolean) => {
+        const params = new URLSearchParams(searchParam);
+        const value = checked ? 'true' : null;
+
+        router.push(updateUrlParams(params, IN_STOCK_KEY, value));
     };
 
     const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -106,10 +110,6 @@ export function Filters({ priceRange, sorting, paths, stockOptions, totalHits }:
 
         if (name === 'price') {
             return router.push(updateUrlParams(params, PRICE_RANGE_KEY, value));
-        }
-
-        if (name === 'stock') {
-            return router.push(updateUrlParams(params, STOCK_KEY, value));
         }
     };
 
@@ -215,6 +215,18 @@ export function Filters({ priceRange, sorting, paths, stockOptions, totalHits }:
                                     </DisclosurePanel>
                                 </Disclosure>
                             ))}
+                            <Field className="px-4 flex items-center justify-between">
+                                <Label as="span" className="mr-3 text-sm">
+                                    In Stock
+                                </Label>
+                                <Switch
+                                    checked={inStock}
+                                    onChange={handleStockChange}
+                                    className="group inline-flex h-6 w-11 items-center rounded-full bg-dark/20 transition data-checked:bg-accent/60"
+                                >
+                                    <span className="size-4 translate-x-1 rounded-full bg-light transition group-data-checked:translate-x-6" />
+                                </Switch>
+                            </Field>
                         </form>
                     </DialogPanel>
                 </div>
@@ -267,7 +279,7 @@ export function Filters({ priceRange, sorting, paths, stockOptions, totalHits }:
                                                                 : 'text-dark/50',
                                                             'block cursor-pointer px-4 py-2 text-sm  data-focus:bg-dark/10 data-focus:outline-hidden',
                                                         )}
-                                                        onClick={(e) => handleSortingChange(option.value)}
+                                                        onClick={() => handleSortingChange(option.value)}
                                                     >
                                                         <span className="font-bold">{option.label}</span>
                                                     </MenuItem>
@@ -293,7 +305,7 @@ export function Filters({ priceRange, sorting, paths, stockOptions, totalHits }:
                         <div className="hidden sm:block">
                             <div className="flow-root">
                                 <PopoverGroup className="flex items-center">
-                                    {filters.map((section, sectionIdx) => (
+                                    {filters.map((section) => (
                                         <Popover key={section.name} className="relative inline-block px-1 text-left">
                                             {({ open }) => (
                                                 <>
@@ -383,6 +395,18 @@ export function Filters({ priceRange, sorting, paths, stockOptions, totalHits }:
                                             )}
                                         </Popover>
                                     ))}
+                                    <Field className="px-4 flex items-center">
+                                        <Label as="span" className="mr-3 text-sm">
+                                            In Stock
+                                        </Label>
+                                        <Switch
+                                            checked={inStock}
+                                            onChange={handleStockChange}
+                                            className="group inline-flex h-6 w-11 items-center rounded-full bg-dark/20 transition data-checked:bg-accent/70"
+                                        >
+                                            <span className="size-4 translate-x-1 rounded-full bg-light transition group-data-checked:translate-x-6" />
+                                        </Switch>
+                                    </Field>
                                 </PopoverGroup>
                             </div>
                         </div>

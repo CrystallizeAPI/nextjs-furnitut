@@ -6,7 +6,6 @@ query SearchCategory(
     $filters: TenantFilter
     $sorting: TenantSort
     $boundaries: [Int]!
-    $stockBoundaries: [Int]!
     $publicationState: [PublicationState]
 ) {
     filters: search(
@@ -14,17 +13,11 @@ query SearchCategory(
         facets: {
             price_default: { boundaries: $boundaries, key: "price" }
             parentPaths: { key: "parentPaths", limit: 10 }
-            stock_default: { key: "online", boundaries: $stockBoundaries }
-            stock_oslo: { key: "oslo", boundaries: $stockBoundaries }
-            stock_toronto: { key: "toronto", boundaries: $stockBoundaries }
         }
     ) {
         summary {
             price: facets(key: "price")
             parentPaths: facets(key: "parentPaths")
-            online: facets(key: "online")
-            oslo: facets(key: "oslo")
-            toronto: facets(key: "toronto")
         }
     }
     search(

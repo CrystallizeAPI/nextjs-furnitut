@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const title = meta?.title ?? '';
     const description = meta?.description[0].textContent;
     const image = meta?.image?.[0];
-    const baseUrl = new URL(process.env.NEXT_PUBLIC_CANONICAL_URL ?? 'http://localhost:3000');
+    const baseUrl = new URL(process.env.CANONICAL_URL ?? 'http://localhost:3000');
 
     return {
         title: {

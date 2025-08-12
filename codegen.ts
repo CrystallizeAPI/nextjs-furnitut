@@ -1,11 +1,12 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 import { getIntrospectionQuery, buildClientSchema } from 'graphql/utilities';
 
+const SHOP_API_BASE_URL = `https://shop-api.crystallize.com`;
 const TENANT_IDENTIFIER = process.env.CRYSTALLIZE_TENANT_IDENTIFIER;
 const TOKEN_ID = process.env.CRYSTALLIZE_ACCESS_TOKEN_ID;
 const TOKEN_SECRET = process.env.CRYSTALLIZE_ACCESS_TOKEN_SECRET;
-const SHOP_API_ENDPOINT = `https://shop-api.crystallize.com/${TENANT_IDENTIFIER}/cart`;
-const SHOP_API_AUTH_TOKEN_ENDPOINT = `https://shop-api.crystallize.com/${TENANT_IDENTIFIER}/auth/token`;
+const SHOP_API_ENDPOINT = `${SHOP_API_BASE_URL}/${TENANT_IDENTIFIER}/cart`;
+const SHOP_API_AUTH_TOKEN_ENDPOINT = `${SHOP_API_BASE_URL}/${TENANT_IDENTIFIER}/auth/token`;
 const DISCOVERY_API_ENDPOINT = `https://api.crystallize.com/${TENANT_IDENTIFIER}/discovery`;
 
 if (!TOKEN_ID || !TOKEN_SECRET || !TENANT_IDENTIFIER) {
@@ -26,7 +27,6 @@ const config: CodegenConfig = {
                         // @ts-expect-error - we can pass a loader function
                         loader: async function shopApiLoader() {
                             const introspectionQuery = getIntrospectionQuery();
-
                             const authTokenResponse = await fetch(SHOP_API_AUTH_TOKEN_ENDPOINT, {
                                 method: 'POST',
                                 headers: {

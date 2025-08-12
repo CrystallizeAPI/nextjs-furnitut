@@ -12,7 +12,7 @@ export type SearchParams = {
     priceRange?: string | string[];
     sort?: SortingOption;
     parentPath?: string | string[];
-    stock?: string | string[];
+    inStock?: string;
     sku?: string | string[];
     preview?: string;
 };

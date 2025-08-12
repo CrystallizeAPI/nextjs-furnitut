@@ -19,7 +19,7 @@ export const CartItems = () => {
     return (
         <ul>
             {items.map((item: CartItem, index) => (
-                <Fragment key={item.variant.sku}>
+                <Fragment key={item.variant.sku + '-' + index}>
                     <li className="flex mb-4 justify-between">
                         <div className="flex w-full">
                             <div className="shrink-0 relative h-24 w-20 aspect-square border border-muted rounded-sm overflow-hidden">

@@ -52,6 +52,8 @@ export type Cart = {
     total: Price;
     lastItemAdded?: CartItem;
     appliedPromotions: PromotionSlim[];
+    orderId?: string;
+    state: string;
 };
 
 export type CartItemInput = {

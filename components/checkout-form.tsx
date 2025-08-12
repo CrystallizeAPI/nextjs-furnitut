@@ -56,6 +56,22 @@ export const CheckoutForm = () => {
                                 defaultValue={customer?.lastName}
                             />
                         </div>
+                        <div className="grid md:grid-cols-2 border-b border-muted">
+                            <div className="border-r border-muted">
+                                <InputField
+                                    type="text"
+                                    name="companyName"
+                                    label="Company name"
+                                    defaultValue={customer?.companyName}
+                                />
+                            </div>
+                            <InputField
+                                type="text"
+                                name="taxNumber"
+                                label="Tax number"
+                                defaultValue={customer?.taxNumber}
+                            />
+                        </div>
 
                         <div className="grid md:grid-cols-2 border-b border-muted">
                             <div className="border-r border-muted">
@@ -98,7 +114,7 @@ export const CheckoutForm = () => {
                         <p className="text-xs italic">Create a user and locking the cart</p>
                         <button
                             type="submit"
-                            className="bg-dark mx-auto text-light  rounded-lg px-8 py-2 mt-2"
+                            className="bg-dark mx-auto text-light  rounded-lg px-8 py-2 mt-2 cursor-pointer"
                             disabled={isPending || !!customer}
                         >
                             Go to payment

@@ -1,8 +1,8 @@
 import { NumberFilter, StringFilter, TenantFilter } from '@/generated/discovery/graphql';
 import { PRICE_FIELD } from './constants';
-import { FilterOption } from './types';
 
 const INFINITY_FALLBACK = Number.NEGATIVE_INFINITY;
+const STOCK_FIELD = 'stock_default' as const;
 
 type PriceRange = {
     min: number;
@@ -28,31 +28,16 @@ function processPriceRanges(priceRange: string | string[]): PriceRange {
     };
 }
 
-type StockFilter = {
-    exists: boolean;
-};
-
-function buildStockFilter(stock: string | string[]): Record<string, StockFilter> {
-    if (Array.isArray(stock)) {
-        return stock.reduce<Record<string, StockFilter>>((acc, item) => {
-            acc[item] = { exists: true };
-            return acc;
-        }, {});
-    }
-
-    return { [stock]: { exists: true } };
-}
-
 type BuildFilterCriteriaProps = {
     priceRange?: string | string[];
     parentPath?: string | string[];
-    stock?: string | string[];
+    inStock?: boolean;
 };
 
-export function buildFilterCriteria({ stock, parentPath, priceRange }: BuildFilterCriteriaProps) {
+export function buildFilterCriteria({ parentPath, priceRange, inStock }: BuildFilterCriteriaProps) {
     const filterCriteria = {} as TenantFilter;
 
-    if (!stock && !parentPath && !priceRange) {
+    if (!parentPath && !priceRange && !inStock) {
         return filterCriteria;
     }
 
@@ -62,9 +47,10 @@ export function buildFilterCriteria({ stock, parentPath, priceRange }: BuildFilt
         } as StringFilter;
     }
 
-    if (stock) {
-        const stockFilters = Array.isArray(stock) ? { OR: buildStockFilter(stock) } : buildStockFilter(stock);
-        Object.assign(filterCriteria, stockFilters);
+    if (inStock) {
+        filterCriteria[STOCK_FIELD] = {
+            exists: true,
+        } as NumberFilter;
     }
 
     if (priceRange) {
@@ -95,33 +81,6 @@ export function isChecked({ value, filterValue }: { value: string; filterValue: 
 }
 
 export type ParentPathFacet = Record<string, { count: number; label: string; filter: string }>;
-
-export type StockLocation = {
-    data: ParentPathFacet;
-    label: string;
-};
-
-export function createStockFilterOptions(
-    locations: StockLocation[],
-    stock: string | string[] | undefined,
-): FilterOption[] {
-    return locations
-        .map(({ data, label }) => {
-            const [, value] = Object.entries(data)[0] || [];
-            if (!value) return null;
-
-            return {
-                value: value.filter,
-                label,
-                count: value.count,
-                checked: isChecked({
-                    value: value.filter,
-                    filterValue: stock,
-                }),
-            };
-        })
-        .filter((option): option is FilterOption => option !== null);
-}
 
 export function createAdjacentPairs<T>(array: T[]): { value: string; label: string }[] {
     return array.map((item, index) => {

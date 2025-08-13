@@ -33,6 +33,7 @@ export async function handleCart(initialSate: Cart | null, formData: FormData) {
     const action = formData.get('action') as CartAction;
     const voucherCode = formData.get('voucher-code') as string;
     const cartItem = JSON.parse(formData.get('input') as string) as CartItemInput;
+
     const itemIndex = formData.get('index') as string;
     const { cart, cartId } = await getCart();
 

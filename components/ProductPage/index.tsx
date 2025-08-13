@@ -59,15 +59,11 @@ export default async function CategoryProduct(props: ProductsProps) {
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
     const data = await getCustomerPrices({ path: product?.path });
 
-    console.log('data.special price = ', !!data.specialPrice);
-
-    console.log("currentVariant?.selectedPrice", currentVariant?.selectedPrice);
     const currentVariantPrice = getPrice({
         base: currentVariant?.basePrice,
-        selected: data?.specialPrice ? { price: data.specialPrice } : currentVariant?.selectedPrice ?? 0,
+        selected: data?.specialPrice ? { price: data.specialPrice } : (currentVariant?.selectedPrice ?? 0),
     });
 
-    console.log('currentVariantPrice', currentVariantPrice);
     const dimensions = currentVariant?.dimensions;
     // TODO: this should be for how long the price will be valid
     const TWO_DAYS_FROM_NOW = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);

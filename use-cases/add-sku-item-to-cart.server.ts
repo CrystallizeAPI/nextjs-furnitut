@@ -14,6 +14,10 @@ type Item = {
 type CartInput = {
     items: Item[];
     id?: string;
+    customer?: {
+        identifier: string;
+        isGuest: boolean;
+    };
     context?: {
         price?: {
             voucherCode?: string;
@@ -33,8 +37,18 @@ type HydrateCartProps = {
 };
 
 export const hydrateCart = async ({ id, items, voucherCode }: HydrateCartProps) => {
+    console.log("hydrateCart");
+
+    const session = await getSession();
+    const userIdentifier = session?.user?.email ?? '';
+    console.log("userIdentifier:", userIdentifier);
     const input: CartInput = {
         items,
+
+        customer: {
+            identifier: userIdentifier,
+            isGuest: false
+        },
         context: {
             price: {
                 voucherCode: voucherCode ?? '',

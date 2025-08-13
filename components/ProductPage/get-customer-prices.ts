@@ -18,7 +18,7 @@ export const getCustomerPrices = async ({ path }: GetCustomerPricesProps) => {
 
     const customerIdentifier = session?.user?.email; // Replace this with a dynamic value
 
-    console.log('ss', session);
+
 
     // const customerIdentifier = 'petr@crystallize.com'; // Replace this with a dynamic value
 

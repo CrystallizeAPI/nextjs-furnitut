@@ -1,0 +1,7 @@
+schema:
+  - ./schemas/shop.schema.graphql
+  - ./schemas/discovery.schema.graphql
+documents:
+  - "graphql/**/*.graphql"
+  - "app/**/*.graphql"
+  - "components/**/*.graphql"

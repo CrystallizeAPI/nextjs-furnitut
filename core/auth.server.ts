@@ -31,6 +31,7 @@ export async function login(formData: FormData) {
     }
 
     const user = { email };
+    console.log("user: ", user);
     const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
     const token = await encrypt({ user, expires });
@@ -51,15 +52,17 @@ export async function logout() {
 export async function verifyToken(token: string) {
     try {
         const payload = await decrypt(token);
-
+        console.log("payload: ", payload);
         if (new Date(payload.expires) < new Date()) {
             return { error: 'expired-token' };
         }
 
-        const markets = await getMarkets(payload.user.email)
-
+        // const markets = await getMarkets(payload.user.email)
+        // console.log("markets: ", markets);
         const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-        const session = await encrypt({ markets, user: payload.user, expires });
+        const session = await encrypt({
+            // markets,
+            user: payload.user, expires });
         (await cookies()).set('session', session, { expires, httpOnly: true });
         redirect('/account');
     } catch (error) {
@@ -69,6 +72,7 @@ export async function verifyToken(token: string) {
 
 export async function getSession() {
     const session = (await cookies()).get('session')?.value;
+    console.log("session: ", session);
     if (!session) return null;
     return await decrypt(session);
 }

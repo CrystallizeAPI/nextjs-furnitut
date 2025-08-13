@@ -16,17 +16,22 @@ export const apiRequest = async <TResult, TVariables = {}>(
         body: JSON.stringify({ query: print(query), variables }),
     });
 
-    
-    if (!response.ok) {
 
-        throw new Error(response.statusText);
+    if (!response.ok) {
+        const errorBody = await response.text();
+
+        console.error('GraphQL request failed:', response.status, errorBody);
+        throw new Error(`[${response.status}] ${response.statusText} - See console for full error body.`);
+
     }
 
     const result = await response.json();
 
     if ('errors' in result) {
-        throw new Error();
+        // Throw to make sure we catch GraphQL-specific errors
+        throw new Error(result.errors.map((e: any) => e.message).join('\n'));
     }
+
 
     return result as { data: TResult };
 };

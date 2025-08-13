@@ -1,0 +1,7302 @@
+type BannerPiece {
+  banner: [Image]
+  callToAction: CallToActionPiece
+  description(format: RichTextFormat! = json): RichText
+  layout: LayoutPiece
+  title: String
+}
+
+input BrandFacet {
+  component_name: StringFacet
+  createdAt: DateFacet
+  depth: NumberFacet
+  language: StringFacet
+  name: StringFacet
+  parentPaths: StringFacet
+  position: NumberFacet
+  publicationState: StringFacet
+  publishedAt: DateFacet
+  shortcuts_position: NumberFacet
+  topics: StringFacet
+  type: StringFacet
+  updatedAt: DateFacet
+}
+
+input BrandFilter {
+  """Logical AND filter to apply to the query"""
+  AND: [BrandFilter]
+
+  """Logical OR filter to apply to the query"""
+  OR: [BrandFilter]
+
+  """
+  Filter on "aliases"
+  """
+  aliases: StringFilter
+
+  """
+  Filter on "component_name"
+  """
+  component_name: StringFilter
+
+  """
+  Filter on "createdAt"
+  """
+  createdAt: DateFilter
+
+  """
+  Filter on "depth"
+  """
+  depth: NumberFilter
+
+  """
+  Filter on "description.plainText"
+  """
+  description_plainText: StringFilter
+
+  """
+  Filter on "history"
+  """
+  history: StringFilter
+
+  """
+  Filter on "id"
+  """
+  id: StringFilter
+
+  """
+  Filter on "itemId"
+  """
+  itemId: StringFilter
+
+  """
+  Filter on "language"
+  """
+  language: StringFilter
+
+  """
+  Filter on "logo.caption.plainText"
+  """
+  logo_caption_plainText: StringFilter
+
+  """
+  Filter on "name"
+  """
+  name: StringFilterWithAutocomplete
+
+  """
+  Filter on "parentId"
+  """
+  parentId: StringFilter
+
+  """
+  Filter on "parentPaths"
+  """
+  parentPaths: StringFilter
+
+  """
+  Filter on "path"
+  """
+  path: StringFilter
+
+  """
+  Filter on "position"
+  """
+  position: NumberFilter
+
+  """
+  Filter on "publicationState"
+  """
+  publicationState: StringFilter
+
+  """
+  Filter on "publishedAt"
+  """
+  publishedAt: DateFilter
+
+  """
+  Filter on "shortcuts.parentId"
+  """
+  shortcuts_parentId: StringFilter
+
+  """
+  Filter on "shortcuts.path"
+  """
+  shortcuts_path: StringFilter
+
+  """
+  Filter on "shortcuts.position"
+  """
+  shortcuts_position: NumberFilter
+
+  """
+  Filter on "topics"
+  """
+  topics: StringFilter
+
+  """
+  Filter on "updatedAt"
+  """
+  updatedAt: DateFilter
+}
+
+type BrandQuery {
+  hits: [brand]
+  summary: SearchSummary
+}
+
+input BrandSort {
+  """
+  Sort on "aliases"
+  """
+  aliases: SortOrder
+
+  """
+  Sort on "component_name"
+  """
+  component_name: SortOrder
+
+  """
+  Sort on "createdAt"
+  """
+  createdAt: SortOrder
+
+  """
+  Sort on "depth"
+  """
+  depth: SortOrder
+
+  """
+  Sort on "history"
+  """
+  history: SortOrder
+
+  """
+  Sort on "id"
+  """
+  id: SortOrder
+
+  """
+  Sort on "itemId"
+  """
+  itemId: SortOrder
+
+  """
+  Sort on "language"
+  """
+  language: SortOrder
+
+  """
+  Sort on "name"
+  """
+  name: SortOrder
+
+  """
+  Sort on "parentId"
+  """
+  parentId: SortOrder
+
+  """
+  Sort on "parentPaths"
+  """
+  parentPaths: SortOrder
+
+  """
+  Sort on "path"
+  """
+  path: SortOrder
+
+  """
+  Sort on "position"
+  """
+  position: SortOrder
+
+  """
+  Sort on "publicationState"
+  """
+  publicationState: SortOrder
+
+  """
+  Sort on "publishedAt"
+  """
+  publishedAt: SortOrder
+
+  """Sort on the Score based on the query"""
+  score: SortOrder
+
+  """
+  Sort on "shortcuts.parentId"
+  """
+  shortcuts_parentId: SortOrder
+
+  """
+  Sort on "shortcuts.path"
+  """
+  shortcuts_path: SortOrder
+
+  """
+  Sort on "shortcuts.position"
+  """
+  shortcuts_position: SortOrder
+
+  """
+  Sort on "topics"
+  """
+  topics: SortOrder
+
+  """
+  Sort on "type"
+  """
+  type: SortOrder
+
+  """
+  Sort on "updatedAt"
+  """
+  updatedAt: SortOrder
+}
+
+type Breadcrumb {
+  id: String
+  isShortcut: Boolean
+  name: String
+  path: String
+  shape: String
+}
+
+"""Query the items of a tenant via their Shape identifier."""
+type BrowseQuery {
+  """Implicit filter on Shape: Brand (document)"""
+  brand(
+    facets: BrandFacet
+    filters: BrandFilter
+
+    """The language to search in."""
+    language: [TenantLanguage] = [en]
+
+    """The search options."""
+    options: SearchOptions
+
+    """The pagination settings."""
+    pagination: Pagination = {limit: 25}
+
+    """The path to search from."""
+    path: String
+    pathResolutionMethod: [PathResolutionMethod]
+    publicationState: [PublicationState] = [published]
+    sorting: BrandSort
+
+    """The query to search for (Fulltext)."""
+    term: String
+  ): BrandQuery
+
+  """Implicit filter on Shape: Category (folder)"""
+  category(
+    facets: CategoryFacet
+    filters: CategoryFilter
+
+    """The language to search in."""
+    language: [TenantLanguage] = [en]
+
+    """The search options."""
+    options: SearchOptions
+
+    """The pagination settings."""
+    pagination: Pagination = {limit: 25}
+
+    """The path to search from."""
+    path: String
+    pathResolutionMethod: [PathResolutionMethod]
+    publicationState: [PublicationState] = [published]
+    sorting: CategorySort
+
+    """The query to search for (Fulltext)."""
+    term: String
+  ): CategoryQuery
+
+  """Implicit filter on Shape: Landing page (document)"""
+  landingPage(
+    facets: LandingPageFacet
+    filters: LandingPageFilter
+
+    """The language to search in."""
+    language: [TenantLanguage] = [en]
+
+    """The search options."""
+    options: SearchOptions
+
+    """The pagination settings."""
+    pagination: Pagination = {limit: 25}
+
+    """The path to search from."""
+    path: String
+    pathResolutionMethod: [PathResolutionMethod]
+    publicationState: [PublicationState] = [published]
+    sorting: LandingPageSort
+
+    """The query to search for (Fulltext)."""
+    term: String
+  ): LandingPageQuery
+
+  """Implicit filter on Shape: Menu item (folder)"""
+  menuItem(
+    facets: MenuItemFacet
+    filters: MenuItemFilter
+
+    """The language to search in."""
+    language: [TenantLanguage] = [en]
+
+    """The search options."""
+    options: SearchOptions
+
+    """The pagination settings."""
+    pagination: Pagination = {limit: 25}
+
+    """The path to search from."""
+    path: String
+    pathResolutionMethod: [PathResolutionMethod]
+    publicationState: [PublicationState] = [published]
+    sorting: MenuItemSort
+
+    """The query to search for (Fulltext)."""
+    term: String
+  ): MenuItemQuery
+
+  """Implicit filter on Shape: Product (product)"""
+  product(
+    facets: ProductFacet
+    filters: ProductFilter
+
+    """The language to search in."""
+    language: [TenantLanguage] = [en]
+
+    """The search options."""
+    options: SearchOptions
+
+    """The pagination settings."""
+    pagination: Pagination = {limit: 25}
+
+    """The path to search from."""
+    path: String
+    pathResolutionMethod: [PathResolutionMethod]
+    publicationState: [PublicationState] = [published]
+    sorting: ProductSort
+
+    """The query to search for (Fulltext)."""
+    term: String
+  ): ProductQuery
+
+  """Implicit filter on Shape: Story (document)"""
+  story(
+    facets: StoryFacet
+    filters: StoryFilter
+
+    """The language to search in."""
+    language: [TenantLanguage] = [en]
+
+    """The search options."""
+    options: SearchOptions
+
+    """The pagination settings."""
+    pagination: Pagination = {limit: 25}
+
+    """The path to search from."""
+    path: String
+    pathResolutionMethod: [PathResolutionMethod]
+    publicationState: [PublicationState] = [published]
+    sorting: StorySort
+
+    """The query to search for (Fulltext)."""
+    term: String
+  ): StoryQuery
+}
+
+type CallToActionPiece {
+  action: [ContentChunksComponentForCallToActionPieceAction]
+}
+
+input CategoryFacet {
+  blocks_banner_callToAction_action_label: StringFacet
+  blocks_banner_callToAction_action_url: StringFacet
+  blocks_banner_layout_displayWidth_contain: StringFacet
+  blocks_banner_layout_displayWidth_stretch: StringFacet
+  blocks_banner_layout_theme_dark: StringFacet
+  blocks_banner_layout_theme_light: StringFacet
+  blocks_banner_layout_theme_muted: StringFacet
+  blocks_banner_layout_theme_pastel: StringFacet
+  blocks_banner_layout_theme_vivid: StringFacet
+  blocks_banner_title: StringFacet
+  blocks_featureHighlights_layout_displayWidth_contain: StringFacet
+  blocks_featureHighlights_layout_displayWidth_stretch: StringFacet
+  blocks_featureHighlights_layout_theme_dark: StringFacet
+  blocks_featureHighlights_layout_theme_light: StringFacet
+  blocks_featureHighlights_layout_theme_muted: StringFacet
+  blocks_featureHighlights_layout_theme_pastel: StringFacet
+  blocks_featureHighlights_layout_theme_vivid: StringFacet
+  blocks_featureHighlights_usp_headline: StringFacet
+  blocks_pictureGrid_layout_displayWidth_contain: StringFacet
+  blocks_pictureGrid_layout_displayWidth_stretch: StringFacet
+  blocks_pictureGrid_layout_theme_dark: StringFacet
+  blocks_pictureGrid_layout_theme_light: StringFacet
+  blocks_pictureGrid_layout_theme_muted: StringFacet
+  blocks_pictureGrid_layout_theme_pastel: StringFacet
+  blocks_pictureGrid_layout_theme_vivid: StringFacet
+  blocks_pictureGrid_title: StringFacet
+  blocks_productSlider_layout_displayWidth_contain: StringFacet
+  blocks_productSlider_layout_displayWidth_stretch: StringFacet
+  blocks_productSlider_layout_theme_dark: StringFacet
+  blocks_productSlider_layout_theme_light: StringFacet
+  blocks_productSlider_layout_theme_muted: StringFacet
+  blocks_productSlider_layout_theme_pastel: StringFacet
+  blocks_productSlider_layout_theme_vivid: StringFacet
+  blocks_productSlider_products_skus: StringFacet
+  blocks_productSlider_title: StringFacet
+  blocks_storySlider_layout_displayWidth_contain: StringFacet
+  blocks_storySlider_layout_displayWidth_stretch: StringFacet
+  blocks_storySlider_layout_theme_dark: StringFacet
+  blocks_storySlider_layout_theme_light: StringFacet
+  blocks_storySlider_layout_theme_muted: StringFacet
+  blocks_storySlider_layout_theme_pastel: StringFacet
+  blocks_storySlider_layout_theme_vivid: StringFacet
+  blocks_storySlider_stories_items_name: StringFacet
+  blocks_storySlider_stories_items_path: StringFacet
+  blocks_storySlider_title: StringFacet
+  createdAt: DateFacet
+  depth: NumberFacet
+  language: StringFacet
+  meta_title: StringFacet
+  name: StringFacet
+  parentPaths: StringFacet
+  position: NumberFacet
+  publicationState: StringFacet
+  publishedAt: DateFacet
+  shortcuts_position: NumberFacet
+  title: StringFacet
+  topics: StringFacet
+  type: StringFacet
+  updatedAt: DateFacet
+}
+
+input CategoryFilter {
+  """Logical AND filter to apply to the query"""
+  AND: [CategoryFilter]
+
+  """Logical OR filter to apply to the query"""
+  OR: [CategoryFilter]
+
+  """
+  Filter on "aliases"
+  """
+  aliases: StringFilter
+
+  """
+  Filter on "blocks.banner.banner.caption.plainText"
+  """
+  blocks_banner_banner_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.banner.call-to-action.action.label"
+  """
+  blocks_banner_callToAction_action_label: StringFilter
+
+  """
+  Filter on "blocks.banner.call-to-action.action.url"
+  """
+  blocks_banner_callToAction_action_url: StringFilter
+
+  """
+  Filter on "blocks.banner.description.plainText"
+  """
+  blocks_banner_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.background-media.image.caption.plainText"
+  """
+  blocks_banner_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_banner_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.display-width.contain"
+  """
+  blocks_banner_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.display-width.stretch"
+  """
+  blocks_banner_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.dark"
+  """
+  blocks_banner_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.light"
+  """
+  blocks_banner_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.muted"
+  """
+  blocks_banner_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.pastel"
+  """
+  blocks_banner_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.vivid"
+  """
+  blocks_banner_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.banner.title"
+  """
+  blocks_banner_title: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.background-media.image.caption.plainText"
+  """
+  blocks_featureHighlights_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_featureHighlights_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.display-width.contain"
+  """
+  blocks_featureHighlights_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.display-width.stretch"
+  """
+  blocks_featureHighlights_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.dark"
+  """
+  blocks_featureHighlights_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.light"
+  """
+  blocks_featureHighlights_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.muted"
+  """
+  blocks_featureHighlights_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.pastel"
+  """
+  blocks_featureHighlights_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.vivid"
+  """
+  blocks_featureHighlights_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.usp.description.plainText"
+  """
+  blocks_featureHighlights_usp_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.usp.headline"
+  """
+  blocks_featureHighlights_usp_headline: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.usp.icon.caption.plainText"
+  """
+  blocks_featureHighlights_usp_icon_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.description.plainText"
+  """
+  blocks_pictureGrid_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.images.caption.plainText"
+  """
+  blocks_pictureGrid_images_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.background-media.image.caption.plainText"
+  """
+  blocks_pictureGrid_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_pictureGrid_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.display-width.contain"
+  """
+  blocks_pictureGrid_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.display-width.stretch"
+  """
+  blocks_pictureGrid_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.dark"
+  """
+  blocks_pictureGrid_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.light"
+  """
+  blocks_pictureGrid_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.muted"
+  """
+  blocks_pictureGrid_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.pastel"
+  """
+  blocks_pictureGrid_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.vivid"
+  """
+  blocks_pictureGrid_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.title"
+  """
+  blocks_pictureGrid_title: StringFilter
+
+  """
+  Filter on "blocks.product-slider.description.plainText"
+  """
+  blocks_productSlider_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.background-media.image.caption.plainText"
+  """
+  blocks_productSlider_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_productSlider_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.display-width.contain"
+  """
+  blocks_productSlider_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.display-width.stretch"
+  """
+  blocks_productSlider_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.dark"
+  """
+  blocks_productSlider_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.light"
+  """
+  blocks_productSlider_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.muted"
+  """
+  blocks_productSlider_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.pastel"
+  """
+  blocks_productSlider_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.vivid"
+  """
+  blocks_productSlider_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.product-slider.products.skus"
+  """
+  blocks_productSlider_products_skus: StringFilter
+
+  """
+  Filter on "blocks.product-slider.title"
+  """
+  blocks_productSlider_title: StringFilter
+
+  """
+  Filter on "blocks.story-slider.description.plainText"
+  """
+  blocks_storySlider_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.background-media.image.caption.plainText"
+  """
+  blocks_storySlider_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_storySlider_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.display-width.contain"
+  """
+  blocks_storySlider_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.display-width.stretch"
+  """
+  blocks_storySlider_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.dark"
+  """
+  blocks_storySlider_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.light"
+  """
+  blocks_storySlider_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.muted"
+  """
+  blocks_storySlider_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.pastel"
+  """
+  blocks_storySlider_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.vivid"
+  """
+  blocks_storySlider_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.itemId"
+  """
+  blocks_storySlider_stories_items_itemId: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.name"
+  """
+  blocks_storySlider_stories_items_name: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.parentId"
+  """
+  blocks_storySlider_stories_items_parentId: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.path"
+  """
+  blocks_storySlider_stories_items_path: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.shape"
+  """
+  blocks_storySlider_stories_items_shape: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.type"
+  """
+  blocks_storySlider_stories_items_type: StringFilter
+
+  """
+  Filter on "blocks.story-slider.title"
+  """
+  blocks_storySlider_title: StringFilter
+
+  """
+  Filter on "createdAt"
+  """
+  createdAt: DateFilter
+
+  """
+  Filter on "depth"
+  """
+  depth: NumberFilter
+
+  """
+  Filter on "description.plainText"
+  """
+  description_plainText: StringFilter
+
+  """
+  Filter on "history"
+  """
+  history: StringFilter
+
+  """
+  Filter on "id"
+  """
+  id: StringFilter
+
+  """
+  Filter on "image.caption.plainText"
+  """
+  image_caption_plainText: StringFilter
+
+  """
+  Filter on "itemId"
+  """
+  itemId: StringFilter
+
+  """
+  Filter on "language"
+  """
+  language: StringFilter
+
+  """
+  Filter on "meta.description.plainText"
+  """
+  meta_description_plainText: StringFilter
+
+  """
+  Filter on "meta.image.caption.plainText"
+  """
+  meta_image_caption_plainText: StringFilter
+
+  """
+  Filter on "meta.title"
+  """
+  meta_title: StringFilter
+
+  """
+  Filter on "name"
+  """
+  name: StringFilterWithAutocomplete
+
+  """
+  Filter on "parentId"
+  """
+  parentId: StringFilter
+
+  """
+  Filter on "parentPaths"
+  """
+  parentPaths: StringFilter
+
+  """
+  Filter on "path"
+  """
+  path: StringFilter
+
+  """
+  Filter on "position"
+  """
+  position: NumberFilter
+
+  """
+  Filter on "publicationState"
+  """
+  publicationState: StringFilter
+
+  """
+  Filter on "publishedAt"
+  """
+  publishedAt: DateFilter
+
+  """
+  Filter on "shortcuts.parentId"
+  """
+  shortcuts_parentId: StringFilter
+
+  """
+  Filter on "shortcuts.path"
+  """
+  shortcuts_path: StringFilter
+
+  """
+  Filter on "shortcuts.position"
+  """
+  shortcuts_position: NumberFilter
+
+  """
+  Filter on "title"
+  """
+  title: StringFilter
+
+  """
+  Filter on "topics"
+  """
+  topics: StringFilter
+
+  """
+  Filter on "updatedAt"
+  """
+  updatedAt: DateFilter
+}
+
+type CategoryQuery {
+  hits: [category]
+  summary: SearchSummary
+}
+
+input CategorySort {
+  """
+  Sort on "aliases"
+  """
+  aliases: SortOrder
+
+  """
+  Sort on "blocks.banner.call-to-action.action.label"
+  """
+  blocks_banner_callToAction_action_label: SortOrder
+
+  """
+  Sort on "blocks.banner.call-to-action.action.url"
+  """
+  blocks_banner_callToAction_action_url: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.display-width.contain"
+  """
+  blocks_banner_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.display-width.stretch"
+  """
+  blocks_banner_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.dark"
+  """
+  blocks_banner_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.light"
+  """
+  blocks_banner_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.muted"
+  """
+  blocks_banner_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.pastel"
+  """
+  blocks_banner_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.vivid"
+  """
+  blocks_banner_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.banner.title"
+  """
+  blocks_banner_title: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.display-width.contain"
+  """
+  blocks_featureHighlights_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.display-width.stretch"
+  """
+  blocks_featureHighlights_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.dark"
+  """
+  blocks_featureHighlights_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.light"
+  """
+  blocks_featureHighlights_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.muted"
+  """
+  blocks_featureHighlights_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.pastel"
+  """
+  blocks_featureHighlights_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.vivid"
+  """
+  blocks_featureHighlights_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.usp.headline"
+  """
+  blocks_featureHighlights_usp_headline: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.display-width.contain"
+  """
+  blocks_pictureGrid_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.display-width.stretch"
+  """
+  blocks_pictureGrid_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.dark"
+  """
+  blocks_pictureGrid_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.light"
+  """
+  blocks_pictureGrid_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.muted"
+  """
+  blocks_pictureGrid_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.pastel"
+  """
+  blocks_pictureGrid_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.vivid"
+  """
+  blocks_pictureGrid_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.title"
+  """
+  blocks_pictureGrid_title: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.display-width.contain"
+  """
+  blocks_productSlider_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.display-width.stretch"
+  """
+  blocks_productSlider_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.dark"
+  """
+  blocks_productSlider_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.light"
+  """
+  blocks_productSlider_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.muted"
+  """
+  blocks_productSlider_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.pastel"
+  """
+  blocks_productSlider_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.vivid"
+  """
+  blocks_productSlider_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.product-slider.products.skus"
+  """
+  blocks_productSlider_products_skus: SortOrder
+
+  """
+  Sort on "blocks.product-slider.title"
+  """
+  blocks_productSlider_title: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.display-width.contain"
+  """
+  blocks_storySlider_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.display-width.stretch"
+  """
+  blocks_storySlider_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.dark"
+  """
+  blocks_storySlider_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.light"
+  """
+  blocks_storySlider_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.muted"
+  """
+  blocks_storySlider_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.pastel"
+  """
+  blocks_storySlider_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.vivid"
+  """
+  blocks_storySlider_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.itemId"
+  """
+  blocks_storySlider_stories_items_itemId: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.name"
+  """
+  blocks_storySlider_stories_items_name: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.parentId"
+  """
+  blocks_storySlider_stories_items_parentId: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.path"
+  """
+  blocks_storySlider_stories_items_path: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.shape"
+  """
+  blocks_storySlider_stories_items_shape: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.type"
+  """
+  blocks_storySlider_stories_items_type: SortOrder
+
+  """
+  Sort on "blocks.story-slider.title"
+  """
+  blocks_storySlider_title: SortOrder
+
+  """
+  Sort on "createdAt"
+  """
+  createdAt: SortOrder
+
+  """
+  Sort on "depth"
+  """
+  depth: SortOrder
+
+  """
+  Sort on "history"
+  """
+  history: SortOrder
+
+  """
+  Sort on "id"
+  """
+  id: SortOrder
+
+  """
+  Sort on "itemId"
+  """
+  itemId: SortOrder
+
+  """
+  Sort on "language"
+  """
+  language: SortOrder
+
+  """
+  Sort on "meta.title"
+  """
+  meta_title: SortOrder
+
+  """
+  Sort on "name"
+  """
+  name: SortOrder
+
+  """
+  Sort on "parentId"
+  """
+  parentId: SortOrder
+
+  """
+  Sort on "parentPaths"
+  """
+  parentPaths: SortOrder
+
+  """
+  Sort on "path"
+  """
+  path: SortOrder
+
+  """
+  Sort on "position"
+  """
+  position: SortOrder
+
+  """
+  Sort on "publicationState"
+  """
+  publicationState: SortOrder
+
+  """
+  Sort on "publishedAt"
+  """
+  publishedAt: SortOrder
+
+  """Sort on the Score based on the query"""
+  score: SortOrder
+
+  """
+  Sort on "shortcuts.parentId"
+  """
+  shortcuts_parentId: SortOrder
+
+  """
+  Sort on "shortcuts.path"
+  """
+  shortcuts_path: SortOrder
+
+  """
+  Sort on "shortcuts.position"
+  """
+  shortcuts_position: SortOrder
+
+  """
+  Sort on "title"
+  """
+  title: SortOrder
+
+  """
+  Sort on "topics"
+  """
+  topics: SortOrder
+
+  """
+  Sort on "type"
+  """
+  type: SortOrder
+
+  """
+  Sort on "updatedAt"
+  """
+  updatedAt: SortOrder
+}
+
+type ComponentChoiceComponentForCategoryBlocks {
+  banner: BannerPiece
+  featureHighlights: FeatureHighlightsPiece
+  pictureGrid: PictureGridPiece
+  productSlider: ProductSliderPiece
+  storySlider: StorySliderPiece
+}
+
+type ComponentChoiceComponentForLandingPageBlocks {
+  banner: BannerPiece
+  featureHighlights: FeatureHighlightsPiece
+  pictureGrid: PictureGridPiece
+  productSlider: ProductSliderPiece
+  storySlider: StorySliderPiece
+}
+
+type ComponentChoiceComponentForLayoutPieceBackgroundMedia {
+  image: [Image]
+  video: [VideoComponent]
+}
+
+type ComponentChoiceComponentForMenuItemLink {
+  item: ItemRelations
+  url: String
+}
+
+type ComponentChoiceComponentForStoryMedia {
+  image: [Image]
+  shoppableImage: [Image]
+  video: [VideoComponent]
+}
+
+type ComponentChoiceComponentForVariantProductDescription {
+  alternativeDescription(format: RichTextFormat! = json): RichText
+  extraDescription(format: RichTextFormat! = json): RichText
+}
+
+type ContentChunksComponentForCallToActionPieceAction {
+  label: String
+  url: String
+}
+
+type ContentChunksComponentForFeatureHighlightsPieceUsp {
+  description(format: RichTextFormat! = json): RichText
+  headline: String
+  icon: [Image]
+}
+
+type ContentChunksComponentForProductDetails {
+  description(format: RichTextFormat! = json): RichText
+  title: String
+}
+
+type ContentChunksComponentForProductDownloads {
+  description(format: RichTextFormat! = json): RichText
+  files: [File]
+  title: String
+}
+
+input DateFacet {
+  """The boundaries of the facet"""
+  boundaries: [Datetime]!
+
+  """The key of the facet in the result"""
+  key: String
+  limit: Int = 10
+}
+
+input DateFilter {
+  """Filter on equality"""
+  equals: Datetime
+
+  """Filter on existence"""
+  exists: Boolean
+
+  """Filter if is in list"""
+  in: [Datetime]
+
+  """Filter on not equal to"""
+  not_equals: Datetime
+
+  """Filter if is not in list"""
+  not_in: [Datetime]
+
+  """Filter if is within range"""
+  range: DateRange
+}
+
+input DateRange {
+  gt: Datetime
+  gte: Datetime
+  lt: Datetime
+  lte: Datetime
+}
+
+"""A `Datetime` scalar type represents a `Date`"""
+scalar Datetime
+
+type DimensionsPiece {
+  depth: Float
+  depthUnit: String
+  height: Float
+  heightUnit: String
+  weight: Float
+  weightUnit: String
+  width: Float
+  widthUnit: String
+}
+
+interface Document {
+  """The Aliases"""
+  aliases: [String]
+
+  """The Breadcrumbs"""
+  breadcrumbs(
+    """Include breacrumbs path with shortcuts"""
+    withShortcuts: Boolean = true
+  ): [[Breadcrumb]]
+
+  """The date when the version was created"""
+  createdAt: Datetime
+
+  """The canonical depth in the tree"""
+  depth: String
+
+  """The external reference"""
+  externalReference: String
+
+  """The History of Paths"""
+  history: [String]
+
+  """The version id that includes the language and the publication state"""
+  id: ID
+
+  """The date when the document was indexed for the las time"""
+  indexedAt: Datetime
+
+  """The item id"""
+  itemId: ID
+
+  """The Language"""
+  language: String
+
+  """The name"""
+  name: String
+
+  """To be used with searchAfter and searchBefore"""
+  paginationToken: String
+
+  """The parent document"""
+  parent: Document
+
+  """The parent id"""
+  parentId: ID
+
+  """The path"""
+  path: String
+
+  """The method to resolve the path"""
+  pathResolutionMethod: PathResolutionMethod
+
+  """The canonical position in the tree"""
+  position: String
+
+  """The publication state"""
+  publicationState: String
+
+  """The date when the version was published"""
+  publishedAt: Datetime
+
+  """The score"""
+  score: Float
+
+  """The shape identifier"""
+  shape: String
+
+  """The Shortcuts"""
+  shortcuts: [String]
+
+  """The different topic paths"""
+  topicPaths(
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+  ): [String]
+
+  """The different topics"""
+  topics(
+    key: String
+
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+
+    """Only return leaf names"""
+    onlyLeafName: Boolean = false
+  ): Hash
+
+  """The type"""
+  type: String
+
+  """The date when the version was updated"""
+  updatedAt: Datetime
+}
+
+type FeatureHighlightsPiece {
+  layout: LayoutPiece
+  usp: [ContentChunksComponentForFeatureHighlightsPieceUsp]
+}
+
+type File {
+  createdAt: Datetime
+  key: String
+  meta(key: String): Hash
+  title: String
+  url: String
+}
+
+interface Folder implements Document {
+  """The Aliases"""
+  aliases: [String]
+
+  """The Breadcrumbs"""
+  breadcrumbs(
+    """Include breacrumbs path with shortcuts"""
+    withShortcuts: Boolean = true
+  ): [[Breadcrumb]]
+
+  """
+  Query the children of a folder. Same as a Search but with an implicit filter on the parent path.
+  """
+  children(
+    facets: TenantFacet
+    filters: TenantFilter
+
+    """The language to search in."""
+    language: [TenantLanguage]
+
+    """The search options."""
+    options: SearchOptions
+
+    """The pagination settings."""
+    pagination: Pagination = {limit: 25}
+
+    """The path to search from."""
+    path: String
+    pathResolutionMethod: [PathResolutionMethod]
+    publicationState: [PublicationState]
+
+    """Sorting options."""
+    sorting: TenantSort = {position: asc}
+
+    """The query to search for (Fulltext)."""
+    term: String
+  ): SearchResults
+
+  """The date when the version was created"""
+  createdAt: Datetime
+
+  """The canonical depth in the tree"""
+  depth: String
+
+  """The external reference"""
+  externalReference: String
+
+  """The History of Paths"""
+  history: [String]
+
+  """The version id that includes the language and the publication state"""
+  id: ID
+
+  """The date when the document was indexed for the las time"""
+  indexedAt: Datetime
+
+  """The item id"""
+  itemId: ID
+
+  """The Language"""
+  language: String
+
+  """The name"""
+  name: String
+
+  """To be used with searchAfter and searchBefore"""
+  paginationToken: String
+
+  """The parent document"""
+  parent: Document
+
+  """The parent id"""
+  parentId: ID
+
+  """The path"""
+  path: String
+
+  """The method to resolve the path"""
+  pathResolutionMethod: PathResolutionMethod
+
+  """The canonical position in the tree"""
+  position: String
+
+  """The publication state"""
+  publicationState: String
+
+  """The date when the version was published"""
+  publishedAt: Datetime
+
+  """The score"""
+  score: Float
+
+  """The shape identifier"""
+  shape: String
+
+  """The Shortcuts"""
+  shortcuts: [String]
+
+  """The different topic paths"""
+  topicPaths(
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+  ): [String]
+
+  """The different topics"""
+  topics(
+    key: String
+
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+
+    """Only return leaf names"""
+    onlyLeafName: Boolean = false
+  ): Hash
+
+  """The type"""
+  type: String
+
+  """The date when the version was updated"""
+  updatedAt: Datetime
+}
+
+"""
+Maximum number of single-character edits required to match the specified search term. NONE means it will not be fuzzy.
+"""
+enum Fuziness {
+  DOUBLE
+  NONE
+  SINGLE
+}
+
+input FuzzySearchOptions {
+  """Fuziness level."""
+  fuzziness: Fuziness = NONE
+
+  """The maximum number of variations to generate and search for."""
+  maxExpensions: Int = 50
+
+  """
+  Number of characters at the beginning of each term in the result that must exactly match. Default 0.
+  """
+  prefixLength: Int = 0
+}
+
+type GridComponent {
+  dimensions: GridComponentDimensions
+  name: String
+  rows: [GridComponentRow]
+}
+
+type GridComponentColumn {
+  item(
+    """The language to search in."""
+    language: [TenantLanguage]
+    publicationState: [PublicationState]
+  ): Document
+  layout: Hash
+}
+
+type GridComponentDimensions {
+  columns: Int
+  rows: Int
+}
+
+type GridComponentRow {
+  columns: [GridComponentColumn]
+}
+
+"""A `Hash` scalar type represents a `Record<string,any>`"""
+scalar Hash
+
+type Image {
+  altText: String
+  caption(format: RichTextFormat! = json): RichText
+  createdAt: Datetime
+  focalPoint(key: String): Hash
+  height: Int
+  key: String
+  meta(key: String): Hash
+
+  """Showcases that this image describes."""
+  showcases: [Showcase]
+  topics(key: String): Hash
+  updatedAt: Datetime
+  url: String
+  variants(
+    """The max width of the image variant to return."""
+    maxWidth: Int
+
+    """The min width of the image variant to return."""
+    minWidth: Int
+
+    """The types of image variant to return."""
+    types: [String]
+
+    """The width of the image variant to return."""
+    width: Int
+  ): [ImageVariant]
+  width: Int
+}
+
+type ImageVariant {
+  height: Int
+  key: String
+  size: Int
+  url: String
+  width: Int
+}
+
+interface Images {
+  """
+  This is a syntactic sugar for getting the first image in the images list
+  """
+  firstImage: Image
+  images: [Image]
+}
+
+type ItemRelations implements ItemRelationsInterface & SkuRelationsInterface {
+  items(
+    """The language to search in."""
+    language: [TenantLanguage]
+    publicationState: [PublicationState]
+  ): [Document]
+  variants(
+    """The language to search in."""
+    language: [TenantLanguage]
+    publicationState: [PublicationState]
+  ): [ProductVariant]
+}
+
+interface ItemRelationsInterface {
+  items(
+    """The language to search in."""
+    language: [TenantLanguage]
+    publicationState: [PublicationState]
+  ): [Document]
+}
+
+"""Crystallize Item Type"""
+enum ItemType {
+  document
+  folder
+  product
+}
+
+input LandingPageFacet {
+  blocks_banner_callToAction_action_label: StringFacet
+  blocks_banner_callToAction_action_url: StringFacet
+  blocks_banner_layout_displayWidth_contain: StringFacet
+  blocks_banner_layout_displayWidth_stretch: StringFacet
+  blocks_banner_layout_theme_dark: StringFacet
+  blocks_banner_layout_theme_light: StringFacet
+  blocks_banner_layout_theme_muted: StringFacet
+  blocks_banner_layout_theme_pastel: StringFacet
+  blocks_banner_layout_theme_vivid: StringFacet
+  blocks_banner_title: StringFacet
+  blocks_featureHighlights_layout_displayWidth_contain: StringFacet
+  blocks_featureHighlights_layout_displayWidth_stretch: StringFacet
+  blocks_featureHighlights_layout_theme_dark: StringFacet
+  blocks_featureHighlights_layout_theme_light: StringFacet
+  blocks_featureHighlights_layout_theme_muted: StringFacet
+  blocks_featureHighlights_layout_theme_pastel: StringFacet
+  blocks_featureHighlights_layout_theme_vivid: StringFacet
+  blocks_featureHighlights_usp_headline: StringFacet
+  blocks_pictureGrid_layout_displayWidth_contain: StringFacet
+  blocks_pictureGrid_layout_displayWidth_stretch: StringFacet
+  blocks_pictureGrid_layout_theme_dark: StringFacet
+  blocks_pictureGrid_layout_theme_light: StringFacet
+  blocks_pictureGrid_layout_theme_muted: StringFacet
+  blocks_pictureGrid_layout_theme_pastel: StringFacet
+  blocks_pictureGrid_layout_theme_vivid: StringFacet
+  blocks_pictureGrid_title: StringFacet
+  blocks_productSlider_layout_displayWidth_contain: StringFacet
+  blocks_productSlider_layout_displayWidth_stretch: StringFacet
+  blocks_productSlider_layout_theme_dark: StringFacet
+  blocks_productSlider_layout_theme_light: StringFacet
+  blocks_productSlider_layout_theme_muted: StringFacet
+  blocks_productSlider_layout_theme_pastel: StringFacet
+  blocks_productSlider_layout_theme_vivid: StringFacet
+  blocks_productSlider_products_skus: StringFacet
+  blocks_productSlider_title: StringFacet
+  blocks_storySlider_layout_displayWidth_contain: StringFacet
+  blocks_storySlider_layout_displayWidth_stretch: StringFacet
+  blocks_storySlider_layout_theme_dark: StringFacet
+  blocks_storySlider_layout_theme_light: StringFacet
+  blocks_storySlider_layout_theme_muted: StringFacet
+  blocks_storySlider_layout_theme_pastel: StringFacet
+  blocks_storySlider_layout_theme_vivid: StringFacet
+  blocks_storySlider_stories_items_name: StringFacet
+  blocks_storySlider_stories_items_path: StringFacet
+  blocks_storySlider_title: StringFacet
+  createdAt: DateFacet
+  depth: NumberFacet
+  language: StringFacet
+  meta_title: StringFacet
+  name: StringFacet
+  parentPaths: StringFacet
+  position: NumberFacet
+  publicationState: StringFacet
+  publishedAt: DateFacet
+  shortcuts_position: NumberFacet
+  topics: StringFacet
+  type: StringFacet
+  updatedAt: DateFacet
+}
+
+input LandingPageFilter {
+  """Logical AND filter to apply to the query"""
+  AND: [LandingPageFilter]
+
+  """Logical OR filter to apply to the query"""
+  OR: [LandingPageFilter]
+
+  """
+  Filter on "aliases"
+  """
+  aliases: StringFilter
+
+  """
+  Filter on "blocks.banner.banner.caption.plainText"
+  """
+  blocks_banner_banner_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.banner.call-to-action.action.label"
+  """
+  blocks_banner_callToAction_action_label: StringFilter
+
+  """
+  Filter on "blocks.banner.call-to-action.action.url"
+  """
+  blocks_banner_callToAction_action_url: StringFilter
+
+  """
+  Filter on "blocks.banner.description.plainText"
+  """
+  blocks_banner_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.background-media.image.caption.plainText"
+  """
+  blocks_banner_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_banner_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.display-width.contain"
+  """
+  blocks_banner_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.display-width.stretch"
+  """
+  blocks_banner_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.dark"
+  """
+  blocks_banner_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.light"
+  """
+  blocks_banner_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.muted"
+  """
+  blocks_banner_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.pastel"
+  """
+  blocks_banner_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.vivid"
+  """
+  blocks_banner_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.banner.title"
+  """
+  blocks_banner_title: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.background-media.image.caption.plainText"
+  """
+  blocks_featureHighlights_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_featureHighlights_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.display-width.contain"
+  """
+  blocks_featureHighlights_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.display-width.stretch"
+  """
+  blocks_featureHighlights_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.dark"
+  """
+  blocks_featureHighlights_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.light"
+  """
+  blocks_featureHighlights_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.muted"
+  """
+  blocks_featureHighlights_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.pastel"
+  """
+  blocks_featureHighlights_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.vivid"
+  """
+  blocks_featureHighlights_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.usp.description.plainText"
+  """
+  blocks_featureHighlights_usp_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.usp.headline"
+  """
+  blocks_featureHighlights_usp_headline: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.usp.icon.caption.plainText"
+  """
+  blocks_featureHighlights_usp_icon_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.description.plainText"
+  """
+  blocks_pictureGrid_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.images.caption.plainText"
+  """
+  blocks_pictureGrid_images_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.background-media.image.caption.plainText"
+  """
+  blocks_pictureGrid_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_pictureGrid_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.display-width.contain"
+  """
+  blocks_pictureGrid_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.display-width.stretch"
+  """
+  blocks_pictureGrid_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.dark"
+  """
+  blocks_pictureGrid_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.light"
+  """
+  blocks_pictureGrid_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.muted"
+  """
+  blocks_pictureGrid_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.pastel"
+  """
+  blocks_pictureGrid_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.vivid"
+  """
+  blocks_pictureGrid_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.title"
+  """
+  blocks_pictureGrid_title: StringFilter
+
+  """
+  Filter on "blocks.product-slider.description.plainText"
+  """
+  blocks_productSlider_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.background-media.image.caption.plainText"
+  """
+  blocks_productSlider_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_productSlider_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.display-width.contain"
+  """
+  blocks_productSlider_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.display-width.stretch"
+  """
+  blocks_productSlider_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.dark"
+  """
+  blocks_productSlider_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.light"
+  """
+  blocks_productSlider_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.muted"
+  """
+  blocks_productSlider_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.pastel"
+  """
+  blocks_productSlider_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.vivid"
+  """
+  blocks_productSlider_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.product-slider.products.skus"
+  """
+  blocks_productSlider_products_skus: StringFilter
+
+  """
+  Filter on "blocks.product-slider.title"
+  """
+  blocks_productSlider_title: StringFilter
+
+  """
+  Filter on "blocks.story-slider.description.plainText"
+  """
+  blocks_storySlider_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.background-media.image.caption.plainText"
+  """
+  blocks_storySlider_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_storySlider_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.display-width.contain"
+  """
+  blocks_storySlider_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.display-width.stretch"
+  """
+  blocks_storySlider_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.dark"
+  """
+  blocks_storySlider_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.light"
+  """
+  blocks_storySlider_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.muted"
+  """
+  blocks_storySlider_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.pastel"
+  """
+  blocks_storySlider_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.vivid"
+  """
+  blocks_storySlider_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.itemId"
+  """
+  blocks_storySlider_stories_items_itemId: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.name"
+  """
+  blocks_storySlider_stories_items_name: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.parentId"
+  """
+  blocks_storySlider_stories_items_parentId: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.path"
+  """
+  blocks_storySlider_stories_items_path: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.shape"
+  """
+  blocks_storySlider_stories_items_shape: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.type"
+  """
+  blocks_storySlider_stories_items_type: StringFilter
+
+  """
+  Filter on "blocks.story-slider.title"
+  """
+  blocks_storySlider_title: StringFilter
+
+  """
+  Filter on "createdAt"
+  """
+  createdAt: DateFilter
+
+  """
+  Filter on "depth"
+  """
+  depth: NumberFilter
+
+  """
+  Filter on "history"
+  """
+  history: StringFilter
+
+  """
+  Filter on "id"
+  """
+  id: StringFilter
+
+  """
+  Filter on "itemId"
+  """
+  itemId: StringFilter
+
+  """
+  Filter on "language"
+  """
+  language: StringFilter
+
+  """
+  Filter on "meta.description.plainText"
+  """
+  meta_description_plainText: StringFilter
+
+  """
+  Filter on "meta.image.caption.plainText"
+  """
+  meta_image_caption_plainText: StringFilter
+
+  """
+  Filter on "meta.title"
+  """
+  meta_title: StringFilter
+
+  """
+  Filter on "name"
+  """
+  name: StringFilterWithAutocomplete
+
+  """
+  Filter on "parentId"
+  """
+  parentId: StringFilter
+
+  """
+  Filter on "parentPaths"
+  """
+  parentPaths: StringFilter
+
+  """
+  Filter on "path"
+  """
+  path: StringFilter
+
+  """
+  Filter on "position"
+  """
+  position: NumberFilter
+
+  """
+  Filter on "publicationState"
+  """
+  publicationState: StringFilter
+
+  """
+  Filter on "publishedAt"
+  """
+  publishedAt: DateFilter
+
+  """
+  Filter on "shortcuts.parentId"
+  """
+  shortcuts_parentId: StringFilter
+
+  """
+  Filter on "shortcuts.path"
+  """
+  shortcuts_path: StringFilter
+
+  """
+  Filter on "shortcuts.position"
+  """
+  shortcuts_position: NumberFilter
+
+  """
+  Filter on "topics"
+  """
+  topics: StringFilter
+
+  """
+  Filter on "updatedAt"
+  """
+  updatedAt: DateFilter
+}
+
+type LandingPageQuery {
+  hits: [landingPage]
+  summary: SearchSummary
+}
+
+input LandingPageSort {
+  """
+  Sort on "aliases"
+  """
+  aliases: SortOrder
+
+  """
+  Sort on "blocks.banner.call-to-action.action.label"
+  """
+  blocks_banner_callToAction_action_label: SortOrder
+
+  """
+  Sort on "blocks.banner.call-to-action.action.url"
+  """
+  blocks_banner_callToAction_action_url: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.display-width.contain"
+  """
+  blocks_banner_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.display-width.stretch"
+  """
+  blocks_banner_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.dark"
+  """
+  blocks_banner_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.light"
+  """
+  blocks_banner_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.muted"
+  """
+  blocks_banner_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.pastel"
+  """
+  blocks_banner_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.vivid"
+  """
+  blocks_banner_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.banner.title"
+  """
+  blocks_banner_title: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.display-width.contain"
+  """
+  blocks_featureHighlights_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.display-width.stretch"
+  """
+  blocks_featureHighlights_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.dark"
+  """
+  blocks_featureHighlights_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.light"
+  """
+  blocks_featureHighlights_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.muted"
+  """
+  blocks_featureHighlights_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.pastel"
+  """
+  blocks_featureHighlights_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.vivid"
+  """
+  blocks_featureHighlights_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.usp.headline"
+  """
+  blocks_featureHighlights_usp_headline: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.display-width.contain"
+  """
+  blocks_pictureGrid_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.display-width.stretch"
+  """
+  blocks_pictureGrid_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.dark"
+  """
+  blocks_pictureGrid_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.light"
+  """
+  blocks_pictureGrid_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.muted"
+  """
+  blocks_pictureGrid_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.pastel"
+  """
+  blocks_pictureGrid_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.vivid"
+  """
+  blocks_pictureGrid_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.title"
+  """
+  blocks_pictureGrid_title: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.display-width.contain"
+  """
+  blocks_productSlider_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.display-width.stretch"
+  """
+  blocks_productSlider_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.dark"
+  """
+  blocks_productSlider_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.light"
+  """
+  blocks_productSlider_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.muted"
+  """
+  blocks_productSlider_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.pastel"
+  """
+  blocks_productSlider_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.vivid"
+  """
+  blocks_productSlider_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.product-slider.products.skus"
+  """
+  blocks_productSlider_products_skus: SortOrder
+
+  """
+  Sort on "blocks.product-slider.title"
+  """
+  blocks_productSlider_title: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.display-width.contain"
+  """
+  blocks_storySlider_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.display-width.stretch"
+  """
+  blocks_storySlider_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.dark"
+  """
+  blocks_storySlider_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.light"
+  """
+  blocks_storySlider_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.muted"
+  """
+  blocks_storySlider_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.pastel"
+  """
+  blocks_storySlider_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.vivid"
+  """
+  blocks_storySlider_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.itemId"
+  """
+  blocks_storySlider_stories_items_itemId: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.name"
+  """
+  blocks_storySlider_stories_items_name: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.parentId"
+  """
+  blocks_storySlider_stories_items_parentId: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.path"
+  """
+  blocks_storySlider_stories_items_path: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.shape"
+  """
+  blocks_storySlider_stories_items_shape: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.type"
+  """
+  blocks_storySlider_stories_items_type: SortOrder
+
+  """
+  Sort on "blocks.story-slider.title"
+  """
+  blocks_storySlider_title: SortOrder
+
+  """
+  Sort on "createdAt"
+  """
+  createdAt: SortOrder
+
+  """
+  Sort on "depth"
+  """
+  depth: SortOrder
+
+  """
+  Sort on "history"
+  """
+  history: SortOrder
+
+  """
+  Sort on "id"
+  """
+  id: SortOrder
+
+  """
+  Sort on "itemId"
+  """
+  itemId: SortOrder
+
+  """
+  Sort on "language"
+  """
+  language: SortOrder
+
+  """
+  Sort on "meta.title"
+  """
+  meta_title: SortOrder
+
+  """
+  Sort on "name"
+  """
+  name: SortOrder
+
+  """
+  Sort on "parentId"
+  """
+  parentId: SortOrder
+
+  """
+  Sort on "parentPaths"
+  """
+  parentPaths: SortOrder
+
+  """
+  Sort on "path"
+  """
+  path: SortOrder
+
+  """
+  Sort on "position"
+  """
+  position: SortOrder
+
+  """
+  Sort on "publicationState"
+  """
+  publicationState: SortOrder
+
+  """
+  Sort on "publishedAt"
+  """
+  publishedAt: SortOrder
+
+  """Sort on the Score based on the query"""
+  score: SortOrder
+
+  """
+  Sort on "shortcuts.parentId"
+  """
+  shortcuts_parentId: SortOrder
+
+  """
+  Sort on "shortcuts.path"
+  """
+  shortcuts_path: SortOrder
+
+  """
+  Sort on "shortcuts.position"
+  """
+  shortcuts_position: SortOrder
+
+  """
+  Sort on "topics"
+  """
+  topics: SortOrder
+
+  """
+  Sort on "type"
+  """
+  type: SortOrder
+
+  """
+  Sort on "updatedAt"
+  """
+  updatedAt: SortOrder
+}
+
+type LayoutPiece {
+  backgroundMedia: ComponentChoiceComponentForLayoutPieceBackgroundMedia
+  displayWidth(key: String): Hash
+  theme(key: String): Hash
+}
+
+input MenuItemFacet {
+  createdAt: DateFacet
+  depth: NumberFacet
+  label: StringFacet
+  language: StringFacet
+  link_item_items_name: StringFacet
+  link_item_items_path: StringFacet
+  link_url: StringFacet
+  name: StringFacet
+  parentPaths: StringFacet
+  position: NumberFacet
+  publicationState: StringFacet
+  publishedAt: DateFacet
+  shortcuts_position: NumberFacet
+  topics: StringFacet
+  type: StringFacet
+  updatedAt: DateFacet
+}
+
+input MenuItemFilter {
+  """Logical AND filter to apply to the query"""
+  AND: [MenuItemFilter]
+
+  """Logical OR filter to apply to the query"""
+  OR: [MenuItemFilter]
+
+  """
+  Filter on "aliases"
+  """
+  aliases: StringFilter
+
+  """
+  Filter on "createdAt"
+  """
+  createdAt: DateFilter
+
+  """
+  Filter on "depth"
+  """
+  depth: NumberFilter
+
+  """
+  Filter on "description.plainText"
+  """
+  description_plainText: StringFilter
+
+  """
+  Filter on "history"
+  """
+  history: StringFilter
+
+  """
+  Filter on "icon.caption.plainText"
+  """
+  icon_caption_plainText: StringFilter
+
+  """
+  Filter on "id"
+  """
+  id: StringFilter
+
+  """
+  Filter on "itemId"
+  """
+  itemId: StringFilter
+
+  """
+  Filter on "label"
+  """
+  label: StringFilter
+
+  """
+  Filter on "language"
+  """
+  language: StringFilter
+
+  """
+  Filter on "link.item.items.itemId"
+  """
+  link_item_items_itemId: StringFilter
+
+  """
+  Filter on "link.item.items.name"
+  """
+  link_item_items_name: StringFilter
+
+  """
+  Filter on "link.item.items.parentId"
+  """
+  link_item_items_parentId: StringFilter
+
+  """
+  Filter on "link.item.items.path"
+  """
+  link_item_items_path: StringFilter
+
+  """
+  Filter on "link.item.items.shape"
+  """
+  link_item_items_shape: StringFilter
+
+  """
+  Filter on "link.item.items.type"
+  """
+  link_item_items_type: StringFilter
+
+  """
+  Filter on "link.url"
+  """
+  link_url: StringFilter
+
+  """
+  Filter on "name"
+  """
+  name: StringFilterWithAutocomplete
+
+  """
+  Filter on "parentId"
+  """
+  parentId: StringFilter
+
+  """
+  Filter on "parentPaths"
+  """
+  parentPaths: StringFilter
+
+  """
+  Filter on "path"
+  """
+  path: StringFilter
+
+  """
+  Filter on "position"
+  """
+  position: NumberFilter
+
+  """
+  Filter on "publicationState"
+  """
+  publicationState: StringFilter
+
+  """
+  Filter on "publishedAt"
+  """
+  publishedAt: DateFilter
+
+  """
+  Filter on "shortcuts.parentId"
+  """
+  shortcuts_parentId: StringFilter
+
+  """
+  Filter on "shortcuts.path"
+  """
+  shortcuts_path: StringFilter
+
+  """
+  Filter on "shortcuts.position"
+  """
+  shortcuts_position: NumberFilter
+
+  """
+  Filter on "topics"
+  """
+  topics: StringFilter
+
+  """
+  Filter on "updatedAt"
+  """
+  updatedAt: DateFilter
+}
+
+type MenuItemQuery {
+  hits: [menuItem]
+  summary: SearchSummary
+}
+
+input MenuItemSort {
+  """
+  Sort on "aliases"
+  """
+  aliases: SortOrder
+
+  """
+  Sort on "createdAt"
+  """
+  createdAt: SortOrder
+
+  """
+  Sort on "depth"
+  """
+  depth: SortOrder
+
+  """
+  Sort on "history"
+  """
+  history: SortOrder
+
+  """
+  Sort on "id"
+  """
+  id: SortOrder
+
+  """
+  Sort on "itemId"
+  """
+  itemId: SortOrder
+
+  """
+  Sort on "label"
+  """
+  label: SortOrder
+
+  """
+  Sort on "language"
+  """
+  language: SortOrder
+
+  """
+  Sort on "link.item.items.itemId"
+  """
+  link_item_items_itemId: SortOrder
+
+  """
+  Sort on "link.item.items.name"
+  """
+  link_item_items_name: SortOrder
+
+  """
+  Sort on "link.item.items.parentId"
+  """
+  link_item_items_parentId: SortOrder
+
+  """
+  Sort on "link.item.items.path"
+  """
+  link_item_items_path: SortOrder
+
+  """
+  Sort on "link.item.items.shape"
+  """
+  link_item_items_shape: SortOrder
+
+  """
+  Sort on "link.item.items.type"
+  """
+  link_item_items_type: SortOrder
+
+  """
+  Sort on "link.url"
+  """
+  link_url: SortOrder
+
+  """
+  Sort on "name"
+  """
+  name: SortOrder
+
+  """
+  Sort on "parentId"
+  """
+  parentId: SortOrder
+
+  """
+  Sort on "parentPaths"
+  """
+  parentPaths: SortOrder
+
+  """
+  Sort on "path"
+  """
+  path: SortOrder
+
+  """
+  Sort on "position"
+  """
+  position: SortOrder
+
+  """
+  Sort on "publicationState"
+  """
+  publicationState: SortOrder
+
+  """
+  Sort on "publishedAt"
+  """
+  publishedAt: SortOrder
+
+  """Sort on the Score based on the query"""
+  score: SortOrder
+
+  """
+  Sort on "shortcuts.parentId"
+  """
+  shortcuts_parentId: SortOrder
+
+  """
+  Sort on "shortcuts.path"
+  """
+  shortcuts_path: SortOrder
+
+  """
+  Sort on "shortcuts.position"
+  """
+  shortcuts_position: SortOrder
+
+  """
+  Sort on "topics"
+  """
+  topics: SortOrder
+
+  """
+  Sort on "type"
+  """
+  type: SortOrder
+
+  """
+  Sort on "updatedAt"
+  """
+  updatedAt: SortOrder
+}
+
+type MetaPiece {
+  description(format: RichTextFormat! = json): RichText
+  image: [Image]
+  title: String
+}
+
+input NumberFacet {
+  """The boundaries of the facet"""
+  boundaries: [Int]!
+
+  """The key of the facet in the result"""
+  key: String
+  limit: Int = 10
+}
+
+input NumberFilter {
+  """Filter on equality"""
+  equals: Float
+
+  """Filter on existence"""
+  exists: Boolean
+
+  """Filter if is in list"""
+  in: [Float]
+
+  """Filter on not equal to"""
+  not_equals: Float
+
+  """Filter if is not in list"""
+  not_in: [Float]
+
+  """Filter if is within range"""
+  range: NumberRange
+}
+
+input NumberRange {
+  gt: Float
+  gte: Float
+  lt: Float
+  lte: Float
+}
+
+input Pagination {
+  """Provide the paginationToken from the document."""
+  after: String
+
+  """Provide the paginationToken from the document."""
+  before: String
+
+  """The maximum number of results to return."""
+  limit: Int = 25
+
+  """
+  Not the best in terms of performance. Use searchAfter or searchBefore instead.
+  """
+  skip: Int
+}
+
+type Paragraph implements Images {
+  body(format: RichTextFormat! = json): RichText
+
+  """
+  This is a syntactic sugar for getting the first image in the images list
+  """
+  firstImage: Image
+  images: [Image]
+  title: String
+  videos: [VideoComponent]
+}
+
+"""How to resolve the path of an item."""
+enum PathResolutionMethod {
+  alias
+  canonical
+  history
+  shortcut
+}
+
+type PictureGridPiece {
+  description(format: RichTextFormat! = json): RichText
+  images: [Image]
+  layout: LayoutPiece
+  title: String
+}
+
+type PriceRange {
+  max: Float
+  min: Float
+}
+
+interface Product implements Document {
+  """The Aliases"""
+  aliases: [String]
+
+  """The Breadcrumbs"""
+  breadcrumbs(
+    """Include breacrumbs path with shortcuts"""
+    withShortcuts: Boolean = true
+  ): [[Breadcrumb]]
+
+  """The date when the version was created"""
+  createdAt: Datetime
+
+  """The default variant (generic) of the product"""
+  defaultVariant: ProductVariant
+
+  """The canonical depth in the tree"""
+  depth: String
+
+  """The external reference"""
+  externalReference: String
+
+  """The History of Paths"""
+  history: [String]
+
+  """The version id that includes the language and the publication state"""
+  id: ID
+
+  """The date when the document was indexed for the las time"""
+  indexedAt: Datetime
+
+  """The item id"""
+  itemId: ID
+
+  """The Language"""
+  language: String
+
+  """The name"""
+  name: String
+
+  """To be used with searchAfter and searchBefore"""
+  paginationToken: String
+
+  """The parent document"""
+  parent: Document
+
+  """The parent id"""
+  parentId: ID
+
+  """The path"""
+  path: String
+
+  """The method to resolve the path"""
+  pathResolutionMethod: PathResolutionMethod
+
+  """The canonical position in the tree"""
+  position: String
+
+  """The publication state"""
+  publicationState: String
+
+  """The date when the version was published"""
+  publishedAt: Datetime
+
+  """The score"""
+  score: Float
+
+  """The shape identifier"""
+  shape: String
+
+  """The Shortcuts"""
+  shortcuts: [String]
+
+  """The different topic paths"""
+  topicPaths(
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+  ): [String]
+
+  """The different topics"""
+  topics(
+    key: String
+
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+
+    """Only return leaf names"""
+    onlyLeafName: Boolean = false
+  ): Hash
+
+  """The type"""
+  type: String
+
+  """The date when the version was updated"""
+  updatedAt: Datetime
+
+  """The list of the variants (generic) for the product"""
+  variants: [ProductVariant]
+
+  """The VAT type"""
+  vatType: VatType
+}
+
+input ProductFacet {
+  attributes_key: StringFacet
+  attributes_value: StringFacet
+  brand_items_name: StringFacet
+  brand_items_path: StringFacet
+  createdAt: DateFacet
+  depth: NumberFacet
+  details_title: StringFacet
+  dimensions_depth_number: NumberFacet
+  dimensions_height_number: NumberFacet
+  dimensions_weight_number: NumberFacet
+  dimensions_width_number: NumberFacet
+  downloads_files_title: StringFacet
+  downloads_title: StringFacet
+  language: StringFacet
+  meta_title: StringFacet
+  name: StringFacet
+  parentPaths: StringFacet
+  position: NumberFacet
+  price_default: NumberFacet
+  price_membership: NumberFacet
+  price_membershipNo: NumberFacet
+  price_norwayB2b: NumberFacet
+  price_norwayB2cSales: NumberFacet
+  publicationState: StringFacet
+  publishedAt: DateFacet
+  relatedProducts_items_name: StringFacet
+  relatedProducts_items_path: StringFacet
+  relatedProducts_skus: StringFacet
+  shortcuts_position: NumberFacet
+  sku: StringFacet
+  stock_default: NumberFacet
+  stock_oslo: NumberFacet
+  stock_toronto: NumberFacet
+  story_title: StringFacet
+  title: StringFacet
+  topics: StringFacet
+  type: StringFacet
+  updatedAt: DateFacet
+  variants_dimensions_depth_number: NumberFacet
+  variants_dimensions_height_number: NumberFacet
+  variants_dimensions_weight_number: NumberFacet
+  variants_dimensions_width_number: NumberFacet
+  variants_matchingProducts_skus: StringFacet
+  variants_name: StringFacet
+}
+
+input ProductFilter {
+  """Logical AND filter to apply to the query"""
+  AND: [ProductFilter]
+
+  """Logical OR filter to apply to the query"""
+  OR: [ProductFilter]
+
+  """
+  Filter on "aliases"
+  """
+  aliases: StringFilter
+
+  """
+  Filter on "variants.attributes.key"
+  """
+  attributes_key: StringFilter
+
+  """
+  Filter on "variants.attributes.value"
+  """
+  attributes_value: StringFilter
+
+  """
+  Filter on "brand.items.itemId"
+  """
+  brand_items_itemId: StringFilter
+
+  """
+  Filter on "brand.items.name"
+  """
+  brand_items_name: StringFilter
+
+  """
+  Filter on "brand.items.parentId"
+  """
+  brand_items_parentId: StringFilter
+
+  """
+  Filter on "brand.items.path"
+  """
+  brand_items_path: StringFilter
+
+  """
+  Filter on "brand.items.shape"
+  """
+  brand_items_shape: StringFilter
+
+  """
+  Filter on "brand.items.type"
+  """
+  brand_items_type: StringFilter
+
+  """
+  Filter on "createdAt"
+  """
+  createdAt: DateFilter
+
+  """
+  Filter on "depth"
+  """
+  depth: NumberFilter
+
+  """
+  Filter on "description.plainText"
+  """
+  description_plainText: StringFilter
+
+  """
+  Filter on "details.description.plainText"
+  """
+  details_description_plainText: StringFilter
+
+  """
+  Filter on "details.title"
+  """
+  details_title: StringFilter
+
+  """
+  Filter on "dimensions.depth.number"
+  """
+  dimensions_depth_number: NumberFilter
+
+  """
+  Filter on "dimensions.height.number"
+  """
+  dimensions_height_number: NumberFilter
+
+  """
+  Filter on "dimensions.weight.number"
+  """
+  dimensions_weight_number: NumberFilter
+
+  """
+  Filter on "dimensions.width.number"
+  """
+  dimensions_width_number: NumberFilter
+
+  """
+  Filter on "downloads.description.plainText"
+  """
+  downloads_description_plainText: StringFilter
+
+  """
+  Filter on "downloads.files.key"
+  """
+  downloads_files_key: StringFilter
+
+  """
+  Filter on "downloads.files.title"
+  """
+  downloads_files_title: StringFilter
+
+  """
+  Filter on "downloads.title"
+  """
+  downloads_title: StringFilter
+
+  """
+  Filter on "history"
+  """
+  history: StringFilter
+
+  """
+  Filter on "id"
+  """
+  id: StringFilter
+
+  """
+  Filter on "itemId"
+  """
+  itemId: StringFilter
+
+  """
+  Filter on "language"
+  """
+  language: StringFilter
+
+  """
+  Filter on "meta.description.plainText"
+  """
+  meta_description_plainText: StringFilter
+
+  """
+  Filter on "meta.image.caption.plainText"
+  """
+  meta_image_caption_plainText: StringFilter
+
+  """
+  Filter on "meta.title"
+  """
+  meta_title: StringFilter
+
+  """
+  Filter on "name"
+  """
+  name: StringFilterWithAutocomplete
+
+  """
+  Filter on "parentId"
+  """
+  parentId: StringFilter
+
+  """
+  Filter on "parentPaths"
+  """
+  parentPaths: StringFilter
+
+  """
+  Filter on "path"
+  """
+  path: StringFilter
+
+  """
+  Filter on "position"
+  """
+  position: NumberFilter
+
+  """
+  Filter on "variants.priceVariants.default.price"
+  """
+  price_default: NumberFilter
+
+  """
+  Filter on "variants.priceVariants.membership.price"
+  """
+  price_membership: NumberFilter
+
+  """
+  Filter on "variants.priceVariants.membership-no.price"
+  """
+  price_membershipNo: NumberFilter
+
+  """
+  Filter on "variants.priceVariants.norway-b2b.price"
+  """
+  price_norwayB2b: NumberFilter
+
+  """
+  Filter on "variants.priceVariants.norway-b2c-sales.price"
+  """
+  price_norwayB2cSales: NumberFilter
+
+  """
+  Filter on "publicationState"
+  """
+  publicationState: StringFilter
+
+  """
+  Filter on "publishedAt"
+  """
+  publishedAt: DateFilter
+
+  """
+  Filter on "related-products.items.itemId"
+  """
+  relatedProducts_items_itemId: StringFilter
+
+  """
+  Filter on "related-products.items.name"
+  """
+  relatedProducts_items_name: StringFilter
+
+  """
+  Filter on "related-products.items.parentId"
+  """
+  relatedProducts_items_parentId: StringFilter
+
+  """
+  Filter on "related-products.items.path"
+  """
+  relatedProducts_items_path: StringFilter
+
+  """
+  Filter on "related-products.items.shape"
+  """
+  relatedProducts_items_shape: StringFilter
+
+  """
+  Filter on "related-products.items.type"
+  """
+  relatedProducts_items_type: StringFilter
+
+  """
+  Filter on "related-products.skus"
+  """
+  relatedProducts_skus: StringFilter
+
+  """
+  Filter on "shortcuts.parentId"
+  """
+  shortcuts_parentId: StringFilter
+
+  """
+  Filter on "shortcuts.path"
+  """
+  shortcuts_path: StringFilter
+
+  """
+  Filter on "shortcuts.position"
+  """
+  shortcuts_position: NumberFilter
+
+  """
+  Filter on "variants.sku"
+  """
+  sku: StringFilterWithAutocomplete
+
+  """
+  Filter on "variants.stockLocations.default.stock"
+  """
+  stock_default: NumberFilter
+
+  """
+  Filter on "variants.stockLocations.oslo.stock"
+  """
+  stock_oslo: NumberFilter
+
+  """
+  Filter on "variants.stockLocations.toronto.stock"
+  """
+  stock_toronto: NumberFilter
+
+  """
+  Filter on "story.body.plainText"
+  """
+  story_body_plainText: StringFilter
+
+  """
+  Filter on "story.title"
+  """
+  story_title: StringFilter
+
+  """
+  Filter on "title"
+  """
+  title: StringFilter
+
+  """
+  Filter on "topics"
+  """
+  topics: StringFilter
+
+  """
+  Filter on "updatedAt"
+  """
+  updatedAt: DateFilter
+
+  """
+  Filter on "variants.description.alternative-description.plainText"
+  """
+  variants_description_alternativeDescription_plainText: StringFilter
+
+  """
+  Filter on "variants.description.extra-description.plainText"
+  """
+  variants_description_extraDescription_plainText: StringFilter
+
+  """
+  Filter on "variants.dimensions.depth.number"
+  """
+  variants_dimensions_depth_number: NumberFilter
+
+  """
+  Filter on "variants.dimensions.height.number"
+  """
+  variants_dimensions_height_number: NumberFilter
+
+  """
+  Filter on "variants.dimensions.weight.number"
+  """
+  variants_dimensions_weight_number: NumberFilter
+
+  """
+  Filter on "variants.dimensions.width.number"
+  """
+  variants_dimensions_width_number: NumberFilter
+
+  """
+  Filter on "variants.matching-products.skus"
+  """
+  variants_matchingProducts_skus: StringFilter
+
+  """
+  Filter on "variants.name"
+  """
+  variants_name: StringFilterWithAutocomplete
+}
+
+type ProductQuery {
+  hits: [product]
+  summary: SearchSummary
+}
+
+type ProductSliderPiece {
+  description(format: RichTextFormat! = json): RichText
+  layout: LayoutPiece
+
+  " "
+  products: ItemRelations
+  title: String
+}
+
+input ProductSort {
+  """
+  Sort on "aliases"
+  """
+  aliases: SortOrder
+
+  """
+  Sort on "variants.attributes.key"
+  """
+  attributes_key: SortOrder
+
+  """
+  Sort on "variants.attributes.value"
+  """
+  attributes_value: SortOrder
+
+  """
+  Sort on "brand.items.itemId"
+  """
+  brand_items_itemId: SortOrder
+
+  """
+  Sort on "brand.items.name"
+  """
+  brand_items_name: SortOrder
+
+  """
+  Sort on "brand.items.parentId"
+  """
+  brand_items_parentId: SortOrder
+
+  """
+  Sort on "brand.items.path"
+  """
+  brand_items_path: SortOrder
+
+  """
+  Sort on "brand.items.shape"
+  """
+  brand_items_shape: SortOrder
+
+  """
+  Sort on "brand.items.type"
+  """
+  brand_items_type: SortOrder
+
+  """
+  Sort on "createdAt"
+  """
+  createdAt: SortOrder
+
+  """
+  Sort on "depth"
+  """
+  depth: SortOrder
+
+  """
+  Sort on "details.title"
+  """
+  details_title: SortOrder
+
+  """
+  Sort on "dimensions.depth.number"
+  """
+  dimensions_depth_number: SortOrder
+
+  """
+  Sort on "dimensions.height.number"
+  """
+  dimensions_height_number: SortOrder
+
+  """
+  Sort on "dimensions.weight.number"
+  """
+  dimensions_weight_number: SortOrder
+
+  """
+  Sort on "dimensions.width.number"
+  """
+  dimensions_width_number: SortOrder
+
+  """
+  Sort on "downloads.files.key"
+  """
+  downloads_files_key: SortOrder
+
+  """
+  Sort on "downloads.files.title"
+  """
+  downloads_files_title: SortOrder
+
+  """
+  Sort on "downloads.title"
+  """
+  downloads_title: SortOrder
+
+  """
+  Sort on "history"
+  """
+  history: SortOrder
+
+  """
+  Sort on "id"
+  """
+  id: SortOrder
+
+  """
+  Sort on "itemId"
+  """
+  itemId: SortOrder
+
+  """
+  Sort on "language"
+  """
+  language: SortOrder
+
+  """
+  Sort on "meta.title"
+  """
+  meta_title: SortOrder
+
+  """
+  Sort on "name"
+  """
+  name: SortOrder
+
+  """
+  Sort on "parentId"
+  """
+  parentId: SortOrder
+
+  """
+  Sort on "parentPaths"
+  """
+  parentPaths: SortOrder
+
+  """
+  Sort on "path"
+  """
+  path: SortOrder
+
+  """
+  Sort on "position"
+  """
+  position: SortOrder
+
+  """
+  Sort on "variants.priceVariants.default.price"
+  """
+  price_default: SortOrder
+
+  """
+  Sort on "variants.priceVariants.membership.price"
+  """
+  price_membership: SortOrder
+
+  """
+  Sort on "variants.priceVariants.membership-no.price"
+  """
+  price_membershipNo: SortOrder
+
+  """
+  Sort on "variants.priceVariants.norway-b2b.price"
+  """
+  price_norwayB2b: SortOrder
+
+  """
+  Sort on "variants.priceVariants.norway-b2c-sales.price"
+  """
+  price_norwayB2cSales: SortOrder
+
+  """
+  Sort on "publicationState"
+  """
+  publicationState: SortOrder
+
+  """
+  Sort on "publishedAt"
+  """
+  publishedAt: SortOrder
+
+  """
+  Sort on "related-products.items.itemId"
+  """
+  relatedProducts_items_itemId: SortOrder
+
+  """
+  Sort on "related-products.items.name"
+  """
+  relatedProducts_items_name: SortOrder
+
+  """
+  Sort on "related-products.items.parentId"
+  """
+  relatedProducts_items_parentId: SortOrder
+
+  """
+  Sort on "related-products.items.path"
+  """
+  relatedProducts_items_path: SortOrder
+
+  """
+  Sort on "related-products.items.shape"
+  """
+  relatedProducts_items_shape: SortOrder
+
+  """
+  Sort on "related-products.items.type"
+  """
+  relatedProducts_items_type: SortOrder
+
+  """
+  Sort on "related-products.skus"
+  """
+  relatedProducts_skus: SortOrder
+
+  """Sort on the Score based on the query"""
+  score: SortOrder
+
+  """
+  Sort on "shortcuts.parentId"
+  """
+  shortcuts_parentId: SortOrder
+
+  """
+  Sort on "shortcuts.path"
+  """
+  shortcuts_path: SortOrder
+
+  """
+  Sort on "shortcuts.position"
+  """
+  shortcuts_position: SortOrder
+
+  """
+  Sort on "variants.sku"
+  """
+  sku: SortOrder
+
+  """
+  Sort on "variants.stockLocations.default.stock"
+  """
+  stock_default: SortOrder
+
+  """
+  Sort on "variants.stockLocations.oslo.stock"
+  """
+  stock_oslo: SortOrder
+
+  """
+  Sort on "variants.stockLocations.toronto.stock"
+  """
+  stock_toronto: SortOrder
+
+  """
+  Sort on "story.title"
+  """
+  story_title: SortOrder
+
+  """
+  Sort on "title"
+  """
+  title: SortOrder
+
+  """
+  Sort on "topics"
+  """
+  topics: SortOrder
+
+  """
+  Sort on "type"
+  """
+  type: SortOrder
+
+  """
+  Sort on "updatedAt"
+  """
+  updatedAt: SortOrder
+
+  """
+  Sort on "variants.dimensions.depth.number"
+  """
+  variants_dimensions_depth_number: SortOrder
+
+  """
+  Sort on "variants.dimensions.height.number"
+  """
+  variants_dimensions_height_number: SortOrder
+
+  """
+  Sort on "variants.dimensions.weight.number"
+  """
+  variants_dimensions_weight_number: SortOrder
+
+  """
+  Sort on "variants.dimensions.width.number"
+  """
+  variants_dimensions_width_number: SortOrder
+
+  """
+  Sort on "variants.matching-products.skus"
+  """
+  variants_matchingProducts_skus: SortOrder
+
+  """
+  Sort on "variants.name"
+  """
+  variants_name: SortOrder
+}
+
+interface ProductVariant implements Images {
+  attributes(key: String): Hash
+
+  """
+  This is a syntactic sugar for getting the 'default' priceVariant value in the priceVariants list.
+  """
+  defaultPrice: Float
+
+  """
+  PriceList aware best price for everyone for the 'default' priceVariant.
+  """
+  defaultPriceFor(marketIdentifiers: [String]): Float
+
+  """
+  PriceList aware best price for everyone for the 'default' priceVariant.
+  """
+  defaultPriceForEveryone: Float
+
+  """
+  This is a syntactic sugar for getting the 'default' stockLocation value in the stockLocations list.
+  """
+  defaultStock: Float
+
+  """
+  This is a syntactic sugar for getting the first image in the images list
+  """
+  firstImage: Image
+  images: [Image]
+  isDefault: Boolean
+
+  """
+  This is a syntactic sugar for getting the 'membership-no' priceVariant value in the priceVariants list.
+  """
+  membershipNoPrice: Float
+
+  """
+  PriceList aware best price for everyone for the 'membership-no' priceVariant.
+  """
+  membershipNoPriceFor(marketIdentifiers: [String]): Float
+
+  """
+  PriceList aware best price for everyone for the 'membership-no' priceVariant.
+  """
+  membershipNoPriceForEveryone: Float
+
+  """
+  This is a syntactic sugar for getting the 'membership' priceVariant value in the priceVariants list.
+  """
+  membershipPrice: Float
+
+  """
+  PriceList aware best price for everyone for the 'membership' priceVariant.
+  """
+  membershipPriceFor(marketIdentifiers: [String]): Float
+
+  """
+  PriceList aware best price for everyone for the 'membership' priceVariant.
+  """
+  membershipPriceForEveryone: Float
+
+  """The Subscription plan for monthly-fixed."""
+  monthlyFixedSubscriptionPlan: SubscriptionPlan
+  name: String
+
+  """
+  This is a syntactic sugar for getting the 'norway-b2b' priceVariant value in the priceVariants list.
+  """
+  norwayB2bPrice: Float
+
+  """
+  PriceList aware best price for everyone for the 'norway-b2b' priceVariant.
+  """
+  norwayB2bPriceFor(marketIdentifiers: [String]): Float
+
+  """
+  PriceList aware best price for everyone for the 'norway-b2b' priceVariant.
+  """
+  norwayB2bPriceForEveryone: Float
+
+  """
+  This is a syntactic sugar for getting the 'norway-b2c-sales' priceVariant value in the priceVariants list.
+  """
+  norwayB2cSalesPrice: Float
+
+  """
+  PriceList aware best price for everyone for the 'norway-b2c-sales' priceVariant.
+  """
+  norwayB2cSalesPriceFor(marketIdentifiers: [String]): Float
+
+  """
+  PriceList aware best price for everyone for the 'norway-b2c-sales' priceVariant.
+  """
+  norwayB2cSalesPriceForEveryone: Float
+
+  """
+  This is a syntactic sugar for getting the 'oslo' stockLocation value in the stockLocations list.
+  """
+  osloStock: Float
+
+  """
+  PriceList aware best price for the given price variant. Make it possible for you to do a more dynamic query if the price variant is an input.
+  """
+  priceVariantFor(
+    """The identifier of the price variant to get the price for."""
+    identifier: String = "default"
+    marketIdentifiers: [String]
+  ): Float
+
+  """
+  PriceList aware best price for the given price variant. Make it possible for you to do a more dynamic query if the price variant is an input.
+  """
+  priceVariantForEveryone(
+    """The identifier of the price variant to get the price for."""
+    identifier: String = "default"
+  ): Float
+  priceVariants(key: String): Hash
+  product: Product
+  sku: String
+  stockLocations(key: String): Hash
+
+  """The Subscription plans for the variant."""
+  subscriptionPlans: [SubscriptionPlan]
+
+  """
+  This is a syntactic sugar for getting the 'toronto' stockLocation value in the stockLocations list.
+  """
+  torontoStock: Float
+  videos: [VideoComponent]
+}
+
+type ProductVariantForProduct implements Images & ProductVariant {
+  attributes(key: String): Hash
+
+  """
+  This is a syntactic sugar for getting the 'default' priceVariant value in the priceVariants list.
+  """
+  defaultPrice: Float
+
+  """
+  PriceList aware best price for everyone for the 'default' priceVariant.
+  """
+  defaultPriceFor(marketIdentifiers: [String]): Float
+
+  """
+  PriceList aware best price for everyone for the 'default' priceVariant.
+  """
+  defaultPriceForEveryone: Float
+
+  """
+  This is a syntactic sugar for getting the 'default' stockLocation value in the stockLocations list.
+  """
+  defaultStock: Float
+  description: ComponentChoiceComponentForVariantProductDescription
+  dimensions: DimensionsPiece
+
+  """
+  This is a syntactic sugar for getting the first image in the images list
+  """
+  firstImage: Image
+  images: [Image]
+  isDefault: Boolean
+  matchingProducts: ItemRelations
+
+  """
+  This is a syntactic sugar for getting the 'membership-no' priceVariant value in the priceVariants list.
+  """
+  membershipNoPrice: Float
+
+  """
+  PriceList aware best price for everyone for the 'membership-no' priceVariant.
+  """
+  membershipNoPriceFor(marketIdentifiers: [String]): Float
+
+  """
+  PriceList aware best price for everyone for the 'membership-no' priceVariant.
+  """
+  membershipNoPriceForEveryone: Float
+
+  """
+  This is a syntactic sugar for getting the 'membership' priceVariant value in the priceVariants list.
+  """
+  membershipPrice: Float
+
+  """
+  PriceList aware best price for everyone for the 'membership' priceVariant.
+  """
+  membershipPriceFor(marketIdentifiers: [String]): Float
+
+  """
+  PriceList aware best price for everyone for the 'membership' priceVariant.
+  """
+  membershipPriceForEveryone: Float
+
+  """The Subscription plan for monthly-fixed."""
+  monthlyFixedSubscriptionPlan: SubscriptionPlan
+  name: String
+
+  """
+  This is a syntactic sugar for getting the 'norway-b2b' priceVariant value in the priceVariants list.
+  """
+  norwayB2bPrice: Float
+
+  """
+  PriceList aware best price for everyone for the 'norway-b2b' priceVariant.
+  """
+  norwayB2bPriceFor(marketIdentifiers: [String]): Float
+
+  """
+  PriceList aware best price for everyone for the 'norway-b2b' priceVariant.
+  """
+  norwayB2bPriceForEveryone: Float
+
+  """
+  This is a syntactic sugar for getting the 'norway-b2c-sales' priceVariant value in the priceVariants list.
+  """
+  norwayB2cSalesPrice: Float
+
+  """
+  PriceList aware best price for everyone for the 'norway-b2c-sales' priceVariant.
+  """
+  norwayB2cSalesPriceFor(marketIdentifiers: [String]): Float
+
+  """
+  PriceList aware best price for everyone for the 'norway-b2c-sales' priceVariant.
+  """
+  norwayB2cSalesPriceForEveryone: Float
+
+  """
+  This is a syntactic sugar for getting the 'oslo' stockLocation value in the stockLocations list.
+  """
+  osloStock: Float
+
+  """
+  PriceList aware best price for the given price variant. Make it possible for you to do a more dynamic query if the price variant is an input.
+  """
+  priceVariantFor(
+    """The identifier of the price variant to get the price for."""
+    identifier: String = "default"
+    marketIdentifiers: [String]
+  ): Float
+
+  """
+  PriceList aware best price for the given price variant. Make it possible for you to do a more dynamic query if the price variant is an input.
+  """
+  priceVariantForEveryone(
+    """The identifier of the price variant to get the price for."""
+    identifier: String = "default"
+  ): Float
+  priceVariants(key: String): Hash
+  product: Product
+  sku: String
+  stockLocations(key: String): Hash
+
+  """The Subscription plans for the variant."""
+  subscriptionPlans: [SubscriptionPlan]
+
+  """
+  This is a syntactic sugar for getting the 'toronto' stockLocation value in the stockLocations list.
+  """
+  torontoStock: Float
+  videos: [VideoComponent]
+}
+
+type Profiling {
+  collection: String
+  executionTime: Float
+  lastIndexCompletedAt: Datetime
+  webNode: String
+}
+
+"""The publication state of an Document."""
+enum PublicationState {
+  draft
+  published
+}
+
+"""
+The root of all Discovery queries in the Crystallize API for identifier: furnitut
+"""
+type Query {
+  """
+  This query is used to help with autocomplete (hardcode on `name` so far).
+  """
+  autocomplete(
+    facets: TenantFacet
+    filters: TenantFilter
+
+    """The language to search in."""
+    language: [TenantLanguage] = [en]
+
+    """The search options."""
+    options: SearchOptions
+
+    """The pagination settings."""
+    pagination: Pagination = {limit: 25}
+
+    """The path to search from."""
+    path: String
+    pathResolutionMethod: [PathResolutionMethod]
+    publicationState: [PublicationState] = [published]
+    sorting: TenantSort
+
+    """The query to search for (Fulltext)."""
+    term: String
+  ): SearchResults
+
+  """This query is used to browse the Crystallize catalog per Shape First."""
+  browse: BrowseQuery
+
+  """This query is used to search the Crystallize catalog."""
+  search(
+    facets: TenantFacet
+    filters: TenantFilter
+
+    """The language to search in."""
+    language: [TenantLanguage] = [en]
+
+    """The search options."""
+    options: SearchOptions
+
+    """The pagination settings."""
+    pagination: Pagination = {limit: 25}
+
+    """The path to search from."""
+    path: String
+    pathResolutionMethod: [PathResolutionMethod]
+    publicationState: [PublicationState] = [published]
+    sorting: TenantSort
+
+    """The query to search for (Fulltext)."""
+    term: String
+  ): SearchResults
+
+  """
+  This query is used to retrieve the children topics from the selected parent.
+  """
+  topics(
+    """The language for the name and path of the topics."""
+    language: TenantLanguage = en
+
+    """The parent ID (takes precedence over path)"""
+    parentId: String
+
+    """The path of the topic. (will be coupled with the language)"""
+    path: String
+  ): [Topic]
+}
+
+"""
+A `RichText` scalar type represents a `string[]` (plainText or HTML) or a JSON
+"""
+scalar RichText
+
+enum RichTextFormat {
+  html
+  json
+  plainText
+}
+
+input SearchOptions {
+  """Fuzzy search options."""
+  fuzzy: FuzzySearchOptions
+}
+
+type SearchResults {
+  hits: [Document]
+  summary: SearchSummary
+}
+
+type SearchSummary {
+  """
+  The last token to use for the next page. It only makes sense if used with `after`.
+  """
+  endToken: String
+  facets(key: String): Hash
+
+  """
+  It only makes sense if used with `skip`. Skip is not the best in terms of perofmance. Use after and/or before instead.
+  """
+  hasMoreHits: Boolean
+
+  """
+  It only makes sense if used with `skip`. Skip is not the best in terms of perofmance. Use after and before instead.
+  """
+  hasPreviousHits: Boolean
+
+  """
+  The price range of the search result. (this will re-executes the search query with group by price)
+  """
+  priceRange(
+    """The price identifier to group by"""
+    priceIdentifier: String = "default"
+  ): PriceRange
+  profiling: Profiling
+  totalHits: Int
+}
+
+type Showcase implements ItemRelationsInterface & SkuRelationsInterface {
+  hotspot(key: String): Hash
+  items(
+    """The language to search in."""
+    language: [TenantLanguage]
+    publicationState: [PublicationState]
+  ): [Document]
+  meta(key: String): Hash
+  variants(
+    """The language to search in."""
+    language: [TenantLanguage]
+    publicationState: [PublicationState]
+  ): [ProductVariant]
+}
+
+interface SkuRelationsInterface {
+  variants(
+    """The language to search in."""
+    language: [TenantLanguage]
+    publicationState: [PublicationState]
+  ): [ProductVariant]
+}
+
+"""The order to sort the results"""
+enum SortOrder {
+  asc
+  desc
+}
+
+input StoryFacet {
+  createdAt: DateFacet
+  depth: NumberFacet
+  featured_items_name: StringFacet
+  featured_items_path: StringFacet
+  featured_skus: StringFacet
+  language: StringFacet
+  meta_title: StringFacet
+  name: StringFacet
+  parentPaths: StringFacet
+  position: NumberFacet
+  publicationState: StringFacet
+  publishedAt: DateFacet
+  shortcuts_position: NumberFacet
+  story_title: StringFacet
+  title: StringFacet
+  topics: StringFacet
+  type: StringFacet
+  upNext_items_name: StringFacet
+  upNext_items_path: StringFacet
+  updatedAt: DateFacet
+}
+
+input StoryFilter {
+  """Logical AND filter to apply to the query"""
+  AND: [StoryFilter]
+
+  """Logical OR filter to apply to the query"""
+  OR: [StoryFilter]
+
+  """
+  Filter on "aliases"
+  """
+  aliases: StringFilter
+
+  """
+  Filter on "createdAt"
+  """
+  createdAt: DateFilter
+
+  """
+  Filter on "depth"
+  """
+  depth: NumberFilter
+
+  """
+  Filter on "featured.items.itemId"
+  """
+  featured_items_itemId: StringFilter
+
+  """
+  Filter on "featured.items.name"
+  """
+  featured_items_name: StringFilter
+
+  """
+  Filter on "featured.items.parentId"
+  """
+  featured_items_parentId: StringFilter
+
+  """
+  Filter on "featured.items.path"
+  """
+  featured_items_path: StringFilter
+
+  """
+  Filter on "featured.items.shape"
+  """
+  featured_items_shape: StringFilter
+
+  """
+  Filter on "featured.items.type"
+  """
+  featured_items_type: StringFilter
+
+  """
+  Filter on "featured.skus"
+  """
+  featured_skus: StringFilter
+
+  """
+  Filter on "history"
+  """
+  history: StringFilter
+
+  """
+  Filter on "id"
+  """
+  id: StringFilter
+
+  """
+  Filter on "intro.plainText"
+  """
+  intro_plainText: StringFilter
+
+  """
+  Filter on "itemId"
+  """
+  itemId: StringFilter
+
+  """
+  Filter on "language"
+  """
+  language: StringFilter
+
+  """
+  Filter on "media.image.caption.plainText"
+  """
+  media_image_caption_plainText: StringFilter
+
+  """
+  Filter on "media.shoppable-image.caption.plainText"
+  """
+  media_shoppableImage_caption_plainText: StringFilter
+
+  """
+  Filter on "media.video.thumbnails.caption.plainText"
+  """
+  media_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "meta.description.plainText"
+  """
+  meta_description_plainText: StringFilter
+
+  """
+  Filter on "meta.image.caption.plainText"
+  """
+  meta_image_caption_plainText: StringFilter
+
+  """
+  Filter on "meta.title"
+  """
+  meta_title: StringFilter
+
+  """
+  Filter on "name"
+  """
+  name: StringFilterWithAutocomplete
+
+  """
+  Filter on "parentId"
+  """
+  parentId: StringFilter
+
+  """
+  Filter on "parentPaths"
+  """
+  parentPaths: StringFilter
+
+  """
+  Filter on "path"
+  """
+  path: StringFilter
+
+  """
+  Filter on "position"
+  """
+  position: NumberFilter
+
+  """
+  Filter on "publicationState"
+  """
+  publicationState: StringFilter
+
+  """
+  Filter on "publishedAt"
+  """
+  publishedAt: DateFilter
+
+  """
+  Filter on "shortcuts.parentId"
+  """
+  shortcuts_parentId: StringFilter
+
+  """
+  Filter on "shortcuts.path"
+  """
+  shortcuts_path: StringFilter
+
+  """
+  Filter on "shortcuts.position"
+  """
+  shortcuts_position: NumberFilter
+
+  """
+  Filter on "story.body.plainText"
+  """
+  story_body_plainText: StringFilter
+
+  """
+  Filter on "story.title"
+  """
+  story_title: StringFilter
+
+  """
+  Filter on "title"
+  """
+  title: StringFilter
+
+  """
+  Filter on "topics"
+  """
+  topics: StringFilter
+
+  """
+  Filter on "up-next.items.itemId"
+  """
+  upNext_items_itemId: StringFilter
+
+  """
+  Filter on "up-next.items.name"
+  """
+  upNext_items_name: StringFilter
+
+  """
+  Filter on "up-next.items.parentId"
+  """
+  upNext_items_parentId: StringFilter
+
+  """
+  Filter on "up-next.items.path"
+  """
+  upNext_items_path: StringFilter
+
+  """
+  Filter on "up-next.items.shape"
+  """
+  upNext_items_shape: StringFilter
+
+  """
+  Filter on "up-next.items.type"
+  """
+  upNext_items_type: StringFilter
+
+  """
+  Filter on "updatedAt"
+  """
+  updatedAt: DateFilter
+}
+
+type StoryQuery {
+  hits: [story]
+  summary: SearchSummary
+}
+
+type StorySliderPiece {
+  description(format: RichTextFormat! = json): RichText
+  layout: LayoutPiece
+  stories: ItemRelations
+  title: String
+}
+
+input StorySort {
+  """
+  Sort on "aliases"
+  """
+  aliases: SortOrder
+
+  """
+  Sort on "createdAt"
+  """
+  createdAt: SortOrder
+
+  """
+  Sort on "depth"
+  """
+  depth: SortOrder
+
+  """
+  Sort on "featured.items.itemId"
+  """
+  featured_items_itemId: SortOrder
+
+  """
+  Sort on "featured.items.name"
+  """
+  featured_items_name: SortOrder
+
+  """
+  Sort on "featured.items.parentId"
+  """
+  featured_items_parentId: SortOrder
+
+  """
+  Sort on "featured.items.path"
+  """
+  featured_items_path: SortOrder
+
+  """
+  Sort on "featured.items.shape"
+  """
+  featured_items_shape: SortOrder
+
+  """
+  Sort on "featured.items.type"
+  """
+  featured_items_type: SortOrder
+
+  """
+  Sort on "featured.skus"
+  """
+  featured_skus: SortOrder
+
+  """
+  Sort on "history"
+  """
+  history: SortOrder
+
+  """
+  Sort on "id"
+  """
+  id: SortOrder
+
+  """
+  Sort on "itemId"
+  """
+  itemId: SortOrder
+
+  """
+  Sort on "language"
+  """
+  language: SortOrder
+
+  """
+  Sort on "meta.title"
+  """
+  meta_title: SortOrder
+
+  """
+  Sort on "name"
+  """
+  name: SortOrder
+
+  """
+  Sort on "parentId"
+  """
+  parentId: SortOrder
+
+  """
+  Sort on "parentPaths"
+  """
+  parentPaths: SortOrder
+
+  """
+  Sort on "path"
+  """
+  path: SortOrder
+
+  """
+  Sort on "position"
+  """
+  position: SortOrder
+
+  """
+  Sort on "publicationState"
+  """
+  publicationState: SortOrder
+
+  """
+  Sort on "publishedAt"
+  """
+  publishedAt: SortOrder
+
+  """Sort on the Score based on the query"""
+  score: SortOrder
+
+  """
+  Sort on "shortcuts.parentId"
+  """
+  shortcuts_parentId: SortOrder
+
+  """
+  Sort on "shortcuts.path"
+  """
+  shortcuts_path: SortOrder
+
+  """
+  Sort on "shortcuts.position"
+  """
+  shortcuts_position: SortOrder
+
+  """
+  Sort on "story.title"
+  """
+  story_title: SortOrder
+
+  """
+  Sort on "title"
+  """
+  title: SortOrder
+
+  """
+  Sort on "topics"
+  """
+  topics: SortOrder
+
+  """
+  Sort on "type"
+  """
+  type: SortOrder
+
+  """
+  Sort on "up-next.items.itemId"
+  """
+  upNext_items_itemId: SortOrder
+
+  """
+  Sort on "up-next.items.name"
+  """
+  upNext_items_name: SortOrder
+
+  """
+  Sort on "up-next.items.parentId"
+  """
+  upNext_items_parentId: SortOrder
+
+  """
+  Sort on "up-next.items.path"
+  """
+  upNext_items_path: SortOrder
+
+  """
+  Sort on "up-next.items.shape"
+  """
+  upNext_items_shape: SortOrder
+
+  """
+  Sort on "up-next.items.type"
+  """
+  upNext_items_type: SortOrder
+
+  """
+  Sort on "updatedAt"
+  """
+  updatedAt: SortOrder
+}
+
+input StringFacet {
+  """The key of the facet in the result"""
+  key: String
+  limit: Int = 10
+}
+
+input StringFilter {
+  """Filter if contains"""
+  contains: String
+
+  """Filter on equality"""
+  equals: String
+
+  """Filter on existence"""
+  exists: Boolean
+
+  """Filter if is in list"""
+  in: [String]
+
+  """Filter if does not contain"""
+  not_contains: String
+
+  """Filter on not equal to"""
+  not_equals: String
+
+  """Filter if is not in list"""
+  not_in: [String]
+
+  """Filter  not matching regex. Ex: .*something.*"""
+  not_regex: String
+
+  """Filter with regex. Ex: .*something.*"""
+  regex: String
+}
+
+"""
+Filter when it contains a sequence of characters from an incomplete input string
+"""
+input StringFilterAutocomplete {
+  """Fuziness level."""
+  options: FuzzySearchOptions = {fuzziness: NONE, maxExpensions: 50, prefixLength: 0}
+
+  """
+  Filter when it contains a sequence of characters from an incomplete input string
+  """
+  term: String
+}
+
+input StringFilterWithAutocomplete {
+  autocomplete: StringFilterAutocomplete
+
+  """Filter if contains"""
+  contains: String
+
+  """Filter on equality"""
+  equals: String
+
+  """Filter on existence"""
+  exists: Boolean
+
+  """Filter if is in list"""
+  in: [String]
+
+  """Filter if does not contain"""
+  not_contains: String
+
+  """Filter on not equal to"""
+  not_equals: String
+
+  """Filter if is not in list"""
+  not_in: [String]
+
+  """Filter  not matching regex. Ex: .*something.*"""
+  not_regex: String
+
+  """Filter with regex. Ex: .*something.*"""
+  regex: String
+}
+
+type SubscriptionPlan {
+  """The Subscription Plan Identifier"""
+  identifier: String
+
+  """The Subscription Plan Name"""
+  name: String
+
+  """The Subscription Plan Periods"""
+  periods: [SubscriptionPlanPeriod]
+}
+
+type SubscriptionPlanMeteredVariable {
+  """The Subscription Plan Metered Variable ID"""
+  id: ID
+
+  """The Subscription Plan Metered Variable UIdentifier"""
+  identifier: String
+
+  """The Subscription Plan Metered Variable Name"""
+  name: String
+
+  """The Subscription Plan Metered Variable Tier Type"""
+  tierType: TierType
+
+  """The Subscription Plan Metered Variable Tiers"""
+  tiers: [SubscriptionPlanMeteredVariableTier]
+
+  """The Subscription Plan Metered Variable Unit"""
+  unit: String
+}
+
+type SubscriptionPlanMeteredVariableTier {
+  """
+  This is a syntactic sugar for getting the 'default' priceVariant value in the priceVariants list.
+  """
+  defaultPrice: Float
+
+  """
+  This is a syntactic sugar for getting the 'membership-no' priceVariant value in the priceVariants list.
+  """
+  membershipNoPrice: Float
+
+  """
+  This is a syntactic sugar for getting the 'membership' priceVariant value in the priceVariants list.
+  """
+  membershipPrice: Float
+
+  """
+  This is a syntactic sugar for getting the 'norway-b2b' priceVariant value in the priceVariants list.
+  """
+  norwayB2bPrice: Float
+
+  """
+  This is a syntactic sugar for getting the 'norway-b2c-sales' priceVariant value in the priceVariants list.
+  """
+  norwayB2cSalesPrice: Float
+  priceVariants(key: String): Hash
+
+  """The Subscription Plan Metered Variable Tier Threshold"""
+  threshold: Int
+}
+
+type SubscriptionPlanPeriod {
+  """The Subscription Plan Period ID"""
+  id: ID
+
+  """The Subscription Plan Recurring Period Phase"""
+  initial: SubscriptionPlanPhase
+
+  """The Subscription Plan Period Name"""
+  name: String
+
+  """The Subscription Plan Recurring Period Phase"""
+  recurring: SubscriptionPlanPhase!
+}
+
+type SubscriptionPlanPhase {
+  """
+  This is a syntactic sugar for getting the 'default' priceVariant value in the priceVariants list.
+  """
+  defaultPrice: Float
+
+  """
+  This is a syntactic sugar for getting the 'membership-no' priceVariant value in the priceVariants list.
+  """
+  membershipNoPrice: Float
+
+  """
+  This is a syntactic sugar for getting the 'membership' priceVariant value in the priceVariants list.
+  """
+  membershipPrice: Float
+
+  """The Subscription Plan Metered Variables."""
+  meteredVariables: [SubscriptionPlanMeteredVariable]
+
+  """
+  This is a syntactic sugar for getting the 'norway-b2b' priceVariant value in the priceVariants list.
+  """
+  norwayB2bPrice: Float
+
+  """
+  This is a syntactic sugar for getting the 'norway-b2c-sales' priceVariant value in the priceVariants list.
+  """
+  norwayB2cSalesPrice: Float
+
+  """The Subscription Plan Phase Period"""
+  period: String
+  priceVariants(key: String): Hash
+
+  """The Subscription Plan Phase Unit"""
+  unit: String
+}
+
+input TenantFacet {
+  attributes_key: StringFacet
+  attributes_value: StringFacet
+  blocks_banner_callToAction_action_label: StringFacet
+  blocks_banner_callToAction_action_url: StringFacet
+  blocks_banner_layout_displayWidth_contain: StringFacet
+  blocks_banner_layout_displayWidth_stretch: StringFacet
+  blocks_banner_layout_theme_dark: StringFacet
+  blocks_banner_layout_theme_light: StringFacet
+  blocks_banner_layout_theme_muted: StringFacet
+  blocks_banner_layout_theme_pastel: StringFacet
+  blocks_banner_layout_theme_vivid: StringFacet
+  blocks_banner_title: StringFacet
+  blocks_featureHighlights_layout_displayWidth_contain: StringFacet
+  blocks_featureHighlights_layout_displayWidth_stretch: StringFacet
+  blocks_featureHighlights_layout_theme_dark: StringFacet
+  blocks_featureHighlights_layout_theme_light: StringFacet
+  blocks_featureHighlights_layout_theme_muted: StringFacet
+  blocks_featureHighlights_layout_theme_pastel: StringFacet
+  blocks_featureHighlights_layout_theme_vivid: StringFacet
+  blocks_featureHighlights_usp_headline: StringFacet
+  blocks_pictureGrid_layout_displayWidth_contain: StringFacet
+  blocks_pictureGrid_layout_displayWidth_stretch: StringFacet
+  blocks_pictureGrid_layout_theme_dark: StringFacet
+  blocks_pictureGrid_layout_theme_light: StringFacet
+  blocks_pictureGrid_layout_theme_muted: StringFacet
+  blocks_pictureGrid_layout_theme_pastel: StringFacet
+  blocks_pictureGrid_layout_theme_vivid: StringFacet
+  blocks_pictureGrid_title: StringFacet
+  blocks_productSlider_layout_displayWidth_contain: StringFacet
+  blocks_productSlider_layout_displayWidth_stretch: StringFacet
+  blocks_productSlider_layout_theme_dark: StringFacet
+  blocks_productSlider_layout_theme_light: StringFacet
+  blocks_productSlider_layout_theme_muted: StringFacet
+  blocks_productSlider_layout_theme_pastel: StringFacet
+  blocks_productSlider_layout_theme_vivid: StringFacet
+  blocks_productSlider_products_skus: StringFacet
+  blocks_productSlider_title: StringFacet
+  blocks_storySlider_layout_displayWidth_contain: StringFacet
+  blocks_storySlider_layout_displayWidth_stretch: StringFacet
+  blocks_storySlider_layout_theme_dark: StringFacet
+  blocks_storySlider_layout_theme_light: StringFacet
+  blocks_storySlider_layout_theme_muted: StringFacet
+  blocks_storySlider_layout_theme_pastel: StringFacet
+  blocks_storySlider_layout_theme_vivid: StringFacet
+  blocks_storySlider_stories_items_name: StringFacet
+  blocks_storySlider_stories_items_path: StringFacet
+  blocks_storySlider_title: StringFacet
+  brand_items_name: StringFacet
+  brand_items_path: StringFacet
+  component_name: StringFacet
+  createdAt: DateFacet
+  depth: NumberFacet
+  details_title: StringFacet
+  dimensions_depth_number: NumberFacet
+  dimensions_height_number: NumberFacet
+  dimensions_weight_number: NumberFacet
+  dimensions_width_number: NumberFacet
+  downloads_files_title: StringFacet
+  downloads_title: StringFacet
+  featured_items_name: StringFacet
+  featured_items_path: StringFacet
+  featured_skus: StringFacet
+  label: StringFacet
+  language: StringFacet
+  link_item_items_name: StringFacet
+  link_item_items_path: StringFacet
+  link_url: StringFacet
+  meta_title: StringFacet
+  name: StringFacet
+  parentPaths: StringFacet
+  position: NumberFacet
+  price_default: NumberFacet
+  price_membership: NumberFacet
+  price_membershipNo: NumberFacet
+  price_norwayB2b: NumberFacet
+  price_norwayB2cSales: NumberFacet
+  publicationState: StringFacet
+  publishedAt: DateFacet
+  relatedProducts_items_name: StringFacet
+  relatedProducts_items_path: StringFacet
+  relatedProducts_skus: StringFacet
+  shape: StringFacet
+  shortcuts_position: NumberFacet
+  sku: StringFacet
+  stock_default: NumberFacet
+  stock_oslo: NumberFacet
+  stock_toronto: NumberFacet
+  story_title: StringFacet
+  title: StringFacet
+  topics: StringFacet
+  type: StringFacet
+  upNext_items_name: StringFacet
+  upNext_items_path: StringFacet
+  updatedAt: DateFacet
+  variants_dimensions_depth_number: NumberFacet
+  variants_dimensions_height_number: NumberFacet
+  variants_dimensions_weight_number: NumberFacet
+  variants_dimensions_width_number: NumberFacet
+  variants_matchingProducts_skus: StringFacet
+  variants_name: StringFacet
+}
+
+input TenantFilter {
+  """Logical AND filter to apply to the query"""
+  AND: [TenantFilter]
+
+  """Logical OR filter to apply to the query"""
+  OR: [TenantFilter]
+
+  """
+  Filter on "aliases"
+  """
+  aliases: StringFilter
+
+  """
+  Filter on "variants.attributes.key"
+  """
+  attributes_key: StringFilter
+
+  """
+  Filter on "variants.attributes.value"
+  """
+  attributes_value: StringFilter
+
+  """
+  Filter on "blocks.banner.banner.caption.plainText"
+  """
+  blocks_banner_banner_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.banner.call-to-action.action.label"
+  """
+  blocks_banner_callToAction_action_label: StringFilter
+
+  """
+  Filter on "blocks.banner.call-to-action.action.url"
+  """
+  blocks_banner_callToAction_action_url: StringFilter
+
+  """
+  Filter on "blocks.banner.description.plainText"
+  """
+  blocks_banner_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.background-media.image.caption.plainText"
+  """
+  blocks_banner_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_banner_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.display-width.contain"
+  """
+  blocks_banner_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.display-width.stretch"
+  """
+  blocks_banner_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.dark"
+  """
+  blocks_banner_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.light"
+  """
+  blocks_banner_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.muted"
+  """
+  blocks_banner_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.pastel"
+  """
+  blocks_banner_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.banner.layout.theme.vivid"
+  """
+  blocks_banner_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.banner.title"
+  """
+  blocks_banner_title: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.background-media.image.caption.plainText"
+  """
+  blocks_featureHighlights_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_featureHighlights_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.display-width.contain"
+  """
+  blocks_featureHighlights_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.display-width.stretch"
+  """
+  blocks_featureHighlights_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.dark"
+  """
+  blocks_featureHighlights_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.light"
+  """
+  blocks_featureHighlights_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.muted"
+  """
+  blocks_featureHighlights_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.pastel"
+  """
+  blocks_featureHighlights_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.layout.theme.vivid"
+  """
+  blocks_featureHighlights_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.usp.description.plainText"
+  """
+  blocks_featureHighlights_usp_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.usp.headline"
+  """
+  blocks_featureHighlights_usp_headline: StringFilter
+
+  """
+  Filter on "blocks.feature-highlights.usp.icon.caption.plainText"
+  """
+  blocks_featureHighlights_usp_icon_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.description.plainText"
+  """
+  blocks_pictureGrid_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.images.caption.plainText"
+  """
+  blocks_pictureGrid_images_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.background-media.image.caption.plainText"
+  """
+  blocks_pictureGrid_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_pictureGrid_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.display-width.contain"
+  """
+  blocks_pictureGrid_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.display-width.stretch"
+  """
+  blocks_pictureGrid_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.dark"
+  """
+  blocks_pictureGrid_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.light"
+  """
+  blocks_pictureGrid_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.muted"
+  """
+  blocks_pictureGrid_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.pastel"
+  """
+  blocks_pictureGrid_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.layout.theme.vivid"
+  """
+  blocks_pictureGrid_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.picture-grid.title"
+  """
+  blocks_pictureGrid_title: StringFilter
+
+  """
+  Filter on "blocks.product-slider.description.plainText"
+  """
+  blocks_productSlider_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.background-media.image.caption.plainText"
+  """
+  blocks_productSlider_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_productSlider_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.display-width.contain"
+  """
+  blocks_productSlider_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.display-width.stretch"
+  """
+  blocks_productSlider_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.dark"
+  """
+  blocks_productSlider_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.light"
+  """
+  blocks_productSlider_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.muted"
+  """
+  blocks_productSlider_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.pastel"
+  """
+  blocks_productSlider_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.product-slider.layout.theme.vivid"
+  """
+  blocks_productSlider_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.product-slider.products.skus"
+  """
+  blocks_productSlider_products_skus: StringFilter
+
+  """
+  Filter on "blocks.product-slider.title"
+  """
+  blocks_productSlider_title: StringFilter
+
+  """
+  Filter on "blocks.story-slider.description.plainText"
+  """
+  blocks_storySlider_description_plainText: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.background-media.image.caption.plainText"
+  """
+  blocks_storySlider_layout_backgroundMedia_image_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.background-media.video.thumbnails.caption.plainText"
+  """
+  blocks_storySlider_layout_backgroundMedia_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.display-width.contain"
+  """
+  blocks_storySlider_layout_displayWidth_contain: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.display-width.stretch"
+  """
+  blocks_storySlider_layout_displayWidth_stretch: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.dark"
+  """
+  blocks_storySlider_layout_theme_dark: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.light"
+  """
+  blocks_storySlider_layout_theme_light: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.muted"
+  """
+  blocks_storySlider_layout_theme_muted: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.pastel"
+  """
+  blocks_storySlider_layout_theme_pastel: StringFilter
+
+  """
+  Filter on "blocks.story-slider.layout.theme.vivid"
+  """
+  blocks_storySlider_layout_theme_vivid: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.itemId"
+  """
+  blocks_storySlider_stories_items_itemId: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.name"
+  """
+  blocks_storySlider_stories_items_name: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.parentId"
+  """
+  blocks_storySlider_stories_items_parentId: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.path"
+  """
+  blocks_storySlider_stories_items_path: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.shape"
+  """
+  blocks_storySlider_stories_items_shape: StringFilter
+
+  """
+  Filter on "blocks.story-slider.stories.items.type"
+  """
+  blocks_storySlider_stories_items_type: StringFilter
+
+  """
+  Filter on "blocks.story-slider.title"
+  """
+  blocks_storySlider_title: StringFilter
+
+  """
+  Filter on "brand.items.itemId"
+  """
+  brand_items_itemId: StringFilter
+
+  """
+  Filter on "brand.items.name"
+  """
+  brand_items_name: StringFilter
+
+  """
+  Filter on "brand.items.parentId"
+  """
+  brand_items_parentId: StringFilter
+
+  """
+  Filter on "brand.items.path"
+  """
+  brand_items_path: StringFilter
+
+  """
+  Filter on "brand.items.shape"
+  """
+  brand_items_shape: StringFilter
+
+  """
+  Filter on "brand.items.type"
+  """
+  brand_items_type: StringFilter
+
+  """
+  Filter on "component_name"
+  """
+  component_name: StringFilter
+
+  """
+  Filter on "createdAt"
+  """
+  createdAt: DateFilter
+
+  """
+  Filter on "depth"
+  """
+  depth: NumberFilter
+
+  """
+  Filter on "description.plainText"
+  """
+  description_plainText: StringFilter
+
+  """
+  Filter on "details.description.plainText"
+  """
+  details_description_plainText: StringFilter
+
+  """
+  Filter on "details.title"
+  """
+  details_title: StringFilter
+
+  """
+  Filter on "dimensions.depth.number"
+  """
+  dimensions_depth_number: NumberFilter
+
+  """
+  Filter on "dimensions.height.number"
+  """
+  dimensions_height_number: NumberFilter
+
+  """
+  Filter on "dimensions.weight.number"
+  """
+  dimensions_weight_number: NumberFilter
+
+  """
+  Filter on "dimensions.width.number"
+  """
+  dimensions_width_number: NumberFilter
+
+  """
+  Filter on "downloads.description.plainText"
+  """
+  downloads_description_plainText: StringFilter
+
+  """
+  Filter on "downloads.files.key"
+  """
+  downloads_files_key: StringFilter
+
+  """
+  Filter on "downloads.files.title"
+  """
+  downloads_files_title: StringFilter
+
+  """
+  Filter on "downloads.title"
+  """
+  downloads_title: StringFilter
+
+  """
+  Filter on "featured.items.itemId"
+  """
+  featured_items_itemId: StringFilter
+
+  """
+  Filter on "featured.items.name"
+  """
+  featured_items_name: StringFilter
+
+  """
+  Filter on "featured.items.parentId"
+  """
+  featured_items_parentId: StringFilter
+
+  """
+  Filter on "featured.items.path"
+  """
+  featured_items_path: StringFilter
+
+  """
+  Filter on "featured.items.shape"
+  """
+  featured_items_shape: StringFilter
+
+  """
+  Filter on "featured.items.type"
+  """
+  featured_items_type: StringFilter
+
+  """
+  Filter on "featured.skus"
+  """
+  featured_skus: StringFilter
+
+  """
+  Filter on "history"
+  """
+  history: StringFilter
+
+  """
+  Filter on "icon.caption.plainText"
+  """
+  icon_caption_plainText: StringFilter
+
+  """
+  Filter on "id"
+  """
+  id: StringFilter
+
+  """
+  Filter on "image.caption.plainText"
+  """
+  image_caption_plainText: StringFilter
+
+  """
+  Filter on "intro.plainText"
+  """
+  intro_plainText: StringFilter
+
+  """
+  Filter on "itemId"
+  """
+  itemId: StringFilter
+
+  """
+  Filter on "label"
+  """
+  label: StringFilter
+
+  """
+  Filter on "language"
+  """
+  language: StringFilter
+
+  """
+  Filter on "link.item.items.itemId"
+  """
+  link_item_items_itemId: StringFilter
+
+  """
+  Filter on "link.item.items.name"
+  """
+  link_item_items_name: StringFilter
+
+  """
+  Filter on "link.item.items.parentId"
+  """
+  link_item_items_parentId: StringFilter
+
+  """
+  Filter on "link.item.items.path"
+  """
+  link_item_items_path: StringFilter
+
+  """
+  Filter on "link.item.items.shape"
+  """
+  link_item_items_shape: StringFilter
+
+  """
+  Filter on "link.item.items.type"
+  """
+  link_item_items_type: StringFilter
+
+  """
+  Filter on "link.url"
+  """
+  link_url: StringFilter
+
+  """
+  Filter on "logo.caption.plainText"
+  """
+  logo_caption_plainText: StringFilter
+
+  """
+  Filter on "media.image.caption.plainText"
+  """
+  media_image_caption_plainText: StringFilter
+
+  """
+  Filter on "media.shoppable-image.caption.plainText"
+  """
+  media_shoppableImage_caption_plainText: StringFilter
+
+  """
+  Filter on "media.video.thumbnails.caption.plainText"
+  """
+  media_video_thumbnails_caption_plainText: StringFilter
+
+  """
+  Filter on "meta.description.plainText"
+  """
+  meta_description_plainText: StringFilter
+
+  """
+  Filter on "meta.image.caption.plainText"
+  """
+  meta_image_caption_plainText: StringFilter
+
+  """
+  Filter on "meta.title"
+  """
+  meta_title: StringFilter
+
+  """
+  Filter on "name"
+  """
+  name: StringFilterWithAutocomplete
+
+  """
+  Filter on "parentId"
+  """
+  parentId: StringFilter
+
+  """
+  Filter on "parentPaths"
+  """
+  parentPaths: StringFilter
+
+  """
+  Filter on "path"
+  """
+  path: StringFilter
+
+  """
+  Filter on "position"
+  """
+  position: NumberFilter
+
+  """
+  Filter on "variants.priceVariants.default.price"
+  """
+  price_default: NumberFilter
+
+  """
+  Filter on "variants.priceVariants.membership.price"
+  """
+  price_membership: NumberFilter
+
+  """
+  Filter on "variants.priceVariants.membership-no.price"
+  """
+  price_membershipNo: NumberFilter
+
+  """
+  Filter on "variants.priceVariants.norway-b2b.price"
+  """
+  price_norwayB2b: NumberFilter
+
+  """
+  Filter on "variants.priceVariants.norway-b2c-sales.price"
+  """
+  price_norwayB2cSales: NumberFilter
+
+  """
+  Filter on "publicationState"
+  """
+  publicationState: StringFilter
+
+  """
+  Filter on "publishedAt"
+  """
+  publishedAt: DateFilter
+
+  """
+  Filter on "related-products.items.itemId"
+  """
+  relatedProducts_items_itemId: StringFilter
+
+  """
+  Filter on "related-products.items.name"
+  """
+  relatedProducts_items_name: StringFilter
+
+  """
+  Filter on "related-products.items.parentId"
+  """
+  relatedProducts_items_parentId: StringFilter
+
+  """
+  Filter on "related-products.items.path"
+  """
+  relatedProducts_items_path: StringFilter
+
+  """
+  Filter on "related-products.items.shape"
+  """
+  relatedProducts_items_shape: StringFilter
+
+  """
+  Filter on "related-products.items.type"
+  """
+  relatedProducts_items_type: StringFilter
+
+  """
+  Filter on "related-products.skus"
+  """
+  relatedProducts_skus: StringFilter
+
+  """
+  Filter on "shape"
+  """
+  shape: StringFilter
+
+  """
+  Filter on "shortcuts.parentId"
+  """
+  shortcuts_parentId: StringFilter
+
+  """
+  Filter on "shortcuts.path"
+  """
+  shortcuts_path: StringFilter
+
+  """
+  Filter on "shortcuts.position"
+  """
+  shortcuts_position: NumberFilter
+
+  """
+  Filter on "variants.sku"
+  """
+  sku: StringFilterWithAutocomplete
+
+  """
+  Filter on "variants.stockLocations.default.stock"
+  """
+  stock_default: NumberFilter
+
+  """
+  Filter on "variants.stockLocations.oslo.stock"
+  """
+  stock_oslo: NumberFilter
+
+  """
+  Filter on "variants.stockLocations.toronto.stock"
+  """
+  stock_toronto: NumberFilter
+
+  """
+  Filter on "story.body.plainText"
+  """
+  story_body_plainText: StringFilter
+
+  """
+  Filter on "story.title"
+  """
+  story_title: StringFilter
+
+  """
+  Filter on "title"
+  """
+  title: StringFilter
+
+  """
+  Filter on "topics"
+  """
+  topics: StringFilter
+  type_in: [ItemType]
+
+  """
+  Filter on "up-next.items.itemId"
+  """
+  upNext_items_itemId: StringFilter
+
+  """
+  Filter on "up-next.items.name"
+  """
+  upNext_items_name: StringFilter
+
+  """
+  Filter on "up-next.items.parentId"
+  """
+  upNext_items_parentId: StringFilter
+
+  """
+  Filter on "up-next.items.path"
+  """
+  upNext_items_path: StringFilter
+
+  """
+  Filter on "up-next.items.shape"
+  """
+  upNext_items_shape: StringFilter
+
+  """
+  Filter on "up-next.items.type"
+  """
+  upNext_items_type: StringFilter
+
+  """
+  Filter on "updatedAt"
+  """
+  updatedAt: DateFilter
+
+  """
+  Filter on "variants.description.alternative-description.plainText"
+  """
+  variants_description_alternativeDescription_plainText: StringFilter
+
+  """
+  Filter on "variants.description.extra-description.plainText"
+  """
+  variants_description_extraDescription_plainText: StringFilter
+
+  """
+  Filter on "variants.dimensions.depth.number"
+  """
+  variants_dimensions_depth_number: NumberFilter
+
+  """
+  Filter on "variants.dimensions.height.number"
+  """
+  variants_dimensions_height_number: NumberFilter
+
+  """
+  Filter on "variants.dimensions.weight.number"
+  """
+  variants_dimensions_weight_number: NumberFilter
+
+  """
+  Filter on "variants.dimensions.width.number"
+  """
+  variants_dimensions_width_number: NumberFilter
+
+  """
+  Filter on "variants.matching-products.skus"
+  """
+  variants_matchingProducts_skus: StringFilter
+
+  """
+  Filter on "variants.name"
+  """
+  variants_name: StringFilterWithAutocomplete
+}
+
+"""The languages available for the tenant"""
+enum TenantLanguage {
+  en
+  noNb
+}
+
+"""The price variant identifiers available for the tenant"""
+enum TenantPriceVariantIdentifier {
+  default
+  membership
+  membershipNo
+  norwayB2b
+  norwayB2cSales
+}
+
+input TenantSort {
+  """
+  Sort on "aliases"
+  """
+  aliases: SortOrder
+
+  """
+  Sort on "variants.attributes.key"
+  """
+  attributes_key: SortOrder
+
+  """
+  Sort on "variants.attributes.value"
+  """
+  attributes_value: SortOrder
+
+  """
+  Sort on "blocks.banner.call-to-action.action.label"
+  """
+  blocks_banner_callToAction_action_label: SortOrder
+
+  """
+  Sort on "blocks.banner.call-to-action.action.url"
+  """
+  blocks_banner_callToAction_action_url: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.display-width.contain"
+  """
+  blocks_banner_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.display-width.stretch"
+  """
+  blocks_banner_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.dark"
+  """
+  blocks_banner_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.light"
+  """
+  blocks_banner_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.muted"
+  """
+  blocks_banner_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.pastel"
+  """
+  blocks_banner_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.banner.layout.theme.vivid"
+  """
+  blocks_banner_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.banner.title"
+  """
+  blocks_banner_title: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.display-width.contain"
+  """
+  blocks_featureHighlights_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.display-width.stretch"
+  """
+  blocks_featureHighlights_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.dark"
+  """
+  blocks_featureHighlights_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.light"
+  """
+  blocks_featureHighlights_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.muted"
+  """
+  blocks_featureHighlights_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.pastel"
+  """
+  blocks_featureHighlights_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.layout.theme.vivid"
+  """
+  blocks_featureHighlights_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.feature-highlights.usp.headline"
+  """
+  blocks_featureHighlights_usp_headline: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.display-width.contain"
+  """
+  blocks_pictureGrid_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.display-width.stretch"
+  """
+  blocks_pictureGrid_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.dark"
+  """
+  blocks_pictureGrid_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.light"
+  """
+  blocks_pictureGrid_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.muted"
+  """
+  blocks_pictureGrid_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.pastel"
+  """
+  blocks_pictureGrid_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.layout.theme.vivid"
+  """
+  blocks_pictureGrid_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.picture-grid.title"
+  """
+  blocks_pictureGrid_title: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.display-width.contain"
+  """
+  blocks_productSlider_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.display-width.stretch"
+  """
+  blocks_productSlider_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.dark"
+  """
+  blocks_productSlider_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.light"
+  """
+  blocks_productSlider_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.muted"
+  """
+  blocks_productSlider_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.pastel"
+  """
+  blocks_productSlider_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.product-slider.layout.theme.vivid"
+  """
+  blocks_productSlider_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.product-slider.products.skus"
+  """
+  blocks_productSlider_products_skus: SortOrder
+
+  """
+  Sort on "blocks.product-slider.title"
+  """
+  blocks_productSlider_title: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.display-width.contain"
+  """
+  blocks_storySlider_layout_displayWidth_contain: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.display-width.stretch"
+  """
+  blocks_storySlider_layout_displayWidth_stretch: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.dark"
+  """
+  blocks_storySlider_layout_theme_dark: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.light"
+  """
+  blocks_storySlider_layout_theme_light: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.muted"
+  """
+  blocks_storySlider_layout_theme_muted: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.pastel"
+  """
+  blocks_storySlider_layout_theme_pastel: SortOrder
+
+  """
+  Sort on "blocks.story-slider.layout.theme.vivid"
+  """
+  blocks_storySlider_layout_theme_vivid: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.itemId"
+  """
+  blocks_storySlider_stories_items_itemId: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.name"
+  """
+  blocks_storySlider_stories_items_name: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.parentId"
+  """
+  blocks_storySlider_stories_items_parentId: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.path"
+  """
+  blocks_storySlider_stories_items_path: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.shape"
+  """
+  blocks_storySlider_stories_items_shape: SortOrder
+
+  """
+  Sort on "blocks.story-slider.stories.items.type"
+  """
+  blocks_storySlider_stories_items_type: SortOrder
+
+  """
+  Sort on "blocks.story-slider.title"
+  """
+  blocks_storySlider_title: SortOrder
+
+  """
+  Sort on "brand.items.itemId"
+  """
+  brand_items_itemId: SortOrder
+
+  """
+  Sort on "brand.items.name"
+  """
+  brand_items_name: SortOrder
+
+  """
+  Sort on "brand.items.parentId"
+  """
+  brand_items_parentId: SortOrder
+
+  """
+  Sort on "brand.items.path"
+  """
+  brand_items_path: SortOrder
+
+  """
+  Sort on "brand.items.shape"
+  """
+  brand_items_shape: SortOrder
+
+  """
+  Sort on "brand.items.type"
+  """
+  brand_items_type: SortOrder
+
+  """
+  Sort on "component_name"
+  """
+  component_name: SortOrder
+
+  """
+  Sort on "createdAt"
+  """
+  createdAt: SortOrder
+
+  """
+  Sort on "depth"
+  """
+  depth: SortOrder
+
+  """
+  Sort on "details.title"
+  """
+  details_title: SortOrder
+
+  """
+  Sort on "dimensions.depth.number"
+  """
+  dimensions_depth_number: SortOrder
+
+  """
+  Sort on "dimensions.height.number"
+  """
+  dimensions_height_number: SortOrder
+
+  """
+  Sort on "dimensions.weight.number"
+  """
+  dimensions_weight_number: SortOrder
+
+  """
+  Sort on "dimensions.width.number"
+  """
+  dimensions_width_number: SortOrder
+
+  """
+  Sort on "downloads.files.key"
+  """
+  downloads_files_key: SortOrder
+
+  """
+  Sort on "downloads.files.title"
+  """
+  downloads_files_title: SortOrder
+
+  """
+  Sort on "downloads.title"
+  """
+  downloads_title: SortOrder
+
+  """
+  Sort on "featured.items.itemId"
+  """
+  featured_items_itemId: SortOrder
+
+  """
+  Sort on "featured.items.name"
+  """
+  featured_items_name: SortOrder
+
+  """
+  Sort on "featured.items.parentId"
+  """
+  featured_items_parentId: SortOrder
+
+  """
+  Sort on "featured.items.path"
+  """
+  featured_items_path: SortOrder
+
+  """
+  Sort on "featured.items.shape"
+  """
+  featured_items_shape: SortOrder
+
+  """
+  Sort on "featured.items.type"
+  """
+  featured_items_type: SortOrder
+
+  """
+  Sort on "featured.skus"
+  """
+  featured_skus: SortOrder
+
+  """
+  Sort on "history"
+  """
+  history: SortOrder
+
+  """
+  Sort on "id"
+  """
+  id: SortOrder
+
+  """
+  Sort on "itemId"
+  """
+  itemId: SortOrder
+
+  """
+  Sort on "label"
+  """
+  label: SortOrder
+
+  """
+  Sort on "language"
+  """
+  language: SortOrder
+
+  """
+  Sort on "link.item.items.itemId"
+  """
+  link_item_items_itemId: SortOrder
+
+  """
+  Sort on "link.item.items.name"
+  """
+  link_item_items_name: SortOrder
+
+  """
+  Sort on "link.item.items.parentId"
+  """
+  link_item_items_parentId: SortOrder
+
+  """
+  Sort on "link.item.items.path"
+  """
+  link_item_items_path: SortOrder
+
+  """
+  Sort on "link.item.items.shape"
+  """
+  link_item_items_shape: SortOrder
+
+  """
+  Sort on "link.item.items.type"
+  """
+  link_item_items_type: SortOrder
+
+  """
+  Sort on "link.url"
+  """
+  link_url: SortOrder
+
+  """
+  Sort on "meta.title"
+  """
+  meta_title: SortOrder
+
+  """
+  Sort on "name"
+  """
+  name: SortOrder
+
+  """
+  Sort on "parentId"
+  """
+  parentId: SortOrder
+
+  """
+  Sort on "parentPaths"
+  """
+  parentPaths: SortOrder
+
+  """
+  Sort on "path"
+  """
+  path: SortOrder
+
+  """
+  Sort on "position"
+  """
+  position: SortOrder
+
+  """
+  Sort on "variants.priceVariants.default.price"
+  """
+  price_default: SortOrder
+
+  """
+  Sort on "variants.priceVariants.membership.price"
+  """
+  price_membership: SortOrder
+
+  """
+  Sort on "variants.priceVariants.membership-no.price"
+  """
+  price_membershipNo: SortOrder
+
+  """
+  Sort on "variants.priceVariants.norway-b2b.price"
+  """
+  price_norwayB2b: SortOrder
+
+  """
+  Sort on "variants.priceVariants.norway-b2c-sales.price"
+  """
+  price_norwayB2cSales: SortOrder
+
+  """
+  Sort on "publicationState"
+  """
+  publicationState: SortOrder
+
+  """
+  Sort on "publishedAt"
+  """
+  publishedAt: SortOrder
+
+  """
+  Sort on "related-products.items.itemId"
+  """
+  relatedProducts_items_itemId: SortOrder
+
+  """
+  Sort on "related-products.items.name"
+  """
+  relatedProducts_items_name: SortOrder
+
+  """
+  Sort on "related-products.items.parentId"
+  """
+  relatedProducts_items_parentId: SortOrder
+
+  """
+  Sort on "related-products.items.path"
+  """
+  relatedProducts_items_path: SortOrder
+
+  """
+  Sort on "related-products.items.shape"
+  """
+  relatedProducts_items_shape: SortOrder
+
+  """
+  Sort on "related-products.items.type"
+  """
+  relatedProducts_items_type: SortOrder
+
+  """
+  Sort on "related-products.skus"
+  """
+  relatedProducts_skus: SortOrder
+
+  """Sort on the Score based on the query"""
+  score: SortOrder
+
+  """
+  Sort on "shape"
+  """
+  shape: SortOrder
+
+  """
+  Sort on "shortcuts.parentId"
+  """
+  shortcuts_parentId: SortOrder
+
+  """
+  Sort on "shortcuts.path"
+  """
+  shortcuts_path: SortOrder
+
+  """
+  Sort on "shortcuts.position"
+  """
+  shortcuts_position: SortOrder
+
+  """
+  Sort on "variants.sku"
+  """
+  sku: SortOrder
+
+  """
+  Sort on "variants.stockLocations.default.stock"
+  """
+  stock_default: SortOrder
+
+  """
+  Sort on "variants.stockLocations.oslo.stock"
+  """
+  stock_oslo: SortOrder
+
+  """
+  Sort on "variants.stockLocations.toronto.stock"
+  """
+  stock_toronto: SortOrder
+
+  """
+  Sort on "story.title"
+  """
+  story_title: SortOrder
+
+  """
+  Sort on "title"
+  """
+  title: SortOrder
+
+  """
+  Sort on "topics"
+  """
+  topics: SortOrder
+
+  """
+  Sort on "type"
+  """
+  type: SortOrder
+
+  """
+  Sort on "up-next.items.itemId"
+  """
+  upNext_items_itemId: SortOrder
+
+  """
+  Sort on "up-next.items.name"
+  """
+  upNext_items_name: SortOrder
+
+  """
+  Sort on "up-next.items.parentId"
+  """
+  upNext_items_parentId: SortOrder
+
+  """
+  Sort on "up-next.items.path"
+  """
+  upNext_items_path: SortOrder
+
+  """
+  Sort on "up-next.items.shape"
+  """
+  upNext_items_shape: SortOrder
+
+  """
+  Sort on "up-next.items.type"
+  """
+  upNext_items_type: SortOrder
+
+  """
+  Sort on "updatedAt"
+  """
+  updatedAt: SortOrder
+
+  """
+  Sort on "variants.dimensions.depth.number"
+  """
+  variants_dimensions_depth_number: SortOrder
+
+  """
+  Sort on "variants.dimensions.height.number"
+  """
+  variants_dimensions_height_number: SortOrder
+
+  """
+  Sort on "variants.dimensions.weight.number"
+  """
+  variants_dimensions_weight_number: SortOrder
+
+  """
+  Sort on "variants.dimensions.width.number"
+  """
+  variants_dimensions_width_number: SortOrder
+
+  """
+  Sort on "variants.matching-products.skus"
+  """
+  variants_matchingProducts_skus: SortOrder
+
+  """
+  Sort on "variants.name"
+  """
+  variants_name: SortOrder
+}
+
+"""The stock locations identifiers available for the tenant"""
+enum TenantStockLocationIdentifier {
+  default
+  oslo
+  toronto
+}
+
+"""Crystallize Subscription Plan Metered Variable Tier Type"""
+enum TierType {
+  graduated
+  volume
+}
+
+type Topic {
+  children(
+    """The language for the name and path of the topics."""
+    language: TenantLanguage = en
+  ): [Topic]
+  displayColor: String
+  id: String!
+
+  """
+  Query the items of a topic. Same as a Search but with an implicit filter on the topic.
+  """
+  items(
+    facets: TenantFacet
+    filters: TenantFilter
+
+    """The language to search in."""
+    language: [TenantLanguage] = [en]
+
+    """The search options."""
+    options: SearchOptions
+
+    """The pagination settings."""
+    pagination: Pagination = {limit: 25}
+
+    """The path to search from."""
+    path: String
+    pathResolutionMethod: [PathResolutionMethod]
+    publicationState: [PublicationState] = [published]
+
+    """Sorting options."""
+    sorting: TenantSort = {position: asc}
+
+    """The query to search for (Fulltext)."""
+    term: String
+  ): SearchResults
+  name: String
+  parentId: String
+  path: String
+}
+
+type VatType {
+  name: String
+  percent: Float
+}
+
+type VideoComponent {
+  key: String
+  playlists: [String]
+  thumbnails: [Image]
+  title: String
+  url: String
+}
+
+"""Brand (document)"""
+type brand implements Document {
+  """The Aliases"""
+  aliases: [String]
+
+  """The Breadcrumbs"""
+  breadcrumbs(
+    """Include breacrumbs path with shortcuts"""
+    withShortcuts: Boolean = true
+  ): [[Breadcrumb]]
+  component_name: String
+
+  """The date when the version was created"""
+  createdAt: Datetime
+
+  """The canonical depth in the tree"""
+  depth: String
+  description(format: RichTextFormat! = json): RichText
+
+  """The external reference"""
+  externalReference: String
+
+  """The History of Paths"""
+  history: [String]
+
+  """The version id that includes the language and the publication state"""
+  id: ID
+
+  """The date when the document was indexed for the las time"""
+  indexedAt: Datetime
+
+  """The item id"""
+  itemId: ID
+
+  """The Language"""
+  language: String
+  logo: [Image]
+
+  """The name"""
+  name: String
+
+  """To be used with searchAfter and searchBefore"""
+  paginationToken: String
+
+  """The parent document"""
+  parent: Document
+
+  """The parent id"""
+  parentId: ID
+
+  """The path"""
+  path: String
+
+  """The method to resolve the path"""
+  pathResolutionMethod: PathResolutionMethod
+
+  """The canonical position in the tree"""
+  position: String
+
+  """The publication state"""
+  publicationState: String
+
+  """The date when the version was published"""
+  publishedAt: Datetime
+
+  """The score"""
+  score: Float
+
+  """The shape identifier"""
+  shape: String
+
+  """The Shortcuts"""
+  shortcuts: [String]
+
+  """The different topic paths"""
+  topicPaths(
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+  ): [String]
+
+  """The different topics"""
+  topics(
+    key: String
+
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+
+    """Only return leaf names"""
+    onlyLeafName: Boolean = false
+  ): Hash
+
+  """The type"""
+  type: String
+
+  """The date when the version was updated"""
+  updatedAt: Datetime
+}
+
+"""Category (folder)"""
+type category implements Document & Folder {
+  """The Aliases"""
+  aliases: [String]
+  blocks: [ComponentChoiceComponentForCategoryBlocks]
+
+  """The Breadcrumbs"""
+  breadcrumbs(
+    """Include breacrumbs path with shortcuts"""
+    withShortcuts: Boolean = true
+  ): [[Breadcrumb]]
+
+  """
+  Query the children of a folder. Same as a Search but with an implicit filter on the parent path.
+  """
+  children(
+    facets: TenantFacet
+    filters: TenantFilter
+
+    """The language to search in."""
+    language: [TenantLanguage]
+
+    """The search options."""
+    options: SearchOptions
+
+    """The pagination settings."""
+    pagination: Pagination = {limit: 25}
+
+    """The path to search from."""
+    path: String
+    pathResolutionMethod: [PathResolutionMethod]
+    publicationState: [PublicationState]
+
+    """Sorting options."""
+    sorting: TenantSort = {position: asc}
+
+    """The query to search for (Fulltext)."""
+    term: String
+  ): SearchResults
+
+  """The date when the version was created"""
+  createdAt: Datetime
+
+  """The canonical depth in the tree"""
+  depth: String
+  description(format: RichTextFormat! = json): RichText
+
+  """The external reference"""
+  externalReference: String
+
+  """The History of Paths"""
+  history: [String]
+
+  """The version id that includes the language and the publication state"""
+  id: ID
+  image: [Image]
+
+  """The date when the document was indexed for the las time"""
+  indexedAt: Datetime
+
+  """The item id"""
+  itemId: ID
+
+  """The Language"""
+  language: String
+  meta: MetaPiece
+
+  """The name"""
+  name: String
+
+  """To be used with searchAfter and searchBefore"""
+  paginationToken: String
+
+  """The parent document"""
+  parent: Document
+
+  """The parent id"""
+  parentId: ID
+
+  """The path"""
+  path: String
+
+  """The method to resolve the path"""
+  pathResolutionMethod: PathResolutionMethod
+
+  """The canonical position in the tree"""
+  position: String
+
+  """The publication state"""
+  publicationState: String
+
+  """The date when the version was published"""
+  publishedAt: Datetime
+
+  """The score"""
+  score: Float
+
+  """The shape identifier"""
+  shape: String
+
+  """The Shortcuts"""
+  shortcuts: [String]
+  title: String
+
+  """The different topic paths"""
+  topicPaths(
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+  ): [String]
+
+  """The different topics"""
+  topics(
+    key: String
+
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+
+    """Only return leaf names"""
+    onlyLeafName: Boolean = false
+  ): Hash
+
+  """The type"""
+  type: String
+
+  """The date when the version was updated"""
+  updatedAt: Datetime
+}
+
+"""Landing page (document)"""
+type landingPage implements Document {
+  """The Aliases"""
+  aliases: [String]
+  blocks: [ComponentChoiceComponentForLandingPageBlocks]
+
+  """The Breadcrumbs"""
+  breadcrumbs(
+    """Include breacrumbs path with shortcuts"""
+    withShortcuts: Boolean = true
+  ): [[Breadcrumb]]
+
+  """The date when the version was created"""
+  createdAt: Datetime
+
+  """The canonical depth in the tree"""
+  depth: String
+
+  """The external reference"""
+  externalReference: String
+
+  """The History of Paths"""
+  history: [String]
+
+  """The version id that includes the language and the publication state"""
+  id: ID
+
+  """The date when the document was indexed for the las time"""
+  indexedAt: Datetime
+
+  """The item id"""
+  itemId: ID
+
+  """The Language"""
+  language: String
+  meta: MetaPiece
+
+  """The name"""
+  name: String
+
+  """To be used with searchAfter and searchBefore"""
+  paginationToken: String
+
+  """The parent document"""
+  parent: Document
+
+  """The parent id"""
+  parentId: ID
+
+  """The path"""
+  path: String
+
+  """The method to resolve the path"""
+  pathResolutionMethod: PathResolutionMethod
+
+  """The canonical position in the tree"""
+  position: String
+
+  """The publication state"""
+  publicationState: String
+
+  """The date when the version was published"""
+  publishedAt: Datetime
+
+  """The score"""
+  score: Float
+
+  """The shape identifier"""
+  shape: String
+
+  """The Shortcuts"""
+  shortcuts: [String]
+
+  """The different topic paths"""
+  topicPaths(
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+  ): [String]
+
+  """The different topics"""
+  topics(
+    key: String
+
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+
+    """Only return leaf names"""
+    onlyLeafName: Boolean = false
+  ): Hash
+
+  """The type"""
+  type: String
+
+  """The date when the version was updated"""
+  updatedAt: Datetime
+}
+
+"""Menu item (folder)"""
+type menuItem implements Document & Folder {
+  """The Aliases"""
+  aliases: [String]
+
+  """The Breadcrumbs"""
+  breadcrumbs(
+    """Include breacrumbs path with shortcuts"""
+    withShortcuts: Boolean = true
+  ): [[Breadcrumb]]
+
+  """
+  Query the children of a folder. Same as a Search but with an implicit filter on the parent path.
+  """
+  children(
+    facets: TenantFacet
+    filters: TenantFilter
+
+    """The language to search in."""
+    language: [TenantLanguage]
+
+    """The search options."""
+    options: SearchOptions
+
+    """The pagination settings."""
+    pagination: Pagination = {limit: 25}
+
+    """The path to search from."""
+    path: String
+    pathResolutionMethod: [PathResolutionMethod]
+    publicationState: [PublicationState]
+
+    """Sorting options."""
+    sorting: TenantSort = {position: asc}
+
+    """The query to search for (Fulltext)."""
+    term: String
+  ): SearchResults
+
+  """The date when the version was created"""
+  createdAt: Datetime
+
+  """The canonical depth in the tree"""
+  depth: String
+  description(format: RichTextFormat! = json): RichText
+
+  """The external reference"""
+  externalReference: String
+
+  """The History of Paths"""
+  history: [String]
+  icon: [Image]
+
+  """The version id that includes the language and the publication state"""
+  id: ID
+
+  """The date when the document was indexed for the las time"""
+  indexedAt: Datetime
+
+  """The item id"""
+  itemId: ID
+  label: String
+
+  """The Language"""
+  language: String
+  link: ComponentChoiceComponentForMenuItemLink
+
+  """The name"""
+  name: String
+
+  """To be used with searchAfter and searchBefore"""
+  paginationToken: String
+
+  """The parent document"""
+  parent: Document
+
+  """The parent id"""
+  parentId: ID
+
+  """The path"""
+  path: String
+
+  """The method to resolve the path"""
+  pathResolutionMethod: PathResolutionMethod
+
+  """The canonical position in the tree"""
+  position: String
+
+  """The publication state"""
+  publicationState: String
+
+  """The date when the version was published"""
+  publishedAt: Datetime
+
+  """The score"""
+  score: Float
+
+  """The shape identifier"""
+  shape: String
+
+  """The Shortcuts"""
+  shortcuts: [String]
+
+  """The different topic paths"""
+  topicPaths(
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+  ): [String]
+
+  """The different topics"""
+  topics(
+    key: String
+
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+
+    """Only return leaf names"""
+    onlyLeafName: Boolean = false
+  ): Hash
+
+  """The type"""
+  type: String
+
+  """The date when the version was updated"""
+  updatedAt: Datetime
+}
+
+"""Product (product)"""
+type product implements Document & Product {
+  """The Aliases"""
+  aliases: [String]
+
+  """
+  A relation to the brand document. Select the brand from the quickselect.
+  """
+  brand: ItemRelations
+
+  """The Breadcrumbs"""
+  breadcrumbs(
+    """Include breacrumbs path with shortcuts"""
+    withShortcuts: Boolean = true
+  ): [[Breadcrumb]]
+
+  """The date when the version was created"""
+  createdAt: Datetime
+
+  """The default variant for Product"""
+  defaultVariant: ProductVariantForProduct
+
+  """The canonical depth in the tree"""
+  depth: String
+
+  """
+  This is the short description of your product. Keep it to max 3 sentences and keep in mind SEO. If you do not fill in SEO meta, this field will be used for Web channels.
+  """
+  description(format: RichTextFormat! = json): RichText
+  details: [ContentChunksComponentForProductDetails]
+  dimensions: DimensionsPiece
+  downloads: [ContentChunksComponentForProductDownloads]
+
+  """The external reference"""
+  externalReference: String
+
+  """The History of Paths"""
+  history: [String]
+
+  """The version id that includes the language and the publication state"""
+  id: ID
+
+  """The date when the document was indexed for the las time"""
+  indexedAt: Datetime
+
+  """The item id"""
+  itemId: ID
+
+  """The Language"""
+  language: String
+  meta: MetaPiece
+
+  """The name"""
+  name: String
+
+  """To be used with searchAfter and searchBefore"""
+  paginationToken: String
+
+  """The parent document"""
+  parent: Document
+
+  """The parent id"""
+  parentId: ID
+
+  """The path"""
+  path: String
+
+  """The method to resolve the path"""
+  pathResolutionMethod: PathResolutionMethod
+
+  """The canonical position in the tree"""
+  position: String
+
+  """The publication state"""
+  publicationState: String
+
+  """The date when the version was published"""
+  publishedAt: Datetime
+  relatedProducts: ItemRelations
+
+  """The score"""
+  score: Float
+
+  """The shape identifier"""
+  shape: String
+
+  """The Shortcuts"""
+  shortcuts: [String]
+  story: [Paragraph]
+  title: String
+
+  """The different topic paths"""
+  topicPaths(
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+  ): [String]
+
+  """The different topics"""
+  topics(
+    key: String
+
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+
+    """Only return leaf names"""
+    onlyLeafName: Boolean = false
+  ): Hash
+
+  """The type"""
+  type: String
+
+  """The date when the version was updated"""
+  updatedAt: Datetime
+
+  """The list of the variants for Product"""
+  variants: [ProductVariantForProduct]
+
+  """The VAT type"""
+  vatType: VatType
+}
+
+"""Story (document)"""
+type story implements Document {
+  """The Aliases"""
+  aliases: [String]
+
+  """The Breadcrumbs"""
+  breadcrumbs(
+    """Include breacrumbs path with shortcuts"""
+    withShortcuts: Boolean = true
+  ): [[Breadcrumb]]
+
+  """The date when the version was created"""
+  createdAt: Datetime
+
+  """The canonical depth in the tree"""
+  depth: String
+
+  """The external reference"""
+  externalReference: String
+  featured: ItemRelations
+
+  """The History of Paths"""
+  history: [String]
+
+  """The version id that includes the language and the publication state"""
+  id: ID
+
+  """The date when the document was indexed for the las time"""
+  indexedAt: Datetime
+  intro(format: RichTextFormat! = json): RichText
+
+  """The item id"""
+  itemId: ID
+
+  """The Language"""
+  language: String
+  media: ComponentChoiceComponentForStoryMedia
+  meta: MetaPiece
+
+  """The name"""
+  name: String
+
+  """To be used with searchAfter and searchBefore"""
+  paginationToken: String
+
+  """The parent document"""
+  parent: Document
+
+  """The parent id"""
+  parentId: ID
+
+  """The path"""
+  path: String
+
+  """The method to resolve the path"""
+  pathResolutionMethod: PathResolutionMethod
+
+  """The canonical position in the tree"""
+  position: String
+
+  """The publication state"""
+  publicationState: String
+
+  """The date when the version was published"""
+  publishedAt: Datetime
+
+  """The score"""
+  score: Float
+
+  """The shape identifier"""
+  shape: String
+
+  """The Shortcuts"""
+  shortcuts: [String]
+  story: [Paragraph]
+  title: String
+
+  """The different topic paths"""
+  topicPaths(
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+  ): [String]
+
+  """The different topics"""
+  topics(
+    key: String
+
+    """Only return leaf topics"""
+    leafOnly: Boolean = false
+
+    """Only return leaf names"""
+    onlyLeafName: Boolean = false
+  ): Hash
+
+  """The type"""
+  type: String
+  upNext: ItemRelations
+
+  """The date when the version was updated"""
+  updatedAt: Datetime
+}

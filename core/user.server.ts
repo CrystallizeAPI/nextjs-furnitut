@@ -22,6 +22,7 @@ export const getMarkets = async (identifier: string) => {
     identifier
   });
 
+    console.log("customer: ", customer);
   // get the grandparent
   if (customer.customer?.parents?.[0].identifier) {
     markets.push(customer.customer?.parents[0].identifier?.toLowerCase());

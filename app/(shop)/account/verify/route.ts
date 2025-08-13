@@ -12,6 +12,8 @@ export async function GET(request: NextRequest) {
 
     try {
         const result = await verifyToken(token);
+        console.log("result", result);
+
         if (result?.error) {
             return NextResponse.redirect(new URL(`/account?error=${result.error}`, request.url));
         }

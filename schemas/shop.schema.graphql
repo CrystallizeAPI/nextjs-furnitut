@@ -1,0 +1,540 @@
+type Address {
+  city: String
+  country: String
+  email: String
+  firstName: String
+  lastName: String
+  meta: HashMap
+  metaProperty(key: String!): String
+  middleName: String
+  phone: String
+  postalCode: String
+  state: String
+  street: String
+  street2: String
+  streetNumber: String
+  type: AddressType
+}
+
+input AddressInput {
+  city: String
+  country: String
+  email: String
+  firstName: String
+  lastName: String
+  meta: [KeyValueInput]
+  middleName: String
+  phone: String
+  postalCode: String
+  state: String
+  street: String
+  street2: String
+  streetNumber: String
+  type: AddressType
+}
+
+"""The Address type."""
+enum AddressType {
+  billing
+  delivery
+  other
+}
+
+"""A cart."""
+type Cart {
+  """The promotions applied to the cart."""
+  appliedPromotions: [PromotionSlim!]
+
+  """The context of the cart."""
+  context: HashMap!
+
+  """The creation date of the cart."""
+  createdAt: DateTime!
+
+  """The customer of the cart."""
+  customer: Customer
+
+  """The expiration date of the cart."""
+  expiresAt: DateTime!
+
+  """The unique id of the cart."""
+  id: UUID!
+
+  """If the cart is expired."""
+  isExpired: Boolean!
+
+  """If the cart is stale."""
+  isStale: Boolean!
+
+  """The items in the cart."""
+  items: [CartItem!]!
+  meta: HashMap
+  metaProperty(key: String!): String
+
+  """The order id of the cart when it reaches the state."""
+  orderId: String
+
+  """The stale date of the cart, after which it is abandoned."""
+  staleAt: DateTime
+
+  """The state of the cart."""
+  state: CartState!
+
+  """The total of the cart."""
+  total: Price!
+
+  """The update date of the cart."""
+  updatedAt: DateTime!
+}
+
+input CartInput {
+  """The context to use for the cart."""
+  context: ContextInput = {language: "en", price: {currency: "eur", customerGroups: [], decimals: 0, discountOnNetPrices: false, markets: [], pricesHaveTaxesIncludedInCrystallize: false, selectedVariantIdentifier: "default", voucherCodes: []}, staleTtl: 3600, ttl: 2592000}
+
+  """The customer to use for the cart."""
+  customer: CustomerInput
+
+  """The external items of the cart."""
+  externalItems: [CartItemInputType]
+  id: UUID
+
+  """The items of the cart."""
+  items: [CartSkuItemInput]
+  meta: [KeyValueInput]
+}
+
+"""A cart item."""
+type CartItem {
+  """The context of the item."""
+  context: HashMap
+
+  """The images of the item."""
+  images: [ImageVariant!]
+  meta: HashMap
+  metaProperty(key: String!): String
+
+  """The name of the item."""
+  name: String!
+
+  """The price of the cart item. Quantity * Unit price"""
+  price: Price!
+
+  """The quantity of the item."""
+  quantity: PositiveInt!
+
+  """The variant of the item."""
+  variant: ProductVariant!
+}
+
+input CartItemInputType {
+  images: [ImageVariantInput] = []
+  meta: [KeyValueInput]
+  name: String!
+  quantity: PositiveInt = 1
+  sku: String!
+
+  """The variant to use for the cart item."""
+  variant: ProductVariantInput!
+}
+
+input CartItemPricingChangeType {
+  price: PriceInput
+  quantity: PositiveInt
+  sku: String!
+}
+
+input CartSkuItemInput {
+  meta: [KeyValueInput]
+  quantity: PositiveInt = 1
+  sku: String!
+
+  """
+  Override the Tax Rate for the calculation. It takes precedence over any other Tax Rate.
+  """
+  taxRate: Rate
+}
+
+"""The state of the cart."""
+enum CartState {
+  """The cart is abandoned."""
+  abandoned
+
+  """The cart is being edited."""
+  cart
+
+  """The cart is fulfill. It is read-only."""
+  ordered
+
+  """The cart is placed. It is read-only."""
+  placed
+}
+
+input ContextInput {
+  """The language to use for hydrating the cart."""
+  language: String = "en"
+
+  """The price context to adapt calculations."""
+  price: PriceContextInput = {currency: "eur", customerGroups: [], decimals: 0, discountOnNetPrices: false, markets: [], pricesHaveTaxesIncludedInCrystallize: false, selectedVariantIdentifier: "default", voucherCodes: []}
+
+  """
+  The time during which the Cart will be stay in the state 'cart' before to become 'stale'. Once 'stale', within 5 minutes the Cart state will change to 'abandoned'.
+  """
+  staleTtl: Int = 3600
+
+  """The time during which the Shop API will keep the Cart."""
+  ttl: Int = 2592000
+}
+
+type Customer {
+  addresses: [Address]
+  birthDate: DateTime
+  companyName: String
+  email: String
+  externalReference(key: String!): String
+  externalReferences: HashMap
+  firstName: String
+  identifier: String
+  isGuest: Boolean!
+  lastName: String
+  meta: HashMap
+  metaProperty(key: String!): String
+  middleName: String
+  phone: String
+  taxNumber: String
+  type: CustomerType
+}
+
+input CustomerInput {
+  addresses: [AddressInput] = []
+  birthDate: DateTime
+  companyName: String
+  email: String
+  externalReferences: [KeyValueInput]
+  firstName: String
+  identifier: String
+  isGuest: Boolean!
+  lastName: String
+  meta: [KeyValueInput]
+  middleName: String
+  phone: String
+  taxNumber: String
+  type: CustomerType = individual
+}
+
+enum CustomerType {
+  individual
+  organization
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+"""A discount applied."""
+type Discount {
+  amount: Float!
+  percent: Float!
+}
+
+input DiscountInput {
+  amount: Float!
+}
+
+"""A scalar type for a HashMap."""
+scalar HashMap
+
+type Image {
+  altText: String
+  height: PositiveInt
+  key: String!
+  url: String!
+  variants: [ImageVariant!]
+  width: PositiveInt
+}
+
+type ImageVariant {
+  altText: String
+  height: PositiveInt
+  key: String!
+  url: String!
+  width: PositiveInt
+}
+
+input ImageVariantInput {
+  height: Float!
+  key: String!
+  url: String!
+  width: Float!
+}
+
+input KeyValueInput {
+  key: String!
+  value: String!
+}
+
+type Mechanism {
+  type: MechanismEnumType
+  value: Float
+}
+
+"""The type of the promotion mechanism."""
+enum MechanismEnumType {
+  """Dynamic Fixed amount based on new set price."""
+  DynamicFixed
+
+  """Fixed amount."""
+  Fixed
+
+  """Percentage."""
+  Percentage
+
+  """Get X for the price of Y"""
+  XforY
+}
+
+"""The root mutation type that allow you to mutate things."""
+type Mutation {
+  """Abandon the Cart, that will change its state."""
+  abandon(id: UUID): Cart
+
+  """Add the quantity to an item."""
+  addCartItem(id: UUID, quantity: PositiveInt = 1, sku: String): Cart
+
+  """Add an item to the cart that is fully custom."""
+  addExternalItem(id: UUID, input: CartItemInputType!): Cart
+
+  """
+  Add an item to the cart from an SKU that exist in Crystallize. If the Item is not managed only the quantity will be updated.
+  """
+  addSkuItem(id: UUID, input: CartSkuItemInput!): Cart
+
+  """
+  Change the quantity and/or the price of an iten and flag it "unmanaged".
+  """
+  changeCartItemPricing(id: UUID, input: CartItemPricingChangeType!): Cart
+
+  """Fulfill the Cart, that will change its state and assign the orderId."""
+  fulfill(id: UUID, orderId: String!): Cart
+
+  """
+  Hydrate items from the Catalog API and create/compute the cart based on the provided context.
+  """
+  hydrate(input: CartInput!): Cart
+
+  """
+  Place the Cart, that will change its state and make it read-only after its final re-hydration.
+  """
+  place(id: UUID): Cart
+
+  """Remove the Cart."""
+  remove(id: UUID): Boolean
+
+  """Remove or decrease the quantity of an item."""
+  removeCartItem(id: UUID, quantity: PositiveInt = 1, sku: String): Cart
+
+  """Add or Update an Cart Item and flag it "unmanaged"."""
+  setCartItem(id: UUID, input: CartItemInputType!): Cart
+
+  """Set the customer of the cart."""
+  setCustomer(id: UUID, input: CustomerInput!): Cart
+
+  """Set meta on the Cart."""
+  setMeta(id: UUID, merge: Boolean = true, meta: [KeyValueInput]): Cart
+}
+
+enum OrderIntentFormat {
+  """Order Intent for Core API"""
+  core
+
+  """Order Intent for Legacy PIM API"""
+  legacy
+
+  """Order Intent for Shop API"""
+  shop
+}
+
+type OrderIntentResult {
+  """The cart."""
+  cart: Cart
+
+  """The order intent."""
+  order: HashMap
+}
+
+"""A positive Integer"""
+scalar PositiveInt
+
+"""A price."""
+type Price {
+  currency: String!
+  discounts: [Discount!]
+  gross: Float!
+  net: Float!
+  taxAmount: Float!
+}
+
+input PriceContextInput {
+  """The identifier of the variant to compare against."""
+  compareAtVariantIdentifier: String
+
+  """
+  The currency. This does not change anything and is merely here for reference.
+  """
+  currency: String = "eur"
+
+  """An optional list of customer groups to apply discounts."""
+  customerGroups: [String] = []
+
+  """The number of decimals to use for the price."""
+  decimals: Float = 0
+
+  """
+  Whether or not the discount is applied on the net price. It will change the way the prices are calculated.
+  """
+  discountOnNetPrices: Boolean = false
+
+  """
+  A list of Price Variant identifier on which to fallback if the selectedVariantIdentifier as a null value.
+  """
+  fallbackVariantIdentifiers: [String]
+
+  """
+  The markets to use for the price calculation. It will change the way the prices based on the enabled PriceLists.
+  """
+  markets: [String] = []
+
+  """
+  Whether or not the prices have taxes included in Crystallize. It will change the way the prices are calculated.
+  """
+  pricesHaveTaxesIncludedInCrystallize: Boolean = false
+
+  """The identifier of the variant to use for the price calculation."""
+  selectedVariantIdentifier: String = "default"
+
+  """
+  Override the Tax Rate for the calculation. It takes precedence over the Tax Rate of the product.
+  """
+  taxRate: Rate
+
+  """
+  An optional list of voucher codes to apply discounts. It will change the way the prices are calculated.
+  """
+  voucherCodes: [String] = []
+}
+
+input PriceInput {
+  discounts: [DiscountInput] = []
+  gross: Float!
+  net: Float!
+}
+
+"""A product."""
+type Product {
+  """The ID of the Product"""
+  id: String!
+
+  """The name of the Product"""
+  name: String!
+
+  """The path of the Product"""
+  path: String!
+
+  """The shortcuts of the Product"""
+  shortcuts: [String!]
+
+  """The topics of the Product"""
+  topics: [String!]!
+  vatType: VatType
+}
+
+input ProductInput {
+  id: String!
+  path: String!
+  topics: [String] = []
+}
+
+"""A product variant."""
+type ProductVariant {
+  attribute(key: String!): String
+
+  """The attributes of the variant"""
+  attributes: HashMap
+
+  """The compare at price (of the variant) if it exists."""
+  compareAtPrice: Price
+
+  """The images of the variant"""
+  images: [Image!]
+
+  """The name of the variant"""
+  name: String
+
+  """The unit price (of the variant)"""
+  price: Price!
+
+  """The product linked to the variant"""
+  product: Product!
+
+  """The SKU of the variant"""
+  sku: String
+}
+
+input ProductVariantInput {
+  attributes: [KeyValueInput]
+
+  """This is the unit price."""
+  price: PriceInput!
+  product: ProductInput!
+}
+
+type PromotionSlim {
+  identifier: String!
+  mechanism: PromotionSlimMechanism
+  name: String
+}
+
+type PromotionSlimMechanism {
+  type: MechanismEnumType
+  value: Float
+}
+
+"""The root query type that does not mutate anything, ever."""
+type Query {
+  """Get a cart by its id."""
+  cart(id: UUID): Cart
+
+  """Get a cart placed by its id and transform it into an order intent."""
+  orderIntent(
+    """The format of the order intent."""
+    format: OrderIntentFormat = legacy
+    id: UUID
+  ): OrderIntentResult
+
+  """Validate a voucher code."""
+  validateVoucher(voucher: String!): VoucherValidationResult
+}
+
+"""A float between 0 and 1"""
+scalar Rate
+
+"""The promotion(s) that matches the voucher."""
+type SlimPromotion {
+  identifier: String
+  mechanism: Mechanism
+  name: String
+}
+
+"""An Universal Unique Identifier"""
+scalar UUID
+
+"""The VAT type."""
+type VatType {
+  """The VAT percent."""
+  percent: Float!
+}
+
+type VoucherValidationResult {
+  isValid: Boolean
+  promotions: [SlimPromotion]
+}

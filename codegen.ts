@@ -13,6 +13,45 @@ if (!TOKEN_ID || !TOKEN_SECRET || !TENANT_IDENTIFIER) {
     throw new Error('Missing env variable(s) when generating api shop schema');
 }
 
+// Define the schema loader for the Shop API to reuse it
+const shopApiSchema = [
+    {
+        'shop-api': {
+            // @ts-expect-error - we can pass a loader function
+            loader: async function shopApiLoader() {
+                const introspectionQuery = getIntrospectionQuery();
+                const authTokenResponse = await fetch(SHOP_API_AUTH_TOKEN_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Crystallize-Access-Token-Id': TOKEN_ID,
+                        'X-Crystallize-Access-Token-Secret': TOKEN_SECRET,
+                    },
+                    body: JSON.stringify({
+                        scopes: ['cart', 'cart:admin'],
+                        expiresIn: 1000,
+                    }),
+                });
+
+                const authTokenJson = await authTokenResponse.json();
+
+                const response = await fetch(SHOP_API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${authTokenJson.token}`,
+                    },
+                    body: JSON.stringify({ query: introspectionQuery }),
+                });
+
+                const json = await response.json();
+
+                return buildClientSchema(json.data);
+            },
+        },
+    },
+];
+
 const config: CodegenConfig = {
     ignoreNoDocuments: true,
     overwrite: true,
@@ -20,44 +59,9 @@ const config: CodegenConfig = {
         avoidOptionals: true,
     },
     generates: {
+        // --- Existing config for generating types from documents ---
         'generated/shop/': {
-            schema: [
-                {
-                    'shop-api': {
-                        // @ts-expect-error - we can pass a loader function
-                        loader: async function shopApiLoader() {
-                            const introspectionQuery = getIntrospectionQuery();
-                            const authTokenResponse = await fetch(SHOP_API_AUTH_TOKEN_ENDPOINT, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-Crystallize-Access-Token-Id': TOKEN_ID,
-                                    'X-Crystallize-Access-Token-Secret': TOKEN_SECRET,
-                                },
-                                body: JSON.stringify({
-                                    scopes: ['cart', 'cart:admin'],
-                                    expiresIn: 1000,
-                                }),
-                            });
-
-                            const authTokenJson = await authTokenResponse.json();
-
-                            const response = await fetch(SHOP_API_ENDPOINT, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Authorization: `Bearer ${authTokenJson.token}`,
-                                },
-                                body: JSON.stringify({ query: introspectionQuery }),
-                            });
-
-                            const json = await response.json();
-
-                            return buildClientSchema(json.data);
-                        },
-                    },
-                },
-            ],
+            schema: shopApiSchema,
             documents: ['graphql/shop/**/*.shop.graphql'],
             preset: 'client',
             presetConfig: { fragmentMasking: false },
@@ -69,6 +73,15 @@ const config: CodegenConfig = {
             preset: 'client',
             presetConfig: { fragmentMasking: false },
             plugins: [{ add: { content: '//@ts-nocheck' } }],
+        },
+        // --- New config to also generate schema files ---
+        'schemas/shop.schema.graphql': {
+            schema: shopApiSchema,
+            plugins: ['schema-ast'],
+        },
+        'schemas/discovery.schema.graphql': {
+            schema: DISCOVERY_API_ENDPOINT,
+            plugins: ['schema-ast'],
         },
     },
 };

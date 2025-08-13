@@ -37,5 +37,8 @@ yarn-error.log*
 next-env.d.ts
 
 generated
+schemas/
 
 .idea/
+
+graphql.config.yml

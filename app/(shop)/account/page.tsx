@@ -47,7 +47,7 @@ type OrdersPageProps = { searchParams: Promise<{ error?: string }> };
 export default async function AccountPage(props: OrdersPageProps) {
     const searchParams = await props.searchParams;
     const session = await getSession();
-
+    console.log();
     if (!session) {
         return (
             <main className="page">

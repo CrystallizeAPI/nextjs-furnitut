@@ -22,8 +22,14 @@ import Image from 'next/image';
 import classNames from 'classnames';
 import { getPrice } from '@/utils/price';
 
+
+
 // TODO: get these from the environment variables
-const { CRYSTALLIZE_COMPAREAT_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_MARKETS_PRICE } = process.env;
+// const { CRYSTALLIZE_COMPAREAT_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_MARKETS_PRICE } = process.env;
+
+const CRYSTALLIZE_COMPARE_AT_PRICE = "default"
+const CRYSTALLIZE_SELECTED_PRICE = "membership"
+const CRYSTALLIZE_MARKET_PRICE = "default"
 
 type ProductsProps = {
     searchParams: Promise<SearchParams>;
@@ -32,12 +38,12 @@ type ProductsProps = {
 
 export const fetchProductData = async ({ path, isPreview = false }: { path: string; isPreview?: boolean }) => {
     const session = await getSession();
-    console.log("CRYSTALLIZE_COMPAREAT_PRICE", CRYSTALLIZE_COMPAREAT_PRICE);
+    console.log("CRYSTALLIZE_COMPAREAT_PRICE", CRYSTALLIZE_COMPARE_AT_PRICE);
     const response = await apiRequest(FetchProductDocument, {
         path,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
         selectedPrice: CRYSTALLIZE_SELECTED_PRICE!,
-        basePrice: CRYSTALLIZE_COMPAREAT_PRICE!,
+        basePrice: CRYSTALLIZE_COMPARE_AT_PRICE!,
         marketIdentifiers: session?.markets,
     });
     const { story, variants, brand, breadcrumbs, meta, ...product } = response.data.browse?.product?.hits?.[0] ?? {};

@@ -17,7 +17,6 @@ if (!TOKEN_ID || !TOKEN_SECRET || !TENANT_IDENTIFIER) {
 const shopApiSchema = [
     {
         'shop-api': {
-            // @ts-expect-error - we can pass a loader function
             loader: async function shopApiLoader() {
                 const introspectionQuery = getIntrospectionQuery();
                 const authTokenResponse = await fetch(SHOP_API_AUTH_TOKEN_ENDPOINT, {

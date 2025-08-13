@@ -4,12 +4,7 @@ import { HydrateCartDocument } from '@/generated/shop/graphql';
 import { print } from 'graphql';
 import { getSession } from '@/core/auth.server';
 
-// TODO:
-// const { CRYSTALLIZE_MARKETS_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_BASE_PRICE } = process.env;
-const CRYSTALLIZE_COMPARE_AT_PRICE= "default"
-const CRYSTALLIZE_SELECTED_PRICE= "membership"
-const CRYSTALLIZE_BASE_PRICE= "default"
-
+const { CRYSTALLIZE_BASE_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
 
 type Item = {
     sku: string;

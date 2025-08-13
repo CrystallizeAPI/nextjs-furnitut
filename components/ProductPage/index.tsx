@@ -20,12 +20,15 @@ import downloadIcon from '@/assets/icon-download.svg';
 import Image from 'next/image';
 import { getPrice } from '@/utils/price';
 import classNames from 'classnames';
+import { crystallizeClient } from '@/core/crystallize-client.server';
+import { FetchPricesForQuery } from '@/components/ProductPage/types';
+import { getSession } from '@/core/auth.server';
 // TODO: get these from the environment variables
 // const { CRYSTALLIZE_COMPAREAT_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_MARKETS_PRICE } = process.env;
 
-const CRYSTALLIZE_COMPARE_AT_PRICE = "default"
-const CRYSTALLIZE_SELECTED_PRICE = "membership"
-const CRYSTALLIZE_MARKET_PRICE = "default"
+const CRYSTALLIZE_COMPARE_AT_PRICE = 'default';
+const CRYSTALLIZE_SELECTED_PRICE = 'membership';
+const CRYSTALLIZE_MARKET_PRICE = 'default';
 
 type ProductsProps = {
     searchParams: Promise<SearchParams>;
@@ -38,7 +41,6 @@ export const fetchProductData = async ({ path, isPreview = false }: { path: stri
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
         selectedPrice: CRYSTALLIZE_SELECTED_PRICE!,
         basePrice: CRYSTALLIZE_COMPARE_AT_PRICE!,
-
     });
     const { story, variants, brand, breadcrumbs, meta, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 
@@ -61,7 +63,6 @@ export default async function CategoryProduct(props: ProductsProps) {
     const currentVariantPrice = getPrice({
         base: currentVariant?.basePrice,
         selected: currentVariant?.selectedPrice,
-
     });
     const dimensions = currentVariant?.dimensions;
     // TODO: this should be for how long the price will be valid
@@ -119,6 +120,49 @@ export default async function CategoryProduct(props: ProductsProps) {
         ],
     };
 
+    // 1. Get the path and customer identifier from their respective sources.
+    // The customerIdentifier should come from the user's session data.
+
+    const session = await getSession();
+
+    console.log('ss', session?.user?.identifier);
+
+    const path = product.path;
+    // const customerIdentifier = session?.user?.identifier; // Replace this with a dynamic value
+    const customerIdentifier = 'petr@crystallize.com'; // Replace this with a dynamic value
+
+    // 2. Define the GraphQL query using variables for dynamic values.
+    const query = `#graphql
+    query FETCH_PRICES_FOR($path: String!, $customerIdentifier: String!) {
+        catalogue(path: $path) {
+            id
+            path
+            ... on Product {
+                variants {
+                    price
+                    priceVariant(identifier: "membership") {
+                        # Use the variable for the customer identifier
+                        priceFor(customerIdentifiers: [$customerIdentifier]) {
+                            identifier
+                            price
+                        }
+                    }
+                }
+            }
+        }
+    }
+    `;
+
+    // 3. Pass the query and the variables object to the API client.
+    const data: FetchPricesForQuery = session
+        ? await crystallizeClient.catalogueApi(query, {
+              path,
+              customerIdentifier,
+          })
+        : null;
+
+    console.log('data', data?.catalogue?.variants);
+
     return (
         <>
             <main className="page">
@@ -162,6 +206,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                 ))}
                             </Accordion>
                         )}
+
                         {dimensions && (
                             <Accordion title="Dimensions" defaultOpen className="py-8">
                                 <div className="grid grid-cols-2 gap-x-48 gap-y-4 py-12 pr-24 text-lg">
@@ -275,6 +320,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                             <div className="line-clamp-2">
                                 <ContentTransformer json={product.description?.[0]} />
                             </div>
+
                             {!!product.variants?.length && (
                                 <div className="py-4">
                                     <VariantSelector
@@ -284,6 +330,54 @@ export default async function CategoryProduct(props: ProductsProps) {
                                     />
                                 </div>
                             )}
+
+                            {session && data && (
+                                <div>
+                                    <h3 className="text-xl font-bold mb-2 text-blue-900">Member Pricing Details</h3>
+                                    <p className="text-sm text-blue-700 mb-4">
+                                        The following prices are fetched dynamically based on your identifier:
+                                        {customerIdentifier}
+                                    </p>
+                                    <div className="space-y-3">
+                                        {data.catalogue?.variants?.map((variant, index) => {
+                                            if (!variant) return null;
+                                            const membershipPrice = variant.priceVariant?.priceFor?.price;
+
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    className="p-3 bg-white rounded-md border border-blue-100 flex justify-between items-center"
+                                                >
+                                                    <div>
+                                                        <p className="font-semibold">Standard Price</p>
+                                                        <Price price={{ price: variant.price ?? 0 }} />
+                                                    </div>
+                                                    <div className="text-right">
+                                                        {membershipPrice !== undefined && membershipPrice !== null ? (
+                                                            <>
+                                                                <p className="font-semibold text-green-700">
+                                                                    Your Member Price
+                                                                </p>
+                                                                <Price price={{ price: membershipPrice }} />
+                                                            </>
+                                                        ) : (
+                                                            <p className="text-sm text-gray-500">
+                                                                No membership price available.
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                        {(!data.catalogue?.variants || data.catalogue.variants.length === 0) && (
+                                            <p className="mt-2 text-sm text-gray-600">
+                                                No variant pricing information available for this product.
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
                             <div className="text-4xl flex items-center font-bold py-4 justify-between w-full">
                                 <div className="flex flex-col">
                                     {/* Lowest price */}
@@ -383,6 +477,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                                         </span>
                                                     </div>
                                                 </div>
+
                                                 <div className="justify-end">
                                                     {!!product && !!product.sku && (
                                                         <AddToCartButton

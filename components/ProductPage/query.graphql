@@ -1,4 +1,9 @@
-query FetchProduct($path: String!, $publicationState: [PublicationState], $basePrice: String!, $selectedPrice: String!) {
+query FetchProduct(
+    $path: String!
+    $publicationState: [PublicationState]
+    $basePrice: String!
+    $selectedPrice: String!
+) {
     browse {
         product(path: $path, publicationState: $publicationState) {
             hits {
@@ -96,7 +101,7 @@ fragment productVariant on ProductVariantForProduct {
     attributes
     basePrice: priceVariants(key: $basePrice)
     selectedPrice: priceVariants(key: $selectedPrice)
-#    marketPrice: b2bPriceFor(marketIdentifiers: $marketIdentifiers)
+    #    marketPrice: b2bPriceFor(marketIdentifiers: $marketIdentifiers)
     description {
         extraDescription
     }
@@ -109,7 +114,7 @@ fragment productVariant on ProductVariantForProduct {
             }
             basePrice: priceVariants(key: $basePrice)
             selectedPrice: priceVariants(key: $selectedPrice)
-#            marketPrice: b2bPriceFor(marketIdentifiers: $marketIdentifiers)
+            #            marketPrice: b2bPriceFor(marketIdentifiers: $marketIdentifiers)
             firstImage {
                 url
                 variants(maxWidth: 200, types: ["avif"]) {

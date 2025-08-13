@@ -2,6 +2,14 @@ import { storage } from '@/core/storage.server';
 import { crystallizeClient } from '@/core/crystallize-client.server';
 import { HydrateCartDocument } from '@/generated/shop/graphql';
 import { print } from 'graphql';
+import { getSession } from '@/core/auth.server';
+
+// TODO:
+// const { CRYSTALLIZE_MARKETS_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_BASE_PRICE } = process.env;
+const CRYSTALLIZE_COMPARE_AT_PRICE= "default"
+const CRYSTALLIZE_SELECTED_PRICE= "membership"
+const CRYSTALLIZE_BASE_PRICE= "default"
+
 
 type Item = {
     sku: string;
@@ -15,6 +23,10 @@ type CartInput = {
         price?: {
             voucherCode?: string;
             decimals?: number;
+            fallbackVariantIdentifiers?: string;
+            compareAtVariantIdentifier?: string;
+            selectedVariantIdentifier?: string;
+            markets?: string[];
         };
     };
 };
@@ -32,6 +44,9 @@ export const hydrateCart = async ({ id, items, voucherCode }: HydrateCartProps) 
             price: {
                 voucherCode: voucherCode ?? '',
                 decimals: 4,
+                fallbackVariantIdentifiers: CRYSTALLIZE_BASE_PRICE,
+                compareAtVariantIdentifier: CRYSTALLIZE_COMPARE_AT_PRICE,
+                selectedVariantIdentifier: CRYSTALLIZE_SELECTED_PRICE,
             },
         },
     };

@@ -23,6 +23,7 @@ import classNames from 'classnames';
 import { crystallizeClient } from '@/core/crystallize-client.server';
 import { FetchPricesForQuery } from '@/components/ProductPage/types';
 import { getSession } from '@/core/auth.server';
+import { getCustomerPrices } from '@/components/ProductPage/get-customer-prices';
 
 const { CRYSTALLIZE_BASE_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
 
@@ -56,10 +57,17 @@ export default async function CategoryProduct(props: ProductsProps) {
     const url = `/${params.category.join('/')}`;
     const product = await fetchProductData({ path: url, isPreview: !!searchParams.preview });
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
+    const data = await getCustomerPrices({ path: product?.path });
+
+    console.log('data.special price = ', !!data.specialPrice);
+
+    console.log("currentVariant?.selectedPrice", currentVariant?.selectedPrice);
     const currentVariantPrice = getPrice({
         base: currentVariant?.basePrice,
-        selected: currentVariant?.selectedPrice,
+        selected: data?.specialPrice ? { price: data.specialPrice } : currentVariant?.selectedPrice ?? 0,
     });
+
+    console.log('currentVariantPrice', currentVariantPrice);
     const dimensions = currentVariant?.dimensions;
     // TODO: this should be for how long the price will be valid
     const TWO_DAYS_FROM_NOW = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
@@ -115,49 +123,6 @@ export default async function CategoryProduct(props: ProductsProps) {
             },
         ],
     };
-
-    // 1. Get the path and customer identifier from their respective sources.
-    // The customerIdentifier should come from the user's session data.
-
-    const session = await getSession();
-
-    console.log('ss', session?.user?.identifier);
-
-    const path = product.path;
-    // const customerIdentifier = session?.user?.identifier; // Replace this with a dynamic value
-    const customerIdentifier = 'petr@crystallize.com'; // Replace this with a dynamic value
-
-    // 2. Define the GraphQL query using variables for dynamic values.
-    const query = `#graphql
-    query FETCH_PRICES_FOR($path: String!, $customerIdentifier: String!) {
-        catalogue(path: $path) {
-            id
-            path
-            ... on Product {
-                variants {
-                    price
-                    priceVariant(identifier: "sales") {
-                        # Use the variable for the customer identifier
-                        priceFor(customerIdentifiers: [$customerIdentifier]) {
-                            identifier
-                            price
-                        }
-                    }
-                }
-            }
-        }
-    }
-    `;
-
-    // 3. Pass the query and the variables object to the API client.
-    const data: FetchPricesForQuery = session
-        ? await crystallizeClient.catalogueApi(query, {
-              path,
-              customerIdentifier,
-          })
-        : null;
-
-    console.log('data', data?.catalogue?.variants);
 
     return (
         <>
@@ -324,53 +289,6 @@ export default async function CategoryProduct(props: ProductsProps) {
                                         searchParams={searchParams}
                                         path={product?.path ?? '/'}
                                     />
-                                </div>
-                            )}
-
-                            {session && data && (
-                                <div>
-                                    <h3 className="text-xl font-bold mb-2 text-blue-900">Member Pricing Details</h3>
-                                    <p className="text-sm text-blue-700 mb-4">
-                                        The following prices are fetched dynamically based on your identifier:
-                                        {customerIdentifier}
-                                    </p>
-                                    <div className="space-y-3">
-                                        {data.catalogue?.variants?.map((variant, index) => {
-                                            if (!variant) return null;
-                                            const membershipPrice = variant.priceVariant?.priceFor?.price;
-
-                                            return (
-                                                <div
-                                                    key={index}
-                                                    className="p-3 bg-white rounded-md border border-blue-100 flex justify-between items-center"
-                                                >
-                                                    <div>
-                                                        <p className="font-semibold">Standard Price</p>
-                                                        <Price price={{ price: variant.price ?? 0 }} />
-                                                    </div>
-                                                    <div className="text-right">
-                                                        {membershipPrice !== undefined && membershipPrice !== null ? (
-                                                            <>
-                                                                <p className="font-semibold text-green-700">
-                                                                    Your Member Price
-                                                                </p>
-                                                                <Price price={{ price: membershipPrice }} />
-                                                            </>
-                                                        ) : (
-                                                            <p className="text-sm text-gray-500">
-                                                                No membership price available.
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
-                                        {(!data.catalogue?.variants || data.catalogue.variants.length === 0) && (
-                                            <p className="mt-2 text-sm text-gray-600">
-                                                No variant pricing information available for this product.
-                                            </p>
-                                        )}
-                                    </div>
                                 </div>
                             )}
 

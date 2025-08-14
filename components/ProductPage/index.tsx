@@ -57,11 +57,15 @@ export default async function CategoryProduct(props: ProductsProps) {
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
     const selectedCustomerPrices = await getCustomerPrices({ path: product?.path });
 
+    const selectedPriceVariant = selectedCustomerPrices.catalogueProductVariants?.find(
+        (catalogueProductVariant) => catalogueProductVariant?.sku === currentVariant?.sku,
+    );
+
+    const selectedPrice = selectedPriceVariant?.priceVariant?.priceFor ?? currentVariant?.selectedPrice;
+
     const currentVariantPrice = getPrice({
         base: currentVariant?.basePrice,
-        selected: selectedCustomerPrices?.catalogueProductVariants
-            ? { price: selectedCustomerPrices.catalogueProductVariants?.[0]?.priceVariant?.priceFor?.price }
-            : currentVariant?.selectedPrice,
+        selected: selectedPrice,
     });
 
     const dimensions = currentVariant?.dimensions;

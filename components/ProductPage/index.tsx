@@ -18,6 +18,12 @@ import { SearchParams } from '@/app/(shop)/[...category]/types';
 import downloadIcon from '@/assets/icon-download.svg';
 
 import Image from 'next/image';
+import { getPrice } from '@/utils/price';
+import classNames from 'classnames';
+
+import { getCustomerPrices } from '@/components/ProductPage/get-customer-prices';
+
+const { CRYSTALLIZE_BASE_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
 
 type ProductsProps = {
     searchParams: Promise<SearchParams>;
@@ -28,6 +34,8 @@ export const fetchProductData = async ({ path, isPreview = false }: { path: stri
     const response = await apiRequest(FetchProductDocument, {
         path,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
+        selectedPrice: CRYSTALLIZE_SELECTED_PRICE!,
+        basePrice: CRYSTALLIZE_BASE_PRICE!,
     });
     const { story, variants, brand, breadcrumbs, meta, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 
@@ -47,6 +55,15 @@ export default async function CategoryProduct(props: ProductsProps) {
     const url = `/${params.category.join('/')}`;
     const product = await fetchProductData({ path: url, isPreview: !!searchParams.preview });
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
+    const selectedCustomerPrices = await getCustomerPrices({ path: product?.path });
+
+    const currentVariantPrice = getPrice({
+        base: currentVariant?.basePrice,
+        selected: selectedCustomerPrices?.catalogueProductVariants ? { price: selectedCustomerPrices.catalogueProductVariants?.[0]?.priceVariant?.priceFor?.price } : currentVariant?.selectedPrice,
+    });
+
+    console.log("currentVariantPrice", currentVariantPrice);
+
     const dimensions = currentVariant?.dimensions;
     // TODO: this should be for how long the price will be valid
     const TWO_DAYS_FROM_NOW = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
@@ -65,8 +82,8 @@ export default async function CategoryProduct(props: ProductsProps) {
                 '@type': 'Offer',
                 itemCondition: 'https://schema.org/NewCondition',
                 availability: 'https://schema.org/InStock',
-                price: variant?.defaultPrice.price ?? '',
-                priceCurrency: variant?.defaultPrice.currency ?? '',
+                price: currentVariantPrice.lowest ?? 0,
+                priceCurrency: currentVariantPrice.currency ?? 'EUR',
                 priceValidUntil: TWO_DAYS_FROM_NOW.toLocaleString(),
             },
         })) ?? [];
@@ -102,6 +119,10 @@ export default async function CategoryProduct(props: ProductsProps) {
             },
         ],
     };
+
+
+
+    //sidebar shoping cart shows selected price not base
 
     return (
         <>
@@ -146,6 +167,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                 ))}
                             </Accordion>
                         )}
+
                         {dimensions && (
                             <Accordion title="Dimensions" defaultOpen className="py-8">
                                 <div className="grid grid-cols-2 gap-x-48 gap-y-4 py-12 pr-24 text-lg">
@@ -254,24 +276,50 @@ export default async function CategoryProduct(props: ProductsProps) {
                                 </span>
                             )}
                         </div>
+
                         <div className="py-4 sticky top-20">
                             <h1 className="text-2xl font-bold">{currentVariant?.name ?? product.name}</h1>
                             <div className="line-clamp-2">
                                 <ContentTransformer json={product.description?.[0]} />
                             </div>
+
                             {!!product.variants?.length && (
                                 <div className="py-4">
                                     <VariantSelector
                                         variants={product.variants}
                                         searchParams={searchParams}
                                         path={product?.path ?? '/'}
+                                        selectedCustomerPrices={selectedCustomerPrices}
                                     />
                                 </div>
                             )}
+
                             <div className="text-4xl flex items-center font-bold py-4 justify-between w-full">
-                                <span>
-                                    <Price price={currentVariant?.priceVariants.default} />
-                                </span>
+                                <div className="flex flex-col">
+                                    {/* Lowest price */}
+                                    <span>
+                                        <Price
+                                            price={{
+                                                price: currentVariantPrice.lowest,
+                                                currency: currentVariantPrice.currency,
+                                            }}
+                                        />
+                                    </span>
+                                    {/* Compared at price */}
+                                    <span
+                                        className={classNames('block text-sm line-through font-normal', {
+                                            hidden: !currentVariantPrice.hasBestPrice,
+                                        })}
+                                    >
+                                        <Price
+                                            price={{
+                                                price: currentVariantPrice.highest,
+                                                currency: currentVariantPrice.currency,
+                                            }}
+                                        />
+                                    </span>
+                                </div>
+
                                 {!!currentVariant && !!currentVariant.sku && (
                                     <AddToCartButton
                                         input={{
@@ -283,9 +331,9 @@ export default async function CategoryProduct(props: ProductsProps) {
                                                 currentVariant?.images?.[0],
                                             quantity: 1,
                                             price: {
-                                                currency: currentVariant.defaultPrice?.currency || 'EUR',
-                                                gross: currentVariant.defaultPrice?.price || 0,
-                                                net: currentVariant.defaultPrice?.price || 0,
+                                                currency: currentVariantPrice.currency,
+                                                gross: currentVariantPrice.lowest,
+                                                net: currentVariantPrice.lowest,
                                                 taxAmount: 0,
                                                 discounts: [],
                                             },
@@ -293,6 +341,9 @@ export default async function CategoryProduct(props: ProductsProps) {
                                     />
                                 )}
                             </div>
+
+
+                            {/*Matching products*/}
                             {!!currentVariant?.matchingProducts?.variants?.length && (
                                 <Accordion
                                     className="py-8 text-lg"
@@ -302,6 +353,14 @@ export default async function CategoryProduct(props: ProductsProps) {
                                     })`}
                                 >
                                     {currentVariant?.matchingProducts?.variants?.map((product, index) => {
+                                        if (!product) {
+                                            return null;
+                                        }
+
+                                        const matchingProductPrice = getPrice({
+                                            base: product.basePrice,
+                                            selected: product.selectedPrice ,
+                                        });
                                         return (
                                             <div
                                                 key={`${product?.sku}-featured-${index}`}
@@ -316,10 +375,28 @@ export default async function CategoryProduct(props: ProductsProps) {
                                                             <Link href={product.product.path}>{product?.name}</Link>
                                                         )}
                                                         <span className="text-sm font-bold">
-                                                            <Price price={product?.defaultPrice} />
+                                                            <Price
+                                                                price={{
+                                                                    price: matchingProductPrice.lowest,
+                                                                    currency: matchingProductPrice.currency,
+                                                                }}
+                                                            />
+                                                        </span>
+                                                        <span
+                                                            className={classNames('text-xs line-through', {
+                                                                hidden: !matchingProductPrice.hasBestPrice,
+                                                            })}
+                                                        >
+                                                            <Price
+                                                                price={{
+                                                                    price: matchingProductPrice.highest,
+                                                                    currency: matchingProductPrice.currency,
+                                                                }}
+                                                            />
                                                         </span>
                                                     </div>
                                                 </div>
+
                                                 <div className="justify-end">
                                                     {!!product && !!product.sku && (
                                                         <AddToCartButton
@@ -331,9 +408,9 @@ export default async function CategoryProduct(props: ProductsProps) {
                                                                 image: product.firstImage?.variants?.[0],
                                                                 quantity: 1,
                                                                 price: {
-                                                                    currency: product.defaultPrice?.currency || 'EUR',
-                                                                    gross: product.defaultPrice?.price || 0,
-                                                                    net: currentVariant.defaultPrice.price || 0,
+                                                                    currency: matchingProductPrice.currency,
+                                                                    gross: matchingProductPrice.lowest,
+                                                                    net: matchingProductPrice.lowest,
                                                                     taxAmount: 0,
                                                                     discounts: [],
                                                                 },
@@ -346,11 +423,14 @@ export default async function CategoryProduct(props: ProductsProps) {
                                     })}
                                 </Accordion>
                             )}
+
+
                             <div className="border-muted border-t"></div>
                         </div>
                     </div>
                 </div>
             </main>
+
             {product?.relatedProducts && (
                 <div className="mt-24 border-t border-muted">
                     <div className=" max-w-(--breakpoint-2xl) pt-24  mx-auto ">

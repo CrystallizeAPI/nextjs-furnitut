@@ -161,7 +161,7 @@ export const CheckoutForm = () => {
                                                             <>
                                                                 <s className="text-sm text-dark/60">
                                                                     <Price
-                                                                        price={{ price: item.variant.price.gross }}
+                                                                        price={{ price: item.variant.compareAtPrice.gross * item.quantity }}
                                                                     />
                                                                 </s>
                                                                 <br />

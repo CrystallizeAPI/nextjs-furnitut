@@ -37,17 +37,15 @@ type HydrateCartProps = {
 };
 
 export const hydrateCart = async ({ id, items, voucherCode }: HydrateCartProps) => {
-    console.log("hydrateCart");
-
     const session = await getSession();
     const userIdentifier = session?.user?.email ?? '';
-    console.log("userIdentifier:", userIdentifier);
+
     const input: CartInput = {
         items,
 
         customer: {
             identifier: userIdentifier,
-            isGuest: false
+            isGuest: false,
         },
         context: {
             price: {

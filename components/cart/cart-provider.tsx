@@ -29,7 +29,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     const [serverCart, handleCartAction, isLoading] = useActionState(handleCart, initialCart);
     const [cart, setOptimisticCart] = useOptimistic(serverCart ?? initialCart);
     const [, startTransition] = useTransition();
-    console.log("cart ===================== ", cart);
+
     useEffect(() => {
         fetch('/api/cart').then(async (res) => {
             if (res.ok) {
@@ -40,14 +40,11 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     }, []);
 
     const onUpdateCart = (formData: FormData) => {
-
-
         setOptimisticCart((prevCart: Cart | null) => {
             const cartItem = JSON.parse(formData.get('input') as string);
             const itemIndex = JSON.parse(formData.get('index') as string);
             const action = formData.get('action') as CartAction;
 
-            console.log("cartItem", cartItem);
             return getNextCart({ cart: prevCart, cartItem, action, itemIndex });
         });
 

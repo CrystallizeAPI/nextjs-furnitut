@@ -118,8 +118,8 @@ export default async function CategoryProduct(props: ProductsProps) {
         ],
     };
 
-    // TODO: variat prices fix
-    //show count on checkout page
+
+
     //sidebar shoping cart shows selected price not base
 
     return (

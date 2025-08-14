@@ -24,7 +24,7 @@ export const CheckoutForm = () => {
 
     const { customer, cartId, cart: serverCart } = data ?? {};
     const cart = serverCart ?? clientCart;
-
+    {console.log("cart.items", cart?.items)}
     return (
         <div className="grid grid-cols-12 gap-12 ">
             <div className="col-span-8">
@@ -130,6 +130,7 @@ export const CheckoutForm = () => {
             </div>
             <div className="col-span-4">
                 <h2 className="font-bold mb-2">Shopping Cart</h2>
+
                 <div className="bg-light rounded-xl border-muted border ">
                     {!!cart?.items.length && (
                         <>
@@ -150,8 +151,10 @@ export const CheckoutForm = () => {
                                                         {item.variant.sku}
                                                     </span>
                                                 </div>
+
+
                                                 <div className="flex justify-between w-full ">
-                                                    <div className="flex gap-4"></div>
+                                                    <div className="flex items-end justify-center">{item.quantity}x</div>
 
                                                     <span className="font-bold text-sm text-end">
                                                         {item.price.discounts?.length > 0 && (
@@ -163,7 +166,7 @@ export const CheckoutForm = () => {
                                                                 </s>
                                                                 <br />
                                                                 <Badge className={'text-xs mr-2'}>
-                                                                    -{item.price.discounts?.[0].percent}%
+                                                                    -{item.price.discounts?.[0].percent.toFixed(2)}%
                                                                 </Badge>
                                                             </>
                                                         )}

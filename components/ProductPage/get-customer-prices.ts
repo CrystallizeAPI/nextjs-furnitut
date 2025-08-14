@@ -55,7 +55,7 @@ export const getCustomerPrices = async ({ path }: GetCustomerPricesProps) => {
     });
 
 
-    console.log("data", data);
+
 
 
     return {

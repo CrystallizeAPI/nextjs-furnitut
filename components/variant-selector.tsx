@@ -6,7 +6,7 @@ import { ProductVariantFragment } from '@/generated/discovery/graphql';
 import { SearchParams } from '@/app/(shop)/[...category]/types';
 import { getPrice } from '@/utils/price';
 import { getCustomerPrices } from './ProductPage/get-customer-prices';
-import {  ProductVariant } from '@/components/ProductPage/types';
+import { ProductVariant } from '@/components/ProductPage/types';
 
 function reduceAttributes(variants?: ProductVariantFragment[]) {
     return variants?.reduce((acc: Record<string, any[]>, variant: any) => {
@@ -74,9 +74,9 @@ type VariantSelectorProps = {
     variants?: Array<ProductVariantFragment | null> | null;
     searchParams: SearchParams;
     path: string;
-    selectedCustomerPrices: {
-        catalogueProductVariants: (ProductVariant | null)[] | null;
-    }
+    selectedCustomerPrices?: {
+        catalogueProductVariants?: (ProductVariant | null)[] | null;
+    };
 };
 
 export const VariantSelector = (props: VariantSelectorProps) => {
@@ -87,7 +87,7 @@ export const VariantSelector = (props: VariantSelectorProps) => {
         !!variant && acc.push(variant);
         return acc;
     }, []);
-    console.log('variants: ', variants);
+
     const hasAttributeSelector = variants?.every(
         (variant) => variant?.attributes !== null && Object.keys(variant.attributes).length > 0,
     );
@@ -103,14 +103,10 @@ export const VariantSelector = (props: VariantSelectorProps) => {
                         (catalogueVariant) => catalogueVariant?.sku === variant.sku,
                     );
 
-                    console.log('customerSelectedPriceVariant ===========', customerSelectedPriceVariant);
-                    console.log("variant.basePrice", variant.basePrice);
                     const variantPrice = getPrice({
                         base: variant.basePrice,
                         selected: customerSelectedPriceVariant?.priceVariant?.priceFor ?? variant.selectedPrice,
                     });
-
-                    console.log("variantPrice", variantPrice);
 
                     return (
                         <Link

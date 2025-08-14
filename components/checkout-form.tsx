@@ -24,7 +24,9 @@ export const CheckoutForm = () => {
 
     const { customer, cartId, cart: serverCart } = data ?? {};
     const cart = serverCart ?? clientCart;
-    {console.log("cart.items", cart?.items)}
+    {
+        console.log('cart.items', cart?.items);
+    }
     return (
         <div className="grid grid-cols-12 gap-12 ">
             <div className="col-span-8">
@@ -152,16 +154,21 @@ export const CheckoutForm = () => {
                                                     </span>
                                                 </div>
 
-
                                                 <div className="flex justify-between w-full ">
-                                                    <div className="flex items-end justify-center">{item.quantity}x</div>
+                                                    <div className="flex items-end justify-center">
+                                                        {item.quantity}x
+                                                    </div>
 
                                                     <span className="font-bold text-sm text-end">
                                                         {item.price.discounts?.length > 0 && (
                                                             <>
                                                                 <s className="text-sm text-dark/60">
                                                                     <Price
-                                                                        price={{ price: item.variant.compareAtPrice.gross * item.quantity }}
+                                                                        price={{
+                                                                            price:
+                                                                                (item.variant?.compareAtPrice?.gross ??
+                                                                                    item.price.gross) * item.quantity,
+                                                                        }}
                                                                     />
                                                                 </s>
                                                                 <br />

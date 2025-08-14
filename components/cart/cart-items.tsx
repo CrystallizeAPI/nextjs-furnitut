@@ -16,7 +16,7 @@ export const CartItems = () => {
         return <p>Your cart is empty.</p>;
     }
 
-    console.log("cart itmes", cart?.items);
+    console.log('cart itmes', cart?.items);
     return (
         <ul>
             {items.map((item: CartItem, index) => (
@@ -84,11 +84,21 @@ export const CartItems = () => {
                                         {item.price.discounts?.length > 0 && (
                                             <>
                                                 <s className="text-sm text-dark/60">
-                                                    <Price price={{ price: item.variant.compareAtPrice.gross * item.quantity}} />
+                                                    <Price
+                                                        price={{
+                                                            price:
+                                                                (item.variant?.compareAtPrice?.gross ??
+                                                                    item.price.gross) * item.quantity,
+                                                        }}
+                                                    />
                                                 </s>
                                                 <br />
                                                 <Badge className={'text-xs mr-2'}>
-                                                    -{Math.round((item.price.discounts?.[0].percent + Number.EPSILON) * 100) / 100}%
+                                                    -
+                                                    {Math.round(
+                                                        (item.price.discounts?.[0].percent + Number.EPSILON) * 100,
+                                                    ) / 100}
+                                                    %
                                                 </Badge>
                                             </>
                                         )}

@@ -26,7 +26,7 @@ export type CartItem = {
         product: {
             name: string;
         };
-        compareAtPrice: Price;
+        compareAtPrice?: Price;
         price: Price;
     };
 };

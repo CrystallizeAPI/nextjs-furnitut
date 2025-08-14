@@ -6,12 +6,14 @@ type GetLowestPrice = {
     // market: number | null;
 };
 
-export function getPrice({ base, selected,
-                             // market
+export function getPrice({
+    base,
+    selected,
+    // market
 }: GetLowestPrice) {
-    const basePrice = base?.price ?? 0;
-    const selectedPrice = selected?.price ?? null;
-    const prices = [basePrice, selectedPrice];
+    const basePrice = base?.price;
+    const selectedPrice = selected?.price;
+    const prices = [basePrice, selectedPrice].filter(Boolean) as number[];
 
     // if (market) {
     //     prices.push(market);

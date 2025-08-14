@@ -24,9 +24,7 @@ export const CheckoutForm = () => {
 
     const { customer, cartId, cart: serverCart } = data ?? {};
     const cart = serverCart ?? clientCart;
-    {
-        console.log('cart.items', cart?.items);
-    }
+
     return (
         <div className="grid grid-cols-12 gap-12 ">
             <div className="col-span-8">

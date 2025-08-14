@@ -59,8 +59,10 @@ export default async function CategoryProduct(props: ProductsProps) {
 
     const currentVariantPrice = getPrice({
         base: currentVariant?.basePrice,
-        selected: selectedCustomerPrices?.catalogueProductVariants ? { price: selectedCustomerPrices.catalogueProductVariants?.[0]?.priceVariant?.priceFor?.price } : (currentVariant?.selectedPrice ?? 0),
+        selected: selectedCustomerPrices?.catalogueProductVariants ? { price: selectedCustomerPrices.catalogueProductVariants?.[0]?.priceVariant?.priceFor?.price } : currentVariant?.selectedPrice,
     });
+
+    console.log("currentVariantPrice", currentVariantPrice);
 
     const dimensions = currentVariant?.dimensions;
     // TODO: this should be for how long the price will be valid
@@ -357,8 +359,7 @@ export default async function CategoryProduct(props: ProductsProps) {
 
                                         const matchingProductPrice = getPrice({
                                             base: product.basePrice,
-                                            selected: product.selectedPrice,
-                                            // market: product.marketPrice,
+                                            selected: product.selectedPrice ,
                                         });
                                         return (
                                             <div

@@ -103,6 +103,7 @@ export const VariantSelector = (props: VariantSelectorProps) => {
                         (catalogueVariant) => catalogueVariant?.sku === variant.sku,
                     );
 
+
                     const variantPrice = getPrice({
                         base: variant.basePrice,
                         selected: customerSelectedPriceVariant?.priceVariant?.priceFor ?? variant.selectedPrice,

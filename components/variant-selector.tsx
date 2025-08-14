@@ -5,7 +5,6 @@ import { Price } from './price';
 import { ProductVariantFragment } from '@/generated/discovery/graphql';
 import { SearchParams } from '@/app/(shop)/[...category]/types';
 import { getPrice } from '@/utils/price';
-import { getCustomerPrices } from './ProductPage/get-customer-prices';
 import { ProductVariant } from '@/components/ProductPage/types';
 
 function reduceAttributes(variants?: ProductVariantFragment[]) {
@@ -102,7 +101,6 @@ export const VariantSelector = (props: VariantSelectorProps) => {
                     const customerSelectedPriceVariant = selectedCustomerPrices?.catalogueProductVariants?.find(
                         (catalogueVariant) => catalogueVariant?.sku === variant.sku,
                     );
-
 
                     const variantPrice = getPrice({
                         base: variant.basePrice,

@@ -1,5 +1,5 @@
 import { getSession } from '@/core/auth.server';
-import { FetchPricesForQuery } from '@/components/ProductPage/types';
+import { FetchPricesForQuery } from './types';
 import { crystallizeClient } from '@/core/crystallize-client.server';
 
 type GetCustomerPricesProps = {
@@ -16,13 +16,8 @@ export const getCustomerPrices = async ({ path }: GetCustomerPricesProps) => {
         };
     }
 
-    const customerIdentifier = session?.user?.email; // Replace this with a dynamic value
+    const customerIdentifier = session?.user?.email;
 
-
-
-    // const customerIdentifier = 'petr@crystallize.com'; // Replace this with a dynamic value
-
-    // 2. Define the GraphQL query using variables for dynamic values.
     const query = `#graphql
     query FETCH_PRICES_FOR($path: String!, $customerIdentifier: String!, $priceVariantIdentifier: String!) {
         catalogue(path: $path) {
@@ -47,16 +42,11 @@ export const getCustomerPrices = async ({ path }: GetCustomerPricesProps) => {
     }
     `;
 
-    // 3. Pass the query and the variables object to the API client.
     const data: FetchPricesForQuery = await crystallizeClient.catalogueApi(query, {
         path,
         customerIdentifier,
         priceVariantIdentifier: CRYSTALLIZE_SELECTED_PRICE,
     });
-
-
-
-
 
     return {
         catalogueProductVariants: data?.catalogue?.variants,

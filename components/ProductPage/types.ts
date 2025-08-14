@@ -11,6 +11,9 @@ export interface PriceVariant {
 
 // Type for each product variant in the list
 export interface ProductVariant {
+    id: string;
+    sku: string;
+    name: string;
     price: number | null;
     priceVariant: PriceVariant | null;
 }
@@ -25,5 +28,5 @@ export interface CatalogueProduct {
 
 // This is the main type for the entire query response
 export interface FetchPricesForQuery {
-    catalogue: CatalogueProduct | null;
+    catalogue?: CatalogueProduct | null;
 }

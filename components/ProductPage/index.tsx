@@ -20,9 +20,7 @@ import downloadIcon from '@/assets/icon-download.svg';
 import Image from 'next/image';
 import { getPrice } from '@/utils/price';
 import classNames from 'classnames';
-import { crystallizeClient } from '@/core/crystallize-client.server';
-import { FetchPricesForQuery } from '@/components/ProductPage/types';
-import { getSession } from '@/core/auth.server';
+
 import { getCustomerPrices } from '@/components/ProductPage/get-customer-prices';
 
 const { CRYSTALLIZE_BASE_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
@@ -57,11 +55,11 @@ export default async function CategoryProduct(props: ProductsProps) {
     const url = `/${params.category.join('/')}`;
     const product = await fetchProductData({ path: url, isPreview: !!searchParams.preview });
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
-    const data = await getCustomerPrices({ path: product?.path });
+    const selectedCustomerPrices = await getCustomerPrices({ path: product?.path });
 
     const currentVariantPrice = getPrice({
         base: currentVariant?.basePrice,
-        selected: data?.specialPrice ? { price: data.specialPrice } : (currentVariant?.selectedPrice ?? 0),
+        selected: selectedCustomerPrices?.catalogueProductVariants ? { price: selectedCustomerPrices.catalogueProductVariants?.[0]?.priceVariant?.priceFor?.price } : (currentVariant?.selectedPrice ?? 0),
     });
 
     const dimensions = currentVariant?.dimensions;
@@ -119,6 +117,10 @@ export default async function CategoryProduct(props: ProductsProps) {
             },
         ],
     };
+
+    // TODO: variat prices fix
+    //show count on checkout page
+    //sidebar shoping cart shows selected price not base
 
     return (
         <>
@@ -272,6 +274,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                 </span>
                             )}
                         </div>
+
                         <div className="py-4 sticky top-20">
                             <h1 className="text-2xl font-bold">{currentVariant?.name ?? product.name}</h1>
                             <div className="line-clamp-2">
@@ -284,6 +287,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                         variants={product.variants}
                                         searchParams={searchParams}
                                         path={product?.path ?? '/'}
+                                        selectedCustomerPrices={selectedCustomerPrices}
                                     />
                                 </div>
                             )}
@@ -313,6 +317,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                         />
                                     </span>
                                 </div>
+
                                 {!!currentVariant && !!currentVariant.sku && (
                                     <AddToCartButton
                                         input={{
@@ -334,6 +339,9 @@ export default async function CategoryProduct(props: ProductsProps) {
                                     />
                                 )}
                             </div>
+
+
+                            {/*Matching products*/}
                             {!!currentVariant?.matchingProducts?.variants?.length && (
                                 <Accordion
                                     className="py-8 text-lg"
@@ -414,11 +422,14 @@ export default async function CategoryProduct(props: ProductsProps) {
                                     })}
                                 </Accordion>
                             )}
+
+
                             <div className="border-muted border-t"></div>
                         </div>
                     </div>
                 </div>
             </main>
+
             {product?.relatedProducts && (
                 <div className="mt-24 border-t border-muted">
                     <div className=" max-w-(--breakpoint-2xl) pt-24  mx-auto ">

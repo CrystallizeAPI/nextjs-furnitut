@@ -5,6 +5,8 @@ import { Price } from './price';
 import { ProductVariantFragment } from '@/generated/discovery/graphql';
 import { SearchParams } from '@/app/(shop)/[...category]/types';
 import { getPrice } from '@/utils/price';
+import { getCustomerPrices } from './ProductPage/get-customer-prices';
+import {  ProductVariant } from '@/components/ProductPage/types';
 
 function reduceAttributes(variants?: ProductVariantFragment[]) {
     return variants?.reduce((acc: Record<string, any[]>, variant: any) => {
@@ -72,17 +74,20 @@ type VariantSelectorProps = {
     variants?: Array<ProductVariantFragment | null> | null;
     searchParams: SearchParams;
     path: string;
+    selectedCustomerPrices: {
+        catalogueProductVariants: (ProductVariant | null)[] | null;
+    }
 };
 
 export const VariantSelector = (props: VariantSelectorProps) => {
-    const { searchParams, path } = props;
+    const { searchParams, path, selectedCustomerPrices } = props;
 
     const variants = props.variants?.reduce<ProductVariantFragment[]>((acc, item) => {
         const variant = item as ProductVariantFragment | null;
         !!variant && acc.push(variant);
         return acc;
     }, []);
-
+    console.log('variants: ', variants);
     const hasAttributeSelector = variants?.every(
         (variant) => variant?.attributes !== null && Object.keys(variant.attributes).length > 0,
     );
@@ -92,12 +97,20 @@ export const VariantSelector = (props: VariantSelectorProps) => {
         return (
             <div className="py-2 flex gap-y-1 flex-col">
                 <span className="font-bold text-base pb-2 block">Variants</span>
+
                 {variants?.map((variant, index) => {
+                    const customerSelectedPriceVariant = selectedCustomerPrices?.catalogueProductVariants?.find(
+                        (catalogueVariant) => catalogueVariant?.sku === variant.sku,
+                    );
+
+                    console.log('customerSelectedPriceVariant ===========', customerSelectedPriceVariant);
+                    console.log("variant.basePrice", variant.basePrice);
                     const variantPrice = getPrice({
                         base: variant.basePrice,
-                        selected: variant.selectedPrice,
-
+                        selected: customerSelectedPriceVariant?.priceVariant?.priceFor ?? variant.selectedPrice,
                     });
+
+                    console.log("variantPrice", variantPrice);
 
                     return (
                         <Link

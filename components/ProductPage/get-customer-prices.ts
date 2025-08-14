@@ -12,7 +12,7 @@ export const getCustomerPrices = async ({ path }: GetCustomerPricesProps) => {
 
     if (!session || !path) {
         return {
-            specialPrice: null,
+            catalogueProductVariants: null,
         };
     }
 
@@ -30,6 +30,9 @@ export const getCustomerPrices = async ({ path }: GetCustomerPricesProps) => {
             path
             ... on Product {
                 variants {
+                    id
+                    sku
+                    name
                     price
                     priceVariant(identifier: $priceVariantIdentifier) {
                         # Use the variable for the customer identifier
@@ -52,8 +55,10 @@ export const getCustomerPrices = async ({ path }: GetCustomerPricesProps) => {
     });
 
 
+    console.log("data", data);
+
 
     return {
-        specialPrice: data?.catalogue?.variants?.[0]?.priceVariant?.priceFor?.price,
+        catalogueProductVariants: data?.catalogue?.variants,
     };
 };

@@ -70,7 +70,6 @@ const searchCategory = async ({ path, limit, skip = 0, filters, sorting, isPrevi
 };
 
 const fetchItemShape = async (path: string): Promise<ItemShape> => {
-    console.log(path)
     const response = await apiRequest(FetchItemShapeDocument, { path });
     const itemShape = response?.data?.search?.hits?.[0]?.shape;
 

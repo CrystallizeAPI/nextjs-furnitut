@@ -3,9 +3,10 @@ query FetchProduct(
     $publicationState: [PublicationState]
     $basePrice: String!
     $selectedPrice: String!
+    $language: [TenantLanguage]!
 ) {
     browse {
-        product(path: $path, publicationState: $publicationState) {
+        product(path: $path, language: $language, publicationState: $publicationState) {
             hits {
                 name
                 path

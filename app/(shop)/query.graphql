@@ -1,6 +1,8 @@
-query FetchLandingPage {
+query FetchLandingPage(
+    $language: [TenantLanguage]!
+) {
     browse {
-        landingPage(path: "/index") {
+        landingPage( language: $language, path: "/index") {
             hits {
                 name
                 blocks {

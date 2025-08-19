@@ -5,7 +5,7 @@ fragment productSlider on ProductSliderPiece {
     title
     description
     products {
-        variants {
+        variants( language: $language ) {
             sku
             name
             defaultPrice: priceVariants(key: "default")

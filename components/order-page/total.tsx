@@ -4,13 +4,14 @@ type TotalProps = {
     total: {
         net: number;
         gross: number;
+        currency: string;
     }
 }
 export const CartOrderTotal = ({ total }: TotalProps) => {
     return <div className="flex flex-col gap-2  py-4 items-end mt-2 px-6" >
         <div className="flex justify-between w-60 text-sm text-dark/70">
             <p>Net</p>
-            <Price price={{ price: total.net }} />
+            <Price price={{ price: total.net, currency: total.currency }} />
         </div>
         <div className="flex justify-between w-60 text-sm text-dark/70">
             <p>Tax</p>
@@ -18,6 +19,7 @@ export const CartOrderTotal = ({ total }: TotalProps) => {
                 <Price
                     price={{
                         price: total.gross - total.net,
+                        currency: total.currency
                     }}
                 />
             </p>
@@ -25,7 +27,7 @@ export const CartOrderTotal = ({ total }: TotalProps) => {
         <div className="flex font-bold text-lgxl justify-between w-60">
             <p>Gross</p>
             <p>
-                <Price price={{ price: total.gross }} />
+                <Price price={{ price: total.gross, currency: total.currency }} />
             </p>
         </div>
     </div >

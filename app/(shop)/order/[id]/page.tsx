@@ -56,10 +56,11 @@ export default async function Order(props: OrderProps) {
                         <p className="font-bold text-lg">{orderCart?.reference}</p>
                     </span>
 
-                    {orderCart.cart.map((item, index) => <CartOrderItem key={index} item={item} />)}
+                    {orderCart.cart.map((item, index) => <CartOrderItem key={index} item={item} currency={orderCart.total?.currency} />)}
                     <CartOrderTotal total={{
                         gross: orderCart.total?.gross || 0,
                         net: orderCart.total?.net || 0,
+                        currency: orderCart.total?.currency || 'EUR',
                     }} />
                 </div>
             </div>

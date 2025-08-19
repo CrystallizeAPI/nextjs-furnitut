@@ -16,7 +16,6 @@ export const CartItems = () => {
         return <p>Your cart is empty.</p>;
     }
 
-
     return (
         <ul>
             {items.map((item: CartItem, index) => (

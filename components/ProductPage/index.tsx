@@ -21,7 +21,7 @@ import Image from 'next/image';
 import { getPrice } from '@/utils/price';
 import classNames from 'classnames';
 
-import { getCustomerPrices } from '@/components/ProductPage/get-customer-prices';
+import { getCustomerPrices } from './get-customer-prices';
 
 const { CRYSTALLIZE_BASE_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
 
@@ -57,12 +57,16 @@ export default async function CategoryProduct(props: ProductsProps) {
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
     const selectedCustomerPrices = await getCustomerPrices({ path: product?.path });
 
+    const selectedPriceVariant = selectedCustomerPrices.catalogueProductVariants?.find(
+        (catalogueProductVariant) => catalogueProductVariant?.sku === currentVariant?.sku,
+    );
+
+    const selectedPrice = selectedPriceVariant?.priceVariant?.priceFor ?? currentVariant?.selectedPrice;
+
     const currentVariantPrice = getPrice({
         base: currentVariant?.basePrice,
-        selected: selectedCustomerPrices?.catalogueProductVariants ? { price: selectedCustomerPrices.catalogueProductVariants?.[0]?.priceVariant?.priceFor?.price } : currentVariant?.selectedPrice,
+        selected: selectedPrice,
     });
-
-    console.log("currentVariantPrice", currentVariantPrice);
 
     const dimensions = currentVariant?.dimensions;
     // TODO: this should be for how long the price will be valid
@@ -119,8 +123,6 @@ export default async function CategoryProduct(props: ProductsProps) {
             },
         ],
     };
-
-
 
     //sidebar shoping cart shows selected price not base
 
@@ -342,7 +344,6 @@ export default async function CategoryProduct(props: ProductsProps) {
                                 )}
                             </div>
 
-
                             {/*Matching products*/}
                             {!!currentVariant?.matchingProducts?.variants?.length && (
                                 <Accordion
@@ -359,7 +360,7 @@ export default async function CategoryProduct(props: ProductsProps) {
 
                                         const matchingProductPrice = getPrice({
                                             base: product.basePrice,
-                                            selected: product.selectedPrice ,
+                                            selected: product.selectedPrice,
                                         });
                                         return (
                                             <div
@@ -423,7 +424,6 @@ export default async function CategoryProduct(props: ProductsProps) {
                                     })}
                                 </Accordion>
                             )}
-
 
                             <div className="border-muted border-t"></div>
                         </div>

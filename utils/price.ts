@@ -19,8 +19,6 @@ export function getPrice({
     //     prices.push(market);
     // }
 
-    console.log(base);
-
     const low = Math.min(...prices);
     const high = Math.max(...prices);
     const currency = base.currency ?? 'EUR';

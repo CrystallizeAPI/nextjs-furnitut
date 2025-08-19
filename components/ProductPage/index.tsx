@@ -349,9 +349,8 @@ export default async function CategoryProduct(props: ProductsProps) {
                                 <Accordion
                                     className="py-8 text-lg"
                                     defaultOpen={!!currentVariant?.matchingProducts?.variants?.length}
-                                    title={`Matching products (${
-                                        currentVariant?.matchingProducts?.variants?.length || 0
-                                    })`}
+                                    title={`Matching products (${currentVariant?.matchingProducts?.variants?.length || 0
+                                        })`}
                                 >
                                     {currentVariant?.matchingProducts?.variants?.map((product, index) => {
                                         if (!product) {

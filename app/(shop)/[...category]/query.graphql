@@ -7,7 +7,7 @@ query SearchCategory(
     $sorting: TenantSort
     $boundaries: [Int]!
     $publicationState: [PublicationState]
-    $language: [TenantLanguage]!    
+    $language: [TenantLanguage] = en    
 ) {
     filters: search(
         path: $path
@@ -441,7 +441,7 @@ query SearchCategory(
     }
 }
 
-query FetchItemShape( $path: String!, $language: [TenantLanguage]! ) {
+query FetchItemShape( $path: String!, $language: [TenantLanguage] = en ) {
     search( path: $path, language: $language ) {
         hits {
             id

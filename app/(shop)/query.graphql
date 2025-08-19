@@ -1,6 +1,6 @@
 query FetchLandingPage(
-    $language: [TenantLanguage]!,
-    $selectedPriceVariant: String
+    $selectedPriceVariant: String = "default",
+    $language: [TenantLanguage] = en
 ) {
     browse {
         landingPage( language: $language, path: "/index") {

@@ -1,4 +1,4 @@
-query FetchStory($path: String!, $language: [TenantLanguage]!) {
+query FetchStory($path: String!, $language: [TenantLanguage] = en ) {
     browse {
         story(path: $path, language: $language) {
             hits {

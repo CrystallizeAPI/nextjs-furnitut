@@ -5,6 +5,7 @@ import {
     PublicationState,
     SearchCategoryDocument,
     TenantFilter,
+    TenantLanguage,
     TenantSort,
 } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
@@ -47,6 +48,7 @@ const searchCategory = async ({ path, limit, skip = 0, filters, sorting, isPrevi
         sorting,
         boundaries: path.includes('entertainment') ? ENTERTAINMENT_PRICE_RANGE : PRODUCTS_PRICE_RANGE,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
+        language: process.env.CRYSTALLIZE_TENANT_LANGUAGE as TenantLanguage
     });
 
     const { hits, summary: searchSummary } = response.data.search ?? {};

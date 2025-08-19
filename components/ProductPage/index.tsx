@@ -3,7 +3,7 @@ import Link from 'next/link';
 import schemas from 'schema-dts';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 
-import { FetchProductDocument, TenantLanguage, Paragraph, PublicationState } from '@/generated/discovery/graphql';
+import { FetchProductDocument, Paragraph, PublicationState } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Price } from '@/components/price';
@@ -35,8 +35,7 @@ export const fetchProductData = async ({ path, isPreview = false }: { path: stri
         path,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
         selectedPriceVariant: CRYSTALLIZE_SELECTED_PRICE!,
-        fallbackPriceVariant: CRYSTALLIZE_FALLBACK_PRICE!,
-        language: process.env.CRYSTALLIZE_TENANT_LANGUAGE as TenantLanguage
+        fallbackPriceVariant: CRYSTALLIZE_FALLBACK_PRICE!
     });
     const { story, variants, brand, breadcrumbs, meta, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 

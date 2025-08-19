@@ -3,7 +3,7 @@ query FetchProduct(
     $publicationState: [PublicationState]
     $fallbackPriceVariant: String!
     $selectedPriceVariant: String!
-    $language: [TenantLanguage]!
+    $language: [TenantLanguage] = en
 ) {
     browse {
         product(path: $path, language: $language, publicationState: $publicationState) {

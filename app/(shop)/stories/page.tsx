@@ -1,11 +1,13 @@
-import { FetchAllStoriesDocument } from '@/generated/discovery/graphql';
+import { FetchAllStoriesDocument, TenantLanguage } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Story } from '@/components/story';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Metadata } from 'next';
 
 const fetchData = async () => {
-    const response = await apiRequest(FetchAllStoriesDocument);
+    const response = await apiRequest(FetchAllStoriesDocument, {
+        language: (process.env.CRYSTALLIZE_TENANT_LANGUAGE || 'en') as TenantLanguage
+    });
     const { title, children, breadcrumbs, meta } = response.data.browse?.category?.hits?.[0] ?? {};
 
     return { title, meta, children: children?.hits, breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item) };

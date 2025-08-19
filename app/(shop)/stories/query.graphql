@@ -1,4 +1,4 @@
-query FetchAllStories($language: [TenantLanguage]!) {
+query FetchAllStories($language: [TenantLanguage] = en) {
     browse {
         category(path: "/stories", language: $language) {
             hits {

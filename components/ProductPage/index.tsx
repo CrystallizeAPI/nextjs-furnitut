@@ -34,8 +34,8 @@ export const fetchProductData = async ({ path, isPreview = false }: { path: stri
     const response = await apiRequest(FetchProductDocument, {
         path,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
-        selectedPrice: CRYSTALLIZE_SELECTED_PRICE!,
-        fallbackPrice: CRYSTALLIZE_FALLBACK_PRICE!,
+        selectedPriceVariant: CRYSTALLIZE_SELECTED_PRICE!,
+        fallbackPriceVariant: CRYSTALLIZE_FALLBACK_PRICE!
     });
     const { story, variants, brand, breadcrumbs, meta, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 
@@ -61,11 +61,11 @@ export default async function CategoryProduct(props: ProductsProps) {
         (catalogueProductVariant) => catalogueProductVariant?.sku === currentVariant?.sku,
     );
 
-    const selectedPrice = selectedPriceVariant?.priceVariant?.priceFor ?? currentVariant?.selectedPrice;
+    const selectedPrice = selectedPriceVariant?.priceVariant?.priceFor ?? currentVariant?.selectedPriceVariant;
 
     const currentVariantPrice = getPrice({
-        fallback: currentVariant?.fallbackPrice,
-        selected: selectedPrice,
+        fallbackPriceVariant: currentVariant?.fallbackPriceVariant,
+        selectedPriceVariant: selectedPrice,
     });
 
     const dimensions = currentVariant?.dimensions;
@@ -358,8 +358,8 @@ export default async function CategoryProduct(props: ProductsProps) {
                                         }
 
                                         const matchingProductPrice = getPrice({
-                                            fallback: product.fallbackPrice,
-                                            selected: product.selectedPrice,
+                                            fallbackPriceVariant: product.fallbackPriceVariant,
+                                            selectedPriceVariant: product.selectedPriceVariant,
                                         });
                                         return (
                                             <div

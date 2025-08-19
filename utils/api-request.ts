@@ -27,6 +27,7 @@ export const apiRequest = async <TResult, TVariables = {}>(
         }),
     });
 
+    console.log(variables);
     if (!response.ok) {
         throw new Error(response.statusText);
     }

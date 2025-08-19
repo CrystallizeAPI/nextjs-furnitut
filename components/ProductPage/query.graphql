@@ -1,7 +1,7 @@
 query FetchProduct(
     $path: String!
     $publicationState: [PublicationState]
-    $basePrice: String!
+    $fallbackPrice: String!
     $selectedPrice: String!
     $language: [TenantLanguage]!
 ) {
@@ -100,7 +100,7 @@ fragment productVariant on ProductVariantForProduct {
     sku
     priceVariants
     attributes
-    basePrice: priceVariants(key: $basePrice)
+    fallbackPrice: priceVariants(key: $fallbackPrice)
     selectedPrice: priceVariants(key: $selectedPrice)
     description {
         extraDescription
@@ -112,7 +112,7 @@ fragment productVariant on ProductVariantForProduct {
             product {
                 path
             }
-            basePrice: priceVariants(key: $basePrice)
+            fallbackPrice: priceVariants(key: $fallbackPrice)
             selectedPrice: priceVariants(key: $selectedPrice)
             firstImage {
                 url

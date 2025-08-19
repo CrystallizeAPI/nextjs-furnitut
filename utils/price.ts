@@ -1,19 +1,19 @@
 import { Price } from '@/components/price';
 
 type GetLowestPrice = {
-    base: Price;
+    fallback: Price;
     selected: Price;
     // market: number | null;
 };
 
 export function getPrice({
-    base,
+    fallback,
     selected,
     // market
 }: GetLowestPrice) {
-    const basePrice = base?.price;
+    const fallbackPrice = fallback?.price;
     const selectedPrice = selected?.price;
-    const prices = [basePrice, selectedPrice].filter(Boolean) as number[];
+    const prices = [fallbackPrice, selectedPrice].filter(Boolean) as number[];
 
     // if (market) {
     //     prices.push(market);
@@ -21,7 +21,7 @@ export function getPrice({
 
     const low = Math.min(...prices);
     const high = Math.max(...prices);
-    const currency = base.currency ?? 'EUR';
+    const currency = fallback.currency ?? 'EUR';
 
     return {
         hasBestPrice: low !== high,

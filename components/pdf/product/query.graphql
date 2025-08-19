@@ -1,4 +1,4 @@
-query FetchProductForPDF($path: String!, $basePrice: String!, $selectedPrice: String!, $marketIdentifiers: [String!]) {
+query FetchProductForPDF($path: String!, $fallbackPrice: String!, $selectedPrice: String!, $marketIdentifiers: [String!]) {
     browse {
         product(path: $path) {
             hits {

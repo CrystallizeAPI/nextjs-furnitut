@@ -23,7 +23,7 @@ import classNames from 'classnames';
 
 import { getCustomerPrices } from './get-customer-prices';
 
-const { CRYSTALLIZE_BASE_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
+const { CRYSTALLIZE_FALLBACK_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
 
 type ProductsProps = {
     searchParams: Promise<SearchParams>;
@@ -35,7 +35,7 @@ export const fetchProductData = async ({ path, isPreview = false }: { path: stri
         path,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
         selectedPrice: CRYSTALLIZE_SELECTED_PRICE!,
-        basePrice: CRYSTALLIZE_BASE_PRICE!,
+        fallbackPrice: CRYSTALLIZE_FALLBACK_PRICE!,
     });
     const { story, variants, brand, breadcrumbs, meta, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 
@@ -64,7 +64,7 @@ export default async function CategoryProduct(props: ProductsProps) {
     const selectedPrice = selectedPriceVariant?.priceVariant?.priceFor ?? currentVariant?.selectedPrice;
 
     const currentVariantPrice = getPrice({
-        base: currentVariant?.basePrice,
+        fallback: currentVariant?.fallbackPrice,
         selected: selectedPrice,
     });
 
@@ -358,7 +358,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                         }
 
                                         const matchingProductPrice = getPrice({
-                                            base: product.basePrice,
+                                            fallback: product.fallbackPrice,
                                             selected: product.selectedPrice,
                                         });
                                         return (

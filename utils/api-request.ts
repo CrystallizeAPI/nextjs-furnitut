@@ -3,6 +3,7 @@ import { print } from 'graphql';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 
 const apiEndpoint = `https://api.crystallize.com/${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}/discovery`;
+
 const apiLanguage: string = process.env.CRYSTALLIZE_TENANT_LANGUAGE || 'en';
 const selectedPrice: string = process.env.CRYSTALLIZE_SELECTED_PRICE || 'default';
 const fallbackPrice: string = process.env.CRYSTALLIZE_FALLBACK_PRICE || 'default';

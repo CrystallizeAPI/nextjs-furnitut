@@ -17,14 +17,7 @@ export const apiRequest = async <TResult, TVariables = {}>(
         body: JSON.stringify({ query: print(query), variables: { ...variables, language: apiLanguage } }),
     });
 
-
-
     if (!response.ok) {
-        const result42 = await response.json();
-
-        console.log(result42);
-        console.log(JSON.stringify({ query: print(query), variables: { ...variables, language: apiLanguage } }));
-        console.log(response);
         throw new Error(response.statusText);
     }
 

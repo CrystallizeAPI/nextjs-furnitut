@@ -1,8 +1,8 @@
-query FetchLayout {
+query FetchLayout( $language: [TenantLanguage]! ) {
     browse {
-        header: menuItem(path: "/menu/top") {
+        header: menuItem(path: "/menu/top", language: $language) {
             hits {
-                children {
+                children(language: $language) {
                     hits {
                         ...menuItem
                     }
@@ -19,7 +19,7 @@ fragment menuItem on Document {
         link {
             url
             item {
-                items {
+                items(language: $language) {
                     path
                 }
             }

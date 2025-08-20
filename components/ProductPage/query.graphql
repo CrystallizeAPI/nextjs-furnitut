@@ -54,7 +54,7 @@ query FetchProduct(
                     }
                 }
                 relatedProducts {
-                    items {
+                    items(language: $language) {
                         ... on product {
                             path
                             name
@@ -69,7 +69,7 @@ query FetchProduct(
                                 }
                             }
                             defaultVariant {
-                                defaultPrice: priceVariants(key: "default")
+                                defaultPrice: priceVariants(key: $selectedPriceVariant)
                                 firstImage {
                                     url
                                     variants(types: ["avif"], maxWidth: 500) {
@@ -106,7 +106,7 @@ fragment productVariant on ProductVariantForProduct {
         extraDescription
     }
     matchingProducts {
-        variants {
+        variants(language: $language) {
             sku
             name
             product {

@@ -22,6 +22,7 @@ type CartInput = {
         isGuest: boolean;
     };
     context?: {
+        language?: string;
         price?: {
             voucherCode?: string;
             decimals?: number;
@@ -52,6 +53,7 @@ export const hydrateCart = async ({ id, items, voucherCode }: HydrateCartProps) 
             isGuest: false,
         },
         context: {
+            language: 'no-nb',
             price: {
                 voucherCode: voucherCode ?? '',
                 decimals: 4,

@@ -4,7 +4,10 @@ import { HydrateCartDocument } from '@/generated/shop/graphql';
 import { print } from 'graphql';
 import { getSession } from '@/core/auth.server';
 
-const { CRYSTALLIZE_BASE_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
+const { CRYSTALLIZE_FALLBACK_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
+const apiLanguage: string = process.env.CRYSTALLIZE_TENANT_LANGUAGE || 'en';
+const apiCurrency: string = process.env.CRYSTALLIZE_TENANT_CURRENCY || 'EUR';
+
 
 type Item = {
     sku: string;
@@ -19,12 +22,14 @@ type CartInput = {
         isGuest: boolean;
     };
     context?: {
+        language?: string;
         price?: {
             voucherCode?: string;
             decimals?: number;
             fallbackVariantIdentifiers?: string;
             compareAtVariantIdentifier?: string;
             selectedVariantIdentifier?: string;
+            currency?: string;
             markets?: string[];
         };
     };
@@ -48,12 +53,14 @@ export const hydrateCart = async ({ id, items, voucherCode }: HydrateCartProps) 
             isGuest: false,
         },
         context: {
+            language: 'no-nb',
             price: {
                 voucherCode: voucherCode ?? '',
                 decimals: 4,
-                fallbackVariantIdentifiers: CRYSTALLIZE_BASE_PRICE,
+                fallbackVariantIdentifiers: CRYSTALLIZE_FALLBACK_PRICE,
                 compareAtVariantIdentifier: CRYSTALLIZE_COMPARE_AT_PRICE,
                 selectedVariantIdentifier: CRYSTALLIZE_SELECTED_PRICE,
+                currency: apiCurrency
             },
         },
     };

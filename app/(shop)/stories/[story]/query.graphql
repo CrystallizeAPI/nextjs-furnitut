@@ -1,6 +1,6 @@
-query FetchStory($path: String!) {
+query FetchStory($path: String!, $language: [TenantLanguage] = en ) {
     browse {
-        story(path: $path) {
+        story(path: $path, language: $language) {
             hits {
                 ...storyContent
                 breadcrumbs {

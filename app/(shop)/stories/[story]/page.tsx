@@ -45,10 +45,10 @@ export async function generateMetadata({ params }: StoriesProps): Promise<Metada
 
     return {
         title: `${title}`,
-        description: description?.[0].textContent ?? '',
+        description: description?.[0]?.textContent ?? '',
         openGraph: {
             title: `${title} | Furnitut`,
-            description: description?.[0].textContent ?? '',
+            description: description?.[0]?.textContent ?? '',
             url: `/stories/${story}`,
             images: [
                 {
@@ -86,7 +86,7 @@ export default async function StoryPage(props: StoriesProps) {
         name: (item as Product)?.name ?? '',
         image: (item as Product)?.defaultVariant?.firstImage?.url ?? '',
         // @ts-expect-error complains about the description
-        description: (item as ProductVariantForProduct)?.description?.[0].textContent ?? '',
+        description: (item as ProductVariantForProduct)?.description?.[0]?.textContent ?? '',
         sku: (item as Product)?.defaultVariant?.sku ?? '',
         offers: {
             '@type': 'Offer',
@@ -196,7 +196,7 @@ export default async function StoryPage(props: StoriesProps) {
                                 {featured.variants?.length
                                     ? featured.variants.map(renderVariantItem)
                                     : // @ts-expect-error
-                                      featured.items?.map(renderProductItem)}
+                                    featured.items?.map(renderProductItem)}
                             </div>
                         </div>
                     )}

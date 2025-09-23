@@ -5,10 +5,10 @@ fragment productSlider on ProductSliderPiece {
     title
     description
     products {
-        variants {
+        variants( language: $language ) {
             sku
             name
-            defaultPrice: priceVariants(key: "default")
+            defaultPrice: priceVariants(key: $selectedPriceVariant)
             firstImage {
                 url
                 variants(width: 500, types: ["avif"]) {

@@ -1,11 +1,12 @@
 query FetchProduct(
     $path: String!
     $publicationState: [PublicationState]
-    $basePrice: String!
-    $selectedPrice: String!
+    $fallbackPriceVariant: String!
+    $selectedPriceVariant: String!
+    $language: [TenantLanguage] = en
 ) {
     browse {
-        product(path: $path, publicationState: $publicationState) {
+        product(path: $path, language: $language, publicationState: $publicationState) {
             hits {
                 name
                 path
@@ -53,7 +54,7 @@ query FetchProduct(
                     }
                 }
                 relatedProducts {
-                    items {
+                    items(language: $language) {
                         ... on product {
                             path
                             name
@@ -68,7 +69,7 @@ query FetchProduct(
                                 }
                             }
                             defaultVariant {
-                                defaultPrice: priceVariants(key: "default")
+                                defaultPrice: priceVariants(key: $selectedPriceVariant)
                                 firstImage {
                                     url
                                     variants(types: ["avif"], maxWidth: 500) {
@@ -99,20 +100,20 @@ fragment productVariant on ProductVariantForProduct {
     sku
     priceVariants
     attributes
-    basePrice: priceVariants(key: $basePrice)
-    selectedPrice: priceVariants(key: $selectedPrice)
+    fallbackPriceVariant: priceVariants(key: $fallbackPriceVariant)
+    selectedPriceVariant: priceVariants(key: $selectedPriceVariant)
     description {
         extraDescription
     }
     matchingProducts {
-        variants {
+        variants(language: $language) {
             sku
             name
             product {
                 path
             }
-            basePrice: priceVariants(key: $basePrice)
-            selectedPrice: priceVariants(key: $selectedPrice)
+            fallbackPriceVariant: priceVariants(key: $fallbackPriceVariant)
+            selectedPriceVariant: priceVariants(key: $selectedPriceVariant)
             firstImage {
                 url
                 variants(maxWidth: 200, types: ["avif"]) {

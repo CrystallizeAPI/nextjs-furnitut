@@ -5,6 +5,7 @@ import { OrderItem } from '@crystallize/js-api-client';
 import { useTranslations } from 'next-intl';
 type CartOrderItemProps = {
     item: CartItem | OrderItem;
+    currency?: string;
 };
 export const CartOrderItem = ({ item }: CartOrderItemProps) => {
     const t = useTranslations('Cart');
@@ -25,7 +26,9 @@ export const CartOrderItem = ({ item }: CartOrderItemProps) => {
                 </div>
             </div>
             <div className="text-base">
-                {typeof item.price?.gross === 'number' && <Price price={{ price: item.price.gross }} />}
+                {typeof item.price?.gross === 'number' && (
+                    <Price price={{ price: item.price.gross, currency: item.price.currency }} />
+                )}
             </div>
         </div>
     );

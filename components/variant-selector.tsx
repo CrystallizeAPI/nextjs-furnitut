@@ -104,8 +104,8 @@ export const VariantSelector = (props: VariantSelectorProps) => {
                     );
 
                     const variantPrice = getPrice({
-                        base: variant.basePrice,
-                        selected: customerSelectedPriceVariant?.priceVariant?.priceFor ?? variant.selectedPrice,
+                        fallbackPriceVariant: variant.fallbackPriceVariant,
+                        selectedPriceVariant: customerSelectedPriceVariant?.priceVariant?.priceFor ?? variant.selectedPriceVariant,
                     });
 
                     return (

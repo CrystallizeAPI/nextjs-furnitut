@@ -5,9 +5,9 @@
         "noResultsShort": "Inga resultat"
     },
     "Cart": {
-        "title": "Kundvagn",
-        "cart": "Kundvagn",
-        "emptyCart": "Kundvagnen är tom",
+        "title": "Din varukorg",
+        "cart": "Varukorg",
+        "emptyCart": "Din varukorg är tom",
         "addedToCart": "tillagd",
         "addingToCart": "Lägger till...",
         "addToCart": "Lägg till",
@@ -70,7 +70,7 @@
         "hits": "träffar"
     },
     "Checkout": {
-        "lockCart": "Skapa konto och lås kundvagnen",
+        "lockCart": "Skapa konto och lås din varukorg",
         "checkout": "Kassa",
         "customer": "Kund",
         "goToPayment": "Till betalning",

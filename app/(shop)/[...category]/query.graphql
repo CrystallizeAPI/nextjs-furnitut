@@ -7,9 +7,11 @@ query SearchCategory(
     $sorting: TenantSort
     $boundaries: [Int]!
     $publicationState: [PublicationState]
+    $language: [TenantLanguage] = en    
 ) {
     filters: search(
         path: $path
+        language: $language
         facets: {
             price_default: { boundaries: $boundaries, key: "price" }
             parentPaths: { key: "parentPaths", limit: 10 }
@@ -22,6 +24,7 @@ query SearchCategory(
     }
     search(
         path: $path
+        language: $language
         publicationState: $publicationState
         pagination: { limit: $limit, skip: $skip }
         filters: $filters
@@ -73,7 +76,7 @@ query SearchCategory(
         }
     }
     browse {
-        category(path: $browsePath, publicationState: $publicationState) {
+        category(path: $browsePath, language: $language, publicationState: $publicationState) {
             hits {
                 name
                 breadcrumbs {
@@ -438,8 +441,8 @@ query SearchCategory(
     }
 }
 
-query FetchItemShape($path: String!) {
-    search(path: $path) {
+query FetchItemShape( $path: String!, $language: [TenantLanguage] = en ) {
+    search( path: $path, language: $language ) {
         hits {
             id
             name

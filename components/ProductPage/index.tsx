@@ -23,7 +23,7 @@ import classNames from 'classnames';
 
 import { getCustomerPrices } from './get-customer-prices';
 
-const { CRYSTALLIZE_BASE_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
+const { CRYSTALLIZE_FALLBACK_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
 
 type ProductsProps = {
     searchParams: Promise<SearchParams>;
@@ -34,8 +34,8 @@ export const fetchProductData = async ({ path, isPreview = false }: { path: stri
     const response = await apiRequest(FetchProductDocument, {
         path,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
-        selectedPrice: CRYSTALLIZE_SELECTED_PRICE!,
-        basePrice: CRYSTALLIZE_BASE_PRICE!,
+        selectedPriceVariant: CRYSTALLIZE_SELECTED_PRICE!,
+        fallbackPriceVariant: CRYSTALLIZE_FALLBACK_PRICE!
     });
     const { story, variants, brand, breadcrumbs, meta, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 
@@ -61,11 +61,11 @@ export default async function CategoryProduct(props: ProductsProps) {
         (catalogueProductVariant) => catalogueProductVariant?.sku === currentVariant?.sku,
     );
 
-    const selectedPrice = selectedPriceVariant?.priceVariant?.priceFor ?? currentVariant?.selectedPrice;
+    const selectedPrice = selectedPriceVariant?.priceVariant?.priceFor ?? currentVariant?.selectedPriceVariant;
 
     const currentVariantPrice = getPrice({
-        base: currentVariant?.basePrice,
-        selected: selectedPrice,
+        fallbackPriceVariant: currentVariant?.fallbackPriceVariant,
+        selectedPriceVariant: selectedPrice,
     });
 
     const dimensions = currentVariant?.dimensions;
@@ -349,9 +349,8 @@ export default async function CategoryProduct(props: ProductsProps) {
                                 <Accordion
                                     className="py-8 text-lg"
                                     defaultOpen={!!currentVariant?.matchingProducts?.variants?.length}
-                                    title={`Matching products (${
-                                        currentVariant?.matchingProducts?.variants?.length || 0
-                                    })`}
+                                    title={`Matching products (${currentVariant?.matchingProducts?.variants?.length || 0
+                                        })`}
                                 >
                                     {currentVariant?.matchingProducts?.variants?.map((product, index) => {
                                         if (!product) {
@@ -359,8 +358,8 @@ export default async function CategoryProduct(props: ProductsProps) {
                                         }
 
                                         const matchingProductPrice = getPrice({
-                                            base: product.basePrice,
-                                            selected: product.selectedPrice,
+                                            fallbackPriceVariant: product.fallbackPriceVariant,
+                                            selectedPriceVariant: product.selectedPriceVariant,
                                         });
                                         return (
                                             <div

@@ -4,9 +4,10 @@ import { CartItem } from "@/use-cases/contracts/cart";
 import { OrderItem } from "@crystallize/js-api-client";
 
 type CartOrderItemProps = {
-    item: CartItem | OrderItem
+    item: CartItem | OrderItem,
+    currency?: string
 }
-export const CartOrderItem = ({ item }: CartOrderItemProps) => {
+export const CartOrderItem = ({ item, currency }: CartOrderItemProps) => {
     const imageProps = 'imageUrl' in item ? { src: item.imageUrl } : ('images' in item ? item.images[0] : {});
     const sku = 'sku' in item ? item.sku : ('variant' in item ? item.variant.sku : '');
     return <div className="px-6 py-2 mb-2 gap-2 w-full flex items-center border-b border-muted">
@@ -22,7 +23,7 @@ export const CartOrderItem = ({ item }: CartOrderItemProps) => {
         </div>
         <div className="text-base">
             {typeof item.price?.gross === 'number' && (
-                <Price price={{ price: item.price.gross }} />
+                <Price price={{ price: item.price.gross, currency: currency }} />
             )}
         </div>
     </div>

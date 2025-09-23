@@ -88,6 +88,7 @@ export const CartItems = () => {
                                                             price:
                                                                 (item.variant?.compareAtPrice?.gross ??
                                                                     item.price.gross) * item.quantity,
+                                                            currency: item.price.currency
                                                         }}
                                                     />
                                                 </s>
@@ -101,7 +102,7 @@ export const CartItems = () => {
                                                 </Badge>
                                             </>
                                         )}
-                                        <Price price={{ price: item.price.gross }} />
+                                        <Price price={{ price: item.price.gross, currency: item.price.currency }} />
                                     </span>
                                 </div>
                             </div>

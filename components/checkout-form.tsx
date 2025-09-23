@@ -153,9 +153,9 @@ export const CheckoutForm = () => {
                                                 </div>
 
                                                 <div className="flex justify-between w-full ">
-                                                    <div className="flex items-end justify-center">
+                                                    <Badge className={'text-xxs py-1 mr-2 h-5 flex self-end'}>
                                                         {item.quantity}x
-                                                    </div>
+                                                    </Badge>
 
                                                     <span className="font-bold text-sm text-end">
                                                         {item.price.discounts?.length > 0 && (
@@ -166,6 +166,7 @@ export const CheckoutForm = () => {
                                                                             price:
                                                                                 (item.variant?.compareAtPrice?.gross ??
                                                                                     item.price.gross) * item.quantity,
+                                                                            currency: item.price.currency,
                                                                         }}
                                                                     />
                                                                 </s>
@@ -175,7 +176,7 @@ export const CheckoutForm = () => {
                                                                 </Badge>
                                                             </>
                                                         )}
-                                                        <Price price={{ price: item.price.gross }} />
+                                                        <Price price={{ price: item.price.gross, currency: item.price.currency }} />
                                                     </span>
                                                 </div>
                                             </div>
@@ -187,27 +188,27 @@ export const CheckoutForm = () => {
                                 <div className="text-dark/70 text-sm flex justify-between items-center">
                                     <span>Net:</span>
                                     <span>
-                                        <Price price={{ price: cart.total.net }} />
+                                        <Price price={{ price: cart.total.net, currency: cart.total.currency }} />
                                     </span>
                                 </div>
                                 <div className="text-dark/70 text-sm flex justify-between items-center mb-3">
                                     <span>Tax:</span>
                                     <span>
-                                        <Price price={{ price: cart.total.taxAmount }} />
+                                        <Price price={{ price: cart.total.taxAmount, currency: cart.total.currency }} />
                                     </span>
                                 </div>
                                 {cart.total.discounts.length > 0 && (
                                     <div className="text-dark/70 text-sm flex justify-between items-center mb-4">
                                         <span>Total savings:</span>
                                         <span>
-                                            -<Price price={{ price: cart.total.discounts[0].amount }} />
+                                            -<Price price={{ price: cart.total.discounts[0].amount, currency: cart.total.currency }} />
                                         </span>
                                     </div>
                                 )}
                                 <div className="my-4 text-base">
                                     <span className="text-gray-900  font-bold">Total</span>
                                     <span className="text-gray-900 font-bold float-right">
-                                        <Price price={{ price: cart.total.gross }} />
+                                        <Price price={{ price: cart.total.gross, currency: cart.total.currency }} />
                                     </span>
                                 </div>
                             </div>

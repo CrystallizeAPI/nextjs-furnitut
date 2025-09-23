@@ -29,6 +29,7 @@
         "graphql": "^16.9.0",
         "jose": "^5.9.6",
         "next": "15.2.2-canary.0",
+        "next-intl": "^4.3.9",
         "nodemailer": "^6.9.15",
         "razorpay": "^2.9.4",
         "react": "19.0.0",

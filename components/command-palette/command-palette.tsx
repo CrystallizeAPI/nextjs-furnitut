@@ -17,6 +17,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { apiRequest } from '@/utils/api-request';
 import { GlobalSearchDocument } from '@/generated/discovery/graphql';
 import { debounce } from '@/utils/debounce';
+import { useTranslations } from 'next-intl';
 
 type ImageVariant = {
     url: string;
@@ -45,6 +46,7 @@ export function CommandPalette() {
     const [open, setOpen] = useState(false);
     const [results, setResults] = useState<Product[]>([]);
     const router = useRouter();
+    const t = useTranslations('Search');
 
     useEffect(() => {
         if (typeof window === 'undefined') {
@@ -125,7 +127,7 @@ export function CommandPalette() {
                                 <ComboboxInput
                                     autoFocus
                                     className="col-start-1 row-start-1 h-12 w-full pr-4 pl-11 text-base text-dark/90 outline-hidden placeholder:text-dark/40 sm:text-sm"
-                                    placeholder="Search..."
+                                    placeholder={t('placeholder')}
                                     onChange={(event) => setQuery(event.target.value)}
                                     onBlur={() => setQuery('')}
                                 />
@@ -178,10 +180,8 @@ export function CommandPalette() {
                                         name="exclamation-circle"
                                         className="mx-auto size-6 text-dark/40"
                                     />
-                                    <p className="mt-4 font-semibold text-dark/90">No results found</p>
-                                    <p className="mt-2 text-dark/50">
-                                        No products found for this search term. Please try again.
-                                    </p>
+                                    <p className="mt-4 font-semibold text-dark/90">{t('noResultsShort')}</p>
+                                    <p className="mt-2 text-dark/50">{t('noResults')}</p>
                                 </div>
                             )}
                         </Combobox>

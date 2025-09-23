@@ -12,10 +12,12 @@ import { Image } from '@/components/image';
 import { Customer } from '@/use-cases/contracts/customer';
 import { useCart } from './cart/cart-provider';
 import { Badge } from '@/components/badge';
+import { useTranslations } from 'next-intl';
 
 type InitialState = { customer: Customer | null; cart: Cart | null; cartId?: string } | null;
 
 export const CheckoutForm = () => {
+    const t = useTranslations();
     const { emptyCart, cart: clientCart } = useCart();
     const [data, onSubmit, isPending] = useActionState<InitialState, FormData>(async (...param) => {
         emptyCart();
@@ -28,14 +30,14 @@ export const CheckoutForm = () => {
     return (
         <div className="grid grid-cols-12 gap-12 ">
             <div className="col-span-8">
-                <h2 className="font-bold mb-2">Customer</h2>
+                <h2 className="font-bold mb-2">{t('Checkout.customer')}</h2>
                 <form action={onSubmit}>
                     <div className="bg-light rounded-t-xl border-muted border">
                         <div className="border-b border-muted">
                             <InputField
                                 type="email"
                                 name="email"
-                                label="Email address"
+                                label={t('Checkout.labelEmail')}
                                 defaultValue={customer?.addresses.email}
                             />
                         </div>
@@ -45,14 +47,14 @@ export const CheckoutForm = () => {
                                 <InputField
                                     type="text"
                                     name="firstName"
-                                    label="First name"
+                                    label={t('Checkout.labelFirstName')}
                                     defaultValue={customer?.firstName}
                                 />
                             </div>
                             <InputField
                                 type="text"
                                 name="lastName"
-                                label="Last name"
+                                label={t('Checkout.labelLastName')}
                                 defaultValue={customer?.lastName}
                             />
                         </div>
@@ -61,14 +63,14 @@ export const CheckoutForm = () => {
                                 <InputField
                                     type="text"
                                     name="companyName"
-                                    label="Company name"
+                                    label={t('Checkout.labelCompany')}
                                     defaultValue={customer?.companyName}
                                 />
                             </div>
                             <InputField
                                 type="text"
                                 name="taxNumber"
-                                label="Tax number"
+                                label={t('Checkout.labelTaxNumber')}
                                 defaultValue={customer?.taxNumber}
                             />
                         </div>
@@ -78,7 +80,7 @@ export const CheckoutForm = () => {
                                 <InputField
                                     type="text"
                                     name="street"
-                                    label="Street"
+                                    label={t('Checkout.labelStreet')}
                                     defaultValue={customer?.addresses.street}
                                 />
                             </div>
@@ -86,7 +88,7 @@ export const CheckoutForm = () => {
                             <InputField
                                 type="text"
                                 name="postalCode"
-                                label="Zip Code"
+                                label={t('Checkout.labelPostalCode')}
                                 pattern="[0-9]{4}|[0-9]{5}"
                                 defaultValue={customer?.addresses.postalCode}
                             />
@@ -97,39 +99,39 @@ export const CheckoutForm = () => {
                                 <InputField
                                     type="text"
                                     name="city"
-                                    label="City"
+                                    label={t('Checkout.labelCity')}
                                     defaultValue={customer?.addresses.city}
                                 />
                             </div>
                             <InputField
                                 type="text"
                                 name="country"
-                                label="Country"
+                                label={t('Checkout.labelCountry')}
                                 defaultValue={customer?.addresses.country}
                             />
                         </div>
                     </div>
 
                     <div className=" rounded-b-xl border-b border-x border-muted bg-light flex flex-col justify-center items-center py-3">
-                        <p className="text-xs italic">Create a user and locking the cart</p>
+                        <p className="text-xs italic">{t('Checkout.lockCart')}</p>
                         <button
                             type="submit"
                             className="bg-dark mx-auto text-light  rounded-lg px-8 py-2 mt-2 cursor-pointer"
                             disabled={isPending || !!customer}
                         >
-                            Go to payment
+                            {t('Checkout.goToPayment')}
                         </button>
                     </div>
                 </form>
                 <div className={clsx('mt-8', !customer && 'opacity-50 pointer-events-none')}>
-                    <h2 className="font-bold mb-2">Payment</h2>
+                    <h2 className="font-bold mb-2">{t('Checkout.payment')}</h2>
                     <div className="bg-light rounded-xl border-muted border">
                         <PaymentButton cartId={cartId} />
                     </div>
                 </div>
             </div>
             <div className="col-span-4">
-                <h2 className="font-bold mb-2">Shopping Cart</h2>
+                <h2 className="font-bold mb-2">{t('Checkout.orderSummary')}</h2>
 
                 <div className="bg-light rounded-xl border-muted border ">
                     {!!cart?.items.length && (
@@ -185,27 +187,27 @@ export const CheckoutForm = () => {
                             </ul>
                             <div className="mt-8 px-6">
                                 <div className="text-dark/70 text-sm flex justify-between items-center">
-                                    <span>Net:</span>
+                                    <span>{t('Price.net')}</span>
                                     <span>
                                         <Price price={{ price: cart.total.net }} />
                                     </span>
                                 </div>
                                 <div className="text-dark/70 text-sm flex justify-between items-center mb-3">
-                                    <span>Tax:</span>
+                                    <span>{t('Price.tax')}</span>
                                     <span>
                                         <Price price={{ price: cart.total.taxAmount }} />
                                     </span>
                                 </div>
                                 {cart.total.discounts.length > 0 && (
                                     <div className="text-dark/70 text-sm flex justify-between items-center mb-4">
-                                        <span>Total savings:</span>
+                                        <span>{t('Price.totalSavings')}</span>
                                         <span>
                                             -<Price price={{ price: cart.total.discounts[0].amount }} />
                                         </span>
                                     </div>
                                 )}
                                 <div className="my-4 text-base">
-                                    <span className="text-gray-900  font-bold">Total</span>
+                                    <span className="text-gray-900  font-bold">{t('Price.total')}</span>
                                     <span className="text-gray-900 font-bold float-right">
                                         <Price price={{ price: cart.total.gross }} />
                                     </span>

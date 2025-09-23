@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import { CheckoutForm } from '@/components/checkout-form';
+import { getTranslations } from 'next-intl/server';
 
 export default async function Checkout() {
+    const t = await getTranslations('Checkout');
+
     return (
         <>
             <header className="fixed max-w-(--breakpoint-2xl) w-full px-10 top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-8">
@@ -15,7 +18,7 @@ export default async function Checkout() {
                         </svg>
                     </div>
                 </Link>
-                <h1 className="text-xl font-bold">Checkout</h1>
+                <h1 className="text-xl font-bold">{t('checkout')}</h1>
             </header>
 
             <main className="page max-w-(--breakpoint-xl)! min-h-screen">

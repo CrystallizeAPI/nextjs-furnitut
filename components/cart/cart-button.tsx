@@ -3,10 +3,12 @@
 import { Image } from '@/components/image';
 import { useCart } from './cart-provider';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export const CartButton = () => {
     const { cart, setIsOpen } = useCart();
     const [item, setItem] = useState(cart?.lastItemAdded);
+    const t = useTranslations('Cart');
 
     useEffect(() => {
         setItem(cart?.lastItemAdded);
@@ -45,7 +47,7 @@ export const CartButton = () => {
                     <circle cx="9" cy="20.4778" r="1" fill="#222222" />
                 </svg>
                 <span className="pr-4 sm:pr-8 relative flex items-start justify-center">
-                    <span className="max-sm:sr-only">Cart </span>
+                    <span className="max-sm:sr-only">{t('cart')} </span>
                     {!!cart?.items.length && (
                         <span className="text-sm absolute right-0 h-5 w-5 text-bold bg-vivid text-light rounded-sm top-1/2 -translate-y-1/2">
                             {cart?.items.reduce((acc, item) => acc + (item.quantity ?? 0), 0)}
@@ -64,7 +66,7 @@ export const CartButton = () => {
                         </div>
                         <div className="flex gap-1">
                             <span className="text-sm italic font-bold text-dark">{item.variant.product.name}</span>
-                            <span className="text-sm text-dark ">added to cart</span>
+                            <span className="text-sm text-dark ">{t('addedToCart')}</span>
                         </div>
                     </div>
                 </div>

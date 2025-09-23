@@ -22,6 +22,7 @@ import { getPrice } from '@/utils/price';
 import classNames from 'classnames';
 
 import { getCustomerPrices } from './get-customer-prices';
+import { getTranslations } from 'next-intl/server';
 
 const { CRYSTALLIZE_BASE_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
 
@@ -125,7 +126,7 @@ export default async function CategoryProduct(props: ProductsProps) {
     };
 
     //sidebar shoping cart shows selected price not base
-
+    const t = await getTranslations('Product');
     return (
         <>
             <main className="page">
@@ -150,7 +151,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                             })}
                         </div>
                         {product.story && (
-                            <Accordion defaultOpen className="py-8" title="Product">
+                            <Accordion defaultOpen className="py-8" title={t('product')}>
                                 <div className="text-lg leading-10 font-normal">
                                     <ParagraphCollection paragraphs={product.story} />
                                 </div>
@@ -158,7 +159,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                         )}
 
                         {product.details && (
-                            <Accordion title="Details" defaultOpen className="py-8">
+                            <Accordion title={t('details')} defaultOpen className="py-8">
                                 {product.details.map((detail, index) => (
                                     <div className="grid grid-cols-4 gap-y-4 py-8 pr-24 text-lg gap-4" key={index}>
                                         <span className="font-bold">{detail?.title}</span>
@@ -171,11 +172,11 @@ export default async function CategoryProduct(props: ProductsProps) {
                         )}
 
                         {dimensions && (
-                            <Accordion title="Dimensions" defaultOpen className="py-8">
+                            <Accordion title={t('dimensions')} defaultOpen className="py-8">
                                 <div className="grid grid-cols-2 gap-x-48 gap-y-4 py-12 pr-24 text-lg">
                                     {dimensions.height && (
                                         <div className="flex justify-between">
-                                            <span className="font-bold">Height</span>
+                                            <span className="font-bold">{t('height')}</span>
                                             <span>
                                                 {dimensions.height} {dimensions.heightUnit}
                                             </span>
@@ -183,7 +184,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                     )}
                                     {dimensions.width && (
                                         <div className="flex justify-between">
-                                            <span className="font-bold">Width</span>
+                                            <span className="font-bold">{t('width')}</span>
                                             <span>
                                                 {dimensions.width} {dimensions.widthUnit}
                                             </span>
@@ -191,7 +192,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                     )}
                                     {dimensions.depth && (
                                         <div className="flex justify-between">
-                                            <span className="font-bold">Depth</span>
+                                            <span className="font-bold">{t('depth')}</span>
                                             <span>
                                                 {dimensions.depth} {dimensions.depthUnit}
                                             </span>
@@ -199,7 +200,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                     )}
                                     {dimensions.weight && (
                                         <div className="flex justify-between">
-                                            <span className="font-bold">Weight</span>
+                                            <span className="font-bold">{t('weight')}</span>
                                             <span>
                                                 {dimensions.weight} {dimensions.weightUnit}
                                             </span>
@@ -209,7 +210,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                             </Accordion>
                         )}
                         {product.downloads && (
-                            <Accordion title="Downloads" defaultOpen className="py-8">
+                            <Accordion title={t('downloads')} defaultOpen className="py-8">
                                 <div className="">
                                     {product.downloads.map((download, index) => {
                                         if (!download) return null;
@@ -292,6 +293,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                         searchParams={searchParams}
                                         path={product?.path ?? '/'}
                                         selectedCustomerPrices={selectedCustomerPrices}
+                                        label={t('variantsLabel')}
                                     />
                                 </div>
                             )}
@@ -434,7 +436,7 @@ export default async function CategoryProduct(props: ProductsProps) {
             {product?.relatedProducts && (
                 <div className="mt-24 border-t border-muted">
                     <div className=" max-w-(--breakpoint-2xl) pt-24  mx-auto ">
-                        <h2 className="text-2xl py-4 font-bold">Related products</h2>
+                        <h2 className="text-2xl py-4 font-bold">{t('relatedProducts')}</h2>
 
                         <Slider type="product" options={{ loop: false, align: 'start' }}>
                             {product?.relatedProducts?.items?.map((item, index) =>

@@ -7,13 +7,15 @@ import clsx from 'classnames';
 import { Badge } from '@/components/badge';
 import { Fragment } from 'react';
 import { CART_ACTION } from '@/use-cases/types';
+import { useTranslations } from 'next-intl';
 
 export const CartItems = () => {
+    const t = useTranslations('Cart');
     const { cart, onUpdateCart } = useCart();
     const { items } = cart ?? {};
 
     if (!items?.length) {
-        return <p>Your cart is empty.</p>;
+        return <p>{t('emptyCart')}</p>;
     }
 
     return (

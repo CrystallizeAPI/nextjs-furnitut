@@ -3,8 +3,11 @@ import { Suspense } from 'react';
 import { CartButton } from './cart/cart-button';
 import { Navigation } from './navigation';
 import { MenuWrapper } from './menu-wrapper';
+import { useTranslations } from 'next-intl';
 
 export const Header = () => {
+    const t = useTranslations('Navigation');
+
     return (
         <header className="fixed max-w-(--breakpoint-2xl) w-full top-4 left-1/2 -translate-x-1/2 z-10">
             <div className="bg-light border border-muted flex items-stretch rounded-full justify-between">
@@ -18,12 +21,15 @@ export const Header = () => {
                                 />
                             </svg>
                         </div>
-                        <span className="sr-only">Home</span>
+                        <span className="sr-only">{t('home')}</span>
                     </Link>
 
                     <Suspense fallback={null}>
                         <MenuWrapper>
-                            <Navigation className="flex flex-col sm:flex-row  items-center gap-6 min-h-full text-base self-stretch  font-medium sm:pl-8" withSearch />
+                            <Navigation
+                                className="flex flex-col sm:flex-row  items-center gap-6 min-h-full text-base self-stretch  font-medium sm:pl-8"
+                                withSearch
+                            />
                         </MenuWrapper>
                     </Suspense>
                 </div>
@@ -49,7 +55,7 @@ export const Header = () => {
                             strokeLinecap="round"
                         />
                     </svg>
-                    <span className="max-sm:sr-only">Account</span>
+                    <span className="max-sm:sr-only">{t('account')}</span>
                 </Link>
                 <CartButton />
             </div>

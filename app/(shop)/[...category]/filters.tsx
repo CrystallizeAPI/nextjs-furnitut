@@ -25,14 +25,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FilterOption, SortingOption } from './types';
 import classNames from 'classnames';
-
-const sortOptions: { label: string; value: SortingOption }[] = [
-    { label: 'Most Popular', value: 'popular' },
-    { label: 'Best Rating', value: 'rating' },
-    { label: 'Newest', value: 'newest' },
-    { label: 'Price Highest', value: 'priceHigh' },
-    { label: 'Price Lowest', value: 'priceLow' },
-];
+import { useTranslations } from 'next-intl';
 
 type Filter = {
     id: string;
@@ -45,20 +38,6 @@ type Filter = {
         checked: boolean;
     }[];
 };
-
-const filters: Filter[] = [
-    {
-        id: 'parentPaths',
-        name: 'Category',
-        options: [],
-    },
-    {
-        id: 'price',
-        name: 'Price',
-        symbol: '€',
-        options: [],
-    },
-];
 
 const PRICE_RANGE_KEY = 'priceRange';
 const SORTING_KEY = 'sort';
@@ -78,6 +57,30 @@ export function Filters({ priceRange, sorting, paths, totalHits, inStock }: Filt
     const pathname = usePathname();
     const router = useRouter();
     const [open, setOpen] = useState(false);
+    const t = useTranslations('Facets');
+
+    //Added to client for translations
+    const filters: Filter[] = [
+        {
+            id: 'parentPaths',
+            name: t('category'),
+            options: [],
+        },
+        {
+            id: 'price',
+            name: t('price'),
+            symbol: t('currencySymbol'),
+            options: [],
+        },
+    ];
+
+    const sortOptions: { label: string; value: SortingOption }[] = [
+        { label: t('mostPopular'), value: 'popular' },
+        { label: t('bestRating'), value: 'rating' },
+        { label: t('newest'), value: 'newest' },
+        { label: t('priceHighToLow'), value: 'priceHigh' },
+        { label: t('priceLowToHigh'), value: 'priceLow' },
+    ];
 
     filters.find((filter) => filter.id === 'parentPaths')!.options = paths;
     filters.find((filter) => filter.id === 'price')!.options = priceRange;
@@ -136,13 +139,13 @@ export function Filters({ priceRange, sorting, paths, totalHits, inStock }: Filt
                         className="relative ml-auto flex size-full max-w-xs transform flex-col overflow-y-auto bg-light py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-closed:translate-x-full"
                     >
                         <div className="flex items-center justify-between px-4">
-                            <h2 className="text-lg font-medium text-dark/90">Filters</h2>
+                            <h2 className="text-lg font-medium text-dark/90">{t('filters')}</h2>
                             <button
                                 type="button"
                                 onClick={() => setOpen(false)}
                                 className="-mr-2 flex size-10 items-center justify-center rounded-md bg-light p-2 text-dark/40"
                             >
-                                <span className="sr-only">Close menu</span>
+                                <span className="sr-only">{t('closeFilters')}</span>
                                 <XMarkIcon aria-hidden="true" className="size-6" />
                             </button>
                         </div>
@@ -217,7 +220,7 @@ export function Filters({ priceRange, sorting, paths, totalHits, inStock }: Filt
                             ))}
                             <Field className="px-4 flex items-center justify-between">
                                 <Label as="span" className="mr-3 text-sm">
-                                    In Stock
+                                    {t('inStock')}
                                 </Label>
                                 <Switch
                                     checked={inStock}
@@ -235,7 +238,7 @@ export function Filters({ priceRange, sorting, paths, totalHits, inStock }: Filt
             {/* Filters */}
             <section aria-labelledby="filter-heading">
                 <h2 id="filter-heading" className="sr-only">
-                    Filters
+                    {t('filters')}
                 </h2>
 
                 <div>
@@ -293,7 +296,7 @@ export function Filters({ priceRange, sorting, paths, totalHits, inStock }: Filt
                                 )}
                             </Menu>
                             <p className="m-0 p-0">
-                                <strong>{totalHits}</strong> products
+                                <strong>{totalHits}</strong> {t('hits')}
                             </p>
                         </div>
 
@@ -302,7 +305,7 @@ export function Filters({ priceRange, sorting, paths, totalHits, inStock }: Filt
                             onClick={() => setOpen(true)}
                             className="inline-block text-sm font-medium text-dark/70 hover:text-dark/90 sm:hidden"
                         >
-                            Filters
+                            {t('filters')}
                         </button>
 
                         <div className="hidden sm:block">
@@ -400,7 +403,7 @@ export function Filters({ priceRange, sorting, paths, totalHits, inStock }: Filt
                                     ))}
                                     <Field className="px-4 flex items-center">
                                         <Label as="span" className="mr-3 text-sm">
-                                            In Stock
+                                            {t('inStock')}
                                         </Label>
                                         <Switch
                                             checked={inStock}

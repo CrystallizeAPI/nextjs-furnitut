@@ -1,0 +1,100 @@
+{
+    "Search": {
+        "placeholder": "Search for products...",
+        "noResults": "No products found for this search term. Please try again.",
+        "noResultsShort": "No results found"
+    },
+    "Cart": {
+        "title": "Shopping Cart",
+        "cart": "Cart",
+        "emptyCart": "Your cart is empty.",
+        "addedToCart": "Added to cart",
+        "addingToCart": "Adding...",
+        "addToCart": "Add to cart",
+        "cuponCode": "Coupon Code",
+        "apply": "Apply",
+        "appliedPromotions": "Applied promotions",
+        "checkout": "Checkout",
+        "quantity": "Quantity",
+        "quantityShort": "Qty"
+    },
+    "Price": {
+        "net": "Net",
+        "gross": "Gross",
+        "tax": "Tax",
+        "total": "Total",
+        "totalSavings": "Total savings"
+    },
+    "Story": {
+        "featuredProducts": "Featured Products",
+        "upNext": "Up next"
+    },
+    "Product": {
+        "product": "Product",
+        "details": "Details",
+        "dimensions": "Dimensions",
+        "depth": "Depth",
+        "height": "Height",
+        "width": "Width",
+        "weight": "Weight",
+        "downloads": "Downloads",
+        "relatedProducts": "Related Products",
+        "variantsLabel": "Variants"
+    },
+    "Navigation": {
+        "home": "Home",
+        "account": "Account"
+    },
+    "Account": {
+        "login": "Login",
+        "loginDescription": "We'll send you an email with login details.",
+        "somethingWentWrong": "Something went wrong, please try again.",
+        "email": "Email",
+        "orders": "Orders",
+        "paid": "Paid",
+        "logout": "Logout",
+        "account": "Account"
+    },
+    "Facets": {
+        "filters": "Filters",
+        "closeFilters": "Close filters",
+        "mostPopular": "Most Popular",
+        "bestRating": "Best Rating",
+        "newest": "Newest",
+        "priceLowToHigh": "Price: Low to High",
+        "priceHighToLow": "Price: High to Low",
+        "price": "Price",
+        "currencySymbol": "€",
+        "category": "Category",
+        "inStock": "In Stock",
+        "hits": "hits"
+    },
+    "Checkout": {
+        "lockCart": "Create account and lock the cart",
+        "checkout": "Checkout",
+        "customer": "Customer",
+        "goToPayment": "Go to payment",
+        "payment": "Payment",
+        "orderSummary": "Order summary",
+        "labelEmail": "Email",
+        "labelFirstName": "First name",
+        "labelLastName": "Last name",
+        "labelCompany": "Company",
+        "labelPhone": "Phone",
+        "labelTaxNumber": "Tax number",
+        "labelStreet": "Street",
+        "labelCity": "City",
+        "labelPostalCode": "Postal code",
+        "labelCountry": "Country",
+        "labelAddress": "Address",
+        "payWith": "Pay with",
+        "payWithQliroShort": "Pay with Qliro",
+        "payWithStripeShort": "Pay with your credit card",
+        "payWithCrystallizeShort": "For testing purposes only"
+    },
+    "Confirmation": {
+        "thankYou": "Thank you {name}!",
+        "orderReceived": " We're on it! Your order is already in motion, and a confirmation email is on its way to {email}. Keep an eye out—it'll be there shortly!",
+        "order": "Order"
+    }
+}

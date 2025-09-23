@@ -4,10 +4,12 @@ import clsx from 'classnames';
 import { CartItemInput } from '@/use-cases/contracts/cart';
 import { useCart } from './cart-provider';
 import { CART_ACTION } from '@/use-cases/types';
+import { useTranslations } from 'next-intl';
 
 type AddToCartButtonProps = { type?: 'default' | 'micro'; input: CartItemInput };
 
 export const AddToCartButton = ({ input, type = 'default' }: AddToCartButtonProps) => {
+    const t = useTranslations('Cart');
     const { isLoading, onUpdateCart } = useCart();
 
     return (
@@ -23,7 +25,7 @@ export const AddToCartButton = ({ input, type = 'default' }: AddToCartButtonProp
                 })}
                 data-testid="add-to-cart-button"
             >
-                {type === 'micro' ? '+' : isLoading ? 'Adding...' : 'Add to cart'}
+                {type === 'micro' ? '+' : isLoading ? t('addingToCart') : t('addToCart')}
             </button>
         </form>
     );

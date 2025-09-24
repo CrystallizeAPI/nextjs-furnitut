@@ -39,7 +39,8 @@
         "weight": "Weight",
         "downloads": "Downloads",
         "relatedProducts": "Related Products",
-        "variantsLabel": "Variants"
+        "variantsLabel": "Variants",
+        "matchingProducts": "Matching Products"
     },
     "Navigation": {
         "home": "Home",

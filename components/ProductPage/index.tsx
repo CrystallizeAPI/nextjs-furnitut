@@ -15,6 +15,8 @@ import { Accordion } from '@/components/accordion';
 import { AddToCartButton } from '@/components/cart/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
 import { SearchParams } from '@/app/(shop)/[...category]/types';
+import { PercentBadgeIcon } from '@heroicons/react/16/solid';
+
 import downloadIcon from '@/assets/icon-download.svg';
 
 import Image from 'next/image';
@@ -23,6 +25,7 @@ import classNames from 'classnames';
 
 import { getCustomerPrices } from './get-customer-prices';
 import { getTranslations } from 'next-intl/server';
+import { getPromotionValues } from '@/utils/topics';
 
 const { CRYSTALLIZE_FALLBACK_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
 
@@ -36,7 +39,7 @@ export const fetchProductData = async ({ path, isPreview = false }: { path: stri
         path,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
         selectedPriceVariant: CRYSTALLIZE_SELECTED_PRICE!,
-        fallbackPriceVariant: CRYSTALLIZE_FALLBACK_PRICE!
+        fallbackPriceVariant: CRYSTALLIZE_FALLBACK_PRICE!,
     });
     const { story, variants, brand, breadcrumbs, meta, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 
@@ -51,6 +54,8 @@ export const fetchProductData = async ({ path, isPreview = false }: { path: stri
 };
 
 export default async function CategoryProduct(props: ProductsProps) {
+    const t = await getTranslations('Product');
+
     const searchParams = await props.searchParams;
     const params = await props.params;
     const url = `/${params.category.join('/')}`;
@@ -72,6 +77,7 @@ export default async function CategoryProduct(props: ProductsProps) {
     const dimensions = currentVariant?.dimensions;
     // TODO: this should be for how long the price will be valid
     const TWO_DAYS_FROM_NOW = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
+    const promos = getPromotionValues(product.topics);
 
     const productVariantsSchema =
         product.variants?.map<schemas.WithContext<schemas.Product>>((variant) => ({
@@ -87,8 +93,8 @@ export default async function CategoryProduct(props: ProductsProps) {
                 '@type': 'Offer',
                 itemCondition: 'https://schema.org/NewCondition',
                 availability: 'https://schema.org/InStock',
-                price: currentVariantPrice.lowest ?? 0,
-                priceCurrency: currentVariantPrice.currency ?? 'EUR',
+                price: currentVariantPrice?.lowest ?? 0,
+                priceCurrency: currentVariantPrice?.currency ?? 'EUR',
                 priceValidUntil: TWO_DAYS_FROM_NOW.toLocaleString(),
             },
         })) ?? [];
@@ -126,7 +132,6 @@ export default async function CategoryProduct(props: ProductsProps) {
     };
 
     //sidebar shoping cart shows selected price not base
-    const t = await getTranslations('Product');
     return (
         <>
             <main className="page">
@@ -281,6 +286,18 @@ export default async function CategoryProduct(props: ProductsProps) {
                         </div>
 
                         <div className="py-4 sticky top-20">
+                            <div className="flex gap-2 pb-2">
+                                {promos.map((promo) => (
+                                    <span
+                                        key={promo}
+                                        className="rounded-full bg-vivid pl-1 pr-3 py-1 text-xs font-semibold text-light border flex items-center gap-1"
+                                    >
+                                        <PercentBadgeIcon className="size-4" />
+                                        {promo}
+                                    </span>
+                                ))}
+                            </div>
+
                             <h1 className="text-2xl font-bold">{currentVariant?.name ?? product.name}</h1>
                             <div className="line-clamp-2">
                                 <ContentTransformer json={product.description?.[0]} />
@@ -351,8 +368,9 @@ export default async function CategoryProduct(props: ProductsProps) {
                                 <Accordion
                                     className="py-8 text-lg"
                                     defaultOpen={!!currentVariant?.matchingProducts?.variants?.length}
-                                    title={`Matching products (${currentVariant?.matchingProducts?.variants?.length || 0
-                                        })`}
+                                    title={`Matching products (${
+                                        currentVariant?.matchingProducts?.variants?.length || 0
+                                    })`}
                                 >
                                     {currentVariant?.matchingProducts?.variants?.map((product, index) => {
                                         if (!product) {
@@ -433,7 +451,7 @@ export default async function CategoryProduct(props: ProductsProps) {
             </main>
 
             {product?.relatedProducts && (
-                <div className="mt-24 border-t border-muted">
+                <div className="mt-24">
                     <div className=" max-w-(--breakpoint-2xl) pt-24  mx-auto ">
                         <h2 className="text-2xl py-4 font-bold">{t('relatedProducts')}</h2>
 

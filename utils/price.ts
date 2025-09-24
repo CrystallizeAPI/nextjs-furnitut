@@ -21,7 +21,7 @@ export function getPrice({
 
     const low = Math.min(...prices);
     const high = Math.max(...prices);
-    const currency = fallbackPriceVariant.currency ?? 'EUR';
+    const currency = fallbackPriceVariant?.currency ?? 'EUR';
 
     return {
         hasBestPrice: low !== high,

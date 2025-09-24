@@ -5,7 +5,7 @@ fragment layout on LayoutPiece {
     theme
     backgroundMedia {
         image {
-            ...image
+            ...showCaseImage
         }
         video {
             playlists

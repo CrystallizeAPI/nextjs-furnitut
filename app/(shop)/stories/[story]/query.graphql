@@ -1,4 +1,9 @@
-query FetchStory($path: String!, $language: [TenantLanguage] = en ) {
+query FetchStory(
+    $path: String!
+    $language: [TenantLanguage] = en
+    $selectedPriceVariant: String = "default"
+    $fallbackPriceVariant: String = "default"
+) {
     browse {
         story(path: $path, language: $language) {
             hits {
@@ -101,6 +106,8 @@ fragment storyContent on story {
 
 fragment commonProductVariant on ProductVariantForProduct {
     defaultPrice: priceVariants(key: "default")
+    fallbackPriceVariant: priceVariants(key: $fallbackPriceVariant)
+    selectedPriceVariant: priceVariants(key: $selectedPriceVariant)
     firstImage {
         url
         variants(maxWidth: 200, types: ["avif"]) {

@@ -19,6 +19,8 @@ import { GlobalSearchDocument } from '@/generated/discovery/graphql';
 import { debounce } from '@/utils/debounce';
 import { useTranslations } from 'next-intl';
 
+const { CRYSTALLIZE_FALLBACK_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
+
 type ImageVariant = {
     url: string;
     width: number;
@@ -31,7 +33,7 @@ type FirstImage = {
 
 type DefaultVariant = {
     firstImage: FirstImage;
-    defaultPrice: number;
+    sku: string;
 };
 
 type Product = {
@@ -70,7 +72,9 @@ export function CommandPalette() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedApiCall = useCallback(
         debounce(async (term: string) => {
-            const response = await apiRequest(GlobalSearchDocument, { term });
+            const response = await apiRequest(GlobalSearchDocument, {
+                term,
+            });
             const results = response?.data?.search?.hits ?? [];
 
             setResults(results as Product[]);
@@ -140,21 +144,21 @@ export function CommandPalette() {
                             {results.length > 0 && (
                                 <ComboboxOptions
                                     static
-                                    className="max-h-96 transform-gpu scroll-py-3 overflow-y-auto p-3"
+                                    className="max-h-96 transform-gpu scroll-py-3 overflow-y-auto p-1"
                                 >
                                     {results.map((item) => (
                                         <ComboboxOption
                                             key={item.id}
                                             value={item}
-                                            className="group flex cursor-default rounded-xl p-3 select-none data-focus:bg-dark/10 data-focus:outline-hidden"
+                                            className="group flex cursor-default rounded-xl px-3 py-2 select-none data-focus:bg-dark/10 data-focus:outline-hidden hover:cursor-pointer"
                                         >
                                             <div
                                                 className={
-                                                    'flex size-10 flex-none items-center justify-center rounded-lg'
+                                                    'flex size-10 aspect-square relative overflow-hidden flex-none items-center justify-center rounded-lg'
                                                 }
                                             >
                                                 <img
-                                                    className="aspect-square h-12"
+                                                    className=" h-12 object-cover"
                                                     src={item.defaultVariant.firstImage.variants[0].url}
                                                     width={item.defaultVariant.firstImage.variants[0].width}
                                                     alt={item.name}
@@ -164,8 +168,8 @@ export function CommandPalette() {
                                                 <p className="text-sm font-medium text-dark/70 group-data-focus:text-dark/90">
                                                     {item.name}
                                                 </p>
-                                                <p className="text-sm text-dark/50 group-data-focus:text-dark/70">
-                                                    {item.defaultVariant.defaultPrice}€
+                                                <p className="text-sm text-dark/50 group-data-focus:text-dark/70 italic">
+                                                    {item.defaultVariant?.sku}
                                                 </p>
                                             </div>
                                         </ComboboxOption>

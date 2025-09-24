@@ -7,7 +7,9 @@ query SearchCategory(
     $sorting: TenantSort
     $boundaries: [Int]!
     $publicationState: [PublicationState]
-    $language: [TenantLanguage] = en    
+    $language: [TenantLanguage] = en
+    $selectedPriceVariant: String = "default"
+    $fallbackPriceVariant: String = "default"
 ) {
     filters: search(
         path: $path
@@ -43,9 +45,12 @@ query SearchCategory(
                 name
                 path
                 description(format: json)
+                topics(onlyLeafName: true, leafOnly: true)
                 defaultVariant {
                     sku
-                    defaultPrice: priceVariants(key: "default")
+                    defaultPrice: priceVariants(key: $selectedPriceVariant)
+                    fallbackPriceVariant: priceVariants(key: $fallbackPriceVariant)
+                    selectedPriceVariant: priceVariants(key: $selectedPriceVariant)
                     firstImage {
                         url
                         altText
@@ -86,332 +91,19 @@ query SearchCategory(
                 }
                 blocks {
                     storySlider {
-                        title
-                        description
-                        stories {
-                            items {
-                                ... on story {
-                                    path
-                                    title
-                                    intro
-                                    media {
-                                        image {
-                                            url
-                                            altText
-                                            focalPoint
-                                            variants {
-                                                url
-                                                width
-                                                height
-                                            }
-                                        }
-                                        shoppableImage {
-                                            url
-                                            altText
-                                            focalPoint
-                                            variants {
-                                                url
-                                                width
-                                                height
-                                            }
-                                        }
-                                        video {
-                                            thumbnails {
-                                                url
-                                                altText
-                                                variants {
-                                                    width
-                                                    height
-                                                    url
-                                                }
-                                            }
-                                            title
-                                            playlists
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        layout {
-                            displayWidth
-                            theme
-                            backgroundMedia {
-                                image {
-                                    url
-                                    altText
-                                    focalPoint
-                                    variants {
-                                        url
-                                        width
-                                        height
-                                    }
-                                }
-                                video {
-                                    playlists
-                                    thumbnails {
-                                        url
-                                        altText
-                                        caption
-                                        meta
-                                        focalPoint
-                                        createdAt
-                                    }
-                                }
-                            }
-                        }
+                        ...storySlider
                     }
                     banner {
-                        title
-                        description
-                        layout {
-                            displayWidth
-                            theme
-                            backgroundMedia {
-                                image {
-                                    url
-                                    altText
-                                    focalPoint
-                                    variants {
-                                        url
-                                        width
-                                        height
-                                    }
-                                }
-                                video {
-                                    playlists
-                                    thumbnails {
-                                        url
-                                        altText
-                                        caption
-                                        meta
-                                        focalPoint
-                                        createdAt
-                                    }
-                                }
-                            }
-                        }
-                        banner {
-                            url
-                            altText
-                            focalPoint
-                            variants {
-                                url
-                                width
-                                height
-                            }
-                            showcases {
-                                hotspot
-                                items {
-                                    name
-                                    path
-                                    ... on product {
-                                        defaultVariant {
-                                            defaultPrice: priceVariants(key: "default")
-                                            firstImage {
-                                                url
-                                                variants(maxWidth: 200, types: ["avif"]) {
-                                                    width
-                                                    url
-                                                    height
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                variants {
-                                    name
-                                    product {
-                                        path
-                                    }
-                                    defaultPrice: priceVariants(key: "default")
-                                    firstImage {
-                                        url
-                                        variants(maxWidth: 200, types: ["avif"]) {
-                                            width
-                                            url
-                                            height
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        callToAction {
-                            action {
-                                label
-                                url
-                            }
-                        }
+                        ...banner
                     }
                     featureHighlights {
-                        layout {
-                            displayWidth
-                            theme
-                            backgroundMedia {
-                                image {
-                                    url
-                                    altText
-                                    focalPoint
-                                    variants {
-                                        url
-                                        width
-                                        height
-                                    }
-                                }
-                                video {
-                                    playlists
-                                    thumbnails {
-                                        url
-                                        altText
-                                        caption
-                                        meta
-                                        focalPoint
-                                        createdAt
-                                    }
-                                }
-                            }
-                        }
-                        usp {
-                            headline
-                            description
-                            icon {
-                                url
-                                altText
-                                focalPoint
-                                variants {
-                                    url
-                                    width
-                                    height
-                                }
-                            }
-                        }
+                        ...featureHighlights
                     }
                     productSlider {
-                        title
-                        description
-                        products {
-                            variants {
-                                sku
-                                name
-                                defaultPrice: priceVariants(key: "default")
-                                firstImage {
-                                    url
-                                    variants(width: 500, types: ["avif"]) {
-                                        url
-                                        width
-                                        height
-                                    }
-                                }
-                                product {
-                                    path
-                                }
-                            }
-                            items {
-                                itemId
-                            }
-                        }
-                        layout {
-                            displayWidth
-                            theme
-                            backgroundMedia {
-                                image {
-                                    url
-                                    altText
-                                    focalPoint
-                                    variants {
-                                        url
-                                        width
-                                        height
-                                    }
-                                }
-                                video {
-                                    playlists
-                                    thumbnails {
-                                        url
-                                        altText
-                                        caption
-                                        meta
-                                        focalPoint
-                                        createdAt
-                                    }
-                                }
-                            }
-                        }
+                        ...productSlider
                     }
                     pictureGrid {
-                        title
-                        description
-                        images {
-                            url
-                            altText
-                            focalPoint
-                            variants {
-                                url
-                                width
-                                height
-                            }
-                            showcases {
-                                hotspot
-                                items {
-                                    name
-                                    path
-                                    ... on product {
-                                        defaultVariant {
-                                            defaultPrice: priceVariants(key: "default")
-                                            firstImage {
-                                                url
-                                                variants(maxWidth: 200, types: ["avif"]) {
-                                                    width
-                                                    url
-                                                    height
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                variants {
-                                    name
-                                    product {
-                                        path
-                                    }
-                                    defaultPrice: priceVariants(key: "default")
-                                    firstImage {
-                                        url
-                                        variants(maxWidth: 200, types: ["avif"]) {
-                                            width
-                                            url
-                                            height
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        layout {
-                            displayWidth
-                            theme
-                            backgroundMedia {
-                                image {
-                                    url
-                                    altText
-                                    focalPoint
-                                    variants {
-                                        url
-                                        width
-                                        height
-                                    }
-                                }
-                                video {
-                                    playlists
-                                    thumbnails {
-                                        url
-                                        altText
-                                        caption
-                                        meta
-                                        focalPoint
-                                        createdAt
-                                    }
-                                }
-                            }
-                        }
+                        ...pictureGrid
                     }
                 }
                 children {
@@ -441,8 +133,8 @@ query SearchCategory(
     }
 }
 
-query FetchItemShape( $path: String!, $language: [TenantLanguage] = en ) {
-    search( path: $path, language: $language ) {
+query FetchItemShape($path: String!, $language: [TenantLanguage] = en) {
+    search(path: $path, language: $language) {
         hits {
             id
             name

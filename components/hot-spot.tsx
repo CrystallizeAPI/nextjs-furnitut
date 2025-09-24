@@ -43,8 +43,15 @@ export const HotSpot = ({ showcase }: { showcase: any }) => {
     const y = showcase?.hotspot.y * 100;
     const product = showcase?.items?.[0] || showcase?.variants?.[0];
     const image = product?.firstImage || product?.defaultVariant?.firstImage;
-    const price = product?.defaultPrice || product?.defaultVariant?.defaultPrice;
+    const price =
+        product?.selectedPriceVariant ||
+        product?.defaultVariant?.selectedPriceVariant ||
+        product?.fallbackPriceVariant ||
+        product?.defaultVariant?.fallbackPriceVariant ||
+        product?.defaultPrice ||
+        product?.defaultVariant?.defaultPrice;
     const link = product?.product?.path || product?.path;
+    const hasPromotion = Boolean(product?.selectedPriceVariant);
 
     return (
         <HotspotWrapper link={link} x={x} y={y}>
@@ -72,7 +79,21 @@ export const HotSpot = ({ showcase }: { showcase: any }) => {
                         <div className="flex flex-col overflow-hidden gap-1">
                             <span className="text-ellipsis text-nowrap w-full">{product.name}</span>
                             <span className="text-xs font-medium">
-                                <Price price={price} />
+                                <b className="flex gap-1">
+                                    <div className={hasPromotion ? 'text-vivid' : ''}>
+                                        <Price price={price} />
+                                    </div>
+                                    {hasPromotion && (
+                                        <div className="line-through text-xs text-white/70 font-normal">
+                                            <Price
+                                                price={
+                                                    product?.fallbackPriceVariant ||
+                                                    product?.defaultVariant?.fallbackPriceVariant
+                                                }
+                                            />
+                                        </div>
+                                    )}
+                                </b>
                             </span>
                         </div>
                     </div>

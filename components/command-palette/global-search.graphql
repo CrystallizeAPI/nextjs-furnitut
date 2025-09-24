@@ -1,5 +1,6 @@
-query GlobalSearch($term: String!) {
+query GlobalSearch($term: String!, $language: [TenantLanguage]) {
     search(
+        language: $language
         term: $term
         options: { fuzzy: { fuzziness: SINGLE } }
         filters: { type_in: [product] }
@@ -13,6 +14,7 @@ query GlobalSearch($term: String!) {
             path
             ... on Product {
                 defaultVariant {
+                    sku
                     firstImage {
                         variants(maxWidth: 100, types: ["avif"]) {
                             url
@@ -20,7 +22,6 @@ query GlobalSearch($term: String!) {
                             width
                         }
                     }
-                    defaultPrice
                 }
             }
         }

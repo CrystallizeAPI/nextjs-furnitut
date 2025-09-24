@@ -26,6 +26,8 @@ fragment showCaseImage on Image {
             ... on product {
                 defaultVariant {
                     defaultPrice: priceVariants(key: "default")
+                    fallbackPriceVariant: priceVariants(key: $fallbackPriceVariant)
+                    selectedPriceVariant: priceVariants(key: $selectedPriceVariant)
                     firstImage {
                         url
                         variants(maxWidth: 200, types: ["avif"]) {
@@ -43,6 +45,8 @@ fragment showCaseImage on Image {
                 path
             }
             defaultPrice: priceVariants(key: "default")
+            fallbackPriceVariant: priceVariants(key: $fallbackPriceVariant)
+            selectedPriceVariant: priceVariants(key: $selectedPriceVariant)
             firstImage {
                 url
                 variants(maxWidth: 200, types: ["avif"]) {

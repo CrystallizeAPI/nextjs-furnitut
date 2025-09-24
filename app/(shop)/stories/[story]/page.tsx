@@ -183,7 +183,7 @@ export default async function StoryPage(props: StoriesProps) {
                 </div>
                 <div className="lg:grid grid-cols-5 max-w-(--breakpoint-xl) mx-auto mt-24">
                     <div
-                        className={clsx('col-span-3 gap-24 px-12', {
+                        className={clsx('col-span-3 gap-24', {
                             'col-span-5! max-w-(--breakpoint-md) mx-auto': featured === null,
                         })}
                     >
@@ -196,14 +196,14 @@ export default async function StoryPage(props: StoriesProps) {
                                 {featured.variants?.length
                                     ? featured.variants.map(renderVariantItem)
                                     : // @ts-expect-error
-                                    featured.items?.map(renderProductItem)}
+                                      featured.items?.map(renderProductItem)}
                             </div>
                         </div>
                     )}
                 </div>
                 {upNext && (
                     <div className="mt-24 px-12 max-w-(--breakpoint-2xl) mx-auto">
-                        <div className="px-0 border-t border-muted  pt-24  ">
+                        <div className="px-0  pt-24  ">
                             <h2 className="text-2xl  py-4 font-bold">{t('upNext')}</h2>
                             <Slider type="story" options={{ loop: false, align: 'start' }}>
                                 {upNext.items?.map((item) => (

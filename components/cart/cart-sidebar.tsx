@@ -33,7 +33,7 @@ export const CartSidebar = () => {
     return (
         <div
             className={classNames(
-                'bg-light transition-all border-l-muted border-l py-8 px-10 w-[500px] h-full z-10 overflow-y-auto',
+                'bg-light transition-all border-l-muted border-l py-8 px-10 w-[500px] h-full z-60 overflow-y-auto',
                 'flex flex-col fixed top-0 right-0',
                 !isOpen && '-right-[505px]!',
             )}
@@ -125,7 +125,10 @@ export const CartSidebar = () => {
                             <div className="text-dark/70 text-sm flex justify-between items-center mb-4">
                                 <span>{t('Price.totalSavings')}</span>
                                 <span>
-                                    -<Price price={{ price: cart.total.discounts[0].amount, currency: cart.total.currency }} />
+                                    -
+                                    <Price
+                                        price={{ price: cart.total.discounts[0].amount, currency: cart.total.currency }}
+                                    />
                                 </span>
                             </div>
                         )}

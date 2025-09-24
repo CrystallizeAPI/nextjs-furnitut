@@ -51,7 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
 type LayoutProps = { children: React.ReactNode };
 
 export default async function Layout({ children }: LayoutProps) {
-    const locale = process.env.NEXT_PUBLIC_STOREFRONT_LANGUAGE || 'en';
+    const locale = process.env.CRYSTALLIZE_TENANT_LANGUAGE || 'en';
     const messages = (await import(`../messages/${locale}.json`)).default;
 
     return (

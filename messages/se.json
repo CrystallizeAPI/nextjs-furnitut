@@ -39,7 +39,8 @@
         "weight": "Vikt",
         "downloads": "Nedladdningar",
         "relatedProducts": "Liknande produkter",
-        "variantsLabel": "Varianter"
+        "variantsLabel": "Varianter",
+        "matchingProducts": "Relaterade produkter"
     },
     "Navigation": {
         "home": "Hem",
@@ -64,7 +65,7 @@
         "priceLowToHigh": "Pris: Lågt→Högt",
         "priceHighToLow": "Pris: Högt→Lågt",
         "price": "Pris",
-        "currencySymbol": "€",
+        "currencySymbol": "kr",
         "category": "Kategori",
         "inStock": "I lager",
         "hits": "träffar"

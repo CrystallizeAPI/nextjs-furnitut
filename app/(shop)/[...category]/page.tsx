@@ -48,7 +48,7 @@ const searchCategory = async ({ path, limit, skip = 0, filters, sorting, isPrevi
         sorting,
         boundaries: path.includes('entertainment') ? ENTERTAINMENT_PRICE_RANGE : PRODUCTS_PRICE_RANGE,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
-        language: process.env.CRYSTALLIZE_TENANT_LANGUAGE as TenantLanguage
+        selectedPriceVariant: process.env.NEXT_PUBLIC_CRYSTALLIZE_SELECTED_PRICE || 'default',
     });
 
     const { hits, summary: searchSummary } = response.data.search ?? {};
@@ -180,6 +180,7 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     const { totalHits, hasPreviousHits, hasMoreHits, price, parentPaths } = summary ?? {};
 
     const priceCounts = Object.values(price) as { count: number }[];
+
     const pairs = createAdjacentPairs(
         path.includes('entertainment') ? ENTERTAINMENT_PRICE_RANGE : PRODUCTS_PRICE_RANGE,
     );
@@ -205,7 +206,7 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
 
     return (
         <main>
-            <div className="border-muted border-b border-0">
+            <div>
                 <div className="page  pb-2 ">
                     <Breadcrumbs breadcrumbs={breadcrumbs} />
                     <h1 className="text-6xl font-bold py-4 ">{name}</h1>
@@ -242,7 +243,7 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
 
             {/* Blocks */}
             {blocks && (
-                <div className={classNames('flex flex-col items-center pt-12', !!blocks?.length && 'pb-12')}>
+                <div className={classNames('flex flex-col items-center')}>
                     <Blocks blocks={blocks} />
                 </div>
             )}

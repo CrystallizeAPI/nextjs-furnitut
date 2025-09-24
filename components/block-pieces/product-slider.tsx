@@ -27,6 +27,8 @@ export const ProductSlider = ({ block }: ProductSliderProps) => {
                                         defaultVariant: {
                                             firstImage: item.firstImage,
                                             defaultPrice: item.defaultPrice,
+                                            fallbackPriceVariant: item.fallbackPriceVariant,
+                                            selectedPriceVariant: item.selectedPriceVariant,
                                         },
                                     }}
                                 />

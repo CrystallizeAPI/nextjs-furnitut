@@ -39,7 +39,8 @@
         "weight": "Vekt",
         "downloads": "Nedlastinger",
         "relatedProducts": "Relaterte produkter",
-        "variantsLabel": "Varianter"
+        "variantsLabel": "Varianter",
+        "matchingProducts": "Tilhørende produkter"
     },
     "Navigation": {
         "home": "Hjem",
@@ -64,7 +65,7 @@
         "priceLowToHigh": "Pris: Lav→Høy",
         "priceHighToLow": "Pris: Høy→Lav",
         "price": "Pris",
-        "currencySymbol": "€",
+        "currencySymbol": "kr",
         "category": "Kategori",
         "inStock": "På lager",
         "hits": "treff"

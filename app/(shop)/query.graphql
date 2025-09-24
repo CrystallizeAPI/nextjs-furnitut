@@ -1,9 +1,10 @@
 query FetchLandingPage(
-    $selectedPriceVariant: String = "default",
+    $selectedPriceVariant: String = "default"
+    $fallbackPriceVariant: String = "default"
     $language: [TenantLanguage] = en
 ) {
     browse {
-        landingPage( language: $language, path: "/index") {
+        landingPage(language: $language, path: "/index") {
             hits {
                 name
                 blocks {

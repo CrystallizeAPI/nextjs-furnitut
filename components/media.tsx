@@ -32,6 +32,7 @@ export const Media = ({
         );
     }
     if (image?.[0]) {
+        console.log('what', image?.[0]);
         return <Image {...image[0]} {...imageProps} sizes={sizes} preserveRatio={preserveRatio} loading="lazy" />;
     }
     return null;

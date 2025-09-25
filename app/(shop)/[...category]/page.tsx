@@ -232,9 +232,7 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
                                         return <Image {...img} key={img?.url} sizes="200px" />;
                                     })}
                                 </div>
-                                <span className="group-hover:font-bold py-2 text-sm text-wrap max-w-full">
-                                    {(child as Category).name}
-                                </span>
+                                <span className="py-2 text-sm text-wrap max-w-full">{(child as Category).name}</span>
                             </Link>
                         );
                     })}

@@ -105,6 +105,9 @@ query SearchCategory(
                     pictureGrid {
                         ...pictureGrid
                     }
+                    categorySlider {
+                        ...categorySlider
+                    }
                 }
                 children {
                     hits {

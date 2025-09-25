@@ -3,6 +3,7 @@ import { FeatureHighlight } from './block-pieces/feature-highlight';
 import { PictureGrid } from './block-pieces/picture-grid';
 import { ProductSlider } from './block-pieces/product-slider';
 import { StorySlider } from './block-pieces/story-slider';
+import { CategorySlider } from './block-pieces/category-slider';
 import { BlockLayout } from './block-fragments/layout';
 import type { CategoryBlocksFragment, LandingPageBlocksFragment } from '@/generated/discovery/graphql';
 
@@ -32,6 +33,9 @@ const BlockType = ({ block }: { block: Block }) => {
 
     if ('productSlider' in block && block.productSlider) {
         return <ProductSlider block={block.productSlider} />;
+    }
+    if ('categorySlider' in block && block.categorySlider) {
+        return <CategorySlider block={block.categorySlider} />;
     }
 
     return null;

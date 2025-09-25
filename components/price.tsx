@@ -11,6 +11,7 @@ export const Price = ({ price }: PriceProps) => {
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
+        currencyDisplay: 'narrowSymbol',
         currency: price?.currency || 'EUR',
     });
 

@@ -1,0 +1,101 @@
+{
+    "Search": {
+        "placeholder": "Sök produkter...",
+        "noResults": "Inga produkter hittades. Försök igen.",
+        "noResultsShort": "Inga resultat"
+    },
+    "Cart": {
+        "title": "Din varukorg",
+        "cart": "Varukorg",
+        "emptyCart": "Din varukorg är tom",
+        "addedToCart": "tillagd",
+        "addingToCart": "Lägger till...",
+        "addToCart": "Lägg till",
+        "cuponCode": "Kupongkod",
+        "apply": "Använd",
+        "appliedPromotions": "Aktiva erbjudanden",
+        "checkout": "Kassa",
+        "quantity": "Antal",
+        "quantityShort": "Antal"
+    },
+    "Price": {
+        "net": "Netto",
+        "gross": "Brutto",
+        "tax": "Skatt",
+        "total": "Totalt",
+        "totalSavings": "Besparingar"
+    },
+    "Story": {
+        "featuredProducts": "Utvalda",
+        "upNext": "Nästa"
+    },
+    "Product": {
+        "product": "Produkt",
+        "details": "Detaljer",
+        "dimensions": "Mått",
+        "depth": "Djup",
+        "height": "Höjd",
+        "width": "Bredd",
+        "weight": "Vikt",
+        "downloads": "Nedladdningar",
+        "relatedProducts": "Liknande produkter",
+        "variantsLabel": "Varianter",
+        "matchingProducts": "Relaterade produkter"
+    },
+    "Navigation": {
+        "home": "Hem",
+        "account": "Konto"
+    },
+    "Account": {
+        "login": "Logga in",
+        "loginDescription": "Vi skickar e-post med inloggning.",
+        "somethingWentWrong": "Något gick fel, försök igen.",
+        "email": "E-post",
+        "orders": "Beställningar",
+        "paid": "Betald",
+        "logout": "Logga ut",
+        "account": "Konto"
+    },
+    "Facets": {
+        "filters": "Filter",
+        "closeFilters": "Stäng filter",
+        "mostPopular": "Populärast",
+        "bestRating": "Bäst betyg",
+        "newest": "Nyast",
+        "priceLowToHigh": "Pris: Lågt→Högt",
+        "priceHighToLow": "Pris: Högt→Lågt",
+        "price": "Pris",
+        "currencySymbol": "kr",
+        "category": "Kategori",
+        "inStock": "I lager",
+        "hits": "träffar"
+    },
+    "Checkout": {
+        "lockCart": "Skapa konto och lås din varukorg",
+        "checkout": "Kassa",
+        "customer": "Kund",
+        "goToPayment": "Till betalning",
+        "payment": "Betalning",
+        "orderSummary": "Orderöversikt",
+        "labelEmail": "E-post",
+        "labelFirstName": "Förnamn",
+        "labelLastName": "Efternamn",
+        "labelCompany": "Företag",
+        "labelPhone": "Telefon",
+        "labelTaxNumber": "Org.nr / Skattenr",
+        "labelStreet": "Gatuadress",
+        "labelCity": "Stad",
+        "labelPostalCode": "Postnummer",
+        "labelCountry": "Land",
+        "labelAddress": "Adress",
+        "payWith": "Betala med",
+        "payWithQliroShort": "Betala med Qliro",
+        "payWithStripeShort": "Betala med kort",
+        "payWithCrystallizeShort": "Endast test"
+    },
+    "Confirmation": {
+        "thankYou": "Tack {name}!",
+        "orderReceived": "Vi är på det! Din beställning är på väg och en bekräftelse skickas till {email}.",
+        "order": "Beställning"
+    }
+}

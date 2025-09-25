@@ -14,4 +14,7 @@ fragment landingPageBlocks on ComponentChoiceComponentForLandingPageBlocks {
     pictureGrid {
         ...pictureGrid
     }
+    categorySlider {
+        ...categorySlider
+    }
 }

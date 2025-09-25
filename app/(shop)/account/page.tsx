@@ -5,6 +5,7 @@ import { crystallizeClient } from '@/core/crystallize-client.server';
 import { Price } from '@/components/price';
 import { logout } from '@/core/auth.server';
 import { Image } from '@/components/image';
+import { getTranslations } from 'next-intl/server';
 
 const formatDate = (incomingDate: string) => {
     const date = new Date(incomingDate);
@@ -78,11 +79,13 @@ export default async function AccountPage(props: OrdersPageProps) {
         },
     );
 
+    const t = await getTranslations();
+
     return (
         <main className="page min-h-screen">
             <div className="grid grid-cols-12 gap-8">
                 <div className="col-span-8">
-                    <h1 className="font-medium">Orders</h1>
+                    <h1 className="font-medium">{t('Account.orders')}</h1>
                     {orders?.orders.map((item) => {
                         const order = item as Order & { reference: string; createdAt: string };
                         return (
@@ -130,11 +133,11 @@ export default async function AccountPage(props: OrdersPageProps) {
 
                                 <div className="flex flex-col gap-2  py-4 items-end mt-2 px-6">
                                     <div className="flex justify-between w-60 text-sm text-dark/70">
-                                        <p>Net</p>
+                                        <p>{t('Price.net')}</p>
                                         <Price price={{ price: order?.total?.net ?? 0 }} />
                                     </div>
                                     <div className="flex justify-between w-60 text-sm text-dark/70">
-                                        <p>Tax</p>
+                                        <p>{t('Price.tax')}</p>
                                         <p>
                                             <Price
                                                 price={{
@@ -144,7 +147,7 @@ export default async function AccountPage(props: OrdersPageProps) {
                                         </p>
                                     </div>
                                     <div className="flex font-bold text-lgxl justify-between w-60">
-                                        <p>Paid</p>
+                                        <p>{t('Account.paid')}</p>
                                         <p>
                                             <Price price={{ price: order?.total?.gross ?? 0 }} />
                                         </p>
@@ -155,7 +158,7 @@ export default async function AccountPage(props: OrdersPageProps) {
                     })}
                 </div>
                 <div className="col-span-4">
-                    <p className="font-medium">Account</p>
+                    <p className="font-medium">{t('Account.account')}</p>
 
                     {!!customer.customer && (
                         <div className="p-8 bg-light rounded-xl mt-2 border border-muted">
@@ -185,7 +188,7 @@ export default async function AccountPage(props: OrdersPageProps) {
                             type="submit"
                             className="px-6 py-2 mt-4 font-medium  float-right rounded-lg bg-dark text-light hover:bg-dark/90 active:bg-dark/95"
                         >
-                            Logut
+                            {t('Account.logout')}
                         </button>
                     </form>
                 </div>

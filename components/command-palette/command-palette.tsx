@@ -17,6 +17,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { apiRequest } from '@/utils/api-request';
 import { GlobalSearchDocument } from '@/generated/discovery/graphql';
 import { debounce } from '@/utils/debounce';
+import { useTranslations } from 'next-intl';
 
 type ImageVariant = {
     url: string;
@@ -30,7 +31,7 @@ type FirstImage = {
 
 type DefaultVariant = {
     firstImage: FirstImage;
-    defaultPrice: number;
+    sku: string;
 };
 
 type Product = {
@@ -45,6 +46,7 @@ export function CommandPalette() {
     const [open, setOpen] = useState(false);
     const [results, setResults] = useState<Product[]>([]);
     const router = useRouter();
+    const t = useTranslations('Search');
 
     useEffect(() => {
         if (typeof window === 'undefined') {
@@ -68,7 +70,9 @@ export function CommandPalette() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedApiCall = useCallback(
         debounce(async (term: string) => {
-            const response = await apiRequest(GlobalSearchDocument, { term });
+            const response = await apiRequest(GlobalSearchDocument, {
+                term,
+            });
             const results = response?.data?.search?.hits ?? [];
 
             setResults(results as Product[]);
@@ -114,7 +118,8 @@ export function CommandPalette() {
                         className="mx-auto max-w-xl transform divide-y divide-dark/10 overflow-hidden rounded-xl bg-light shadow-2xl ring-1 ring-black/5 transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
                     >
                         <Combobox
-                            onChange={(item: Product | null) => {
+                            onChange={(value: unknown) => {
+                                const item = value as Product | null;
                                 if (item) {
                                     router.push(item.path);
                                     resetCommandPalette();
@@ -125,7 +130,7 @@ export function CommandPalette() {
                                 <ComboboxInput
                                     autoFocus
                                     className="col-start-1 row-start-1 h-12 w-full pr-4 pl-11 text-base text-dark/90 outline-hidden placeholder:text-dark/40 sm:text-sm"
-                                    placeholder="Search..."
+                                    placeholder={t('placeholder')}
                                     onChange={(event) => setQuery(event.target.value)}
                                     onBlur={() => setQuery('')}
                                 />
@@ -138,21 +143,21 @@ export function CommandPalette() {
                             {results.length > 0 && (
                                 <ComboboxOptions
                                     static
-                                    className="max-h-96 transform-gpu scroll-py-3 overflow-y-auto p-3"
+                                    className="max-h-96 transform-gpu scroll-py-3 overflow-y-auto p-1"
                                 >
                                     {results.map((item) => (
                                         <ComboboxOption
                                             key={item.id}
                                             value={item}
-                                            className="group flex cursor-default rounded-xl p-3 select-none data-focus:bg-dark/10 data-focus:outline-hidden"
+                                            className="group flex cursor-default rounded-xl px-3 py-2 select-none data-focus:bg-dark/10 data-focus:outline-hidden hover:cursor-pointer"
                                         >
                                             <div
                                                 className={
-                                                    'flex size-10 flex-none items-center justify-center rounded-lg'
+                                                    'flex size-10 aspect-square relative overflow-hidden flex-none items-center justify-center rounded-lg'
                                                 }
                                             >
                                                 <img
-                                                    className="aspect-square h-12"
+                                                    className=" h-12 object-cover"
                                                     src={item.defaultVariant.firstImage.variants[0].url}
                                                     width={item.defaultVariant.firstImage.variants[0].width}
                                                     alt={item.name}
@@ -162,8 +167,8 @@ export function CommandPalette() {
                                                 <p className="text-sm font-medium text-dark/70 group-data-focus:text-dark/90">
                                                     {item.name}
                                                 </p>
-                                                <p className="text-sm text-dark/50 group-data-focus:text-dark/70">
-                                                    {item.defaultVariant.defaultPrice}€
+                                                <p className="text-sm text-dark/50 group-data-focus:text-dark/70 italic">
+                                                    {item.defaultVariant?.sku}
                                                 </p>
                                             </div>
                                         </ComboboxOption>
@@ -178,10 +183,8 @@ export function CommandPalette() {
                                         name="exclamation-circle"
                                         className="mx-auto size-6 text-dark/40"
                                     />
-                                    <p className="mt-4 font-semibold text-dark/90">No results found</p>
-                                    <p className="mt-2 text-dark/50">
-                                        No products found for this search term. Please try again.
-                                    </p>
+                                    <p className="mt-4 font-semibold text-dark/90">{t('noResultsShort')}</p>
+                                    <p className="mt-2 text-dark/50">{t('noResults')}</p>
                                 </div>
                             )}
                         </Combobox>

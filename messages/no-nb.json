@@ -1,0 +1,101 @@
+{
+    "Search": {
+        "placeholder": "Søk produkter...",
+        "noResults": "Ingen produkter ble funnet. Prøv igjen.",
+        "noResultsShort": "Ingen resultater"
+    },
+    "Cart": {
+        "title": "Handlevogn",
+        "cart": "Handlevogn",
+        "emptyCart": "Handlevognen er tom",
+        "addedToCart": "Lagt til",
+        "addingToCart": "Legger til...",
+        "addToCart": "Legg til",
+        "cuponCode": "Kupongkode",
+        "apply": "Bruk",
+        "appliedPromotions": "Aktive kampanjer",
+        "checkout": "Betaling",
+        "quantity": "Antall",
+        "quantityShort": "Antall"
+    },
+    "Price": {
+        "net": "Netto",
+        "gross": "Brutto",
+        "tax": "Mva",
+        "total": "Totalt",
+        "totalSavings": "Totale besparelser"
+    },
+    "Story": {
+        "featuredProducts": "Utvalgte",
+        "upNext": "Neste"
+    },
+    "Product": {
+        "product": "Produkt",
+        "details": "Detaljer",
+        "dimensions": "Mål",
+        "depth": "Dybde",
+        "height": "Høyde",
+        "width": "Bredde",
+        "weight": "Vekt",
+        "downloads": "Nedlastinger",
+        "relatedProducts": "Relaterte produkter",
+        "variantsLabel": "Varianter",
+        "matchingProducts": "Tilhørende produkter"
+    },
+    "Navigation": {
+        "home": "Hjem",
+        "account": "Konto"
+    },
+    "Account": {
+        "login": "Logg inn",
+        "loginDescription": "Vi sender deg en e-post med innloggingsdetaljer.",
+        "somethingWentWrong": "Noe gikk galt, prøv igjen.",
+        "email": "E-post",
+        "orders": "Ordre",
+        "paid": "Betalt",
+        "logout": "Logg ut",
+        "account": "Konto"
+    },
+    "Facets": {
+        "filters": "Filter",
+        "closeFilters": "Lukk filter",
+        "mostPopular": "Mest populære",
+        "bestRating": "Beste vurdering",
+        "newest": "Nyeste",
+        "priceLowToHigh": "Pris: Lav→Høy",
+        "priceHighToLow": "Pris: Høy→Lav",
+        "price": "Pris",
+        "currencySymbol": "kr",
+        "category": "Kategori",
+        "inStock": "På lager",
+        "hits": "treff"
+    },
+    "Checkout": {
+        "lockCart": "Opprett konto og lås handlevognen",
+        "checkout": "Betaling",
+        "customer": "Kunde",
+        "goToPayment": "Til betaling",
+        "payment": "Betaling",
+        "orderSummary": "Ordreoversikt",
+        "labelEmail": "E-post",
+        "labelFirstName": "Fornavn",
+        "labelLastName": "Etternavn",
+        "labelCompany": "Firma",
+        "labelPhone": "Telefon",
+        "labelTaxNumber": "Org.nr / Skattenr",
+        "labelStreet": "Gateadresse",
+        "labelCity": "By",
+        "labelPostalCode": "Postnummer",
+        "labelCountry": "Land",
+        "labelAddress": "Adresse",
+        "payWith": "Betal med",
+        "payWithQliroShort": "Betal med Qliro",
+        "payWithStripeShort": "Betal med kort",
+        "payWithCrystallizeShort": "Kun for testing"
+    },
+    "Confirmation": {
+        "thankYou": "Takk {name}!",
+        "orderReceived": "Vi har mottatt bestillingen! En bekreftelse er sendt til {email}.",
+        "order": "Bestilling"
+    }
+}

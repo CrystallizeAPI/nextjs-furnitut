@@ -9,21 +9,22 @@ type TypographyProps = {
     } | null;
 };
 
-const className = 'block-title text-5xl font-bold text-center max-w-(--breakpoint-sm) leading-16 pt-24';
+const className = 'block-title text-5xl font-bold text-center max-w-(--breakpoint-sm) leading-16 pt-12';
 
 export const Typography = ({ title, description, callToAction, isFirstBlock }: TypographyProps) => {
     const actions = callToAction?.action;
-
     return (
         <>
-            {isFirstBlock && title ? <h1 className={className}>{title}</h1> : <h2 className={className}>{title}</h2>}
-            {description && (
+            {!!title ? (
+                <>{isFirstBlock ? <h1 className={className}>{title}</h1> : <h2 className={className}>{title}</h2>}</>
+            ) : null}
+            {description.length ? (
                 <div className="block-description text-lg text-center max-w-(--breakpoint-md) pt-4 font-medium pb-12">
                     <ContentTransformer json={description} />
                 </div>
-            )}
+            ) : null}
             {!!actions?.length && (
-                <div className="flex pb-12">
+                <div className="flex pb-12 gap-4">
                     {actions?.map((action) =>
                         !!action?.url ? (
                             <a

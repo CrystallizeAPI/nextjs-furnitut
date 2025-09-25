@@ -18,6 +18,7 @@ import { Price } from '@/components/price';
 import { Metadata } from 'next';
 import { WithContext, Article, Product as ProductSchema } from 'schema-dts';
 import { AddToCartButton } from '@/components/cart/add-to-cart-button';
+import { getTranslations } from 'next-intl/server';
 
 const fetchData = async (path: string) => {
     const response = await apiRequest(FetchStoryDocument, { path });
@@ -64,7 +65,7 @@ export async function generateMetadata({ params }: StoriesProps): Promise<Metada
 export default async function StoryPage(props: StoriesProps) {
     const params = await props.params;
     const { intro, featured, upNext, story, title, media, publishedAt } = await fetchData(`/stories/${params.story}`);
-
+    const t = await getTranslations('Story');
     const storySchema: WithContext<Article> = {
         '@context': 'https://schema.org',
         '@type': 'Article',
@@ -182,7 +183,7 @@ export default async function StoryPage(props: StoriesProps) {
                 </div>
                 <div className="lg:grid grid-cols-5 max-w-(--breakpoint-xl) mx-auto mt-24">
                     <div
-                        className={clsx('col-span-3 gap-24 px-12', {
+                        className={clsx('col-span-3 gap-24', {
                             'col-span-5! max-w-(--breakpoint-md) mx-auto': featured === null,
                         })}
                     >
@@ -190,22 +191,24 @@ export default async function StoryPage(props: StoriesProps) {
                     </div>
                     {featured && (
                         <div className="col-span-2 px-12 pt-6">
-                            <h3 className="font-bold text-sm mb-4">Featured products</h3>
+                            <h3 className="font-bold text-sm mb-4">{t('featuredProducts')}</h3>
                             <div className="sticky top-20 min-h-[200px] bg-light rounded-lg border border-muted flex flex-col">
                                 {featured.variants?.length
                                     ? featured.variants.map(renderVariantItem)
                                     : // @ts-expect-error
-                                    featured.items?.map(renderProductItem)}
+                                      featured.items?.map(renderProductItem)}
                             </div>
                         </div>
                     )}
                 </div>
                 {upNext && (
                     <div className="mt-24 px-12 max-w-(--breakpoint-2xl) mx-auto">
-                        <div className="px-0 border-t border-muted  pt-24  ">
-                            <h2 className="text-2xl  py-4 font-bold">Up next</h2>
+                        <div className="px-0  pt-24  ">
+                            <h2 className="text-2xl  py-4 font-bold">{t('upNext')}</h2>
                             <Slider type="story" options={{ loop: false, align: 'start' }}>
-                                {upNext.items?.map((item) => <Story story={item} key={item?.path} />)}
+                                {upNext.items?.map((item) => (
+                                    <Story story={item} key={item?.path} />
+                                ))}
                             </Slider>
                         </div>
                     </div>

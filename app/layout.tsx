@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
+import { NextIntlClientProvider } from 'next-intl';
+import { headers } from 'next/headers'; // with async request APIs
+
 import { CartProvider } from '@/components/cart/cart-provider';
 
 import './globals.css';
@@ -48,15 +51,21 @@ export async function generateMetadata(): Promise<Metadata> {
 type LayoutProps = { children: React.ReactNode };
 
 export default async function Layout({ children }: LayoutProps) {
+    const locale = process.env.CRYSTALLIZE_TENANT_LANGUAGE || 'en';
+    const messages = (await import(`../messages/${locale}.json`)).default;
+
     return (
-        <html lang="en">
+        <html lang={locale}>
             <head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link rel="icon" href="/favicon.ico" />
             </head>
             <body className={`${manrope.className} bg-soft`}>
-                <CartProvider>{children}</CartProvider>
+                <NextIntlClientProvider locale={locale} messages={messages}>
+                    <CartProvider>{children}</CartProvider>
+                </NextIntlClientProvider>
+
                 <Script src="/scripts/frontend-preview-listener.js" />
             </body>
         </html>

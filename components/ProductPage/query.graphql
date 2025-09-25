@@ -10,6 +10,8 @@ query FetchProduct(
             hits {
                 name
                 path
+                topics(onlyLeafName: true, leafOnly: true)
+
                 description(format: json)
                 details {
                     title
@@ -58,6 +60,8 @@ query FetchProduct(
                         ... on product {
                             path
                             name
+                            topics(onlyLeafName: true, leafOnly: true)
+
                             variants {
                                 firstImage {
                                     url
@@ -69,6 +73,8 @@ query FetchProduct(
                                 }
                             }
                             defaultVariant {
+                                fallbackPriceVariant: priceVariants(key: $fallbackPriceVariant)
+                                selectedPriceVariant: priceVariants(key: $selectedPriceVariant)
                                 defaultPrice: priceVariants(key: $selectedPriceVariant)
                                 firstImage {
                                     url

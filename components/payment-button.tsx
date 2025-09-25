@@ -7,32 +7,9 @@ import StripeLogo from '@/assets/stripe-logo.svg';
 import CrystallizeLogo from '@/assets/crystallize-logo.svg';
 import Image from 'next/image';
 import classNames from 'classnames';
+import { useTranslations } from 'next-intl';
 
 type PaymentMethod = number | null;
-
-const paymentMethods = [
-    {
-        id: 1,
-        name: 'crystal coin',
-        component: Crystal,
-        description: 'For test purposes only',
-        img: CrystallizeLogo,
-    },
-    {
-        id: 2,
-        name: 'Qliro',
-        description: 'Pay with Qliro',
-        component: Qliro,
-        img: QliroLogo
-    },
-    {
-        id: 3,
-        name: 'Stripe',
-        component: Stripe,
-        description: 'Pay with your credit card',
-        img: StripeLogo,
-    },
-];
 
 type PaymentButtonProps = {
     cartId?: string;
@@ -40,7 +17,30 @@ type PaymentButtonProps = {
 
 export function PaymentButton({ cartId }: PaymentButtonProps) {
     const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>(null);
-
+    const t = useTranslations('Checkout');
+    const paymentMethods = [
+        {
+            id: 1,
+            name: 'crystal coin',
+            component: Crystal,
+            description: t('payWithCrystallizeShort'),
+            img: CrystallizeLogo,
+        },
+        {
+            id: 2,
+            name: 'Qliro',
+            description: `${t('payWithQliroShort')}`,
+            component: Qliro,
+            img: QliroLogo,
+        },
+        {
+            id: 3,
+            name: 'Stripe',
+            component: Stripe,
+            description: `${t('payWithStripeShort')}`,
+            img: StripeLogo,
+        },
+    ];
     return (
         <div>
             {paymentMethods.map((method) => {
@@ -67,7 +67,9 @@ export function PaymentButton({ cartId }: PaymentButtonProps) {
                                 />
                             </span>
                             <div className="flex flex-col w-full">
-                                <span className="font-bold">Pay with {method.name}</span>
+                                <span className="font-bold">
+                                    {t('payWith')} {method.name}
+                                </span>
                                 <span className="text-dark/60 text-sm font-normal">{method.description}</span>
                             </div>
                             <div className="self-start shrink-0">

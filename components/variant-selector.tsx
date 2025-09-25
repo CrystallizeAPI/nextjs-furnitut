@@ -73,13 +73,14 @@ type VariantSelectorProps = {
     variants?: Array<ProductVariantFragment | null> | null;
     searchParams: SearchParams;
     path: string;
+    label: string;
     selectedCustomerPrices?: {
         catalogueProductVariants?: (ProductVariant | null)[] | null;
     };
 };
 
 export const VariantSelector = (props: VariantSelectorProps) => {
-    const { searchParams, path, selectedCustomerPrices } = props;
+    const { searchParams, path, selectedCustomerPrices, label } = props;
 
     const variants = props.variants?.reduce<ProductVariantFragment[]>((acc, item) => {
         const variant = item as ProductVariantFragment | null;
@@ -95,7 +96,7 @@ export const VariantSelector = (props: VariantSelectorProps) => {
         const currentSku = searchParams.sku;
         return (
             <div className="py-2 flex gap-y-1 flex-col">
-                <span className="font-bold text-base pb-2 block">Variants</span>
+                <span className="font-bold text-base pb-2 block">{label}</span>
 
                 {variants?.map((variant, index) => {
                     const customerSelectedPriceVariant = selectedCustomerPrices?.catalogueProductVariants?.find(

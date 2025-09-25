@@ -65,7 +65,9 @@ export const Image = ({
             />
             {showShowcases && (
                 <div className="absolute top-0 left-0 w-full h-full">
-                    {image?.showcases?.map((showcase, index) => <HotSpot key={index} showcase={showcase} />)}
+                    {image?.showcases?.map((showcase, index) => (
+                        <HotSpot key={index} showcase={showcase} />
+                    ))}
                 </div>
             )}
         </div>

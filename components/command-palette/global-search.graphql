@@ -1,4 +1,4 @@
-query GlobalSearch($term: String!, $language: [TenantLanguage]) {
+query GlobalSearch($term: String!, $language: [TenantLanguage] = en) {
     search(
         language: $language
         term: $term

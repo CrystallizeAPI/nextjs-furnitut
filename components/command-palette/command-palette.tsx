@@ -19,8 +19,6 @@ import { GlobalSearchDocument } from '@/generated/discovery/graphql';
 import { debounce } from '@/utils/debounce';
 import { useTranslations } from 'next-intl';
 
-const { CRYSTALLIZE_FALLBACK_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
-
 type ImageVariant = {
     url: string;
     width: number;
@@ -120,7 +118,8 @@ export function CommandPalette() {
                         className="mx-auto max-w-xl transform divide-y divide-dark/10 overflow-hidden rounded-xl bg-light shadow-2xl ring-1 ring-black/5 transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
                     >
                         <Combobox
-                            onChange={(item: Product | null) => {
+                            onChange={(value: unknown) => {
+                                const item = value as Product | null;
                                 if (item) {
                                     router.push(item.path);
                                     resetCommandPalette();

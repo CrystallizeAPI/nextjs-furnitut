@@ -6,7 +6,6 @@ import { Image } from '@crystallize/reactjs-components';
 export const Category: React.FC<{ category: any }> = ({ category }) => {
     const { path, title, intro, image } = category || {};
     const hasImage = !!image?.[0];
-    console.log('category', category);
     return (
         <Link
             href={path}

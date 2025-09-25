@@ -1,32 +1,7 @@
 import { CartOrderItem } from '@/components/order-page/item';
 import { CartOrderTotal } from '@/components/order-page/total';
-import { crystallizeClient } from '@/core/crystallize-client.server';
-import { createOrderFetcher, type Order } from '@crystallize/js-api-client';
 import { getTranslations } from 'next-intl/server';
-export const fetchData = async (orderId: string) => {
-    const response = await createOrderFetcher(crystallizeClient).byId(
-        orderId,
-        {},
-        {},
-        {
-            reference: true,
-            customer: {
-                identifier: true,
-                firstName: true,
-                lastName: true,
-                addresses: {
-                    city: true,
-                    country: true,
-                    postalCode: true,
-                    state: true,
-                    street: true,
-                    type: true,
-                },
-            },
-        },
-    );
-    return response as Order & { reference: string };
-};
+import { fetchData } from '../utils';
 
 type OrderProps = {
     params: Promise<{ id: string }>;

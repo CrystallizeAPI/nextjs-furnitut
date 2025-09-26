@@ -8,7 +8,6 @@ const { CRYSTALLIZE_FALLBACK_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMP
 const apiLanguage: string = process.env.CRYSTALLIZE_TENANT_LANGUAGE || 'en';
 const apiCurrency: string = process.env.CRYSTALLIZE_TENANT_CURRENCY || 'EUR';
 
-
 type Item = {
     sku: string;
     quantity: number;
@@ -53,14 +52,14 @@ export const hydrateCart = async ({ id, items, voucherCode }: HydrateCartProps) 
             isGuest: false,
         },
         context: {
-            language: 'no-nb',
+            language: apiLanguage,
             price: {
                 voucherCode: voucherCode ?? '',
                 decimals: 4,
                 fallbackVariantIdentifiers: CRYSTALLIZE_FALLBACK_PRICE,
                 compareAtVariantIdentifier: CRYSTALLIZE_COMPARE_AT_PRICE,
                 selectedVariantIdentifier: CRYSTALLIZE_SELECTED_PRICE,
-                currency: apiCurrency
+                currency: apiCurrency,
             },
         },
     };

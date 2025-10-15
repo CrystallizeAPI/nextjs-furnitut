@@ -9,6 +9,26 @@
             "intent": "shape/create"
         },
         {
+            "identifier": "category",
+            "name": "Category",
+            "components": [],
+            "type": "folder",
+            "intent": "shape/create"
+        },
+        {
+            "identifier": "category-slider",
+            "name": "category-slider",
+            "components": [],
+            "intent": "piece/create"
+        },
+        {
+            "identifier": "category",
+            "name": "Category",
+            "components": [],
+            "type": "folder",
+            "intent": "shape/create"
+        },
+        {
             "identifier": "brand",
             "name": "Brand",
             "components": [
@@ -186,12 +206,14 @@
                 {
                     "id": "title",
                     "type": "singleLine",
-                    "name": "Title"
+                    "name": "Title",
+                    "config": {}
                 },
                 {
                     "id": "description",
                     "type": "richText",
-                    "name": "Description"
+                    "name": "Description",
+                    "config": {}
                 },
                 {
                     "id": "call-to-action",
@@ -241,12 +263,14 @@
                                 {
                                     "id": "headline",
                                     "type": "singleLine",
-                                    "name": "Headline"
+                                    "name": "Headline",
+                                    "config": {}
                                 },
                                 {
                                     "id": "description",
                                     "type": "richText",
-                                    "name": "Description"
+                                    "name": "Description",
+                                    "config": {}
                                 },
                                 {
                                     "id": "icon",
@@ -284,7 +308,10 @@
                     "name": "Width",
                     "config": {
                         "numeric": {
-                            "units": ["cm", "mm"]
+                            "units": [
+                                "cm",
+                                "mm"
+                            ]
                         }
                     }
                 },
@@ -294,7 +321,10 @@
                     "name": "Height",
                     "config": {
                         "numeric": {
-                            "units": ["cm", "mm"]
+                            "units": [
+                                "cm",
+                                "mm"
+                            ]
                         }
                     }
                 },
@@ -304,7 +334,10 @@
                     "name": "Depth",
                     "config": {
                         "numeric": {
-                            "units": ["cm", "mm"]
+                            "units": [
+                                "cm",
+                                "mm"
+                            ]
                         }
                     }
                 },
@@ -314,7 +347,10 @@
                     "name": "Weight",
                     "config": {
                         "numeric": {
-                            "units": ["g", "kg"]
+                            "units": [
+                                "g",
+                                "kg"
+                            ]
                         }
                     }
                 }
@@ -379,7 +415,12 @@
                     "name": "Story",
                     "config": {
                         "paragraphCollection": {
-                            "multilingual": []
+                            "multilingual": [
+                                "title",
+                                "body",
+                                "images",
+                                "videos"
+                            ]
                         }
                     }
                 },
@@ -391,11 +432,13 @@
                     "config": {
                         "itemRelations": {
                             "multilingual": false,
-                            "minItems": 0,
+                            "minItems": 1,
                             "maxItems": 1,
                             "minSkus": 0,
                             "maxSkus": 0,
-                            "acceptedShapeIdentifiers": ["brand"],
+                            "acceptedShapeIdentifiers": [
+                                "brand"
+                            ],
                             "quickSelect": {
                                 "folders": []
                             }
@@ -453,7 +496,9 @@
                             "multilingual": false,
                             "minItems": 0,
                             "minSkus": 0,
-                            "acceptedShapeIdentifiers": ["product"]
+                            "acceptedShapeIdentifiers": [
+                                "product"
+                            ]
                         }
                     }
                 },
@@ -572,12 +617,14 @@
                 {
                     "id": "title",
                     "type": "singleLine",
-                    "name": "Title"
+                    "name": "Title",
+                    "config": {}
                 },
                 {
                     "id": "description",
                     "type": "richText",
-                    "name": "Description"
+                    "name": "Description",
+                    "config": {}
                 },
                 {
                     "id": "products",
@@ -589,7 +636,9 @@
                             "minItems": 0,
                             "maxItems": 0,
                             "minSkus": 0,
-                            "acceptedShapeIdentifiers": ["product"]
+                            "acceptedShapeIdentifiers": [
+                                "product"
+                            ]
                         }
                     }
                 },
@@ -688,8 +737,9 @@
                         "itemRelations": {
                             "minItems": 0,
                             "minSkus": 0,
-                            "maxSkus": 0,
-                            "acceptedShapeIdentifiers": ["product"]
+                            "acceptedShapeIdentifiers": [
+                                "product"
+                            ]
                         }
                     }
                 },
@@ -726,12 +776,14 @@
                 {
                     "id": "title",
                     "type": "singleLine",
-                    "name": "Title"
+                    "name": "Title",
+                    "config": {}
                 },
                 {
                     "id": "description",
                     "type": "richText",
-                    "name": "Description"
+                    "name": "Description",
+                    "config": {}
                 },
                 {
                     "id": "stories",
@@ -742,7 +794,9 @@
                             "minItems": 1,
                             "minSkus": 0,
                             "maxSkus": 0,
-                            "acceptedShapeIdentifiers": ["story"],
+                            "acceptedShapeIdentifiers": [
+                                "story"
+                            ],
                             "quickSelect": {
                                 "folders": []
                             }
@@ -807,6 +861,63 @@
             "intent": "piece/upsert"
         },
         {
+            "identifier": "category-slider",
+            "name": "category-slider",
+            "components": [
+                {
+                    "id": "title",
+                    "type": "singleLine",
+                    "name": "Title",
+                    "config": {
+                        "singleLine": {
+                            "multilingual": true,
+                            "required": false,
+                            "discoverable": true
+                        }
+                    }
+                },
+                {
+                    "id": "description",
+                    "type": "richText",
+                    "name": "Description",
+                    "config": {
+                        "richText": {
+                            "multilingual": true,
+                            "discoverable": true
+                        }
+                    }
+                },
+                {
+                    "id": "categories",
+                    "type": "itemRelations",
+                    "name": "Categories",
+                    "config": {
+                        "itemRelations": {
+                            "multilingual": true,
+                            "discoverable": true,
+                            "minItems": 0,
+                            "minSkus": 0,
+                            "maxSkus": 0,
+                            "acceptedShapeIdentifiers": [
+                                "category"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": "layout",
+                    "type": "piece",
+                    "name": "Layout",
+                    "config": {
+                        "piece": {
+                            "identifier": "layout"
+                        }
+                    }
+                }
+            ],
+            "intent": "piece/upsert"
+        },
+        {
             "identifier": "category",
             "name": "Category",
             "components": [
@@ -844,6 +955,7 @@
                     "name": "Blocks",
                     "config": {
                         "componentMultipleChoice": {
+                            "multilingual": true,
                             "choices": [
                                 {
                                     "id": "banner",
@@ -894,8 +1006,19 @@
                                             "identifier": "picture-grid"
                                         }
                                     }
+                                },
+                                {
+                                    "id": "category-slider",
+                                    "type": "piece",
+                                    "name": "Category slider",
+                                    "config": {
+                                        "piece": {
+                                            "identifier": "category-slider"
+                                        }
+                                    }
                                 }
-                            ]
+                            ],
+                            "allowDuplicates": true
                         }
                     }
                 },
@@ -923,6 +1046,7 @@
                     "name": "Blocks",
                     "config": {
                         "componentMultipleChoice": {
+                            "multilingual": true,
                             "choices": [
                                 {
                                     "id": "banner",
@@ -973,8 +1097,19 @@
                                             "identifier": "picture-grid"
                                         }
                                     }
+                                },
+                                {
+                                    "id": "category-slider",
+                                    "type": "piece",
+                                    "name": "Category slider",
+                                    "config": {
+                                        "piece": {
+                                            "identifier": "category-slider"
+                                        }
+                                    }
                                 }
-                            ]
+                            ],
+                            "allowDuplicates": true
                         }
                     }
                 },

@@ -17,7 +17,7 @@
         },
         {
             "identifier": "category-slider",
-            "name": "category-slider",
+            "name": "Category slider",
             "components": [],
             "intent": "piece/create"
         },
@@ -70,7 +70,7 @@
         },
         {
             "identifier": "call-to-action",
-            "name": "call-to-action",
+            "name": "Call to action",
             "components": [
                 {
                     "id": "action",
@@ -105,7 +105,7 @@
         },
         {
             "identifier": "layout",
-            "name": "layout",
+            "name": "Layout",
             "components": [
                 {
                     "id": "display-width",
@@ -201,7 +201,7 @@
         },
         {
             "identifier": "banner",
-            "name": "banner",
+            "name": "Banner",
             "components": [
                 {
                     "id": "title",
@@ -251,7 +251,7 @@
         },
         {
             "identifier": "feature-highlights",
-            "name": "feature-highlights",
+            "name": "Feature highlights",
             "components": [
                 {
                     "id": "usp",
@@ -300,7 +300,7 @@
         },
         {
             "identifier": "dimensions",
-            "name": "dimensions",
+            "name": "Dimensions",
             "components": [
                 {
                     "id": "width",
@@ -359,7 +359,7 @@
         },
         {
             "identifier": "meta",
-            "name": "meta",
+            "name": "Meta",
             "components": [
                 {
                     "id": "title",
@@ -612,7 +612,7 @@
         },
         {
             "identifier": "product-slider",
-            "name": "product-slider",
+            "name": "Product slider",
             "components": [
                 {
                     "id": "title",
@@ -771,7 +771,7 @@
         },
         {
             "identifier": "story-slider",
-            "name": "story-slider",
+            "name": "Story slider",
             "components": [
                 {
                     "id": "title",
@@ -818,7 +818,7 @@
         },
         {
             "identifier": "picture-grid",
-            "name": "picture-grid",
+            "name": "Picture grid",
             "components": [
                 {
                     "id": "title",
@@ -862,7 +862,7 @@
         },
         {
             "identifier": "category-slider",
-            "name": "category-slider",
+            "name": "Category slider",
             "components": [
                 {
                     "id": "title",

@@ -6,7 +6,11 @@ export const StripeButton: React.FC<{
     paying?: boolean;
 }> = ({ paying = false }) => {
     return (
-        <button type="button" disabled={paying} className="bg-dark text-light text-lg rounded-xl px-8 py-2 w-full mt-5">
+        <button
+            type="button"
+            disabled={paying}
+            className="bg-dark text-light text-lg rounded-xl px-8 py-2 w-full mt-5 hover:bg-dark/90"
+        >
             <span>{paying ? 'Processing payment' : 'Pay now'}</span>
         </button>
     );

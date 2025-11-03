@@ -1,4 +1,4 @@
-query FetchLayout( $language: [TenantLanguage] = en ) {
+query FetchLayout($language: [TenantLanguage] = en) {
     browse {
         header: menuItem(path: "/menu/top", language: $language) {
             hits {

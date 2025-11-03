@@ -1,10 +1,9 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
-    experimental: {
-        ppr: 'incremental',
-    },
+    cacheComponents: true,
 };
 
 const withNextIntl = createNextIntlPlugin();

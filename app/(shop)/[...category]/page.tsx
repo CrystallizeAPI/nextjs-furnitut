@@ -1,3 +1,6 @@
+'use cache: private';
+
+import { cacheLife, cacheTag } from 'next/cache';
 import {
     Category,
     FetchItemShapeDocument,
@@ -5,9 +8,9 @@ import {
     PublicationState,
     SearchCategoryDocument,
     TenantFilter,
-    TenantLanguage,
     TenantSort,
 } from '@/generated/discovery/graphql';
+
 import { apiRequest } from '@/utils/api-request';
 import { Product } from '@/components/product';
 import { Breadcrumbs } from '@/components/breadcrumbs';
@@ -27,16 +30,21 @@ import { Image } from '@/components/image';
 import type { Metadata } from 'next';
 import { findSuitableVariant } from '@/components/variant-selector';
 
-interface FetchCategoryProps {
+type FetchCategoryProps = {
     path: string;
     limit: number;
     skip?: number;
     filters: TenantFilter;
     sorting: TenantSort;
     isPreview?: boolean;
-}
+};
 
 type ItemShape = 'category' | 'product' | null;
+
+type CategoryOrProductProps = {
+    params: Promise<{ slug: string; category: string[] }>;
+    searchParams: Promise<SearchParams>;
+};
 
 const searchCategory = async ({ path, limit, skip = 0, filters, sorting, isPreview = false }: FetchCategoryProps) => {
     const response = await apiRequest(SearchCategoryDocument, {
@@ -78,11 +86,6 @@ const fetchItemShape = async (path: string): Promise<ItemShape> => {
     }
 
     return itemShape as ItemShape;
-};
-
-type CategoryOrProductProps = {
-    params: Promise<{ slug: string; category: string[] }>;
-    searchParams: Promise<SearchParams>;
 };
 
 export async function generateMetadata(props: CategoryOrProductProps): Promise<Metadata> {
@@ -158,6 +161,9 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     const limit = ITEMS_PER_PAGE;
     const skip = currentPage ? (currentPage - 1) * limit : 0;
     const path = `/${params.category.join('/')}`;
+
+    cacheTag(path);
+    cacheLife('hours');
 
     const itemShape = await fetchItemShape(path);
     if (!itemShape) {

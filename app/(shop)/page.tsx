@@ -1,8 +1,9 @@
+'use cache';
+
+import { cacheTag } from 'next/cache';
 import { type FetchLandingPageQuery, FetchLandingPageDocument } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Blocks } from '@/components/blocks';
-
-export const revalidate = 120;
 
 const fetchLandingPage = async () => {
     const { data } = await apiRequest<FetchLandingPageQuery>(FetchLandingPageDocument);
@@ -10,6 +11,8 @@ const fetchLandingPage = async () => {
 };
 
 export default async function LandingPage() {
+    cacheTag('/index');
+
     const { blocks } = await fetchLandingPage();
 
     return (

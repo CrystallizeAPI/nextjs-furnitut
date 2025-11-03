@@ -131,7 +131,7 @@ export default async function CategoryProduct(props: ProductsProps) {
         ],
     };
 
-    //sidebar shoping cart shows selected price not base
+    //sidebar shopping cart shows selected price not base
     return (
         <>
             <main className="page">

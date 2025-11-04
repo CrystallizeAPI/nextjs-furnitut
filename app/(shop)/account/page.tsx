@@ -3,7 +3,7 @@
 import { getSession } from '@/core/auth.server';
 import { cacheLife, cacheTag } from 'next/cache';
 import LoginForm from '@/components/login-form';
-import { createOrderFetcher } from '@crystallize/js-api-client';
+import { createOrderFetcher, type Order } from '@crystallize/js-api-client';
 import { crystallizeClient } from '@/core/crystallize-client.server';
 import { Price } from '@/components/price';
 import { logout } from '@/core/auth.server';

@@ -1,6 +1,6 @@
 import clsx from 'classnames';
 import Link from 'next/link';
-import { cacheLife, cacheTag } from 'next/cache';
+import { cacheLife } from 'next/cache';
 import schemas from 'schema-dts';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 
@@ -39,7 +39,6 @@ export const fetchProductData = async ({ path, isPreview = false }: { path: stri
     'use cache';
 
     cacheLife('hours');
-    cacheTag(path);
 
     const response = await apiRequest(FetchProductDocument, {
         path,

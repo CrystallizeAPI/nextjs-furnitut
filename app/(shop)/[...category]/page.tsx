@@ -1,4 +1,4 @@
-import { cacheLife, cacheTag } from 'next/cache';
+import { cacheLife } from 'next/cache';
 import {
     Category,
     FetchItemShapeDocument,
@@ -48,7 +48,6 @@ const searchCategory = async ({ path, limit, skip = 0, filters, sorting, isPrevi
     'use cache';
 
     cacheLife('hours');
-    cacheTag(path);
 
     const response = await apiRequest(SearchCategoryDocument, {
         path: `${path}/*`,
@@ -84,7 +83,6 @@ const fetchItemShape = async (path: string): Promise<ItemShape> => {
     'use cache';
 
     cacheLife('hours');
-    cacheTag(path);
 
     const response = await apiRequest(FetchItemShapeDocument, { path });
     const itemShape = response?.data?.search?.hits?.[0]?.shape;

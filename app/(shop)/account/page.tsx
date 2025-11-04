@@ -3,7 +3,7 @@
 import { getSession } from '@/core/auth.server';
 import { cacheLife, cacheTag } from 'next/cache';
 import LoginForm from '@/components/login-form';
-import { createOrderFetcher, type Order } from '@crystallize/js-api-client';
+import { createOrderFetcher } from '@crystallize/js-api-client';
 import { crystallizeClient } from '@/core/crystallize-client.server';
 import { Price } from '@/components/price';
 import { logout } from '@/core/auth.server';
@@ -51,24 +51,22 @@ const getCustomer = async (identifier: string) => {
 const getOrders = async (identifier: string) => {
     return createOrderFetcher(crystallizeClient).byCustomerIdentifier(
         identifier,
-        {},
         {
-            identifier: true,
-            firstName: true,
-            lastName: true,
-            addresses: {
-                city: true,
-                country: true,
-                postalCode: true,
-                state: true,
-                street: true,
-                type: true,
+            customer: {
+                identifier: true,
+                firstName: true,
+                lastName: true,
+                addresses: {
+                    city: true,
+                    country: true,
+                    postalCode: true,
+                    state: true,
+                    street: true,
+                    type: true,
+                },
             },
         },
-        {},
-        {
-            reference: true,
-        },
+        { onOrder: { reference: true } },
     );
 };
 

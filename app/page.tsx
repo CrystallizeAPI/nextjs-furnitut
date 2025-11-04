@@ -1,6 +1,6 @@
 'use cache';
 
-import { cacheTag, cacheLife } from 'next/cache';
+import { cacheLife } from 'next/cache';
 import { type FetchLandingPageQuery, FetchLandingPageDocument } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Blocks } from '@/components/blocks';
@@ -14,7 +14,6 @@ const fetchLandingPage = async () => {
 
 export default async function LandingPage() {
     cacheLife('max');
-    cacheTag('/index');
 
     const { blocks } = await fetchLandingPage();
 

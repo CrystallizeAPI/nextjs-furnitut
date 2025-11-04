@@ -1,6 +1,6 @@
 'use cache';
 
-import { cacheLife, cacheTag } from 'next/cache';
+import { cacheLife } from 'next/cache';
 import { FetchAllStoriesDocument, TenantLanguage } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Story } from '@/components/story';
@@ -18,7 +18,6 @@ const fetchData = async () => {
 
 export async function generateMetadata(): Promise<Metadata> {
     cacheLife('max');
-    cacheTag('/stories');
 
     const { meta } = await fetchData();
     const { title, description, image } = meta ?? {};

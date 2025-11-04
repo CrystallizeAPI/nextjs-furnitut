@@ -1,4 +1,7 @@
+'use cache: private';
+
 import { getSession } from '@/core/auth.server';
+import { cacheLife, cacheTag } from 'next/cache';
 import LoginForm from '@/components/login-form';
 import { createOrderFetcher, type Order } from '@crystallize/js-api-client';
 import { crystallizeClient } from '@/core/crystallize-client.server';
@@ -20,19 +23,8 @@ const formatDate = (incomingDate: string) => {
 
 type OrdersPageProps = { searchParams: Promise<{ error?: string }> };
 
-export default async function AccountPage(props: OrdersPageProps) {
-    const searchParams = await props.searchParams;
-    const session = await getSession();
-
-    if (!session) {
-        return (
-            <main className="page">
-                <LoginForm error={searchParams.error} />
-            </main>
-        );
-    }
-
-    const customer = await crystallizeClient.nextPimApi(
+const getCustomer = async (identifier: string) => {
+    return crystallizeClient.nextPimApi(
         `#graphql
             query GetCustomer($identifier: String!) {
                 customer(identifier: $identifier) {
@@ -52,13 +44,13 @@ export default async function AccountPage(props: OrdersPageProps) {
                     }
                 }
           }`,
-        {
-            identifier: session.user.email,
-        },
+        { identifier },
     );
+};
 
-    const orders = await createOrderFetcher(crystallizeClient).byCustomerIdentifier(
-        session.user.email,
+const getOrders = async (identifier: string) => {
+    return createOrderFetcher(crystallizeClient).byCustomerIdentifier(
+        identifier,
         {},
         {
             identifier: true,
@@ -78,8 +70,28 @@ export default async function AccountPage(props: OrdersPageProps) {
             reference: true,
         },
     );
+};
 
+export default async function AccountPage(props: OrdersPageProps) {
+    const searchParams = await props.searchParams;
+    const session = await getSession();
     const t = await getTranslations();
+
+    if (!session) {
+        return (
+            <main className="page">
+                <LoginForm error={searchParams.error} />
+            </main>
+        );
+    }
+
+    const identifier = session.user.email;
+
+    cacheTag(`customer-${identifier}`);
+    cacheLife({ stale: 60 });
+
+    const customer = await getCustomer(identifier);
+    const orders = await getOrders(identifier);
 
     return (
         <main className="page min-h-screen">

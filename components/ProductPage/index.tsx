@@ -1,5 +1,6 @@
 import clsx from 'classnames';
 import Link from 'next/link';
+import { cacheLife, cacheTag } from 'next/cache';
 import schemas from 'schema-dts';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 
@@ -35,6 +36,11 @@ type ProductsProps = {
 };
 
 export const fetchProductData = async ({ path, isPreview = false }: { path: string; isPreview?: boolean }) => {
+    'use cache';
+
+    cacheLife('hours');
+    cacheTag(path);
+
     const response = await apiRequest(FetchProductDocument, {
         path,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
@@ -55,14 +61,15 @@ export const fetchProductData = async ({ path, isPreview = false }: { path: stri
 
 export default async function CategoryProduct(props: ProductsProps) {
     const t = await getTranslations('Product');
-
     const searchParams = await props.searchParams;
     const params = await props.params;
+
     const url = `/${params.category.join('/')}`;
+
     const product = await fetchProductData({ path: url, isPreview: !!searchParams.preview });
-    const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
     const selectedCustomerPrices = await getCustomerPrices({ path: product?.path });
 
+    const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
     const selectedPriceVariant = selectedCustomerPrices.catalogueProductVariants?.find(
         (catalogueProductVariant) => catalogueProductVariant?.sku === currentVariant?.sku,
     );

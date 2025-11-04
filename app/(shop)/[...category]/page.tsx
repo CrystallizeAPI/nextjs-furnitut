@@ -1,5 +1,3 @@
-'use cache: private';
-
 import { cacheLife, cacheTag } from 'next/cache';
 import {
     Category,
@@ -47,6 +45,11 @@ type CategoryOrProductProps = {
 };
 
 const searchCategory = async ({ path, limit, skip = 0, filters, sorting, isPreview = false }: FetchCategoryProps) => {
+    'use cache';
+
+    cacheLife('hours');
+    cacheTag(path);
+
     const response = await apiRequest(SearchCategoryDocument, {
         path: `${path}/*`,
         browsePath: path,
@@ -78,6 +81,11 @@ const searchCategory = async ({ path, limit, skip = 0, filters, sorting, isPrevi
 };
 
 const fetchItemShape = async (path: string): Promise<ItemShape> => {
+    'use cache';
+
+    cacheLife('hours');
+    cacheTag(path);
+
     const response = await apiRequest(FetchItemShapeDocument, { path });
     const itemShape = response?.data?.search?.hits?.[0]?.shape;
 
@@ -161,9 +169,6 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     const limit = ITEMS_PER_PAGE;
     const skip = currentPage ? (currentPage - 1) * limit : 0;
     const path = `/${params.category.join('/')}`;
-
-    cacheTag(path);
-    cacheLife('hours');
 
     const itemShape = await fetchItemShape(path);
     if (!itemShape) {

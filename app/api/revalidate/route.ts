@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 
 export async function POST(request: NextRequest) {
     const { item } = await request.json();
+    console.log(item)
     const path = item.get.tree.path;
     
     if (path) {

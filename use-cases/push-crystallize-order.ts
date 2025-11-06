@@ -8,8 +8,6 @@ export const pushCrystallizeOrder = async (
     metadata?: Record<string, string>,
 ) => {
     orderIntent.payment = [payment];
-    // @ts-expect-error
-    orderIntent.paymentStatus = 'paid';
     orderIntent.meta = [
         ...(orderIntent.meta || []),
         ...(metadata

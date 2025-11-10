@@ -1,8 +1,11 @@
+'use cache';
+
+import { cacheLife } from 'next/cache';
 import { type FetchLandingPageQuery, FetchLandingPageDocument } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Blocks } from '@/components/blocks';
-
-export const revalidate = 120;
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 const fetchLandingPage = async () => {
     const { data } = await apiRequest<FetchLandingPageQuery>(FetchLandingPageDocument);
@@ -10,11 +13,17 @@ const fetchLandingPage = async () => {
 };
 
 export default async function LandingPage() {
+    cacheLife('max');
+
     const { blocks } = await fetchLandingPage();
 
     return (
-        <main className="flex min-h-screen flex-col items-center">
-            <Blocks blocks={blocks} hasFirstBlockPadding />
-        </main>
+        <>
+            <Header />
+            <main className="flex min-h-screen flex-col items-center">
+                <Blocks blocks={blocks} hasFirstBlockPadding />
+            </main>
+            <Footer />
+        </>
     );
 }

@@ -1,3 +1,6 @@
+'use cache';
+
+import { cacheLife } from 'next/cache';
 import { FetchAllStoriesDocument, TenantLanguage } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Story } from '@/components/story';
@@ -6,7 +9,7 @@ import { Metadata } from 'next';
 
 const fetchData = async () => {
     const response = await apiRequest(FetchAllStoriesDocument, {
-        language: (process.env.CRYSTALLIZE_TENANT_LANGUAGE || 'en') as TenantLanguage
+        language: (process.env.CRYSTALLIZE_TENANT_LANGUAGE || 'en') as TenantLanguage,
     });
     const { title, children, breadcrumbs, meta } = response.data.browse?.category?.hits?.[0] ?? {};
 
@@ -14,6 +17,8 @@ const fetchData = async () => {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
+    cacheLife('max');
+
     const { meta } = await fetchData();
     const { title, description, image } = meta ?? {};
 
@@ -47,7 +52,9 @@ export default async function Stories() {
             </div>
             <div className="pt-12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch max-w-(--breakpoint-2xl) mx-auto ">
-                    {children?.map((story, index) => <Story story={story} key={index} />)}
+                    {children?.map((story, index) => (
+                        <Story story={story} key={index} />
+                    ))}
                 </div>
             </div>
         </main>

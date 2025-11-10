@@ -1,5 +1,6 @@
 import clsx from 'classnames';
 import Link from 'next/link';
+import { cacheLife } from 'next/cache';
 import schemas from 'schema-dts';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 
@@ -30,11 +31,14 @@ import { getPromotionValues } from '@/utils/topics';
 const { CRYSTALLIZE_FALLBACK_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
 
 type ProductsProps = {
-    searchParams: Promise<SearchParams>;
     params: Promise<{ slug: string; category: string[] }>;
 };
 
 export const fetchProductData = async ({ path, isPreview = false }: { path: string; isPreview?: boolean }) => {
+    'use cache';
+
+    cacheLife('hours');
+
     const response = await apiRequest(FetchProductDocument, {
         path,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
@@ -55,86 +59,24 @@ export const fetchProductData = async ({ path, isPreview = false }: { path: stri
 
 export default async function CategoryProduct(props: ProductsProps) {
     const t = await getTranslations('Product');
-
-    const searchParams = await props.searchParams;
+    const searchParams = {};
     const params = await props.params;
+
     const url = `/${params.category.join('/')}`;
-    const product = await fetchProductData({ path: url, isPreview: !!searchParams.preview });
+
+    const product = await fetchProductData({ path: url, isPreview: false });
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
-    const selectedCustomerPrices = await getCustomerPrices({ path: product?.path });
-
-    const selectedPriceVariant = selectedCustomerPrices.catalogueProductVariants?.find(
-        (catalogueProductVariant) => catalogueProductVariant?.sku === currentVariant?.sku,
-    );
-
-    const selectedPrice = selectedPriceVariant?.priceVariant?.priceFor ?? currentVariant?.selectedPriceVariant;
-
-    const currentVariantPrice = getPrice({
-        fallbackPriceVariant: currentVariant?.fallbackPriceVariant,
-        selectedPriceVariant: selectedPrice,
-    });
 
     const dimensions = currentVariant?.dimensions;
     // TODO: this should be for how long the price will be valid
     const TWO_DAYS_FROM_NOW = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
     const promos = getPromotionValues(product.topics);
 
-    const productVariantsSchema =
-        product.variants?.map<schemas.WithContext<schemas.Product>>((variant) => ({
-            '@context': 'https://schema.org',
-            '@type': 'Product',
-            name: variant?.name ?? '',
-            image: variant?.images?.[0]?.url ?? '',
-            description: variant?.description?.extraDescription ?? '',
-            sku: variant?.sku ?? '',
-            // TODO: Enable the color, to display the variant varies by the color.
-            // color: variant?.attributes?.Color,
-            offers: {
-                '@type': 'Offer',
-                itemCondition: 'https://schema.org/NewCondition',
-                availability: 'https://schema.org/InStock',
-                price: currentVariantPrice?.lowest ?? 0,
-                priceCurrency: currentVariantPrice?.currency ?? 'EUR',
-                priceValidUntil: TWO_DAYS_FROM_NOW.toLocaleString(),
-            },
-        })) ?? [];
-
-    const productSchema: schemas.WithContext<schemas.ProductGroup> = {
-        '@context': 'https://schema.org',
-        '@type': 'ProductGroup',
-        name: product?.name ?? '',
-        description: product?.description?.[0]?.text,
-        // TODO: Enable the variesBy, to display by which the variants in the ProductGroup vary.
-        //  See: https://schema.org/variesBy
-        // variesBy: [
-        //     'https://schema.org/color',
-        // ],
-        hasVariant: productVariantsSchema,
-        brand: {
-            '@type': 'Brand',
-            name: 'HAY',
-        },
-        // TODO: replace with actual reviews from users
-        review: [
-            {
-                '@type': 'Review',
-                author: {
-                    '@type': 'Person',
-                    name: 'John Doe',
-                },
-                reviewRating: {
-                    '@type': 'Rating',
-                    ratingValue: '5',
-                    bestRating: '5',
-                },
-            },
-        ],
-    };
-
-    //sidebar shoping cart shows selected price not base
+    //sidebar shopping cart shows selected price not base
     return (
         <>
             <main className="page">
+                {new Date().toISOString()}
                 <div className="lg:grid lg:grid-cols-12 lg:gap-24 rounded-xl px-4 lg:px-0">
                     <div className="lg:col-span-7">
                         <Breadcrumbs breadcrumbs={product.breadcrumbs} />
@@ -303,66 +245,6 @@ export default async function CategoryProduct(props: ProductsProps) {
                                 <ContentTransformer json={product.description?.[0]} />
                             </div>
 
-                            {!!product.variants?.length && (
-                                <div className="py-4">
-                                    <VariantSelector
-                                        variants={product.variants}
-                                        searchParams={searchParams}
-                                        path={product?.path ?? '/'}
-                                        selectedCustomerPrices={selectedCustomerPrices}
-                                        label={t('variantsLabel')}
-                                    />
-                                </div>
-                            )}
-
-                            <div className="text-4xl flex items-center font-bold py-4 justify-between w-full">
-                                <div className="flex flex-col">
-                                    {/* Lowest price */}
-                                    <span>
-                                        <Price
-                                            price={{
-                                                price: currentVariantPrice.lowest,
-                                                currency: currentVariantPrice.currency,
-                                            }}
-                                        />
-                                    </span>
-                                    {/* Compared at price */}
-                                    <span
-                                        className={classNames('block text-sm line-through font-normal', {
-                                            hidden: !currentVariantPrice.hasBestPrice,
-                                        })}
-                                    >
-                                        <Price
-                                            price={{
-                                                price: currentVariantPrice.highest,
-                                                currency: currentVariantPrice.currency,
-                                            }}
-                                        />
-                                    </span>
-                                </div>
-
-                                {!!currentVariant && !!currentVariant.sku && (
-                                    <AddToCartButton
-                                        input={{
-                                            variantName: currentVariant.name || product.name || 'Variant',
-                                            productName: product.name || 'Variant',
-                                            sku: currentVariant.sku,
-                                            image:
-                                                currentVariant?.images?.[0]?.variants?.[0] ??
-                                                currentVariant?.images?.[0],
-                                            quantity: 1,
-                                            price: {
-                                                currency: currentVariantPrice.currency,
-                                                gross: currentVariantPrice.lowest,
-                                                net: currentVariantPrice.lowest,
-                                                taxAmount: 0,
-                                                discounts: [],
-                                            },
-                                        }}
-                                    />
-                                )}
-                            </div>
-
                             {/*Matching products*/}
                             {!!currentVariant?.matchingProducts?.variants?.length && (
                                 <Accordion
@@ -463,13 +345,6 @@ export default async function CategoryProduct(props: ProductsProps) {
                     </div>
                 </div>
             )}
-
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(productSchema),
-                }}
-            />
         </>
     );
 }

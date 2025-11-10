@@ -1,6 +1,7 @@
 import { FetchLayoutDocument, MenuItemFragment, TenantLanguage } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import Link from 'next/link';
+import { cacheLife } from 'next/cache';
 import { CommandPalette } from '@/components/command-palette';
 
 type NavigationProps = {
@@ -26,6 +27,10 @@ const fetchNavigation = async () => {
 };
 
 export const Navigation = async ({ className, withSearch }: NavigationProps) => {
+    'use cache';
+
+    cacheLife('max');
+
     const { navigation } = await fetchNavigation();
 
     return (

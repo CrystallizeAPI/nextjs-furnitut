@@ -1,4 +1,6 @@
 import { getSession } from '@/core/auth.server';
+import { cacheLife, cacheTag } from 'next/cache';
+
 import { FetchPricesForQuery } from './types';
 import { crystallizeClient } from '@/core/crystallize-client.server';
 
@@ -17,6 +19,9 @@ export const getCustomerPrices = async ({ path }: GetCustomerPricesProps) => {
     }
 
     const customerIdentifier = session?.user?.email;
+
+    cacheTag(`customer-${customerIdentifier}`);
+    cacheLife({ stale: 60 });
 
     const query = `#graphql
     query FETCH_PRICES_FOR($path: String!, $customerIdentifier: String!, $priceVariantIdentifier: String!) {

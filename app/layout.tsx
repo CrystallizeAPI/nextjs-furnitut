@@ -1,14 +1,16 @@
+'use cache';
+
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Manrope } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
-import { headers } from 'next/headers'; // with async request APIs
 
 import { CartProvider } from '@/components/cart/cart-provider';
 
-import './globals.css';
 import { apiRequest } from '@/utils/api-request';
 import { FrontPageMetadataDocument } from '@/generated/discovery/graphql';
-import Script from 'next/script';
+
+import './globals.css';
 
 const manrope = Manrope({ subsets: ['latin'], display: 'swap' });
 
@@ -19,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const title = meta?.title ?? '';
     const description = meta?.description[0].textContent;
     const image = meta?.image?.[0];
-    const baseUrl = new URL(process.env.CANONICAL_URL ?? 'http://localhost:3000');
+    const baseUrl = new URL(process.env.CANONICAL_URL ?? 'http://localhost:3000').toString();
 
     return {
         title: {

@@ -1,3 +1,6 @@
+'use cache';
+
+import { Suspense } from 'react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 
@@ -7,8 +10,11 @@ export default async function ShopLayout({ children }: ShopLayoutProps) {
     return (
         <>
             <Header />
-            {children}
-            <Footer />
+            Layout {new Date().toISOString()}
+            <Suspense>
+                {children}
+                <Footer />
+            </Suspense>
         </>
     );
 }

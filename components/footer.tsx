@@ -1,8 +1,13 @@
+'use cache';
+
 import Link from 'next/link';
+import { cacheLife } from 'next/cache';
 import { Suspense } from 'react';
 import { Navigation } from './navigation';
 
-export const Footer = () => {
+export const Footer = async () => {
+    cacheLife('max');
+
     const year = new Date().getFullYear();
 
     return (

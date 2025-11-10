@@ -223,6 +223,7 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
 
     return (
         <main>
+            {new Date().toISOString()}
             <div>
                 <div className="page  pb-2 ">
                     <Breadcrumbs breadcrumbs={breadcrumbs} />

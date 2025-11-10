@@ -10,7 +10,6 @@ export default async function ShopLayout({ children }: ShopLayoutProps) {
     return (
         <>
             <Header />
-
             <Suspense>
                 {children}
                 <Footer />

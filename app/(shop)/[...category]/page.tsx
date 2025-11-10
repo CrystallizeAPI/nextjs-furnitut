@@ -160,6 +160,14 @@ export async function generateMetadata(props: CategoryOrProductProps): Promise<M
     };
 }
 
+export async function generateStaticParams() {
+    return [
+        { category: ['products', 'outdoor-furniture', 'palissade-chaise-longue'] },
+        { category: ['products'] },
+        { category: ['products', 'outdoor-furniture'] },
+    ];
+}
+
 export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     const params = await props.params;
     const { page, priceRange, sort = 'popular', parentPath, preview, inStock } = await props.searchParams;

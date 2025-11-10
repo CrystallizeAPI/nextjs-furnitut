@@ -172,11 +172,7 @@ const fetchItemShape = async (path: string): Promise<ItemShape> => {
 // }
 
 export async function generateStaticParams() {
-    return [
-        { category: ['products', 'outdoor-furniture', 'palissade-chaise-longue'] },
-        { category: ['products'] },
-        { category: ['products', 'outdoor-furniture'] },
-    ];
+    return [{ category: ['products', 'outdoor-furniture', 'palissade-chaise-longue'] }];
 }
 
 export default async function CategoryOrProduct(props: CategoryOrProductProps) {

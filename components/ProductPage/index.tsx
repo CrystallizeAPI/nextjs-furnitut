@@ -76,6 +76,7 @@ export default async function CategoryProduct(props: ProductsProps) {
     return (
         <>
             <main className="page">
+                {new Date().toISOString()}
                 <div className="lg:grid lg:grid-cols-12 lg:gap-24 rounded-xl px-4 lg:px-0">
                     <div className="lg:col-span-7">
                         <Breadcrumbs breadcrumbs={product.breadcrumbs} />

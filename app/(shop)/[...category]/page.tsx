@@ -201,7 +201,7 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     }
 
     if (itemShape === 'product') {
-        return <ProductPage params={props.params} searchParams={{}} />;
+        return <ProductPage params={props.params} />;
     }
 
     const { breadcrumbs, name, categories, blocks, products, summary } = await searchCategory({

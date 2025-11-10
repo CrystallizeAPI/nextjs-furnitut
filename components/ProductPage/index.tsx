@@ -31,7 +31,6 @@ import { getPromotionValues } from '@/utils/topics';
 const { CRYSTALLIZE_FALLBACK_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
 
 type ProductsProps = {
-    searchParams: Promise<SearchParams>;
     params: Promise<{ slug: string; category: string[] }>;
 };
 
@@ -65,7 +64,7 @@ export default async function CategoryProduct(props: ProductsProps) {
 
     const url = `/${params.category.join('/')}`;
 
-    const product = await fetchProductData({ path: url, isPreview: !!searchParams.preview });
+    const product = await fetchProductData({ path: url, isPreview: false });
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
 
     const dimensions = currentVariant?.dimensions;

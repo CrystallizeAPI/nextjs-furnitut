@@ -1,3 +1,5 @@
+'use cache';
+
 import { cacheLife } from 'next/cache';
 import {
     Category,
@@ -94,71 +96,80 @@ const fetchItemShape = async (path: string): Promise<ItemShape> => {
     return itemShape as ItemShape;
 };
 
-export async function generateMetadata(props: CategoryOrProductProps): Promise<Metadata> {
-    const searchParams = await props.searchParams;
-    const params = await props.params;
-    const url = `/${params.category.join('/')}`;
-    const { page, priceRange, sort = 'popular', parentPath, inStock } = await props.searchParams;
-    const currentPage = Number(page ?? 1);
-    const limit = ITEMS_PER_PAGE;
-    const skip = currentPage ? (currentPage - 1) * limit : 0;
-    const itemShape = await fetchItemShape(url);
+// export async function generateMetadata(props: CategoryOrProductProps): Promise<Metadata> {
+//     const {
+//         page,
+//         priceRange,
+//         sort = 'popular',
+//         parentPath,
+//         preview,
+//         inStock,
+//     } = { page: 1, parentPath: '/', preview: false, inStock: true, priceRange: [] };
+//     const params = await props.params;
+//     const url = `/${params.category.join('/')}`;
+//     const currentPage = Number(page ?? 1);
+//     const limit = ITEMS_PER_PAGE;
+//     const skip = currentPage ? (currentPage - 1) * limit : 0;
+//     const itemShape = await fetchItemShape(url);
 
-    if (itemShape === 'product') {
-        const { meta, variants } = await fetchProductData({ path: url });
-        const currentVariant = findSuitableVariant({ variants: variants, searchParams });
-        const title = currentVariant?.name ?? '';
-        const description = meta?.description?.[0]?.textContent;
-        const image = currentVariant?.images?.[0];
-        const ogImage = image?.ogVariants?.[0];
-        const attributesQueryParams = new URLSearchParams(currentVariant?.attributes ?? {});
+//     if (itemShape === 'product') {
+//         const { meta, variants } = await fetchProductData({ path: url });
+//         const currentVariant = findSuitableVariant({
+//             variants: variants,
+//             searchParams: { page: '1', parentPath: '/', preview: 'true', inStock: 'true', priceRange: [] },
+//         });
+//         const title = currentVariant?.name ?? '';
+//         const description = meta?.description?.[0]?.textContent;
+//         const image = currentVariant?.images?.[0];
+//         const ogImage = image?.ogVariants?.[0];
+//         const attributesQueryParams = new URLSearchParams(currentVariant?.attributes ?? {});
 
-        return {
-            title: `${title}`,
-            description,
-            openGraph: {
-                title: `${title} | Furnitut`,
-                description,
-                url: `${url}?${attributesQueryParams.toString()}`,
-                images: [
-                    {
-                        url: ogImage?.url ?? '',
-                        alt: image?.altText ?? '',
-                        height: ogImage?.height ?? 0,
-                        width: ogImage?.width ?? 0,
-                    },
-                ],
-            },
-        };
-    }
+//         return {
+//             title: `${title}`,
+//             description,
+//             openGraph: {
+//                 title: `${title} | Furnitut`,
+//                 description,
+//                 url: `${url}?${attributesQueryParams.toString()}`,
+//                 images: [
+//                     {
+//                         url: ogImage?.url ?? '',
+//                         alt: image?.altText ?? '',
+//                         height: ogImage?.height ?? 0,
+//                         width: ogImage?.width ?? 0,
+//                     },
+//                 ],
+//             },
+//         };
+//     }
 
-    const { meta, name } = await searchCategory({
-        path: url,
-        limit,
-        skip,
-        filters: buildFilterCriteria({ priceRange, parentPath, inStock: !!inStock }),
-        sorting: SORTING_CONFIGS[sort] as TenantSort,
-    });
-    const { title, description, image } = meta ?? {};
+//     const { meta, name } = await searchCategory({
+//         path: url,
+//         limit,
+//         skip,
+//         filters: buildFilterCriteria({ priceRange, parentPath, inStock: !!inStock }),
+//         sorting: SORTING_CONFIGS[sort] as TenantSort,
+//     });
+//     const { title, description, image } = meta ?? {};
 
-    return {
-        title: title || name,
-        description: description?.[0]?.textContent ?? '',
-        openGraph: {
-            title: `${title} | Furnitut`,
-            description: description?.[0]?.textContent ?? '',
-            url: `/${url}`,
-            images: [
-                {
-                    url: image?.[0]?.url ?? '',
-                    alt: image?.[0]?.altText ?? '',
-                    height: image?.[0]?.height ?? 0,
-                    width: image?.[0]?.width ?? 0,
-                },
-            ],
-        },
-    };
-}
+//     return {
+//         title: title || name,
+//         description: description?.[0]?.textContent ?? '',
+//         openGraph: {
+//             title: `${title} | Furnitut`,
+//             description: description?.[0]?.textContent ?? '',
+//             url: `/${url}`,
+//             images: [
+//                 {
+//                     url: image?.[0]?.url ?? '',
+//                     alt: image?.[0]?.altText ?? '',
+//                     height: image?.[0]?.height ?? 0,
+//                     width: image?.[0]?.width ?? 0,
+//                 },
+//             ],
+//         },
+//     };
+// }
 
 export async function generateStaticParams() {
     return [
@@ -170,7 +181,14 @@ export async function generateStaticParams() {
 
 export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     const params = await props.params;
-    const { page, priceRange, sort = 'popular', parentPath, preview, inStock } = await props.searchParams;
+    const {
+        page,
+        priceRange,
+        sort = 'popular',
+        parentPath,
+        preview,
+        inStock,
+    } = { page: '1', parentPath: '/', preview: false, inStock: true, priceRange: [] };
     const currentPage = Number(page ?? 1);
     const limit = ITEMS_PER_PAGE;
     const skip = currentPage ? (currentPage - 1) * limit : 0;
@@ -183,7 +201,7 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     }
 
     if (itemShape === 'product') {
-        return <ProductPage params={props.params} searchParams={props.searchParams} />;
+        return <ProductPage params={props.params} searchParams={{}} />;
     }
 
     const { breadcrumbs, name, categories, blocks, products, summary } = await searchCategory({

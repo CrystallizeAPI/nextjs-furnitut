@@ -1,5 +1,3 @@
-'use cache: private';
-
 import { getSession } from '@/core/auth.server';
 import { cacheLife, cacheTag } from 'next/cache';
 

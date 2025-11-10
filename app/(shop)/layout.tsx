@@ -10,6 +10,7 @@ export default async function ShopLayout({ children }: ShopLayoutProps) {
     return (
         <>
             <Header />
+            Layout {new Date().toISOString()}
             <Suspense>
                 {children}
                 <Footer />

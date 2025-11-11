@@ -85,75 +85,16 @@ type CategoryOrProductProps = {
     searchParams: Promise<SearchParams>;
 };
 
-export async function generateMetadata(props: CategoryOrProductProps): Promise<Metadata> {
-    const searchParams = await props.searchParams;
-    const params = await props.params;
-    const url = `/${params.category.join('/')}`;
-    const { page, priceRange, sort = 'popular', parentPath, inStock } = await props.searchParams;
-    const currentPage = Number(page ?? 1);
-    const limit = ITEMS_PER_PAGE;
-    const skip = currentPage ? (currentPage - 1) * limit : 0;
-    const itemShape = await fetchItemShape(url);
-
-    if (itemShape === 'product') {
-        const { meta, variants } = await fetchProductData({ path: url });
-        const currentVariant = findSuitableVariant({ variants: variants, searchParams });
-        const title = currentVariant?.name ?? '';
-        const description = meta?.description?.[0]?.textContent;
-        const image = currentVariant?.images?.[0];
-        const ogImage = image?.ogVariants?.[0];
-        const attributesQueryParams = new URLSearchParams(currentVariant?.attributes ?? {});
-
-        return {
-            title: `${title}`,
-            description,
-            openGraph: {
-                title: `${title} | Furnitut`,
-                description,
-                url: `${url}?${attributesQueryParams.toString()}`,
-                images: [
-                    {
-                        url: ogImage?.url ?? '',
-                        alt: image?.altText ?? '',
-                        height: ogImage?.height ?? 0,
-                        width: ogImage?.width ?? 0,
-                    },
-                ],
-            },
-        };
-    }
-
-    const { meta, name } = await searchCategory({
-        path: url,
-        limit,
-        skip,
-        filters: buildFilterCriteria({ priceRange, parentPath, inStock: !!inStock }),
-        sorting: SORTING_CONFIGS[sort] as TenantSort,
-    });
-    const { title, description, image } = meta ?? {};
-
-    return {
-        title: title || name,
-        description: description?.[0]?.textContent ?? '',
-        openGraph: {
-            title: `${title} | Furnitut`,
-            description: description?.[0]?.textContent ?? '',
-            url: `/${url}`,
-            images: [
-                {
-                    url: image?.[0]?.url ?? '',
-                    alt: image?.[0]?.altText ?? '',
-                    height: image?.[0]?.height ?? 0,
-                    width: image?.[0]?.width ?? 0,
-                },
-            ],
-        },
-    };
+export async function generateStaticParams() {
+    return [{ category: ['products', 'plants', 'golden-pothos'] }];
 }
+
+export const revalidate = 3600;
 
 export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     const params = await props.params;
-    const { page, priceRange, sort = 'popular', parentPath, preview, inStock } = await props.searchParams;
+    const searchParams = await props.searchParams;
+    const { page, priceRange, sort = 'popular', parentPath, preview, inStock } = searchParams;
     const currentPage = Number(page ?? 1);
     const limit = ITEMS_PER_PAGE;
     const skip = currentPage ? (currentPage - 1) * limit : 0;
@@ -166,123 +107,8 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     }
 
     if (itemShape === 'product') {
-        return <ProductPage params={props.params} searchParams={props.searchParams} />;
+        return <ProductPage params={params} searchParams={searchParams} />;
     }
 
-    const { breadcrumbs, name, categories, blocks, products, summary } = await searchCategory({
-        path,
-        limit,
-        skip,
-        filters: buildFilterCriteria({ priceRange, parentPath, inStock: !!inStock }),
-        sorting: SORTING_CONFIGS[sort] as TenantSort,
-        isPreview: !!preview,
-    });
-    const { totalHits, hasPreviousHits, hasMoreHits, price, parentPaths } = summary ?? {};
-
-    const priceCounts = Object.values(price) as { count: number }[];
-
-    const pairs = createAdjacentPairs(
-        path.includes('entertainment') ? ENTERTAINMENT_PRICE_RANGE : PRODUCTS_PRICE_RANGE,
-    );
-
-    const priceRangeOptions: FilterOption[] = pairs.map((pair, index) => ({
-        value: pair.value,
-        label: pair.label,
-        count: priceCounts[index].count,
-        checked: isChecked({ filterValue: priceRange, value: pair.value }),
-    }));
-
-    const paths: FilterOption[] = Object.entries(parentPaths as ParentPathFacet)
-        .map(([key, value]) => ({
-            value: key,
-            label: value.label.split(' > ').at(-1) as string,
-            count: value.count,
-            checked: isChecked({
-                filterValue: parentPath,
-                value: key,
-            }),
-        }))
-        .sort((a, b) => a.label.localeCompare(b.label));
-
-    return (
-        <main>
-            <div>
-                <div className="page  pb-2 ">
-                    <Breadcrumbs breadcrumbs={breadcrumbs} />
-                    <h1 className="text-6xl font-bold py-4 ">{name}</h1>
-                </div>
-                {/* Categories List */}
-                <div className={classNames('flex flex-wrap mx-auto gap-2  max-w-(--breakpoint-2xl) empty:pb-0 pb-4 ')}>
-                    {categories?.map((child) => {
-                        if (!child) {
-                            return null;
-                        }
-
-                        return (
-                            <Link
-                                className={classNames(
-                                    'group w-28 pt-2 text-center text-dark divide divide-black divide-solid hover:border-dark transition-all',
-                                    'bg-light border-muted border border-solid rounded-lg  flex flex-col gap-1  justify-start  items-center',
-                                )}
-                                href={(child as Category).path ?? '#'}
-                                key={(child as Category).id}
-                            >
-                                <div className="w-24 h-24 text-center rounded-lg overflow-hidden border border-muted relative ">
-                                    {(child as Category).image?.map((img) => {
-                                        return <Image {...img} key={img?.url} sizes="200px" />;
-                                    })}
-                                </div>
-                                <span className="py-2 text-sm text-wrap max-w-full">{(child as Category).name}</span>
-                            </Link>
-                        );
-                    })}
-                </div>
-            </div>
-
-            {/* Blocks */}
-            {blocks && (
-                <div className={classNames('flex flex-col items-center')}>
-                    <Blocks blocks={blocks} />
-                </div>
-            )}
-
-            {/* Products List */}
-            <div
-                className={classNames(
-                    'grid  mt-2 grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-4 max-w-(--breakpoint-2xl) mx-auto mb-8 relative',
-                )}
-            >
-                <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 pb-4 mt-4">
-                    {/* Filters */}
-                    <Suspense fallback={null}>
-                        <Filters
-                            priceRange={priceRangeOptions}
-                            sorting={sort}
-                            totalHits={totalHits ?? 0}
-                            paths={paths}
-                            inStock={!!inStock}
-                        />
-                    </Suspense>
-                </div>
-                {products?.map((child) => {
-                    if (!child) {
-                        return null;
-                    }
-
-                    return <Product key={(child as ProductShape).id} product={child} />;
-                })}
-            </div>
-
-            {/* Pagination */}
-            {totalHits && totalHits > ITEMS_PER_PAGE && (
-                <Pagination
-                    totalItems={totalHits ?? 0}
-                    currentPage={currentPage}
-                    hasPreviousPage={hasPreviousHits ?? false}
-                    hasNextPage={hasMoreHits ?? false}
-                    url={path}
-                />
-            )}
-        </main>
-    );
+    return null;
 }

@@ -22,16 +22,18 @@ import downloadIcon from '@/assets/icon-download.svg';
 import Image from 'next/image';
 import { getPrice } from '@/utils/price';
 import classNames from 'classnames';
+import { ProductPrice } from './product-price';
 
 import { getCustomerPrices } from './get-customer-prices';
 import { getTranslations } from 'next-intl/server';
 import { getPromotionValues } from '@/utils/topics';
+import { Suspense } from 'react';
 
 const { CRYSTALLIZE_FALLBACK_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
 
 type ProductsProps = {
-    searchParams: Promise<SearchParams>;
-    params: Promise<{ slug: string; category: string[] }>;
+    searchParams: SearchParams;
+    params: { slug: string; category: string[] };
 };
 
 export const fetchProductData = async ({ path, isPreview = false }: { path: string; isPreview?: boolean }) => {
@@ -55,9 +57,7 @@ export const fetchProductData = async ({ path, isPreview = false }: { path: stri
 
 export default async function CategoryProduct(props: ProductsProps) {
     const t = await getTranslations('Product');
-
-    const searchParams = await props.searchParams;
-    const params = await props.params;
+    const { searchParams, params } = props;
     const url = `/${params.category.join('/')}`;
     const product = await fetchProductData({ path: url, isPreview: !!searchParams.preview });
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
@@ -316,30 +316,9 @@ export default async function CategoryProduct(props: ProductsProps) {
                             )}
 
                             <div className="text-4xl flex items-center font-bold py-4 justify-between w-full">
-                                <div className="flex flex-col">
-                                    {/* Lowest price */}
-                                    <span>
-                                        <Price
-                                            price={{
-                                                price: currentVariantPrice.lowest,
-                                                currency: currentVariantPrice.currency,
-                                            }}
-                                        />
-                                    </span>
-                                    {/* Compared at price */}
-                                    <span
-                                        className={classNames('block text-sm line-through font-normal', {
-                                            hidden: !currentVariantPrice.hasBestPrice,
-                                        })}
-                                    >
-                                        <Price
-                                            price={{
-                                                price: currentVariantPrice.highest,
-                                                currency: currentVariantPrice.currency,
-                                            }}
-                                        />
-                                    </span>
-                                </div>
+                                <Suspense fallback={<div className="bg-red w-10 h-10" />}>
+                                    <ProductPrice params={params} searchParams={searchParams} />
+                                </Suspense>
 
                                 {!!currentVariant && !!currentVariant.sku && (
                                     <AddToCartButton

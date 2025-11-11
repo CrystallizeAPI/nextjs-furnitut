@@ -1,18 +1,15 @@
 import { findSuitableVariant } from '@/components/variant-selector';
-import { apiRequest } from '@/utils/api-request';
 import { FetchProductDocument, Paragraph, PublicationState } from '@/generated/discovery/graphql';
 import { Price } from '@/components/price';
 import { getPrice } from '@/utils/price';
 import clsx from 'classnames';
 import { SearchParams } from '@/app/(shop)/[...category]/types';
-import { getCustomerPrices } from './get-customer-prices';
-
-export const dynamic = 'force-dynamic';
+import { newFetch } from './new-fetch';
 
 const { CRYSTALLIZE_FALLBACK_PRICE, CRYSTALLIZE_SELECTED_PRICE, CRYSTALLIZE_COMPARE_AT_PRICE } = process.env;
 
 export const fetchProductData = async ({ path, isPreview = false }: { path: string; isPreview?: boolean }) => {
-    const response = await apiRequest(FetchProductDocument, {
+    const response = await newFetch(FetchProductDocument, {
         path,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
         selectedPriceVariant: CRYSTALLIZE_SELECTED_PRICE!,
@@ -41,17 +38,17 @@ export async function ProductPrice(props: ProductsProps) {
     const product = await fetchProductData({ path: url, isPreview: !!searchParams.preview });
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
 
-    const selectedCustomerPrices = await getCustomerPrices({ path: product?.path });
+    // const selectedCustomerPrices = await getCustomerPrices({ path: product?.path });
 
-    const selectedPriceVariant = selectedCustomerPrices.catalogueProductVariants?.find(
-        (catalogueProductVariant) => catalogueProductVariant?.sku === currentVariant?.sku,
-    );
+    // const selectedPriceVariant = selectedCustomerPrices.catalogueProductVariants?.find(
+    //     (catalogueProductVariant) => catalogueProductVariant?.sku === currentVariant?.sku,
+    // );
 
-    const selectedPrice = selectedPriceVariant?.priceVariant?.priceFor ?? currentVariant?.selectedPriceVariant;
+    // const selectedPrice = selectedPriceVariant?.priceVariant?.priceFor ?? currentVariant?.selectedPriceVariant;
 
     const currentVariantPrice = getPrice({
         fallbackPriceVariant: currentVariant?.fallbackPriceVariant,
-        selectedPriceVariant: selectedPrice,
+        selectedPriceVariant: { price: 888 },
     });
 
     return (

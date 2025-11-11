@@ -316,9 +316,8 @@ export default async function CategoryProduct(props: ProductsProps) {
                             )}
 
                             <div className="text-4xl flex items-center font-bold py-4 justify-between w-full">
-                                <Suspense fallback={<div className="bg-red w-10 h-10" />}>
-                                    <ProductPrice params={params} searchParams={searchParams} />
-                                </Suspense>
+                                {new Date().toISOString()}
+                                <Suspense fallback={<div className="bg-red w-10 h-10" />}></Suspense>
 
                                 {!!currentVariant && !!currentVariant.sku && (
                                     <AddToCartButton

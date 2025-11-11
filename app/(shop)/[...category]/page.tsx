@@ -86,8 +86,10 @@ type CategoryOrProductProps = {
 };
 
 export async function generateStaticParams() {
-    return [];
+    return [{ category: ['products', 'plants', 'golden-pothos'] }];
 }
+
+export const revalidate = 3600;
 
 export default async function CategoryOrProduct(props: CategoryOrProductProps) {
     const params = await props.params;

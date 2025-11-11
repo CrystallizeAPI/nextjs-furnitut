@@ -89,6 +89,8 @@ export async function generateStaticParams() {
     return [];
 }
 
+export const dynamic = 'force-static';
+
 export async function generateMetadata(props: CategoryOrProductProps): Promise<Metadata> {
     const searchParams = await props.searchParams;
     const params = await props.params;

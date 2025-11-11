@@ -85,6 +85,10 @@ type CategoryOrProductProps = {
     searchParams: Promise<SearchParams>;
 };
 
+export async function generateStaticParams() {
+    return [];
+}
+
 export async function generateMetadata(props: CategoryOrProductProps): Promise<Metadata> {
     const searchParams = await props.searchParams;
     const params = await props.params;

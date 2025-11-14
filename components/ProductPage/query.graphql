@@ -108,6 +108,7 @@ fragment productVariant on ProductVariantForProduct {
     attributes
     fallbackPriceVariant: priceVariants(key: $fallbackPriceVariant)
     selectedPriceVariant: priceVariants(key: $selectedPriceVariant)
+    stockLocations
     description {
         extraDescription
     }

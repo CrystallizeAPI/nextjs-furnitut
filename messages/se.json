@@ -40,7 +40,13 @@
         "downloads": "Nedladdningar",
         "relatedProducts": "Liknande produkter",
         "variantsLabel": "Varianter",
-        "matchingProducts": "Relaterade produkter"
+        "matchingProducts": "Relaterade produkter",
+        "outOfStock": "Slut i lager",
+        "inStock": "{count} i lager",
+        "availableInStores": "Tillgänglig i {count, plural, one {# butik} other {# butiker}}",
+        "stock-default": "Online",
+        "stock-oslo": "Oslo butik",
+        "stock-toronto": "Toronto butik"
     },
     "Navigation": {
         "home": "Hem",

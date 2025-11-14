@@ -318,7 +318,11 @@ export default async function CategoryProduct(props: ProductsProps) {
                             <div className="text-4xl flex items-center font-bold py-4 justify-between w-full">
                                 <div className="flex flex-col">
                                     {/* Lowest price */}
-                                    <span>
+                                    <span
+                                        className={classNames({
+                                            'text-vivid': currentVariantPrice.hasBestPrice,
+                                        })}
+                                    >
                                         <Price
                                             price={{
                                                 price: currentVariantPrice.lowest,
@@ -362,13 +366,54 @@ export default async function CategoryProduct(props: ProductsProps) {
                                     />
                                 )}
                             </div>
+                            {/* Stock locations */}
+                            <div className="border-muted border-t"></div>
+
+                            {currentVariant?.stockLocations && (
+                                <Accordion
+                                    className="py-4 text-lg"
+                                    title={t('availableInStores', {
+                                        count: Object.entries(currentVariant.stockLocations).filter(
+                                            ([, availability]) => {
+                                                const stockInfo = availability as { stock: number };
+                                                return stockInfo.stock > 0;
+                                            },
+                                        ).length,
+                                    })}
+                                >
+                                    {Object.entries(currentVariant.stockLocations).map(([location, availability]) => {
+                                        const stockInfo = availability as { stock: number };
+                                        return (
+                                            <div key={location} className="flex justify-between py-1 last:pb-4">
+                                                <span className="flex items-center gap-2">
+                                                    <span
+                                                        className={classNames('h-3 w-3  rounded-full', {
+                                                            'bg-green': stockInfo.stock > 19,
+                                                            'bg-orange': stockInfo.stock > 0 && stockInfo.stock <= 19,
+                                                            'bg-red ': stockInfo.stock <= 0,
+                                                        })}
+                                                    ></span>
+                                                    <span className="font-medium">{t(`stock-${location}`)}</span>
+                                                </span>
+                                                <span>
+                                                    {stockInfo.stock > 0
+                                                        ? t('inStock', {
+                                                              count: stockInfo.stock > 20 ? '20+' : stockInfo.stock,
+                                                          })
+                                                        : t('outOfStock')}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </Accordion>
+                            )}
 
                             {/*Matching products*/}
                             {!!currentVariant?.matchingProducts?.variants?.length && (
                                 <Accordion
-                                    className="py-8 text-lg"
+                                    className="py-4 text-lg"
                                     defaultOpen={!!currentVariant?.matchingProducts?.variants?.length}
-                                    title={`Matching products (${
+                                    title={`${t('matchingProducts')} (${
                                         currentVariant?.matchingProducts?.variants?.length || 0
                                     })`}
                                 >

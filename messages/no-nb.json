@@ -40,7 +40,13 @@
         "downloads": "Nedlastinger",
         "relatedProducts": "Relaterte produkter",
         "variantsLabel": "Varianter",
-        "matchingProducts": "Tilhørende produkter"
+        "matchingProducts": "Tilhørende produkter",
+        "outOfStock": "Utsolgt",
+        "inStock": "{count} på lager",
+        "availableInStores": "Tilgjengelig i {count, plural, one {# butikk} other {# butikker}}",
+        "stock-default": "Nettbutikk",
+        "stock-oslo": "Oslo butikk",
+        "stock-toronto": "Toronto butikk"
     },
     "Navigation": {
         "home": "Hjem",

@@ -40,7 +40,13 @@
         "downloads": "Downloads",
         "relatedProducts": "Related Products",
         "variantsLabel": "Variants",
-        "matchingProducts": "Matching Products"
+        "matchingProducts": "Matching Products",
+        "outOfStock": "Out of stock",
+        "inStock": "{count} in stock",
+        "availableInStores": "Available in {count, plural, one {# store} other {# stores}}",
+        "stock-default": "Online",
+        "stock-oslo": "Oslo store",
+        "stock-toronto": "Toronto store"
     },
     "Navigation": {
         "home": "Home",

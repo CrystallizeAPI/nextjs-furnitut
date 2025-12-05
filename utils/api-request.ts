@@ -61,7 +61,7 @@ export const apiRequest = async <TResult, TVariables = {}>(
 
     if ('errors' in result) {
         console.log('GraphQL errors:', result.errors);
-        throw new Error('GraphQL errors occurred');
+        throw new Error(`GraphQL errors: ${JSON.stringify(result.errors)}`);
     }
 
     return result as { data: TResult };

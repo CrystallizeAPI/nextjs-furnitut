@@ -3,7 +3,14 @@ import { apiRequest } from '@/utils/api-request';
 import { GlobalSearchDocument } from '@/generated/discovery/graphql';
 
 export async function POST(req: Request) {
-  const { term } = await req.json();
-  const response = await apiRequest(GlobalSearchDocument, { term });
-  return NextResponse.json(response);
+  try {
+    const { term } = await req.json();
+    const response = await apiRequest(GlobalSearchDocument, { term });
+    return NextResponse.json(response);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "An error occurred while processing your request." },
+      { status: 500 }
+    );
+  }
 }

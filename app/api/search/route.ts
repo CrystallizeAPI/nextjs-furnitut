@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 import { apiRequest } from '@/utils/api-request';
 import { GlobalSearchDocument } from '@/generated/discovery/graphql';
 

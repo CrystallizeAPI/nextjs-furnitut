@@ -44,6 +44,7 @@ export function CommandPalette() {
     const [query, setQuery] = useState('');
     const [open, setOpen] = useState(false);
     const [results, setResults] = useState<Product[]>([]);
+    const [error, setError] = useState<string | null>(null);
     const router = useRouter();
     const t = useTranslations('Search');
 
@@ -69,22 +70,35 @@ export function CommandPalette() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedApiCall = useCallback(
         debounce(async (term: string) => {
-            const res = await fetch('/api/search', {
-                method: 'POST',
-                body: JSON.stringify({ term }),
-            });
+            try {
+                setError(null);
+                const res = await fetch('/api/search', {
+                    method: 'POST',
+                    body: JSON.stringify({ term }),
+                });
 
-            const data = await res.json();
-            setResults(data?.data?.search?.hits ?? []);
+                if (!res.ok) {
+                    throw new Error(`Search request failed with status ${res.status}`);
+                }
+
+                const data = await res.json();
+                setResults(data?.data?.search?.hits ?? []);
+            } catch (err) {
+                console.error('Search API error:', err);
+                setError(t('error'));
+                setResults([]);
+            }
         }, 150),
         [],
     );
 
     useEffect(() => {
         if (query === '') {
+            setError(null);
             return;
         }
 
+        setError(null);
         debouncedApiCall(query);
     }, [debouncedApiCall, query]);
 
@@ -92,6 +106,7 @@ export function CommandPalette() {
         setOpen(false);
         setQuery('');
         setResults([]);
+        setError(null);
     };
 
     return (
@@ -178,7 +193,18 @@ export function CommandPalette() {
                                 </ComboboxOptions>
                             )}
 
-                            {query !== '' && results.length === 0 && (
+                            {error && (
+                                <div className="px-6 py-14 text-center text-sm sm:px-14">
+                                    <ExclamationCircleIcon
+                                        type="outline"
+                                        name="exclamation-circle"
+                                        className="mx-auto size-6 text-red-500"
+                                    />
+                                    <p className="mt-4 font-semibold text-dark/90">{error}</p>
+                                </div>
+                            )}
+
+                            {query !== '' && results.length === 0 && !error && (
                                 <div className="px-6 py-14 text-center text-sm sm:px-14">
                                     <ExclamationCircleIcon
                                         type="outline"

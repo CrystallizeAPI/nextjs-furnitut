@@ -2,7 +2,8 @@
     "Search": {
         "placeholder": "Søk produkter...",
         "noResults": "Ingen produkter ble funnet. Prøv igjen.",
-        "noResultsShort": "Ingen resultater"
+        "noResultsShort": "Ingen resultater",
+        "error": "Noe gikk galt. Vennligst prøv igjen."
     },
     "Cart": {
         "title": "Handlevogn",

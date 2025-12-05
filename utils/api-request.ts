@@ -26,9 +26,9 @@ const normalizeForGraphQLName = (name: string): string => {
 
 export const normalizeForGraphQL = (string: string): string => normalizeForGraphQLName(camelCaseHyphens(string));
 
-const apiEndpoint = `https://api.crystallize.com/${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}/discovery`;
+const apiEndpoint = `https://api.crystallize.com/${process.env.CRYSTALLIZE_TENANT_IDENTIFIER}/discovery`;
 
-const apiLanguage: string = normalizeForGraphQL(process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_LANGUAGE || 'en');
+const apiLanguage: string = normalizeForGraphQL(process.env.CRYSTALLIZE_TENANT_LANGUAGE || 'en');
 
 const selectedPrice: string = process.env.CRYSTALLIZE_SELECTED_PRICE || 'default';
 const fallbackPrice: string = process.env.CRYSTALLIZE_FALLBACK_PRICE || 'default';
@@ -60,7 +60,8 @@ export const apiRequest = async <TResult, TVariables = {}>(
     const result = await response.json();
 
     if ('errors' in result) {
-        throw new Error();
+        console.log('GraphQL errors:', result.errors);
+        throw new Error('GraphQL errors occurred');
     }
 
     return result as { data: TResult };

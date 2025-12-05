@@ -67,6 +67,7 @@ export function Pagination({ totalItems, currentPage, hasPreviousPage, hasNextPa
             return (
                 <Link
                     key={page}
+                    prefetch={true}
                     href={getPageUrl(page as number)}
                     className={classNames(
                         `inline-flex items-center justify-center text-center h-9 w-9 rounded-full text-sm`,
@@ -85,6 +86,7 @@ export function Pagination({ totalItems, currentPage, hasPreviousPage, hasNextPa
         <nav className="flex items-center gap-4 justify-center px-4 sm:px-0 max-w-(--breakpoint-2xl) mx-auto">
             <div className="flex ">
                 <Link
+                    prefetch={true}
                     href={getPageUrl(previousPage)}
                     className={`inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 ${!hasPreviousPage ? 'invisible' : ''}`}
                     aria-disabled={!hasPreviousPage}
@@ -96,6 +98,7 @@ export function Pagination({ totalItems, currentPage, hasPreviousPage, hasNextPa
             <div className="md:-mt-px md:flex pt-4 gap-2">{renderPageNumbers()}</div>
             <div className="flex">
                 <Link
+                    prefetch={true}
                     href={getPageUrl(nextPage)}
                     className={`inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 ${!hasNextPage ? 'invisible' : ''}`}
                     aria-disabled={!hasNextPage}

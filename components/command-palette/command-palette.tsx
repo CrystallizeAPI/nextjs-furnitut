@@ -14,8 +14,7 @@ import {
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { useCallback, useEffect, useState } from 'react';
-import { apiRequest } from '@/utils/api-request';
-import { GlobalSearchDocument } from '@/generated/discovery/graphql';
+
 import { debounce } from '@/utils/debounce';
 import { useTranslations } from 'next-intl';
 
@@ -70,12 +69,13 @@ export function CommandPalette() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedApiCall = useCallback(
         debounce(async (term: string) => {
-            const response = await apiRequest(GlobalSearchDocument, {
-                term,
+            const res = await fetch('/api/search', {
+                method: 'POST',
+                body: JSON.stringify({ term }),
             });
-            const results = response?.data?.search?.hits ?? [];
 
-            setResults(results as Product[]);
+            const data = await res.json();
+            setResults(data?.data?.search?.hits ?? []);
         }, 150),
         [],
     );
@@ -153,15 +153,17 @@ export function CommandPalette() {
                                         >
                                             <div
                                                 className={
-                                                    'flex size-10 aspect-square relative overflow-hidden flex-none items-center justify-center rounded-lg'
+                                                    'flex size-10 aspect-square  bg-soft border border-muted  relative overflow-hidden flex-none items-center justify-center rounded-lg'
                                                 }
                                             >
-                                                <img
-                                                    className=" h-12 object-cover"
-                                                    src={item.defaultVariant.firstImage.variants[0].url}
-                                                    width={item.defaultVariant.firstImage.variants[0].width}
-                                                    alt={item.name}
-                                                />
+                                                {item.defaultVariant.firstImage?.variants && (
+                                                    <img
+                                                        className=" h-12 object-cover p-2"
+                                                        src={item.defaultVariant.firstImage.variants[0].url}
+                                                        width={item.defaultVariant.firstImage.variants[0].width}
+                                                        alt={item.name}
+                                                    />
+                                                )}
                                             </div>
                                             <div className="ml-4 flex-auto">
                                                 <p className="text-sm font-medium text-dark/70 group-data-focus:text-dark/90">

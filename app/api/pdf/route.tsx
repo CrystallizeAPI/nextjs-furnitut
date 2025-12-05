@@ -12,7 +12,6 @@ type ItemShape = 'category' | 'product' | null;
 const fetchItemShape = async (path: string): Promise<ItemShape> => {
     const response = await apiRequest(FetchItemShapeDocument, { path });
     const itemShape = response?.data?.search?.hits?.[0]?.shape;
-
     if (!itemShape) {
         return null;
     }
@@ -33,6 +32,7 @@ export async function GET(
 
     if (shapeType === 'product') {
         const data = await fetchProductDataForPDF(path);
+        console.log({data})
         stream = await renderToStream(<ProductPDF product={data as unknown as ProductPDFProps} />);
     } else {
         stream = await renderToStream(<EmptyPDF />);

@@ -48,7 +48,7 @@ const searchCategory = async ({ path, limit, skip = 0, filters, sorting, isPrevi
         sorting,
         boundaries: path.includes('entertainment') ? ENTERTAINMENT_PRICE_RANGE : PRODUCTS_PRICE_RANGE,
         publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
-        selectedPriceVariant: process.env.NEXT_PUBLIC_CRYSTALLIZE_SELECTED_PRICE || 'default',
+        selectedPriceVariant: process.env.CRYSTALLIZE_SELECTED_PRICE || 'default',
     });
 
     const { hits, summary: searchSummary } = response.data.search ?? {};
@@ -206,8 +206,8 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
 
     return (
         <main>
-            <div>
-                <div className="page  pb-2 ">
+            <div className="page">
+                <div className=" pb-2 ">
                     <Breadcrumbs breadcrumbs={breadcrumbs} />
                     <h1 className="text-6xl font-bold py-4 ">{name}</h1>
                 </div>
@@ -220,6 +220,7 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
 
                         return (
                             <Link
+                                prefetch={true}
                                 className={classNames(
                                     'group w-28 pt-2 text-center text-dark divide divide-black divide-solid hover:border-dark transition-all',
                                     'bg-light border-muted border border-solid rounded-lg  flex flex-col gap-1  justify-start  items-center',
@@ -249,7 +250,7 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
             {/* Products List */}
             <div
                 className={classNames(
-                    'grid  mt-2 grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-4 max-w-(--breakpoint-2xl) mx-auto mb-8 relative',
+                    'page grid  mt-2 grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-4 mb-8 relative',
                 )}
             >
                 <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 pb-4 mt-4">

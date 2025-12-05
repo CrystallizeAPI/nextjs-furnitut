@@ -94,9 +94,11 @@ export function CommandPalette() {
 
     useEffect(() => {
         if (query === '') {
+            setError(null);
             return;
         }
 
+        setError(null);
         debouncedApiCall(query);
     }, [debouncedApiCall, query]);
 

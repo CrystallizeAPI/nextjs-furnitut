@@ -32,7 +32,7 @@ export async function GET(
 
     if (shapeType === 'product') {
         const data = await fetchProductDataForPDF(path);
-        console.log({data})
+        
         stream = await renderToStream(<ProductPDF product={data as unknown as ProductPDFProps} />);
     } else {
         stream = await renderToStream(<EmptyPDF />);

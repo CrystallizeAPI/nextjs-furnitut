@@ -9,6 +9,7 @@ export const Story: React.FC<{ story: any }> = ({ story }) => {
     return (
         <Link
             href={path}
+            prefetch={true}
             className="rounded-2xl bg-quinary p-2 text-dark border-muted border-solid border text-primary relative block flex-col items-stretch bg-light"
             data-testid={path}
         >

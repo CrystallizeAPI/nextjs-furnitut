@@ -15,7 +15,7 @@ query FetchStory(
                 }
                 intro
                 featured {
-                    items {
+                    items(language: $language) {
                         path
                         ... on product {
                             name
@@ -31,7 +31,7 @@ query FetchStory(
                     }
                 }
                 upNext {
-                    items {
+                    items(language: $language) {
                         path
                         ...storyContent
                     }

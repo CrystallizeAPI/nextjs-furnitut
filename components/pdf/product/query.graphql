@@ -1,4 +1,9 @@
-query FetchProductForPDF($path: String!, $language: [TenantLanguage] = en, $fallbackPriceVariant: String!, $selectedPriceVariant: String!, $marketIdentifiers: [String!]) {
+query FetchProductForPDF(
+    $path: String!
+    $language: [TenantLanguage] = en
+    $fallbackPriceVariant: String!
+    $selectedPriceVariant: String!
+) {
     browse {
         product(path: $path) {
             hits {

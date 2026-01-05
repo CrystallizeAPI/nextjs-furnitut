@@ -8,8 +8,6 @@ export const fetchProductDataForPDF = async (path: string) => {
         path,
         selectedPriceVariant: CRYSTALLIZE_SELECTED_PRICE!,
         fallbackPriceVariant: CRYSTALLIZE_FALLBACK_PRICE!,
-        // TODO:fix
-        marketIdentifiers: CRYSTALLIZE_COMPARE_AT_PRICE!,
     });
     const { story, variants, brand, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 

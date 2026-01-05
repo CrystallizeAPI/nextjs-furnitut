@@ -32,6 +32,7 @@ export const Product = ({ product }: ProductProps) => {
     return (
         <Link
             href={path ?? '/'}
+            prefetch={true}
             className="rounded-2xl bg-quinary p-2 pb-0 text-dark border-muted border-solid border text-primary relative flex flex-col items-stretch bg-light"
             data-testid={path}
         >

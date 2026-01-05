@@ -20,7 +20,7 @@ fragment showCaseImage on Image {
     }
     showcases {
         hotspot
-        items {
+        items(language: $language) {
             name
             path
             ... on product {

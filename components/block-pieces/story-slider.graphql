@@ -5,7 +5,7 @@ fragment storySlider on StorySliderPiece {
     title
     description
     stories {
-        items {
+        items(language: $language) {
             ... on story {
                 path
                 title

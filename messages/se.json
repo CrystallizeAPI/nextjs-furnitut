@@ -2,7 +2,8 @@
     "Search": {
         "placeholder": "Sök produkter...",
         "noResults": "Inga produkter hittades. Försök igen.",
-        "noResultsShort": "Inga resultat"
+        "noResultsShort": "Inga resultat",
+        "error": "Något gick fel. Försök igen."
     },
     "Cart": {
         "title": "Din varukorg",

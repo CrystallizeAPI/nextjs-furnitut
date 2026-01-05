@@ -11,7 +11,7 @@ export const ProductSlider = ({ block }: ProductSliderProps) => {
     const { products } = block;
 
     return (
-        <div className="flex-col flex items-center py-12">
+        <div className="flex-col flex items-center py-12 page">
             <Typography {...block} />
             {!!products?.variants?.length && (
                 <div className="w-full pb-24">

@@ -36,7 +36,7 @@ export const Breadcrumbs = ({ breadcrumbs, isCenter }: BreadcrumbsProps) => {
                 'justify-center': isCenter,
             })}
         >
-            <Link href="/" aria-label="Home">
+            <Link href="/" prefetch={true} aria-label="Home">
                 <HomeIcon />
             </Link>
             <span className="opacity-30"> / </span>
@@ -47,7 +47,7 @@ export const Breadcrumbs = ({ breadcrumbs, isCenter }: BreadcrumbsProps) => {
                     ) : (
                         <>
                             {!!item.path && (
-                                <Link href={item.path} aria-label={item.name ?? ''}>
+                                <Link href={item.path} prefetch={true} aria-label={item.name ?? ''}>
                                     {item.name}
                                 </Link>
                             )}

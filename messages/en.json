@@ -2,7 +2,8 @@
     "Search": {
         "placeholder": "Search for products...",
         "noResults": "No products found for this search term. Please try again.",
-        "noResultsShort": "No results found"
+        "noResultsShort": "No results found",
+        "error": "Something went wrong. Please try again."
     },
     "Cart": {
         "title": "Shopping Cart",

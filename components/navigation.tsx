@@ -32,6 +32,7 @@ export const Navigation = async ({ className, withSearch }: NavigationProps) => 
         <div className={className}>
             {navigation?.map(({ href, name }) => (
                 <Link
+                    prefetch={true}
                     href={href}
                     className="h-full flex items-center"
                     key={name}

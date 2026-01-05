@@ -1,6 +1,7 @@
 {
     "extends": ["next/core-web-vitals", "prettier"],
     "rules": {
-        "jsx-a11y/alt-text": [0]
+        "jsx-a11y/alt-text": [0],
+        "@next/next/no-img-element": "off"
     }
 }

@@ -1,5 +1,5 @@
 import { ContentTransformer } from '@crystallize/reactjs-components';
-
+import clsx from 'classnames';
 type TypographyProps = {
     title: string | null;
     description: any | null;
@@ -9,16 +9,20 @@ type TypographyProps = {
     } | null;
 };
 
-const className = 'block-title text-5xl font-bold text-center max-w-(--breakpoint-sm) leading-16 pt-12';
-
 export const Typography = ({ title, description, callToAction, isFirstBlock }: TypographyProps) => {
     const actions = callToAction?.action;
+    const hasDescription = description && description?.length > 0;
+    const className = clsx(
+        'block-title text-5xl font-bold text-center max-w-(--breakpoint-sm) leading-16 pt-12',
+        !hasDescription && 'pb-12',
+    );
+
     return (
         <>
             {!!title ? (
                 <>{isFirstBlock ? <h1 className={className}>{title}</h1> : <h2 className={className}>{title}</h2>}</>
             ) : null}
-            {description.length ? (
+            {hasDescription ? (
                 <div className="block-description text-lg text-center max-w-(--breakpoint-md) pt-4 font-medium pb-12">
                     <ContentTransformer json={description} />
                 </div>

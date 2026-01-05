@@ -4,6 +4,7 @@ query GlobalSearch($term: String!, $language: [TenantLanguage] = en) {
         term: $term
         options: { fuzzy: { fuzziness: SINGLE } }
         filters: { type_in: [product] }
+        sorting: { score: desc }
     ) {
         summary {
             totalHits

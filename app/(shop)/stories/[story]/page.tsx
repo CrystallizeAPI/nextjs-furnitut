@@ -117,7 +117,9 @@ export default async function StoryPage(props: StoriesProps) {
                 </div>
                 <div className="flex flex-col">
                     {variant.product?.path && (
-                        <Link href={`${variant.product.path}?${queryParams}`}>{variant.name}</Link>
+                        <Link prefetch={true} href={`${variant.product.path}?${queryParams}`}>
+                            {variant.name}
+                        </Link>
                     )}
                     <span className="text-sm font-bold">
                         <Price price={variant.defaultPrice} />
@@ -160,7 +162,11 @@ export default async function StoryPage(props: StoriesProps) {
                     <Image {...defaultVariant?.firstImage} />
                 </div>
                 <div className="flex flex-col">
-                    {product.path && <Link href={product.path}>{product.name}</Link>}
+                    {product.path && (
+                        <Link href={product.path} prefetch={true}>
+                            {product.name}
+                        </Link>
+                    )}
                     <span className="text-sm font-bold">
                         <Price price={price} />
                     </span>

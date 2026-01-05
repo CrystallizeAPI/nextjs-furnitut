@@ -105,11 +105,13 @@ export const VariantSelector = (props: VariantSelectorProps) => {
 
                     const variantPrice = getPrice({
                         fallbackPriceVariant: variant.fallbackPriceVariant,
-                        selectedPriceVariant: customerSelectedPriceVariant?.priceVariant?.priceFor ?? variant.selectedPriceVariant,
+                        selectedPriceVariant:
+                            customerSelectedPriceVariant?.priceVariant?.priceFor ?? variant.selectedPriceVariant,
                     });
 
                     return (
                         <Link
+                            prefetch={true}
                             key={`variant-${index}`}
                             href={path + '?sku=' + variant.sku}
                             className={classNames(

@@ -12,7 +12,7 @@ export const Header = () => {
         <header className="fixed max-w-(--breakpoint-2xl) w-full top-4 left-1/2 -translate-x-1/2 z-40">
             <div className="bg-light border border-muted flex items-stretch rounded-full justify-between">
                 <div className="flex items-stretch flex-1">
-                    <Link href="/">
+                    <Link prefetch={true} href="/">
                         <div className="bg-dark items-center inline-flex rounded-full my-2 mx-2 px-6 py-3 h-10">
                             <svg height="100%" viewBox="0 0 89 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path

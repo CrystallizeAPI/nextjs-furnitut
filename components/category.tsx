@@ -11,6 +11,7 @@ export const Category: React.FC<{ category: any }> = ({ category }) => {
             href={path}
             className="aspect-portrait rounded-2xl bg-quinary text-dark border-muted border-solid border text-primary relative block flex-col items-stretch bg-light"
             data-testid={path}
+            prefetch={true}
         >
             <div className="relative border h-full rounded-xl overflow-hidden  border-muted flex flex-col justify-stretch ">
                 <div className=" h-full shrink relative crystallize-image ">

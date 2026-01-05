@@ -437,7 +437,9 @@ export default async function CategoryProduct(props: ProductsProps) {
                                                     </div>
                                                     <div className="flex flex-col">
                                                         {!!product?.product?.path && (
-                                                            <Link href={product.product.path}>{product?.name}</Link>
+                                                            <Link prefetch={true} href={product.product.path}>
+                                                                {product?.name}
+                                                            </Link>
                                                         )}
                                                         <span className="text-sm font-bold">
                                                             <Price
@@ -495,9 +497,9 @@ export default async function CategoryProduct(props: ProductsProps) {
                 </div>
             </main>
 
-            {product?.relatedProducts && (
+            {product?.relatedProducts?.items?.length ? (
                 <div className="mt-24">
-                    <div className=" max-w-(--breakpoint-2xl) pt-24  mx-auto ">
+                    <div className=" max-w-(--breakpoint-2xl) pt-24  mx-auto px-0 lg:px-12 2xl:px-0">
                         <h2 className="text-2xl py-4 font-bold">{t('relatedProducts')}</h2>
 
                         <Slider type="product" options={{ loop: false, align: 'start' }}>
@@ -507,7 +509,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                         </Slider>
                     </div>
                 </div>
-            )}
+            ) : null}
 
             <script
                 type="application/ld+json"

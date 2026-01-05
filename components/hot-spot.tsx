@@ -31,6 +31,7 @@ const HotspotWrapper = ({
             style={{ left: `${x}%`, top: `${y}%` }}
             onMouseEnter={() => setIsActive(true)}
             onMouseLeave={() => setIsActive(false)}
+            {...(!!link ? { prefetch: true } : {})}
         >
             {children}
         </Tag>

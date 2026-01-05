@@ -68,7 +68,7 @@
 }
 
 @utility page {
-    @apply max-w-(--breakpoint-2xl) mx-auto px-0 pt-32;
+    @apply max-w-(--breakpoint-2xl) mx-auto px-0 lg:px-12 2xl:px-0 pt-32;
 }
 
 @utility accordination {

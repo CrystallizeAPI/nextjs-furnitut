@@ -169,8 +169,6 @@ export default async function CategoryOrProduct(props: CategoryOrProductProps) {
         return <ProductPage params={props.params} searchParams={props.searchParams} />;
     }
 
-    console.log('preview on catalogue', preview);
-
     const { breadcrumbs, name, categories, blocks, products, summary } = await searchCategory({
         path,
         limit,

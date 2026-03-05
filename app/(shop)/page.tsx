@@ -1,4 +1,9 @@
-import { type FetchLandingPageQuery, type FetchLandingPageQueryVariables, FetchLandingPageDocument, PublicationState } from '@/generated/discovery/graphql';
+import {
+    type FetchLandingPageQuery,
+    type FetchLandingPageQueryVariables,
+    FetchLandingPageDocument,
+    PublicationState,
+} from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Blocks } from '@/components/blocks';
 
@@ -18,7 +23,7 @@ type LandingPageProps = {
 export default async function LandingPage(props: LandingPageProps) {
     const { preview } = await props.searchParams;
     const { blocks } = await fetchLandingPage({ isPreview: !!preview });
-    console.log({preview})
+    console.log('preview on index', preview);
 
     return (
         <main className="flex min-h-screen flex-col items-center">

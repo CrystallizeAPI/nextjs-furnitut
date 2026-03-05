@@ -40,7 +40,6 @@ export const apiRequest = async <TResult, TVariables = {}>(
     const vars = variables as Record<string, unknown> | undefined;
     const isPreview = vars?.publicationState === 'draft';
 
-    console.log('is preview in apiRequest:', isPreview);
     const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
@@ -55,8 +54,7 @@ export const apiRequest = async <TResult, TVariables = {}>(
                 fallbackPriceVariant: fallbackPrice,
             },
         }),
-        cache: 'no-store',
-        // ...(isPreview ? { cache: 'no-store' as const } : {}),
+        ...(isPreview ? { cache: 'no-store' as const } : {}),
     });
 
     if (!response.ok) {

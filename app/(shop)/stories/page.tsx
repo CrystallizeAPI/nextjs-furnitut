@@ -1,12 +1,13 @@
-import { FetchAllStoriesDocument, TenantLanguage } from '@/generated/discovery/graphql';
+import { FetchAllStoriesDocument, PublicationState, TenantLanguage } from '@/generated/discovery/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Story } from '@/components/story';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Metadata } from 'next';
 
-const fetchData = async () => {
+const fetchData = async ({ isPreview = false }: { isPreview?: boolean } = {}) => {
     const response = await apiRequest(FetchAllStoriesDocument, {
         language: (process.env.CRYSTALLIZE_TENANT_LANGUAGE || 'en') as TenantLanguage,
+        publicationState: isPreview ? PublicationState.Draft : PublicationState.Published,
     });
     const { title, children, breadcrumbs, meta } = response.data.browse?.category?.hits?.[0] ?? {};
 
@@ -36,8 +37,13 @@ export async function generateMetadata(): Promise<Metadata> {
     };
 }
 
-export default async function Stories() {
-    const { title, children, breadcrumbs } = await fetchData();
+type StoriesProps = {
+    searchParams: Promise<{ preview?: string }>;
+};
+
+export default async function Stories(props: StoriesProps) {
+    const { preview } = await props.searchParams;
+    const { title, children, breadcrumbs } = await fetchData({ isPreview: !!preview });
 
     return (
         <main>

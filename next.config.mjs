@@ -5,6 +5,15 @@ const nextConfig = {
     experimental: {
         ppr: 'incremental',
     },
+    async redirects() {
+        return [
+            {
+                source: '/index',
+                destination: '/',
+                permanent: true,
+            },
+        ];
+    },
 };
 
 const withNextIntl = createNextIntlPlugin();

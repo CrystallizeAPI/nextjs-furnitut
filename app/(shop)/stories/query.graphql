@@ -1,6 +1,6 @@
-query FetchAllStories($language: [TenantLanguage] = en) {
+query FetchAllStories($language: [TenantLanguage] = en, $publicationState: [PublicationState]) {
     browse {
-        category(path: "/stories", language: $language) {
+        category(path: "/stories", language: $language, publicationState: $publicationState) {
             hits {
                 title
                 breadcrumbs {
